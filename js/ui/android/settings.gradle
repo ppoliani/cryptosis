@@ -1,0 +1,3 @@
+rootProject.name = 'Tagonize'
+
+include ':app'
