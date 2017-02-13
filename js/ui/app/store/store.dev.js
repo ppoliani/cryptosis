@@ -3,7 +3,7 @@ import futureMiddleware from 'redux-future';
 import state from './state';
 import reducer from './reducer';
 
-const createDevStoreWithMiddleware = compose(
+const createDevStoreWithMiddleware = applyMiddleware(
   futureMiddleware
 )(createStore);
 

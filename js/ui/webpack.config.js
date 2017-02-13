@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 
-const sourcePath = path.join(__dirname, './app');
+const sourcePath = path.join(__dirname, './');
 const distPath = path.join(__dirname, './app/web/dist');
 
 module.exports = () => {
@@ -15,7 +15,10 @@ module.exports = () => {
       filename: 'vendor.bundle.js'
     }),
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify(nodeEnv) }
+      'process.env': {
+        NODE_ENV: JSON.stringify(nodeEnv),
+        PLATFORM_ENV: JSON.stringify(process.env.PLATFORM_ENV)
+      }
     }),
     new webpack.NamedModulesPlugin(),
   ];
@@ -52,12 +55,21 @@ module.exports = () => {
   }
 
   return {
-    devtool: isProd ? 'source-map' : 'eval',
+    devtool: isProd ? 'source-map' : 'cheap-module-eval-source-map',
     context: sourcePath,
 
     entry: {
-      app: './web/index.jsx',
-      vendor: ['react']
+      app: './app/web/index.jsx',
+      vendor: [
+        'react',
+        'react-dom',
+        'react-redux',
+        'redux-actions',
+        'redux-future',
+        'immutable',
+        'babel-polyfill',
+        'material-ui'
+      ]
     },
 
     output: {
@@ -114,11 +126,12 @@ module.exports = () => {
     stats: {
       colors: {
         green: '\u001b[32m',
-      }
+      },
+      errorDetails: true,
     },
 
     devServer: {
-      contentBase: sourcePath,
+      contentBase: './app',
       historyApiFallback: true,
       port: 3000,
       compress: isProd,

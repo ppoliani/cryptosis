@@ -1,8 +1,9 @@
 import { handleActions } from 'redux-actions';
-import { SET_IS_SEARCHING } from './searchActions';
+import { SET_IS_LOADING } from './searchActions';
+import state from '../store/state';
 
-const setIsSearching = (state, action) => state.set('isLoading', action.payload);
+const setIsloading = (state, action) => state.set('isLoading', action.payload);
 
 export default handleActions({
-  [SET_IS_SEARCHING]: setIsSearching
-});
+  [SET_IS_LOADING]: setIsloading
+}, state.search);

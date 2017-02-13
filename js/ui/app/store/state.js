@@ -1,6 +1,6 @@
 const State = {
   search: {
-    isSearching: false
+    isLoading: false
   }
 };
 
