@@ -3,17 +3,22 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
+		"native:start": "node node_modules/react-native/local-cli/cli.js start",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"web:start": "webpack-dev-server",
+		"web:dev": "cross-env NODE_ENV=production webpack --env.prod=true",
+		"web:prod": "cross-env NODE_ENV=production webpack-dev-server --env.prod=true"
 	},
 	"dependencies": {
 		"babel-polyfill": "^6.22.0",
+		"immutable": "^3.8.1",
 		"material-ui": "^0.17.0",
 		"react": "~15.4.0",
 		"react-dom": "^15.4.2",
-		"react-native": "0.41.2",
+		"react-native": "^0.41.2",
 		"react-redux": "^5.0.2",
-		"redux": "^3.6.0"
+		"redux": "^3.6.0",
+		"redux-actions": "^1.2.1"
 	},
 	"devDependencies": {
 		"babel-core": "^6.22.1",
@@ -23,8 +28,12 @@
 		"babel-preset-react": "^6.22.0",
 		"babel-preset-react-hmre": "^1.1.1",
 		"babel-preset-react-native": "1.9.1",
+		"cross-env": "^3.1.4",
+		"css-loader": "^0.26.1",
+		"file-loader": "^0.10.0",
 		"jest": "18.1.0",
 		"react-test-renderer": "~15.4.0",
+		"style-loader": "^0.13.1",
 		"webpack": "^2.2.1",
 		"webpack-dev-server": "^2.3.0"
 	},

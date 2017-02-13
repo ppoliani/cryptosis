@@ -1,6 +1,8 @@
 [ignore]
 ; We fork some components by platform
 .*/*[.]android.js
+.*/node_modules/.*
+.*/webpack.config.js
 
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
@@ -15,6 +17,8 @@
 .*/Libraries/react-native/ReactNative.js
 
 [include]
+.*/**/*.js
+.*/**/*.jsx
 
 [libs]
 node_modules/react-native/Libraries/react-native/react-native-interface.js
@@ -22,6 +26,7 @@ node_modules/react-native/flow
 flow/
 
 [options]
+all=true
 module.system=haste
 
 experimental.strict_type_args=true
@@ -41,4 +46,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 unsafe.enable_getters_and_setters=true
 
 [version]
-^0.37.0
+^0.39.0
