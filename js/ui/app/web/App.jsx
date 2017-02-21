@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
+import { compose } from 'folktale/core/lambda';
 import Logged from './Auth/Logged';
 import Login from './Auth/Login';
+import { getSearchResults } from '../data/search/searchActions';
 
 class App extends Component {
   // ToDo(Pavlos): remove state and use redux instead
@@ -15,9 +17,13 @@ class App extends Component {
 
   }
 
+  componentDidMount() {
+    this.props.search({});
+  }
+
   handleChange = (event, logged) => {
     this.setState({logged: logged});
-  };
+  }
 
   getIconElementLeft() {
     return this.state.logged
@@ -38,7 +44,11 @@ class App extends Component {
 }
 
 const mapStateToProps = state => state;
+const mapDispatchToProps = dispatch => ({
+    search: compose(dispatch, getSearchResults)
+});
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(App);

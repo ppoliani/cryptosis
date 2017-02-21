@@ -55,7 +55,7 @@ module.exports = () => {
   }
 
   return {
-    devtool: isProd ? 'source-map' : 'cheap-module-eval-source-map',
+    devtool: isProd ? 'source-map' : 'source-map',
     context: sourcePath,
 
     entry: {
@@ -131,7 +131,7 @@ module.exports = () => {
     },
 
     devServer: {
-      contentBase: './app',
+      contentBase: path.resolve(__dirname, 'app'),
       historyApiFallback: true,
       port: 3000,
       compress: isProd,
