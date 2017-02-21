@@ -11,6 +11,7 @@
 	},
 	"dependencies": {
 		"babel-polyfill": "^6.22.0",
+		"flux-standard-action": "^1.1.0",
 		"folktale": "git+https://github.com/origamitower/folktale.git",
 		"immutable": "^3.8.1",
 		"material-ui": "^0.17.0",

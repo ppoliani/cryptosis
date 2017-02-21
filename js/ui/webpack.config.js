@@ -65,7 +65,6 @@ module.exports = () => {
         'react-dom',
         'react-redux',
         'redux-actions',
-        'redux-future',
         'immutable',
         'babel-polyfill',
         'material-ui'

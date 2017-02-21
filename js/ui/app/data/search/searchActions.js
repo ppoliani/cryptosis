@@ -18,6 +18,7 @@ export const getSearchResultsRoot = (fetch) => {
   const fetchData = compose(fetch, getUrl);
 
   const transformData = searchResults => {
+    console.log(searchResults);
     //Todo(Pavlos): implement the real transformation function
     return searchResults;
   }

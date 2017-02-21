@@ -1,7 +1,7 @@
-import Task from 'folktale/data/task';
+import { task } from 'folktale/data/task';
 
 export default url => {
-  return new Task.task(async (resolver) => {
+  return task(async (resolver) => {
     const response = await fetch(url);
 
     response.json()
