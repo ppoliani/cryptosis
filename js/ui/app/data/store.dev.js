@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import futureMiddleware from 'redux-future';
+import taskMiddleware from './middlewares/taskMiddleware';
 import state from './state';
 import reducer from './reducer';
 
 const createDevStoreWithMiddleware = applyMiddleware(
-  futureMiddleware
+  taskMiddleware
 )(createStore);
 
 const configureStore = () => {

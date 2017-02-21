@@ -19,8 +19,7 @@
 		"react-native": "^0.41.2",
 		"react-redux": "^5.0.2",
 		"redux": "^3.6.0",
-		"redux-actions": "^1.2.1",
-		"redux-future": "^0.0.11"
+		"redux-actions": "^1.2.1"
 	},
 	"devDependencies": {
 		"babel-core": "^6.22.1",
