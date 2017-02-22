@@ -7,8 +7,6 @@ import { pipe, toFuture } from '../../helpers/fn';
 
 export const GET_SEARCH_RESULTS= 'SEARCH::GET_SEARCH_RESULTS';
 
-export const setIsLoading = createAction(SET_IS_LOADING);
-
 const DUMMY_URL = 'https://jsonplaceholder.typicode.com/posts/1';
 
 export const getSearchResultsRoot = (fetch) => {

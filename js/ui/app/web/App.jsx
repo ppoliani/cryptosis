@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.search({});
+    this.props.startSearch({});
   }
 
   handleChange = (event, logged) => {
@@ -34,18 +34,31 @@ class App extends Component {
   render() {
     const { search } = this.props;
 
-    return <div>
+    return (
+      <div>
+        {
+          search.get('searchResults').cata({
+            Empty: () => <div>Search Results</div>,
+            Loading: () => <div>Loading...</div>,
+            Success: searchResults => <div>{searchResults.title}</div>,
+            Failure: error => <div>{error}</div>
+          })
+        }
+
         <AppBar
           title="Tagonize"
           iconElementRight={this.getIconElementLeft()}
         />
       </div>
+    )
   }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => {
+  return state
+};
 const mapDispatchToProps = dispatch => ({
-    search: compose(dispatch, getSearchResults)
+    startSearch: compose(dispatch, getSearchResults)
 });
 
 export default connect(

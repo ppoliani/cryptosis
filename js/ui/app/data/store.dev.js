@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import taskMiddleware from './middlewares/taskMiddleware';
-import state from './state';
 import reducer from './reducer';
 
 const createDevStoreWithMiddleware = applyMiddleware(
@@ -8,7 +7,7 @@ const createDevStoreWithMiddleware = applyMiddleware(
 )(createStore);
 
 const configureStore = () => {
-  const store = createDevStoreWithMiddleware(reducer, state, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+  const store = createDevStoreWithMiddleware(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
   // enable webpack hot module replacement for reducers
   if (module.hot) {

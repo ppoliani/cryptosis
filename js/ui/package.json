@@ -11,7 +11,7 @@
 	},
 	"dependencies": {
 		"babel-polyfill": "^6.22.0",
-		"daggy": "^0.0.1",
+		"daggy": "git+https://github.com/fantasyland/daggy.git",
 		"folktale": "git+https://github.com/origamitower/folktale.git",
 		"immutable": "^3.8.1",
 		"material-ui": "^0.17.0",
