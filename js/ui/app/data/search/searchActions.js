@@ -5,7 +5,6 @@ import { createAction } from 'redux-actions';
 import fetch from '../../helpers/api';
 import { pipe, toFuture } from '../../helpers/fn';
 
-export const SET_IS_LOADING= 'SEARCH::SET_IS_LOADING';
 export const GET_SEARCH_RESULTS= 'SEARCH::GET_SEARCH_RESULTS';
 
 export const setIsLoading = createAction(SET_IS_LOADING);
@@ -18,7 +17,6 @@ export const getSearchResultsRoot = (fetch) => {
   const fetchData = compose(fetch, getUrl);
 
   const transformData = searchResults => {
-    console.log(searchResults);
     //Todo(Pavlos): implement the real transformation function
     return searchResults;
   }

@@ -1682,6 +1682,10 @@ csurf@~1.8.3:
     csrf "~3.0.0"
     http-errors "~1.3.1"
 
+daggy@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/daggy/-/daggy-0.0.1.tgz#ae9c932c9f7136e655a04afb21e8baadfd0d3707"
+
 dashdash@^1.12.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
@@ -2151,14 +2155,6 @@ find-up@^1.0.0, find-up@^1.1.2:
 flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
-
-flux-standard-action@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/flux-standard-action/-/flux-standard-action-1.1.0.tgz#114a014e70c8830505129511e043880f0961fb38"
-  dependencies:
-    lodash.isplainobject "^4.0.6"
-    lodash.isstring "^4.0.1"
-    lodash.issymbol "^4.0.1"
 
 "folktale@git+https://github.com/origamitower/folktale.git":
   version "2.0.0-alpha3"
@@ -3335,18 +3331,6 @@ lodash.isarguments@^3.0.0:
 lodash.isarray@^3.0.0:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
-
-lodash.isplainobject@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
-
-lodash.isstring@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/lodash.isstring/-/lodash.isstring-4.0.1.tgz#d527dfb5456eca7cc9bb95d5daeaf88ba54a5451"
-
-lodash.issymbol@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/lodash.issymbol/-/lodash.issymbol-4.0.1.tgz#04ad41d96f3f4f399c37dd4fcf3c1b6901e16116"
 
 lodash.keys@^3.0.0:
   version "3.1.2"
