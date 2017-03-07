@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
-import {Spinner, SpinnerType} from 'office-ui-fabric-react/lib/Spinner';
-import {SearchBox} from 'office-ui-fabric-react/lib/SearchBox';
+import AutoComplete from 'material-ui/AutoComplete';
+import CircularProgress from 'material-ui/CircularProgress';
 import {autobind} from 'core-decorators';
 
 class Search extends Component {
@@ -10,7 +10,12 @@ class Search extends Component {
   }
 
   renderSearchBox() {
-    return <SearchBox onSearch={this.handleSearch} />
+    return <AutoComplete
+      fullWidth={true}
+      dataSource={[]}
+      hintText="Enter your tags"
+      floatingLabelText="Search for..."
+      onNewRequest={this.handleSearch} />
   }
 
   renderSearchResults() {
@@ -20,7 +25,7 @@ class Search extends Component {
         {
           search.get('searchResults').cata({
             Empty: () => <div></div>,
-            Loading: () => <div><Spinner type={ SpinnerType.large } label="It's comming..." /></div>,
+            Loading: () => <div><CircularProgress size={80} thickness={5} /></div>,
             Success: searchResults => <div>{searchResults.title}</div>,
             Failure: error => <div>{error}</div>
           })
