@@ -19,7 +19,7 @@ class App extends Component {
     const {search, startSearch} = this.props;
 
     return <section>
-      <AppBar title="My AppBar" />
+      <AppBar title="Neuronise" />
       <Paper style={style}>
         <Search
           startSearch={startSearch}
