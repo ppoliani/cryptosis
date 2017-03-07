@@ -22,7 +22,6 @@ module.exports = () => {
     }),
     new webpack.NamedModulesPlugin(),
   ];
-
   if (isProd) {
     plugins.push(
       new webpack.LoaderOptionsPlugin({
@@ -55,7 +54,7 @@ module.exports = () => {
   }
 
   return {
-    devtool: isProd ? 'source-map' : 'source-map',
+    devtool: isProd ? 'source-map' : 'cheap-module-source-map',
     context: sourcePath,
 
     entry: {
@@ -66,8 +65,7 @@ module.exports = () => {
         'react-redux',
         'redux-actions',
         'immutable',
-        'babel-polyfill',
-        'material-ui'
+        'babel-polyfill'
       ]
     },
 

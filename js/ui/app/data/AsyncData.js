@@ -1,6 +1,6 @@
 import { taggedSum } from 'daggy';
 
-export default taggedSum('RemoteData', {
+export default taggedSum('AsyncData', {
   Empty: [],
   Loading: [],
   Failure: ['error'],

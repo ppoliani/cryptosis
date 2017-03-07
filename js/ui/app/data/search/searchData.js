@@ -1,6 +1,6 @@
 import { Map } from 'immutable';
-import RemoteData from '../RemoteData';
+import AsyncData from '../AsyncData';
 
 export default Map({
-  searchResults: RemoteData.Empty
+  searchResults: AsyncData.Empty
 });
