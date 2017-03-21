@@ -1,5 +1,5 @@
 {
-	"name": "Tagonize",
+	"name": "barter",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -13,7 +13,7 @@
 		"babel-polyfill": "^6.22.0",
 		"core-decorators": "^0.15.0",
 		"daggy": "git+https://github.com/fantasyland/daggy.git",
-		"folktale": "git+https://github.com/origamitower/folktale.git",
+		"folktale": "^2.0.0-alpha3",
 		"immutable": "^3.8.1",
 		"material-ui": "^0.17.0",
 		"react": "~15.4.0",

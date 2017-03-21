@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-export default class Tagonize extends Component {
+export default class Barter extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('Tagonize', () => Tagonize);
+AppRegistry.registerComponent('Barter', () => Barter);

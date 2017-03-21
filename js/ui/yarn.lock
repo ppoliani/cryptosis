@@ -2175,9 +2175,9 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-"folktale@git+https://github.com/origamitower/folktale.git":
+folktale@^2.0.0-alpha3:
   version "2.0.0-alpha3"
-  resolved "git+https://github.com/origamitower/folktale.git#9e1c5b5ba4f51cd081cf66cb6a078e9bb3e0022f"
+  resolved "https://registry.yarnpkg.com/folktale/-/folktale-2.0.0-alpha3.tgz#45f51feb486f00aa3d1d6f0f51eb45406c344899"
 
 for-in@^0.1.5:
   version "0.1.6"
