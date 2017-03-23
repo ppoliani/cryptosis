@@ -1,0 +1,8 @@
+{"level":"info","message":"Koa server listening on port 3000","timestamp":"2017-03-23T19:20:45.670Z"}
+{"level":"info","message":"Koa server listening on port 3000","timestamp":"2017-03-23T19:22:20.442Z"}
+{"level":"info","message":"Koa server listening on port 3000","timestamp":"2017-03-23T19:24:27.371Z"}
+{"level":"info","message":"Koa server listening on port 3000","timestamp":"2017-03-23T19:24:52.523Z"}
+{"level":"info","message":"Koa server listening on port 3000","timestamp":"2017-03-23T19:25:55.677Z"}
+{"level":"error","message":"ctx.send is not a function","timestamp":"2017-03-23T19:25:59.987Z"}
+{"level":"info","message":"Koa server listening on port 3000","timestamp":"2017-03-23T19:29:36.629Z"}
+{"level":"info","message":"Koa server listening on port 3000","timestamp":"2017-03-23T19:31:03.550Z"}

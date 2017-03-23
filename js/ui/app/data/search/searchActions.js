@@ -28,4 +28,4 @@ export const getSearchResultsRoot = (fetch) => {
   );
 };
 
-export const getSearchResults = curry(1, getSearchResultsRoot)(fetch);
+export const getSearchResults = getSearchResultsRoot(fetch);
