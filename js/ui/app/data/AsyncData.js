@@ -1,8 +1,8 @@
-import { taggedSum } from 'daggy';
+import data from 'folktale/core/adt/data';
 
-export default taggedSum('AsyncData', {
-  Empty: [],
-  Loading: [],
-  Failure: ['error'],
-  Success: ['data'],
+export default data('AsyncData', {
+  Empty: () => ({}),
+  Loading: () => ({}),
+  Failure: error => ({error}),
+  Success: data => ({data})
 });

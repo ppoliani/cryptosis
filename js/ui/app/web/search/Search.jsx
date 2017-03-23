@@ -23,11 +23,11 @@ class Search extends Component {
 
     return <div>
         {
-          search.get('searchResults').cata({
+          search.get('searchResults').matchWith({
             Empty: () => <div></div>,
             Loading: () => <div><CircularProgress size={80} thickness={5} /></div>,
-            Success: searchResults => <div>{searchResults.title}</div>,
-            Failure: error => <div>{error}</div>
+            Success: ({ data: searchResults }) => <div>{searchResults.title}</div>,
+            Failure: ({ error }) => <div>{error}</div>
           })
         }
       </div>

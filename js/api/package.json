@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "SERVER_PORT=3000 nodemon ./bin/index.js"
+    "start": "SERVER_PORT=5000 nodemon ./bin/index.js"
   },
   "description": "The api for the Barter UI",
   "main": "index.js",
