@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "SERVER_PORT=3000 node ./bin/index.js"
+    "start": "SERVER_PORT=3000 nodemon ./bin/index.js"
   },
   "description": "The api for the Barter UI",
   "main": "index.js",
@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "folktale": "^2.0.0-alpha3",
+    "global": "^4.3.1",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
     "koa-connect": "^2.0.0",
@@ -20,6 +21,7 @@
     "koa-passport": "^3.0.0",
     "koa-router": "next",
     "morgan": "^1.8.1",
+    "nodemon": "^1.11.0",
     "uws": "^0.13.0",
     "winston": "^2.3.1"
   }
