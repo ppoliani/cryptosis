@@ -54,4 +54,4 @@ fastlane/Preview.html
 fastlane/screenshots
 
 ui/app/web/dist
-env
+.env
