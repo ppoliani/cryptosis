@@ -18,16 +18,26 @@ const checkAccessToken = (source, acessToken) => {
         return Result.Error(response.error.message);
       }
 
-      return response;
+      return Result.Ok(response);
     })
 };
 
-const saveUser = authResponse => {
-  return futureOf(authResponse);
+const saveUser = result => {
+  return futureOf(
+    result.matchWith({
+      Ok: ({value: authResponse}) => Result.Ok(authResponse),
+      Error: ({value: error}) => Result.Error(error)
+    })
+  );
 };
 
-const createToken = user => {
-  return futureOf(Result.Ok(user));
+const createToken = result => {
+  return futureOf(
+    result.matchWith({
+      Ok: ({value: user}) => Result.Ok(user),
+      Error: ({value: error}) => Result.Error(error)
+    })
+  );
 };
 
 const login = async (ctx, next) => {
