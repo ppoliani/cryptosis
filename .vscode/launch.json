@@ -1,0 +1,29 @@
+{
+  // Use IntelliSense to learn about possible Node.js debug attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${workspaceRoot}/js/api/bin/index.js",
+      "cwd": "${workspaceRoot}",
+      "env": {
+        "NODE_ENV": "development",
+        "SERVER_PORT": "5000",
+        "FB_LOGIN_URL": "https://graph.facebook.com/me?access_token",
+        "DB_USERNAME": "neo4j",
+        "DB_PASSWORD": "neo4j"
+      }
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach to Process",
+      "address": "localhost",
+      "port": 5000
+    }
+  ]
+}
