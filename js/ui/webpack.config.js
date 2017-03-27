@@ -11,7 +11,6 @@ module.exports = () => {
 
   const plugins = [
     new DotenvPlugin({
-      // sample: './.env.default',
       path: './.env'
     }),
     new webpack.optimize.CommonsChunkPlugin({
@@ -73,7 +72,10 @@ module.exports = () => {
         'react-redux',
         'redux-actions',
         'immutable',
-        'babel-polyfill'
+        'babel-polyfill',
+        'whatwg-fetch',
+        'folktale',
+        'core-decorators'
       ]
     },
 

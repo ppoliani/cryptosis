@@ -3,7 +3,7 @@ const api = require('./authApi');
 
 const routes = {
   '/login': {
-    method: 'get',
+    method: 'post',
     fn: api.login
   }
 };

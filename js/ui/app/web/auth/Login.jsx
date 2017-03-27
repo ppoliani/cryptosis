@@ -5,14 +5,17 @@ import { login } from '../../helpers/auth';
 
 class Login extends Component {
   responseFacebook(response) {
-    login({source: 'fb', accessToken: response.accessToken})
+    login('fb',response.accessToken)
       .bimap(
-        error => console.log(error),
-        token => console.log('success')
+        error => {
+          console.log('Could not login via fb', error)
+        },
+        token => {
+          console.log(token)
+          // store token in localstorage
+        }
       )
       .run();
-
-    console.log(response);
   }
 
   componentClicked() {

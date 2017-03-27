@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "SERVER_PORT=5000 nodemon ./bin/index.js"
+    "start": "NODE_ENV='development' nodemon ./bin/index.js"
   },
   "description": "The api for the Barter UI",
   "main": "index.js",
@@ -11,8 +11,10 @@
   "author": "Pavlos Polianidis",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^4.0.0",
     "folktale": "^2.0.0-alpha3",
     "global": "^4.3.1",
+    "kcors": "2",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
     "koa-connect": "^2.0.0",
@@ -21,8 +23,13 @@
     "koa-passport": "^3.0.0",
     "koa-router": "next",
     "morgan": "^1.8.1",
+    "neo4j-driver": "^1.2.0",
+    "node-fetch": "^1.6.3",
     "nodemon": "^1.11.0",
     "uws": "^0.13.0",
     "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "ava": "^0.18.2"
   }
 }

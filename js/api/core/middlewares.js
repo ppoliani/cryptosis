@@ -1,19 +1,12 @@
 const logger = require('./logger');
+const cors = require('kcors');
 
 const applyMiddlewares = app => {
-  // cors middleware
-  app.use(async (ctx, next) => {
-    ctx.set('Access-Control-Allow-Origin', '*');
-    ctx.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    ctx.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  const corsOptions = {
+    'Access-Control-Allow-Headers': ['content-type', 'x-auth-source', 'x-auth-token']
+  };
 
-    if (ctx.request.method === 'OPTIONS') {
-      ctx.status = 200;
-    }
-    else {
-      await next();
-    }
-  });
+  app.use(cors(corsOptions));
 
   // error handling middleware
   app.use(async (ctx, next) => {
@@ -21,10 +14,9 @@ const applyMiddlewares = app => {
       await next();
     }
     catch (err) {
+      logger.error(err.message);
       ctx.status = err.status || 500;
       ctx.body = err.message;
-      ctx.app.emit('error', err, ctx);
-      logger.error(err.message);
     }
   });
 };
