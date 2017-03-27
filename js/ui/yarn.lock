@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@types/react@*":
+  version "15.0.20"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.20.tgz#3d4a05ed04a8b1847ac6c8fa6093591d3910fba5"
+
 abab@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.3.tgz#b81de5f7274ec4e756d797cd834f303642724e5d"
@@ -738,9 +742,9 @@ babel-plugin-transform-strict-mode@^6.22.0:
     babel-runtime "^6.22.0"
     babel-types "^6.22.0"
 
-babel-polyfill@^6.20.0, babel-polyfill@^6.22.0:
-  version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.22.0.tgz#1ac99ebdcc6ba4db1e2618c387b2084a82154a3b"
+babel-polyfill@^6.20.0, babel-polyfill@^6.23.0:
+  version "6.23.0"
+  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.23.0.tgz#8364ca62df8eafb830499f699177466c3b03499d"
   dependencies:
     babel-runtime "^6.22.0"
     core-js "^2.4.0"
@@ -1808,6 +1812,16 @@ dom-walk@^0.1.0:
 domain-browser@^1.1.1:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.1.7.tgz#867aa4b093faa05f1de08c06f4d7b21fdf8698bc"
+
+dotenv-safe@^2.3.1:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/dotenv-safe/-/dotenv-safe-2.3.3.tgz#f35e09650527579bcc6e3565a7e2b6fcbbd44539"
+  dependencies:
+    dotenv "^2.0.0"
+
+dotenv@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-2.0.0.tgz#bd759c357aaa70365e01c96b7b0bec08a6e0d949"
 
 duplexer2@0.0.2:
   version "0.0.2"
@@ -3454,9 +3468,9 @@ marked@^0.3.6:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.6.tgz#b2c6c618fccece4ef86c4fc6cb8a7cbf5aeda8d7"
 
-material-ui@^0.17.0:
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-0.17.0.tgz#fd0e2e16f55184f66bc770225a053444e4ae7d33"
+material-ui@^0.17.1:
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-0.17.1.tgz#37f9b9c073afa1603b8fb900d620b41699663176"
   dependencies:
     babel-runtime "^6.18.0"
     inline-style-prefixer "^2.0.1"
@@ -4442,6 +4456,16 @@ react-event-listener@^0.4.0:
     react-addons-shallow-compare "^15.4.2"
     warning "^3.0.0"
 
+react-facebook-login@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/react-facebook-login/-/react-facebook-login-3.5.0.tgz#6a3199e025bac814b2617fe3ae15f86799a402f8"
+
+react-google-login@^2.8.5:
+  version "2.8.5"
+  resolved "https://registry.yarnpkg.com/react-google-login/-/react-google-login-2.8.5.tgz#c2ae0e89d445123cf561c32fe4b1d2a5d1963f47"
+  dependencies:
+    "@types/react" "*"
+
 react-native@latest:
   version "0.42.3"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.42.3.tgz#450c8a03a5e3e991a08a426f22776dd8feb80b26"
@@ -4529,9 +4553,9 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
-react-redux@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.2.tgz#3d9878f5f71c6fafcd45de1fbb162ea31f389814"
+react-redux@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.3.tgz#86c3b68d56e74294a42e2a740ab66117ef6c019f"
   dependencies:
     hoist-non-react-statics "^1.0.3"
     invariant "^2.0.0"
@@ -4567,7 +4591,7 @@ react-transform-hmr@^1.0.3, react-transform-hmr@^1.0.4:
     global "^4.3.0"
     react-proxy "^1.1.7"
 
-react@~15.4.0:
+react@~15.4.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
   dependencies:
@@ -5590,6 +5614,12 @@ webpack-dev-server@^2.3.0:
     supports-color "^3.1.1"
     webpack-dev-middleware "^1.9.0"
     yargs "^6.0.0"
+
+webpack-dotenv-plugin@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/webpack-dotenv-plugin/-/webpack-dotenv-plugin-2.0.0.tgz#f68d0d1c58af252bc97230ba220a707930fd48a8"
+  dependencies:
+    dotenv-safe "^2.3.1"
 
 webpack-sources@^0.1.4:
   version "0.1.4"
