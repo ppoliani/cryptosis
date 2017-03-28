@@ -1,4 +1,3 @@
-const Result = require('folktale/data/result');
 const logger = require('../core/logger');
 const {fetch, HttpError} = require('../core/utils');
 const {getUser} = require('../data/userRepository');

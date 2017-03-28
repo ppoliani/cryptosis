@@ -17,34 +17,35 @@ if(process.env.NODE_ENV === 'development') {
   require('dotenv').config();
 }
 
-initDB()
-  .bimap(
-    error => logger.error(error),
-    DbSession => {
-      logger.info('Succesfully conected to the db');
-      initRepositories(DbSession);
+(async () => {
+  try {
+    const driver = await initDB();
+    logger.info('Succesfully conected to the db');
+    initRepositories(driver);
 
-      const app = new Koa();
-      app.proxy = true;
-      app.keys = [process.env.SESSION_KEY];
+    const app = new Koa();
+    app.proxy = true;
+    app.keys = [process.env.SESSION_KEY];
 
-      applyMiddlewares(app);
+    applyMiddlewares(app);
 
-      const router = setupRoutes(Router());
+    const router = setupRoutes(Router());
 
-      app
-        .use(router.routes())
-        .use(router.allowedMethods())
-        .use(ctk(morgan('dev')))
-        .use(convert(session()))
-        .use(passport.initialize())
-        .use(passport.session())
+    app
+      .use(router.routes())
+      .use(router.allowedMethods())
+      .use(ctk(morgan('dev')))
+      .use(convert(session()))
+      .use(passport.initialize())
+      .use(passport.session())
 
-      uhttp
-        .createServer(app.callback())
-        .listen(process.env.SERVER_PORT, () => {
-          logger.info(`Koa server listening on port ${process.env.SERVER_PORT}`);
-        });
-    }
-  )
-  .run();
+    uhttp
+      .createServer(app.callback())
+      .listen(process.env.SERVER_PORT, () => {
+        logger.info(`Koa server listening on port ${process.env.SERVER_PORT}`);
+      });
+  }
+  catch(error) {
+    logger.error(error)
+  }
+})();
