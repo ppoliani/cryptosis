@@ -1,4 +1,3 @@
-const Maybe = require('folktale/data/maybe');
 const {runQuery} = require('./query');
 
 let DbDriver;
@@ -7,8 +6,8 @@ const init = driver => {
   DbDriver = driver;
 }
 
-const getUser = (authSource, authResponse) => {
-  return runQuery(
+const getUser = async (authResponse) =>  {
+  return await runQuery(
     DbDriver,
     `
     MATCH (u:User), (fb:SocialMediaAccount {userId:{userId}, {name:{name}, email:{email}, picture:{picture}})

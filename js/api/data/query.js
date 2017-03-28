@@ -1,35 +1,18 @@
-const {task} = require('folktale/data/task');
-const Result = require('folktale/data/result');
 const logger = require('../core/logger');
 
-const neo4jQueryToFuture = queryResult => task(
-  async resolver => {
-    try {
-      const result = await queryResult;
-      resolver.resolve(Result.Ok(result.records));
-    }
-    catch(error) {
-      logger.error(`Error while runing a query: ${error}`);
-      resolver.reject(Result.Error(error));
-    }
-});
-
-const sessionUndefinedError = () => {
-  const msg = 'session object is undefined';
-  logger.error(msg);
-  return Result.Error(msg);
-};
-
-const runQuery = (driver, query, params) =>
-  neo4jQueryToFuture(
-    driver
+const runQuery = async (driver, query, params) => {
+  try {
+    const result = await driver
       .session()
-      .run(query, params)
-  )
-  .map(
-    records => Result.Ok(records)
-  )
-  .run()
-  .future()
+      .run(query, params);
+
+    return result;
+  }
+  catch(error) {
+    const msg = `Error running a query: ${error.message}`;
+    logger.error(msg);
+    throw new Error(msg);
+  }
+}
 
 module.exports = {runQuery};

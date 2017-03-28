@@ -1,24 +1,20 @@
 const Result = require('folktale/data/result');
 const logger = require('../core/logger');
 const {fetch, HttpError} = require('../core/utils');
-const {asyncBindSeq} = require('../core/Rop');
 const {getUser} = require('../data/userRepository');
 
-const checkAccessToken = (source, acessToken, authResponse) => {
+const checkAccessToken = async (source, acessToken, authResponse) => {
   const url = source === 'fb'
     ? `${process.env.FB_LOGIN_URL}=${acessToken}`
     : '';
 
-  return fetch(url)
-    .run()
-    .future()
-    .map(response => {
-      if(response.error && response.error.message) {
-        return Result.Error(response.error.message);
-      }
+  const response = await fetch(url);
 
-      return Result.Ok(authResponse);
-    })
+  if(response.error && response.error.message) {
+    throw new Error(`Error from social media oauth server: ${response.error.message}`);
+  }
+
+  return authResponse;
 };
 
 const saveUser = authResponse => {
@@ -26,7 +22,7 @@ const saveUser = authResponse => {
 };
 
 const createToken = user => {
-  return Result.Ok(user);
+  return Promise.resolve(user);
 };
 
 const login = async (ctx, next) => {
@@ -34,29 +30,17 @@ const login = async (ctx, next) => {
   const acessToken = ctx.header['x-auth-token'];
   const authResponse = ctx.request.body;
 
-  await new Promise((resolve, reject) => {
-    asyncBindSeq(
-      checkAccessToken(source, acessToken, authResponse),
-      saveUser,
-      createToken
-    )
-    .bimap(
-      ({value: error}) => {
-        reject(HttpError(401, error))
-      },
-      result => {
-        result.matchWith({
-          Ok: ({value}) => {
-            ctx.body = value;
-            resolve(value);
-          },
-          Error: ({value}) => {
-            reject(HttpError(401, value));
-          }
-        });
-      }
-    );
-  });
+  try {
+    const response = await checkAccessToken(source, acessToken, authResponse);
+    const user = await saveUser(response);
+    const token = await createToken(user);
+
+    ctx.body = token;
+  }
+  catch(error) {
+    ctx.status = 401;
+    ctx.body = HttpError(401, `Unauthorized`);
+  }
 };
 
-module.exports = { login };
+module.exports = {login};
