@@ -1,11 +1,10 @@
 const Result = require('folktale/data/result');
-const {task} = require('folktale/data/task');
-const chain = require('folktale/core/fantasy-land/chain');
 const logger = require('../core/logger');
 const {fetch, HttpError} = require('../core/utils');
 const {asyncBindSeq} = require('../core/Rop');
+const {getUser} = require('../data/userRepository');
 
-const checkAccessToken = (source, acessToken) => {
+const checkAccessToken = (source, acessToken, authResponse) => {
   const url = source === 'fb'
     ? `${process.env.FB_LOGIN_URL}=${acessToken}`
     : '';
@@ -18,12 +17,12 @@ const checkAccessToken = (source, acessToken) => {
         return Result.Error(response.error.message);
       }
 
-      return Result.Ok(response);
+      return Result.Ok(authResponse);
     })
 };
 
 const saveUser = authResponse => {
-  return Result.Ok(authResponse);
+  return getUser(authResponse);
 };
 
 const createToken = user => {
@@ -33,10 +32,11 @@ const createToken = user => {
 const login = async (ctx, next) => {
   const source = ctx.header['x-auth-source'];
   const acessToken = ctx.header['x-auth-token'];
+  const authResponse = ctx.request.body;
 
   await new Promise((resolve, reject) => {
     asyncBindSeq(
-      checkAccessToken(source, acessToken),
+      checkAccessToken(source, acessToken, authResponse),
       saveUser,
       createToken
     )

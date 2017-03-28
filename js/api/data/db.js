@@ -1,17 +1,15 @@
 const neo4j = require('neo4j-driver').v1;
 const {task} = require('folktale/data/task');
 
-const init = () =>
+const initDB = () =>
   task(resolver => {
     try{
-      const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic('asddas', process.env.DB_PASSWORD));
-      const session = driver.session();
-
-      resolver.resolve();
+      const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic(process.env.DB_USERNAME, process.env.DB_PASSWORD));
+      resolver.resolve(driver);
     }
     catch(error) {
       resolver.reject(error);
     }
   });
 
-module.exports = {init};
+module.exports = {initDB};

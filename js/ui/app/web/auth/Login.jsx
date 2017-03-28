@@ -1,11 +1,22 @@
 import React, {Component} from 'react';
+import {autobind} from 'core-decorators';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import { login } from '../../helpers/auth';
 
 class Login extends Component {
+  createAuthResponse(response) {
+    return {
+      email: response.email,
+      name: response.name,
+      userId: response.userID,
+      picture: response.picture.data.url
+    };
+  }
+
+  @autobind
   responseFacebook(response) {
-    login('fb',response.accessToken)
+    login('fb', response.accessToken, this.createAuthResponse(response))
       .bimap(
         error => {
           console.log('Could not login via fb', error)

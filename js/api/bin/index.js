@@ -5,24 +5,24 @@ const uhttp = require('http');
 const Router= require('koa-router');
 const passport = require('koa-passport');
 const convert = require('koa-convert');
-const bodyParser = require('koa-bodyparser');
 const session = require('koa-generic-session');
 const morgan = require('morgan');
 const ctk = require('koa-connect');
 const applyMiddlewares = require('../core/middlewares');
 const setupRoutes = require('../core/routes');
 const logger = require('../core/logger');
-const db = require('../data/db');
+const {initDB, initRepositories} = require('../data');
 
 if(process.env.NODE_ENV === 'development') {
   require('dotenv').config();
 }
 
-db.init()
+initDB()
   .bimap(
     error => logger.error(error),
-    () => {
+    DbSession => {
       logger.info('Succesfully conected to the db');
+      initRepositories(DbSession);
 
       const app = new Koa();
       app.proxy = true;
@@ -36,7 +36,6 @@ db.init()
         .use(router.routes())
         .use(router.allowedMethods())
         .use(ctk(morgan('dev')))
-        .use(bodyParser())
         .use(convert(session()))
         .use(passport.initialize())
         .use(passport.session())
