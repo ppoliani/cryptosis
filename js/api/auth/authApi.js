@@ -1,9 +1,9 @@
 const Result = require('folktale/data/result');
 const {task} = require('folktale/data/task');
-const {of: futureOf} = require('folktale/data/future')
 const chain = require('folktale/core/fantasy-land/chain');
 const logger = require('../core/logger');
 const {fetch, HttpError} = require('../core/utils');
+const {asyncBindSeq} = require('../core/fn');
 
 const checkAccessToken = (source, acessToken) => {
   const url = source === 'fb'
@@ -22,22 +22,12 @@ const checkAccessToken = (source, acessToken) => {
     })
 };
 
-const saveUser = result => {
-  return futureOf(
-    result.matchWith({
-      Ok: ({value: authResponse}) => Result.Ok(authResponse),
-      Error: ({value: error}) => Result.Error(error)
-    })
-  );
+const saveUser = authResponse => {
+  return Result.Ok(authResponse);
 };
 
-const createToken = result => {
-  return futureOf(
-    result.matchWith({
-      Ok: ({value: user}) => Result.Ok(user),
-      Error: ({value: error}) => Result.Error(error)
-    })
-  );
+const createToken = user => {
+  return Result.Ok(user);
 };
 
 const login = async (ctx, next) => {
@@ -45,9 +35,11 @@ const login = async (ctx, next) => {
   const acessToken = ctx.header['x-auth-token'];
 
   await new Promise((resolve, reject) => {
-    checkAccessToken(source, acessToken)
-    .chain(saveUser)
-    .chain(createToken)
+    asyncBindSeq(
+      checkAccessToken(source, acessToken),
+      saveUser,
+      createToken
+    )
     .map(result => {
       result.matchWith({
         Ok: ({value}) => {
