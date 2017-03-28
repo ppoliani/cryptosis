@@ -8,7 +8,7 @@ const asyncBind = (f, next) => {
   return f.chain(result =>
     result.matchWith({
       Ok: ({value}) => futureOf(next(value)),
-      Error: ({value: error}) => futureOf(Result.Error(error))
+      Error: ({value}) => futureOf(Result.Error(value))
     })
   );
 }
