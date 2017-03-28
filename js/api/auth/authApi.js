@@ -3,7 +3,7 @@ const {task} = require('folktale/data/task');
 const chain = require('folktale/core/fantasy-land/chain');
 const logger = require('../core/logger');
 const {fetch, HttpError} = require('../core/utils');
-const {asyncBindSeq} = require('../core/fn');
+const {asyncBindSeq} = require('../core/Rop');
 
 const checkAccessToken = (source, acessToken) => {
   const url = source === 'fb'
