@@ -40,17 +40,22 @@ const login = async (ctx, next) => {
       saveUser,
       createToken
     )
-    .map(result => {
-      result.matchWith({
-        Ok: ({value}) => {
-          ctx.body = value;
-          resolve(value);
-        },
-        Error: ({value}) => {
-          reject(HttpError(401, value));
-        }
-      });
-    });
+    .bimap(
+      ({value: error}) => {
+        reject(HttpError(401, error))
+      },
+      result => {
+        result.matchWith({
+          Ok: ({value}) => {
+            ctx.body = value;
+            resolve(value);
+          },
+          Error: ({value}) => {
+            reject(HttpError(401, value));
+          }
+        });
+      }
+    );
   });
 };
 

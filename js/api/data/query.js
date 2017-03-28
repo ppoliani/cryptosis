@@ -9,6 +9,7 @@ const neo4jQueryToFuture = queryResult => task(
       resolver.resolve(Result.Ok(result.records));
     }
     catch(error) {
+      logger.error(`Error while runing a query: ${error}`);
       resolver.reject(Result.Error(error));
     }
 });
@@ -25,11 +26,7 @@ const runQuery = (driver, query, params) =>
       .session()
       .run(query, params)
   )
-  .bimap(
-    error => {
-      logger.error(`Error while runing a query: ${error}`);
-      Result.Error(error);
-    },
+  .map(
     records => Result.Ok(records)
   )
   .run()
