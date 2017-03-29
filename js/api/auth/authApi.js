@@ -1,6 +1,6 @@
 const logger = require('../core/logger');
 const {fetch, HttpError} = require('../core/utils');
-const {getUser} = require('../data/userRepository');
+const {getSocialMediaAccount, getUser} = require('../data/userRepository');
 
 const checkAccessToken = async (source, acessToken, authResponse) => {
   const url = source === 'fb'
@@ -16,12 +16,8 @@ const checkAccessToken = async (source, acessToken, authResponse) => {
   return authResponse;
 };
 
-const saveUser = authResponse => {
-  return getUser(authResponse);
-};
-
-const createToken = user => {
-  return Promise.resolve(user);
+const createToken = account => {
+  return Promise.resolve(account);
 };
 
 const login = async (ctx, next) => {
@@ -31,8 +27,8 @@ const login = async (ctx, next) => {
 
   try {
     const response = await checkAccessToken(source, acessToken, authResponse);
-    const user = await saveUser(response);
-    const token = await createToken(user);
+    const account = await getSocialMediaAccount(source, authResponse);
+    const token = await createToken(account);
 
     ctx.body = token;
   }

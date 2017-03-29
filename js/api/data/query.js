@@ -7,7 +7,7 @@ const runQuery = async (driver, query, params) => {
     session = driver.session();
     const result = await session.run(query, params);
 
-    return result;
+    return result.records;
   }
   catch(error) {
     const msg = `Error running a query: ${error.message}`;
