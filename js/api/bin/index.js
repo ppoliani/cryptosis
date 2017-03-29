@@ -12,6 +12,7 @@ const applyMiddlewares = require('../core/middlewares');
 const setupRoutes = require('../core/routes');
 const logger = require('../core/logger');
 const {initDB, initRepositories} = require('../data');
+const {initAuth} = require('../auth');
 
 if(process.env.NODE_ENV === 'development') {
   require('dotenv').config();
@@ -21,6 +22,7 @@ if(process.env.NODE_ENV === 'development') {
   try {
     const driver = await initDB();
     logger.info('Succesfully conected to the db');
+    initAuth();
     initRepositories(driver);
 
     const app = new Koa();

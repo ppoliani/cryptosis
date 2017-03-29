@@ -27,6 +27,7 @@
     "neo4j-driver": "next",
     "node-fetch": "^1.6.3",
     "nodemon": "^1.11.0",
+    "passport-http-bearer": "^1.0.1",
     "uws": "^0.13.0",
     "winston": "^2.3.1"
   },

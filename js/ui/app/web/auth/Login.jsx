@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {autobind} from 'core-decorators';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
-import { login } from '../../helpers/auth';
+import {login} from '../../helpers/auth';
 
 class Login extends Component {
   createAuthResponse(response) {
