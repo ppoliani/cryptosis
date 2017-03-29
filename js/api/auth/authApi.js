@@ -1,6 +1,6 @@
 const logger = require('../core/logger');
 const {fetch, HttpError} = require('../core/utils');
-const {getSocialMediaAccount} = require('../data/userRepository');
+const {getOrSaveSocialMediaAccount, createToken} = require('../data/accountRepository');
 
 const checkAccessToken = async (source, acessToken, authResponse) => {
   const url = source === 'fb'
@@ -16,10 +16,6 @@ const checkAccessToken = async (source, acessToken, authResponse) => {
   return authResponse;
 };
 
-const createToken = account => {
-  return Promise.resolve(account);
-};
-
 const login = async (ctx, next) => {
   const source = ctx.header['x-auth-source'];
   const acessToken = ctx.header['x-auth-token'];
@@ -27,10 +23,10 @@ const login = async (ctx, next) => {
 
   try {
     const response = await checkAccessToken(source, acessToken, authResponse);
-    const account = await getSocialMediaAccount(source, authResponse);
-    const token = await createToken(account);
+    const account = await getOrSaveSocialMediaAccount(source, authResponse);
+    const token = await createToken(source, account[0]._fields[0].properties);
 
-    ctx.body = token;
+    ctx.body = {token: token[0]._fields[0]};
   }
   catch(error) {
     ctx.status = 401;
