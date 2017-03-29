@@ -7,21 +7,11 @@ const init = driver => {
 }
 
 const getSocialMediaRelationship = source =>
+
   source === 'fb'
     ? 'r:HAS_FB'
     : 'r:HAS:GOOGLE';
 
-const getUser = async (source, authResponse) => {
-  return await runQuery(
-    DbDriver,
-    `
-    MATCH (u:User), (s:SocialMediaAccount {userId:{userId}, name:{name}, email:{email}, picture:{picture}})
-    WHERW (u)-${getSocialMediaRelationship(source)}->(s)
-    RETURN u, type(r)
-    `,
-    authResponse
-  );
-};
 
 const getSocialMediaAccount = async (source, authResponse) => {
   return await runQuery(
@@ -34,4 +24,4 @@ const getSocialMediaAccount = async (source, authResponse) => {
   );
 };
 
-module.exports = {init, getSocialMediaAccount, getUser}
+module.exports = {init, getSocialMediaAccount}

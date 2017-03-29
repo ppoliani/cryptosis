@@ -1,6 +1,6 @@
 const logger = require('../core/logger');
 const {fetch, HttpError} = require('../core/utils');
-const {getSocialMediaAccount, getUser} = require('../data/userRepository');
+const {getSocialMediaAccount} = require('../data/userRepository');
 
 const checkAccessToken = async (source, acessToken, authResponse) => {
   const url = source === 'fb'
