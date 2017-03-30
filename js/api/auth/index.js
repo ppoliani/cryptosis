@@ -10,7 +10,7 @@ const initAuth = () => {
   // 1. Check if token exists
   // 2. IF not send 401
   // 3. ELSE check expiry date
-  // 4. IF expired send 401 and remove token from the db
+  // 4. IF expired send 401
   // 5. ELSE get user from db
   // 6. IF user doesn't exist 401
   // 7. ELSE done(null, user)

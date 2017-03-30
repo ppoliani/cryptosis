@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+if(process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
+
 const Koa = require('koa');
 const uhttp = require('http');
 // const uhttp = require('uws').http; headers are empty in the request object when using this server
@@ -13,10 +17,6 @@ const setupRoutes = require('../core/routes');
 const logger = require('../core/logger');
 const {initDB, initRepositories} = require('../data');
 const {initAuth} = require('../auth');
-
-if(process.env.NODE_ENV === 'development') {
-  require('dotenv').config();
-}
 
 (async () => {
   try {
