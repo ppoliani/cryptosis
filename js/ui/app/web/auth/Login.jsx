@@ -49,7 +49,7 @@ class Login extends Component {
         'GET',
         {},
         {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWfQiOiIxMDE1NDM2MzMzODMwMzMwOSIsIm5hbWUiOiJQYXZsb3MgUG9saWFuaWRpcyIsImlhdCI6MTQ5MDg3MzI4MCwiZXhwIjoxNDkxNDc4MDgwfQ.7soDjgl0MsCJ5GMBxGKtKxrM30GnYisU_5bgutrAxLg'
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMDE1NDM2MzMzODMwMzMwOSIsIm5hbWUiOiJQYXZsb3MgUG9saWFuaWRpcyIsImlhdCI6MTQ5MDg4Nzk5NywiZXhwIjoxNDkxNDkyNzk3fQ.bHBbb1oQ0Ya_Ct7FxelmSBtObhYK_y5KDStUlJx_qS8'
         }
       )
       .bimap(

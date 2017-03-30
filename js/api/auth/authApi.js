@@ -1,3 +1,4 @@
+const identity = require('folktale/core/lambda/identity');
 const logger = require('../core/logger');
 const {fetch, HttpError} = require('../core/api');
 const {unwrapCypherResult} = require('../data');
@@ -26,14 +27,22 @@ const login = async (ctx, next) => {
     const response = await checkAccessToken(source, acessToken, authResponse);
     const account = await getOrSaveSocialMediaAccount(source, authResponse);
 
-    unwrapCypherResult(account).matchWith({
-      Just: async ({value}) => {
-        const token = await createToken(source, value);
-        ctx.body = {token: unwrapCypherResult(token)};
-      },
-      Nothing: () => { throw new Error() }
-    });
-
+    await unwrapCypherResult(account)
+      .matchWith({
+        Just: async ({value: [account]}) => {
+          const token = await createToken(source, account);
+          await unwrapCypherResult(token)
+            .matchWith({
+              Just: ({value: [token]}) => {
+                ctx.body = {token};
+              },
+              Nothing: () => {
+                throw new Error();
+              }
+           })
+        },
+        Nothing: identity
+      });
   }
   catch(error) {
     ctx.body = HttpError(403, 'Access Denied');

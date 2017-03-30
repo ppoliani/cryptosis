@@ -18,7 +18,7 @@ const initAuth = () => {
     async (accessToken, done) => {
       try {
         const result = await getTokenAndCorrespondingAccounts(accessToken);
-        unwrapCypherResult(result).matchWith({
+        await unwrapCypherResult(result).matchWith({
           Just: async ({value: [_, account]}) => {
             const decodedToken = await decodeToken(accessToken);
             done(null, account);
