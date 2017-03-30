@@ -7,7 +7,8 @@ export default (url, method='GET', body={}, headers={}) =>
       const options = {
         method,
         headers: Object.assign({}, {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${window.localStorage.getItem('bartr_access_token')}`
         }, headers)
       };
 

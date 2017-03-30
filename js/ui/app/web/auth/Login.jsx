@@ -24,9 +24,8 @@ class Login extends Component {
         error => {
           console.log('Could not login via fb', error)
         },
-        token => {
-          console.log(token)
-          // store token in localstorage
+        ({token}) => {
+          window.localStorage.setItem('bartr_access_token', token)
         }
       )
       .run();
@@ -47,11 +46,7 @@ class Login extends Component {
   click() {
      fetch(
         `${process.env.API_URL}/test`,
-        'GET',
-        {},
-        {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMDE1NDM2MzMzODMwMzMwOSIsIm5hbWUiOiJQYXZsb3MgUG9saWFuaWRpcyIsImlhdCI6MTQ5MDg5Nzk5OCwiZXhwIjoxNDkxNTAyNzk4fQ.NzKaV1d5ehDlQzji4qY8IU2Ge9unYkaC-Bu2Smer2DM'
-        }
+        'GET'
       )
       .bimap(
         error => console.log(error),
