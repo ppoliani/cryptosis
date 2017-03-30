@@ -45,7 +45,6 @@ const login = async (ctx, next) => {
       });
   }
   catch(error) {
-    console.log('>>>>>>>>>>>>>', error)
     ctx.body = HttpError(403, 'Access Denied');
   }
 };

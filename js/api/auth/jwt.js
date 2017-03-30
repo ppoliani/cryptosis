@@ -15,7 +15,6 @@ const generateToken = account => {
     name: account.name
   };
 
-  console.log('>>>>>>>>token = ', JWT_SECRET);
   return jwt.sign(tokenValue, JWT_SECRET, {expiresIn: JWT_LIFE_SPAN});
 };
 
