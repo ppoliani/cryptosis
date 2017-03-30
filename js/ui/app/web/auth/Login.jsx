@@ -49,11 +49,12 @@ class Login extends Component {
         'GET',
         {},
         {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMDE1NDM2MzMzODMwMzMwOSIsIm5hbWUiOiJQYXZsb3MgUG9saWFuaWRpcyIsImlhdCI6MTQ5MDg3MzI4MCwiZXhwIjoxNDkxNDc4MDgwfQ.7soDjgl0MsCJ5GMBxGKtKxrM30GnYisU_5bgutrAxLg'
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWfQiOiIxMDE1NDM2MzMzODMwMzMwOSIsIm5hbWUiOiJQYXZsb3MgUG9saWFuaWRpcyIsImlhdCI6MTQ5MDg3MzI4MCwiZXhwIjoxNDkxNDc4MDgwfQ.7soDjgl0MsCJ5GMBxGKtKxrM30GnYisU_5bgutrAxLg'
         }
       )
       .bimap(
-        error => console.log(error)
+        error => console.log(error),
+        response => console.log(response)
       )
       .run()
   }

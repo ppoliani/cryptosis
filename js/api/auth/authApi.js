@@ -25,13 +25,18 @@ const login = async (ctx, next) => {
   try {
     const response = await checkAccessToken(source, acessToken, authResponse);
     const account = await getOrSaveSocialMediaAccount(source, authResponse);
-    const token = await createToken(source, unwrapCypherResult(account));
 
-    ctx.body = {token: unwrapCypherResult(token)};
+    unwrapCypherResult(account).matchWith({
+      Just: async ({value}) => {
+        const token = await createToken(source, value);
+        ctx.body = {token: unwrapCypherResult(token)};
+      },
+      Nothing: () => { throw new Error() }
+    });
+
   }
   catch(error) {
-    ctx.status = 403;
-    ctx.body = HttpError(403, `Unauthorized`);
+    ctx.body = HttpError(403, 'Access Denied');
   }
 };
 

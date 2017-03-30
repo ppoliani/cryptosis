@@ -11,7 +11,8 @@ const routes = {
     method: 'get',
     auth: true,
     fn: (ctx, next) => {
-      ctx.body = ctx.request.user;
+      ctx.status = 200;
+      ctx.body = ctx.state.user;
     },
 
   }

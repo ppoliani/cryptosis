@@ -16,7 +16,7 @@ const _fetch = async (url, method='GET', headers) => {
   }
 }
 
-const HttpError = (status, message) => ({status, message});
+const HttpError = (status, message) => ({status, message: { error: message }});
 
 module.exports = {
   HttpError,
