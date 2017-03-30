@@ -1,5 +1,6 @@
 const logger = require('../core/logger');
-const {fetch, HttpError} = require('../core/utils');
+const {fetch, HttpError} = require('../core/api');
+const {unwrapCypherResult} = require('../data');
 const {getOrSaveSocialMediaAccount, createToken} = require('../data/accountRepository');
 
 const checkAccessToken = async (source, acessToken, authResponse) => {
@@ -24,13 +25,13 @@ const login = async (ctx, next) => {
   try {
     const response = await checkAccessToken(source, acessToken, authResponse);
     const account = await getOrSaveSocialMediaAccount(source, authResponse);
-    const token = await createToken(source, account[0]._fields[0].properties);
+    const token = await createToken(source, unwrapCypherResult(account));
 
-    ctx.body = {token: token[0]._fields[0]};
+    ctx.body = {token: unwrapCypherResult(token)};
   }
   catch(error) {
-    ctx.status = 401;
-    ctx.body = HttpError(401, `Unauthorized`);
+    ctx.status = 403;
+    ctx.body = HttpError(403, `Unauthorized`);
   }
 };
 

@@ -4,6 +4,8 @@ import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import {login} from '../../helpers/auth';
 
+import fetch from '../../helpers/api';
+
 class Login extends Component {
   createAuthResponse(response) {
     return {
@@ -41,6 +43,21 @@ class Login extends Component {
     console.log(response);
   }
 
+  click() {
+     fetch(
+        `${process.env.API_URL}/test`,
+        'GET',
+        {},
+        {
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMDE1NDM2MzMzODMwMzMwOSIsIm5hbWUiOiJQYXZsb3MgUG9saWFuaWRpcyIsImlhdCI6MTQ5MDg3MzI4MCwiZXhwIjoxNDkxNDc4MDgwfQ.7soDjgl0MsCJ5GMBxGKtKxrM30GnYisU_5bgutrAxLg'
+        }
+      )
+      .bimap(
+        error => console.log(error)
+      )
+      .run()
+  }
+
   render() {
     return <section>
       <FacebookLogin
@@ -55,6 +72,7 @@ class Login extends Component {
         onSuccess={this.responseGoogle}
         onFailure={this.responseGoogle}
       />
+      <button onClick={this.click}>test</button>
     </section>
   }
 }

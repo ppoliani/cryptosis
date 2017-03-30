@@ -12,7 +12,6 @@ const getSocialMediaRelationship = source =>
     ? 'r:HAS_FB'
     : 'r:HAS:GOOGLE';
 
-
 const getOrSaveSocialMediaAccount = async (source, authResponse) => {
   return await runQuery(
     DbDriver,
@@ -38,4 +37,15 @@ const createToken = async (source, account) => {
   );
 };
 
-module.exports = {init, getOrSaveSocialMediaAccount, createToken}
+const getTokenAndCorrespondingAccounts = async token => {
+  return await runQuery(
+    DbDriver,
+    `
+      MATCH (u:User)-[rt:HAS_TOKEN]->(t:AccessToken {value:"${token}"}), (s: SocialMediaAccount)
+      WHERE (u)-[:HAS_FB|:HAS_GOOGLE]->(s:SocialMediaAccount)
+      RETURN t, s
+    `
+  );
+};
+
+module.exports = {init, getOrSaveSocialMediaAccount, createToken, getTokenAndCorrespondingAccounts}

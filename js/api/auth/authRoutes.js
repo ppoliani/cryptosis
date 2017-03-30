@@ -11,8 +11,7 @@ const routes = {
     method: 'get',
     auth: true,
     fn: (ctx, next) => {
-      console.log();
-      next();
+      ctx.body = ctx.request.user;
     },
 
   }
