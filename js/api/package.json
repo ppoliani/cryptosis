@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=development nodemon ./bin/index.js"
+    "start": "NODE_ENV='development' ./node_modules/.bin/nodemon ./bin/index.js"
   },
   "description": "The api for the Barter UI",
   "main": "index.js",

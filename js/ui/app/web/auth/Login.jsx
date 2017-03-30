@@ -3,6 +3,7 @@ import {autobind} from 'core-decorators';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import {login} from '../../helpers/auth';
+import './login.css';
 
 import fetch from '../../helpers/api';
 
@@ -60,7 +61,7 @@ class Login extends Component {
   }
 
   render() {
-    return <section>
+    return  <section className='login-section page-center'>
       <FacebookLogin
         appId={process.env.FB_CLIENT_ID}
         autoLoad={true}
@@ -69,10 +70,9 @@ class Login extends Component {
         callback={this.responseFacebook} />
       <GoogleLogin
         clientId={process.env.GOOGLE_CLIENT_ID}
-        buttonText="Login"
+        buttonText="Login with Google"
         onSuccess={this.responseGoogle}
-        onFailure={this.responseGoogle}
-      />
+        onFailure={this.responseGoogle}/>
       <button onClick={this.click}>test</button>
     </section>
   }

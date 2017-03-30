@@ -2,3 +2,10 @@ body {
   margin: 0;
   height: 100vh;
 }
+
+.page-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

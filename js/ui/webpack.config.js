@@ -140,7 +140,7 @@ module.exports = () => {
     devServer: {
       contentBase: path.resolve(__dirname, 'app'),
       historyApiFallback: true,
-      port: 3000,
+      port: process.env.PORT,
       compress: isProd,
       inline: !isProd,
       hot: !isProd,
