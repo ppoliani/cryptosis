@@ -3,7 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
+import 'babel-polyfill';
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('Bartr', () => Bartr);
+AppRegistry.registerComponent('bartr', () => Bartr);

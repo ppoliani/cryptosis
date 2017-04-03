@@ -1,12 +1,11 @@
 {
   "plugins": [
     "transform-class-properties",
-    "transform-async-to-generator",
+    "transform-async-functions",
     "transform-decorators-legacy"
   ],
 
   "presets": [
-      "es2015",
       "react",
       "react-native"
   ],
