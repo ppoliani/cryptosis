@@ -1,0 +1,21 @@
+{
+  "plugins": [
+    "transform-class-properties",
+    "transform-async-to-generator",
+    "transform-decorators-legacy"
+  ],
+
+  "presets": [
+      "es2015",
+      "react",
+      "react-native"
+  ],
+
+  "env": {
+    "development": {
+      "presets": [
+        "react-hmre"
+      ]
+    }
+  }
+}

@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-export default class Barter extends Component {
+export default class Bartr extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('Barter', () => Barter);
+AppRegistry.registerComponent('Bartr', () => Bartr);
