@@ -70,7 +70,7 @@ test('login should return a new access token to the client', async t => {
   t.deepEqual(ctx.body, {token: 'access_token'});
 });
 
-test.only('login should return 403 if createToken failed', async t => {
+test('login should return 403 if createToken failed', async t => {
   const {checkAccessToken, getOrSaveSocialMediaAccount, createToken, ctx, next} = t.context;
   let unwrapCypherResult = () => {
     unwrapCypherResult = Maybe.Nothing();

@@ -6,7 +6,7 @@ const repositories = [
 ];
 
 // CypherResult a -> Maybe a
-const unwrapCypherResult = (result) => {
+const unwrapCypherResult = result => {
   try {
     return Maybe.fromNullable(
       result[0]._fields.reduce((acc, field)=> {
