@@ -37,7 +37,7 @@ class Login extends Component {
 
   responseGoogle(response) {
     if(response.error) {
-      console.log(error);
+      console.log(response.error);
     }
 
     console.log(response);

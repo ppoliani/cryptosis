@@ -5,7 +5,7 @@
 	"scripts": {
 		"native:start": "node node_modules/react-native/local-cli/cli.js start",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"web:start": "cross-env PLATFORM_ENV=web webpack-dev-server",
+		"web:start": "cross-env PORT=3000 PLATFORM_ENV=web webpack-dev-server",
 		"web:build": "cross-env NODE_ENV=production PLATFORM_ENV=web webpack --env.prod=true",
 		"web:prod": "cross-env NODE_ENV=production PLATFORM_ENV=web  webpack-dev-server --env.prod=true"
 	},
