@@ -10,7 +10,7 @@ const init = driver => {
 const getSocialMediaRelationship = source =>
   source === 'fb'
     ? 'r:HAS_FB'
-    : 'r:HAS:GOOGLE';
+    : 'r:HAS_GOOGLE';
 
 const getOrSaveSocialMediaAccount = async (source, authResponse) => {
   return await runQuery(

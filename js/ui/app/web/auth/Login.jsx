@@ -17,6 +17,15 @@ class Login extends Component {
     };
   }
 
+  createGoogleAuthResponse({profileObj}){
+    return {
+      email: profileObj.email,
+      name: profileObj.name,
+      userId: profileObj.googleId,
+      picture: profileObj.imageUrl
+    };
+  }
+
   @autobind
   responseFacebook(response) {
     login('fb', response.accessToken, this.createAuthResponse(response))
@@ -35,24 +44,22 @@ class Login extends Component {
 
   }
 
+  @autobind
   responseGoogle(response) {
     if(response.error) {
       console.log(response.error);
     }
 
-    console.log(response);
-  }
-
-  click() {
-     fetch(
-        `${process.env.API_URL}/test`,
-        'GET'
-      )
+    login('google', response.accessToken, this.createGoogleAuthResponse(response))
       .bimap(
-        error => console.log(error),
-        response => console.log(response)
+        error => {
+          console.log('Could not login via google', error)
+        },
+        ({token}) => {
+          window.localStorage.setItem('bartr_access_token', token)
+        }
       )
-      .run()
+      .run();
   }
 
   render() {
@@ -68,7 +75,6 @@ class Login extends Component {
         buttonText="Login with Google"
         onSuccess={this.responseGoogle}
         onFailure={this.responseGoogle}/>
-      <button onClick={this.click}>test</button>
     </section>
   }
 }
