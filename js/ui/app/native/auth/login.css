@@ -1,0 +1,25 @@
+.login-section {
+  height: 90vh;
+  width: 100%;
+}
+
+.login-section button {
+  height: 50px;
+  width: 250px !important;
+  font-size: 12px !important;
+  text-transform: capitalize;
+  font-family: 'Verdana' !important;
+  cursor: pointer;
+  background: white !important;
+  color: #666 !important;
+  border: none !important;
+  border-radius: 3px !important;
+  margin: 10px;
+  -moz-box-shadow: 0 0 5px #e4e4e4;
+  -webkit-box-shadow: 0 0 5px#e4e4e4;
+  box-shadow: 0 0 5px #e4e4e4;
+}
+
+.login-section button:hover {
+  background: #e4e4e4 !important;
+}

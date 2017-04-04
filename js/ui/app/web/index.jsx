@@ -1,4 +1,4 @@
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
@@ -18,7 +18,6 @@ ReactDOM.render(
   <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
     <Provider store={configureStore()}>
       <Login />
-      {/*<App />*/}
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('root')

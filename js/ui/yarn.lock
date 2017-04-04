@@ -3572,6 +3572,10 @@ istextorbinary@^1.0.2:
     binaryextensions "~1.0.0"
     textextensions "~1.0.0"
 
+itypeof@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/itypeof/-/itypeof-1.1.2.tgz#6fb22639dc78a414f594b3d553a5f2c2488fd022"
+
 jest-changed-files@^19.0.2:
   version "19.0.2"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-19.0.2.tgz#16c54c84c3270be408e06d2e8af3f3e37a885824"
@@ -5401,6 +5405,12 @@ react-google-login@^2.8.5:
   resolved "https://registry.yarnpkg.com/react-google-login/-/react-google-login-2.8.5.tgz#c2ae0e89d445123cf561c32fe4b1d2a5d1963f47"
   dependencies:
     "@types/react" "*"
+
+react-native-facebook-login@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-facebook-login/-/react-native-facebook-login-1.4.0.tgz#b9ec7b05bd9666d7d697d1ecc71a4c82c77f86c9"
+  dependencies:
+    itypeof "^1.1.2"
 
 react-native@0.38.1:
   version "0.38.1"
