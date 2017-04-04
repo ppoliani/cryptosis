@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {autobind} from 'core-decorators';
 import {login} from '../../helpers/auth';
-import {View, StyleSheet} from 'react-native';
-// import './login.css';
+import {View, StyleSheet, AsyncStorage} from 'react-native';
 
 const {FBLogin, FBLoginManager} = require('react-native-facebook-login');
 
@@ -24,7 +23,8 @@ class Login extends Component {
           console.log('Could not login via fb', error)
         },
         ({token}) => {
-          window.localStorage.setItem('bartr_access_token', token)
+          //Todo: move this to a task bases utility function
+          // await AsyncStorage.setItem('@BartrStore:accessToken', token);
         }
       )
       .run();
@@ -45,7 +45,7 @@ class Login extends Component {
       <FBLogin
         loginBehavior={FBLoginManager.LoginBehaviors.Native}
         permissions={['email', 'public_profile']}
-        onLogin={this.componentClicked}
+        // onLogin={this.componentClicked}
         onLoginFound={this.responseFacebook}
         onError={this.onError}
         onPermissionsMissing={this.onPermissionsMissing} />
