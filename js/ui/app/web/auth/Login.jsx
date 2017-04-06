@@ -8,27 +8,9 @@ import './login.css';
 import fetch from '../../helpers/api';
 
 class Login extends Component {
-  createAuthResponse(response) {
-    return {
-      email: response.email,
-      name: response.name,
-      userId: response.userID,
-      picture: response.picture.data.url
-    };
-  }
-
-  createGoogleAuthResponse({profileObj}){
-    return {
-      email: profileObj.email,
-      name: profileObj.name,
-      userId: profileObj.googleId,
-      picture: profileObj.imageUrl
-    };
-  }
-
   @autobind
   responseFacebook(response) {
-    login('fb', response.accessToken, this.createAuthResponse(response))
+    login('fb', response.accessToken)
       .bimap(
         error => {
           console.log('Could not login via fb', error)
@@ -40,9 +22,7 @@ class Login extends Component {
       .run();
   }
 
-  componentClicked() {
-
-  }
+  componentClicked() { }
 
   @autobind
   responseGoogle(response) {
@@ -50,7 +30,7 @@ class Login extends Component {
       console.log(response.error);
     }
 
-    login('google', response.accessToken, this.createGoogleAuthResponse(response))
+    login('google', response.accessToken)
       .bimap(
         error => {
           console.log('Could not login via google', error)
@@ -66,12 +46,13 @@ class Login extends Component {
     return  <section className='login-section page-center'>
       <FacebookLogin
         appId={process.env.FB_CLIENT_ID}
-        autoLoad={true}
+        autoLoad={false}
         fields="name,email,picture"
         onClick={this.componentClicked}
         callback={this.responseFacebook} />
       <GoogleLogin
         clientId={process.env.GOOGLE_CLIENT_ID}
+        scope='openid email profile'
         buttonText="Login with Google"
         onSuccess={this.responseGoogle}
         onFailure={this.responseGoogle}/>

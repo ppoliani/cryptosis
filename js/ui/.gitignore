@@ -40,4 +40,4 @@ buck-out/
 android/app/libs
 *.keystore
 
-ios/Pods
+ios/Pods2

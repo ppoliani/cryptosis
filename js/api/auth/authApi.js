@@ -5,11 +5,10 @@ const {HttpError} = require('../core/api');
 const login = async (checkAccessToken, getOrSaveSocialMediaAccount, createToken, unwrapCypherResult, ctx, next) => {
   const source = ctx.header['x-auth-source'];
   const acessToken = ctx.header['x-auth-token'];
-  const authResponse = ctx.request.body;
 
   try {
-    const response = await checkAccessToken(source, acessToken, authResponse);
-    const account = await getOrSaveSocialMediaAccount(source, authResponse);
+    const response = await checkAccessToken(source, acessToken);
+    const account = await getOrSaveSocialMediaAccount(source, response);
 
     // unwrapCypherResult doesn't do any async but it's Just case does
     // so we need to await here, as well

@@ -6,18 +6,9 @@ import {View, StyleSheet, AsyncStorage} from 'react-native';
 const {FBLogin, FBLoginManager} = require('react-native-facebook-login');
 
 class Login extends Component {
-  createAuthResponse(response) {
-    return {
-      email: response.email,
-      name: response.name,
-      userId: response.userID,
-      picture: response.picture.data.url
-    };
-  }
-
   @autobind
   responseFacebook(response) {
-    login('fb', response.accessToken, this.createAuthResponse(response))
+    login('fb', response.accessToken)
       .bimap(
         error => {
           console.log('Could not login via fb', error)

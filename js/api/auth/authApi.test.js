@@ -8,9 +8,6 @@ test.beforeEach(t => {
     header: {
       'x-auth-source': 'fb',
       'x-auth-token': 'fb_token'
-    },
-    request: {
-      body:'fb_auth_response'
     }
   };
   t.context.next = sinon.spy();
@@ -25,7 +22,7 @@ test('login should call checkAccessToken', async t => {
   const checkAccessToken = sinon.spy();
   await login(checkAccessToken, getOrSaveSocialMediaAccount, createToken, unwrapCypherResult, ctx, next);
   t.truthy(checkAccessToken.called);
-  t.truthy(checkAccessToken.calledWith('fb', 'fb_token', 'fb_auth_response'));
+  t.truthy(checkAccessToken.calledWith('fb', 'fb_token'));
 });
 
 test('login should call set 403 if checkAccessToken raised an error', async t => {
@@ -42,7 +39,7 @@ test('login should call getOrSaveSocialMediaAccount', async t => {
 
   await login(checkAccessToken, getOrSaveSocialMediaAccount, createToken, unwrapCypherResult, ctx, next);
   t.truthy(getOrSaveSocialMediaAccount.called);
-  t.truthy(getOrSaveSocialMediaAccount.calledWith('fb', 'fb_auth_response'));
+  t.truthy(getOrSaveSocialMediaAccount.calledWith('fb'));
 });
 
 test('login should call set 403 if getOrSaveSocialMediaAccount raised an error', async t => {
