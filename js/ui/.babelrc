@@ -2,7 +2,8 @@
   "plugins": [
     "transform-class-properties",
     "transform-async-functions",
-    "transform-decorators-legacy"
+    "transform-decorators-legacy",
+    "transform-inline-environment-variables"
   ],
 
   "presets": [

@@ -1,5 +1,6 @@
 import 'whatwg-fetch'
 import {task} from 'folktale/data/task';
+import {getItem} from '../storage';
 
 export default (url, method='GET', body={}, headers={}) =>
   task(async resolver => {
@@ -8,7 +9,7 @@ export default (url, method='GET', body={}, headers={}) =>
         method,
         headers: Object.assign({}, {
           'content-type': 'application/json',
-          'Authorization': `Bearer ${window.localStorage.getItem('bartr_access_token')}`
+          'Authorization': `Bearer ${getItem('@bartr:access_token')}`
         }, headers)
       };
 
@@ -17,9 +18,8 @@ export default (url, method='GET', body={}, headers={}) =>
       }
 
       const response = await fetch(url, options);
-      response.json()
-        .then(resolver.resolve)
-        .catch(resolver.reject);
+      const json = await response.json()
+      resolver.resolve(json);
     }
     catch(error) {
       resolver.reject(error);

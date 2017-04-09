@@ -1,21 +1,23 @@
 import React, {Component} from 'react';
 import {autobind} from 'core-decorators';
-import {login} from '../../helpers/auth';
 import {View, StyleSheet, AsyncStorage} from 'react-native';
+import {login} from '../../helpers/auth';
+import {setItem} from '../../storage';
+
 
 const {FBLogin, FBLoginManager} = require('react-native-facebook-login');
 
 class Login extends Component {
   @autobind
   responseFacebook(response) {
-    login('fb', response.accessToken)
+    login('fb', response.credentials.token)
+      .chain(token => setItem('@bartr:access_token'))
       .bimap(
         error => {
           console.log('Could not login via fb', error)
         },
-        ({token}) => {
-          //Todo: move this to a task bases utility function
-          // await AsyncStorage.setItem('@BartrStore:accessToken', token);
+        () => {
+          throw new Error('SUCCESSSSS');
         }
       )
       .run();
@@ -37,7 +39,7 @@ class Login extends Component {
         loginBehavior={FBLoginManager.LoginBehaviors.Native}
         permissions={['email', 'public_profile']}
         // onLogin={this.componentClicked}
-        onLoginFound={this.responseFacebook}
+        onLogin={this.responseFacebook}
         onError={this.onError}
         onPermissionsMissing={this.onPermissionsMissing} />
     </View>

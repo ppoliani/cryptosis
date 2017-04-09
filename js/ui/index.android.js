@@ -5,6 +5,7 @@
  */
 import 'babel-polyfill';
 import React, {Component} from 'react';
+import { connectToDevTools } from 'react-devtools-core'
 import {Provider} from 'react-redux';
 import {
   AppRegistry,
@@ -14,6 +15,11 @@ import {
 } from 'react-native';
 import configureStore from './app/data/';
 import Login from './app/native/auth/Login';
+
+connectToDevTools({
+  host: '192.168.0.107',
+  resolveRNStyle: require('flattenStyle'),
+})
 
 export default class Bartr extends Component {
   render() {
@@ -33,17 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  }
 });
 
 AppRegistry.registerComponent('bartr', () => Bartr);

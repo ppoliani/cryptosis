@@ -3,6 +3,8 @@ import {autobind} from 'core-decorators';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import {login} from '../../helpers/auth';
+import {setItem} from '../../storage';
+
 import './login.css';
 
 import fetch from '../../helpers/api';
@@ -16,7 +18,7 @@ class Login extends Component {
           console.log('Could not login via fb', error)
         },
         ({token}) => {
-          window.localStorage.setItem('bartr_access_token', token)
+          setItem('@bartr:access_token', token)
         }
       )
       .run();
