@@ -11,13 +11,13 @@
   font-family: 'Verdana' !important;
   cursor: pointer;
   background: white !important;
-  color: #666 !important;
+  color: #333 !important;
   border: none !important;
   border-radius: 3px !important;
   margin: 10px;
-  -moz-box-shadow: 0 0 5px #e4e4e4;
-  -webkit-box-shadow: 0 0 5px#e4e4e4;
-  box-shadow: 0 0 5px #e4e4e4;
+  -moz-box-shadow: 0 0 5px #999;
+  -webkit-box-shadow: 0 0 5px#999;
+  box-shadow: 0 0 5px #999;
 }
 
 .login-section button:hover {
