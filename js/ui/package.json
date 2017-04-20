@@ -5,10 +5,10 @@
 	"scripts": {
 		"native:start": "REACT_DEBUGGER='rndebugger-open --open --port 8081' node node_modules/react-native/local-cli/cli.js start",
 		"test": "jest",
-		"web:start": "./node_modules/.bin/env-cmd ./.env PORT=3000 PLATFORM_ENV=web webpack-dev-server",
-		"web:build": "./node_modules/.bin/env-cmd ./.env NODE_ENV=production PLATFORM_ENV=web webpack --env.prod=true",
-		"web:prod": "./node_modules/.bin/env-cmd ./.env NODE_ENV=production PLATFORM_ENV=web  webpack-dev-server --env.prod=true",
-		"native:android": "./node_modules/.bin/env-cmd ./.env react-native run-android",
+		"web:start": "PORT=3000 PLATFORM_ENV=web webpack-dev-server",
+		"web:build": "NODE_ENV=production PLATFORM_ENV=web webpack --env.prod=true",
+		"web:prod": "NODE_ENV=production PLATFORM_ENV=web  webpack-dev-server --env.prod=true",
+		"native:android": "env-cmd ./.env react-native run-android",
 		"postinstall": "rndebugger-open"
 	},
 	"dependencies": {

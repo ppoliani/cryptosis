@@ -17,7 +17,7 @@ class Login extends Component {
           console.log('Could not login via fb', error)
         },
         () => {
-          throw new Error('SUCCESSSSS');
+          // navigate to the main page
         }
       )
       .run();
