@@ -18,6 +18,7 @@ export default (url, method='GET', body={}, headers={}) =>
       }
 
       const response = await fetch(url, options);
+      if(response.status >= 400) throw new Error(response.status);
       const json = await response.json()
       resolver.resolve(json);
     }
