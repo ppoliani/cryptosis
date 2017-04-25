@@ -11,13 +11,14 @@ class Login extends Component {
   @autobind
   responseFacebook(response) {
     login('fb', response.credentials.token)
-      .chain(token => setItem('@bartr:access_token'))
+      .chain(({token}) => setItem('@bartr:access_token', token))
       .bimap(
         error => {
           console.log('Could not login via fb', error)
         },
         () => {
           // navigate to the main page
+          console.log('>>>>>>>>>>>>>>>');
         }
       )
       .run();
@@ -38,7 +39,6 @@ class Login extends Component {
       <FBLogin
         loginBehavior={FBLoginManager.LoginBehaviors.Native}
         permissions={['email', 'public_profile']}
-        // onLogin={this.componentClicked}
         onLogin={this.responseFacebook}
         onError={this.onError}
         onPermissionsMissing={this.onPermissionsMissing} />

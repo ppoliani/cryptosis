@@ -1,6 +1,7 @@
+import { AsyncStorage } from 'react-native';
 import {task} from 'folktale/data/task';
 
-export const setItem = (key, value) => {
+export const setItem = (key, value) =>
   task(async resolver => {
     try{
       await AsyncStorage.setItem(key, value);
@@ -10,9 +11,8 @@ export const setItem = (key, value) => {
       resolver.reject(error);
     }
   });
-};
 
-export const getItem = key => {
+export const getItem = key =>
   task(async resolver => {
     try{
       await AsyncStorage.getItem(key);
@@ -22,4 +22,3 @@ export const getItem = key => {
       resolver.reject(error);
     }
   });
-};
