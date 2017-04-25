@@ -18,15 +18,6 @@ module.exports = () => {
       minChunks: Infinity,
       filename: 'vendor.bundle.js'
     }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(nodeEnv),
-        PLATFORM_ENV: JSON.stringify(process.env.PLATFORM_ENV),
-        GOOGLE_CLIENT_ID: JSON.stringify(process.env.GOOGLE_CLIENT_ID),
-        FB_CLIENT_ID: JSON.stringify(process.env.FB_CLIENT_ID),
-        API_URL: JSON.stringify(process.env.API_URL)
-      }
-    }),
     new webpack.NamedModulesPlugin(),
   ];
   if (isProd) {

@@ -16,10 +16,12 @@ import {
 import configureStore from './app/data/';
 import Login from './app/native/auth/Login';
 
-connectToDevTools({
-  host: '192.168.0.107',
-  resolveRNStyle: require('flattenStyle'),
-})
+if(process.env.NODE_ENV === 'development') {
+  connectToDevTools({
+    host: '192.168.0.107',
+    resolveRNStyle: require('flattenStyle'),
+  })
+}
 
 export default class Bartr extends Component {
   render() {
