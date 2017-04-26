@@ -24,7 +24,11 @@ class AuthGuard extends Component {
   render() {
     const Component = this.props.component;
 
-    if(this.state.isAuthenticated === null) return null;
+    if(this.state.isAuthenticated === null) {
+      // TODO: this is the place were we can add a spinner
+      // or something more sophisticated
+      return null;
+    }
 
     return this.state.isAuthenticated
       ? <Component />
