@@ -5,7 +5,6 @@
  */
 import 'babel-polyfill';
 import React, {Component} from 'react';
-import { connectToDevTools } from 'react-devtools-core'
 import {Provider} from 'react-redux';
 import {
   AppRegistry,
@@ -14,21 +13,22 @@ import {
   View
 } from 'react-native';
 import configureStore from './app/data/';
-import Login from './app/native/auth/Login';
+import Router from './app/native/Router';
 
-if(process.env.NODE_ENV === 'development') {
-  connectToDevTools({
-    host: '192.168.0.107',
-    resolveRNStyle: require('flattenStyle'),
-  })
-}
+// if(process.env.NODE_ENV === 'development') {
+//   const connectToDevTools = require('react-devtools-core');
+//   connectToDevTools({
+//     host: '192.168.0.107',
+//     resolveRNStyle: require('flattenStyle'),
+//   })
+// }
 
 export default class Bartr extends Component {
   render() {
     return (
       <Provider store={configureStore()}>
         <View style={styles.container}>
-          <Login />
+          <Router />
         </View>
       </Provider>
     );
