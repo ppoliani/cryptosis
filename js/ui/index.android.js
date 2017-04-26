@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 import 'babel-polyfill';
 import React, {Component} from 'react';
 import {Provider} from 'react-redux';

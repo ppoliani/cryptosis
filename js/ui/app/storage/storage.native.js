@@ -16,7 +16,7 @@ export const getItem = key =>
   task(async resolver => {
     try{
       await AsyncStorage.getItem(key);
-      resolver.resolve();
+      resolver.resolve(key);
     }
     catch(error) {
       resolver.reject(error);

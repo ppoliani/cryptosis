@@ -41,3 +41,5 @@ android/app/libs
 *.keystore
 
 ios/Pods2
+.env
+.env.production
