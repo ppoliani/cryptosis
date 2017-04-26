@@ -48,7 +48,6 @@
     "jest": "19.0.2",
     "jest-react-native": "18.0.0",
     "node-sass": "^4.5.2",
-    "react-devtools-core": "^2.1.0",
     "react-native-debugger-open": "^0.3.4",
     "react-test-renderer": "~15.4.0-rc.4",
     "sass-loader": "^6.0.3",

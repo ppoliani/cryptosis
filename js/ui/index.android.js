@@ -15,14 +15,6 @@ import {
 import configureStore from './app/data/';
 import Router from './app/native/Router';
 
-// if(process.env.NODE_ENV === 'development') {
-//   const connectToDevTools = require('react-devtools-core');
-//   connectToDevTools({
-//     host: '192.168.0.107',
-//     resolveRNStyle: require('flattenStyle'),
-//   })
-// }
-
 export default class Bartr extends Component {
   render() {
     return (
