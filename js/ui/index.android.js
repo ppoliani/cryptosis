@@ -5,6 +5,7 @@ import {Container, Content} from 'native-base';
 import {AppRegistry} from 'react-native';
 import configureStore from './app/data/';
 import AppHeader from './app/native/layout/Header';
+import AppFooter from './app/native/layout/Footer';
 import Router from './app/native/Router';
 
 export default class Bartr extends Component {
@@ -13,9 +14,8 @@ export default class Bartr extends Component {
       <Provider store={configureStore()}>
         <Container>
           <AppHeader />
-          <Content>
-            <Router />
-          </Content>
+          <Router />
+          <AppFooter />
         </Container>
       </Provider>
     );

@@ -8,7 +8,11 @@ import Login from './auth/Login';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    padding: 10,
+    backgroundColor: '#2A2F3A'
   }
 });
 

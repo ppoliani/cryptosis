@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: 'cover',
-    height: 300 // Changed this to >200
+    height: 350
   }
 });
 
