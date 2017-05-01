@@ -1,5 +1,15 @@
 import React, {Component} from 'react';
-import {Container, DeckSwiper, View, Card, CardItem, Left, Thumbnail, Body, Text} from 'native-base';
+import {autobind} from 'core-decorators';
+import {Image, View, StyleSheet} from 'react-native';
+import {Container, DeckSwiper, Card, CardItem, Left, Thumbnail, Body, Text, Icon} from 'native-base';
+
+const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    height: 300 // Changed this to >200
+  }
+});
 
 export default class ProductSwiper extends Component {
   getProducts() {
@@ -18,7 +28,7 @@ export default class ProductSwiper extends Component {
     return (
       <CardItem>
         <Left>
-          <Thumbnail source={item.image} />
+          <Thumbnail source={{uri: item.image}} />
           <Body>
             <Text>{item.text}</Text>
             <Text note>NativeBase</Text>
@@ -40,17 +50,20 @@ export default class ProductSwiper extends Component {
   renderCardBody(item) {
     return (
       <CardItem cardBody>
-        <Image style={{ resizeMode: 'cover', width: null }} source={item.image} />
+        <Image style={styles.image} source={{uri: item.image}} />
       </CardItem>
     );
   }
 
+  @autobind
   renderItem(item) {
-    <Card style={{ elevation: 3 }}>
-      {this.renderCardHeader(item)}
-      {this.renderCardBody(item)}
-      {this.renderCardFooter(item)}
-    </Card>
+    return (
+      <Card style={{ elevation: 3 }}>
+        {this.renderCardHeader(item)}
+        {this.renderCardBody(item)}
+        {this.renderCardFooter(item)}
+      </Card>
+    );
   }
 
   render() {
@@ -66,3 +79,4 @@ export default class ProductSwiper extends Component {
     );
   }
 }
+

@@ -1,9 +1,16 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {NativeRouter, Route, Redirect, Link} from 'react-router-native';
 import {getItem} from '../storage';
 import Home from './Home';
 import Login from './auth/Login';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+  }
+});
 
 class AuthGuard extends Component {
   constructor(props, state) {
@@ -16,7 +23,7 @@ class AuthGuard extends Component {
     getItem(process.env.ACCESS_TOKEN_KEY)
       .bimap(
         error => this.setState({isAuthenticated: false}),
-        () => this.setState({isAuthenticated: true})
+        () => setTimeout(() => this.setState({isAuthenticated: true}))
       )
       .run()
   }
@@ -46,7 +53,7 @@ const PrivateRoute = ({component: Component, ...rest}) =>
 
 export default () =>
   <NativeRouter>
-    <View>
+    <View style={styles.container}>
       <PrivateRoute exact path="/" component={Home}/>
       <Route path="/login" component={Login}/>
     </View>
