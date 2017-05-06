@@ -5,8 +5,7 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import App from './App';
-import Login from './auth/Login';
+import Router from './core/Router';
 import configureStore from '../data/';
 
 import './index.html';
@@ -17,7 +16,7 @@ injectTapEventPlugin();
 ReactDOM.render(
   <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
     <Provider store={configureStore()}>
-      <Login />
+      <Router />
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('root')
