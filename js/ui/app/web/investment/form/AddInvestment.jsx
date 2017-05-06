@@ -1,27 +1,10 @@
 import React from 'react';
 import {Field, reduxForm} from 'redux-form';
 import Layout from 'material-ui/Layout';
-import TextField from 'material-ui/TextField';
-import ContentEditable from 'react-contenteditable';
-import {autobind} from 'core-decorators';
 import Button from 'material-ui/Button';
+import {required} from '../../../data/form/validator';
+import {renderInput, renderTextArea} from '../../form/helpers';
 import './form.scss';
-
-const required = value => value ? undefined : 'Required';
-
-const renderErrorIfNeeded = field => field.meta.touched && field.meta.error
-  ? <span className="error">{field.meta.error}</span>
-  : null;
-
-const renderInput = field => <div>
-    <TextField
-      {...field.input}
-      id={field.name}
-      label={field.label} />
-    {renderErrorIfNeeded(field)}
-  </div>
-
-const renderTextArea = field => <ContentEditable html={field.content} className="form__content-editable"/>;
 
 const AddInvestment = props => {
   const layoutProps = {
@@ -40,6 +23,7 @@ const AddInvestment = props => {
                 name="investmentType"
                 label="Investement Type"
                 component={renderInput}
+                validate={[required]}
                 type="text"/>
             </Layout>
             <Layout item>
