@@ -13,6 +13,13 @@ export default NestedComponent => class Layout extends Component {
   }
 
   @autobind
+  onSidebarClick(link, e) {
+    e.preventDefault();
+    console.log(link);
+    //redirect to given link using react router
+  }
+
+  @autobind
   toggleSidebar() {
     this.setState({isSiderBarOpen: !this.state.isSiderBarOpen});
   }
@@ -26,6 +33,7 @@ export default NestedComponent => class Layout extends Component {
           <SideBar
             toggleSidebar={this.toggleSidebar}
             isOpen={isSiderBarOpen}
+            onSidebarClick={this.onSidebarClick}
           />
           <NestedComponent />
       </div>
