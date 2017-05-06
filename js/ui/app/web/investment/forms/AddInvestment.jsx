@@ -3,7 +3,15 @@ import {Field, reduxForm} from 'redux-form';
 import Layout from 'material-ui/Layout';
 import TextField from 'material-ui/TextField';
 import ContentEditable from 'react-contenteditable';
+import {autobind} from 'core-decorators';
+import Button from 'material-ui/Button';
+import SubmitButton from './SubmitButton';
+
 import './form.scss';
+
+const required = value => {
+  return value ? undefined : 'Required'
+};
 
 class AddInvestment extends Component {
   renderErrorIfNeeded(field) {
@@ -12,15 +20,19 @@ class AddInvestment extends Component {
       : null;
   }
 
+  @autobind
   renderInput(field) {
-    return <TextField id={field.name} label={field.label}/>;
+    return <div>
+      <TextField
+        id={field.name}
+        label={field.label} />
+      {this.renderErrorIfNeeded(field)}
+    </div>;
   }
 
   renderTextArea(field) {
     return <ContentEditable html={field.content} className="form__content-editable"/>
   }
-
-  handleSubmit() {}
 
   render() {
     const layoutProps = {
@@ -29,10 +41,12 @@ class AddInvestment extends Component {
       align: 'center'
     };
 
+    const Submit = SubmitButton('addInvestmentForm');
+
     return (
       <Layout container {...layoutProps}>
-        <Layout item>
-          <form onSubmit={this.handleSubmit}>
+        <Layout item xs={12}>
+          <form onSubmit={this.props.handleSubmit}>
             <Layout container direction="row">
               <Layout item>
                 <Field
@@ -91,6 +105,11 @@ class AddInvestment extends Component {
                   type="text"/>
               </Layout>
             </Layout>
+            <Layout container>
+              <Layout item xs={12}>
+                <Button type="submit" raised primary className="right">Submit</Button>
+              </Layout>
+            </Layout>
           </form>
         </Layout>
       </Layout>
@@ -98,4 +117,6 @@ class AddInvestment extends Component {
   }
 }
 
-export default reduxForm({form: 'addInvestmentForm'})(AddInvestment)
+export default reduxForm({
+  form: 'addInvestmentForm'
+})(AddInvestment)
