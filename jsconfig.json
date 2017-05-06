@@ -6,7 +6,7 @@
   },
 
   "include": [
-    "ui/**/*.js",
-    "ui/**/*.jsx"
+    "js/ui/**/*.js",
+    "js/ui/**/*.jsx"
   ]
 }
