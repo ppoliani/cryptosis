@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import AddInvestment from './AddInvestment';
 
 export default class Investment extends Component {
   render() {
     return (
-      <p>Investements Page</p>
+      <AddInvestment />
     );
   }
 }
