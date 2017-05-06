@@ -15,6 +15,7 @@ const renderErrorIfNeeded = field => field.meta.touched && field.meta.error
 
 const renderInput = field => <div>
     <TextField
+      {...field.input}
       id={field.name}
       label={field.label} />
     {renderErrorIfNeeded(field)}
