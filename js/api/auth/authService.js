@@ -29,9 +29,9 @@ const normalize = (source, response) => {
       return {
         userId: response.id,
         email: response.emails[0].value,
-        name: response.name.displayName,
+        name: response.displayName,
         firstName: response.name.givenName,
-        lastName: response.familyName,
+        lastName: response.name.familyName,
         picture: response.image.url
       };
     default: throw new Error('Unknow oauth source');
