@@ -27,12 +27,12 @@ const normalize = (source, response) => {
       };
     case 'google':
       return {
-        userId: response.googleId,
-        email: response.email,
-        name: response.name,
-        firstName: response.first_name,
-        lastName: response.last_name,
-        picture: response.imageUrl
+        userId: response.id,
+        email: response.emails[0].value,
+        name: response.name.displayName,
+        firstName: response.name.givenName,
+        lastName: response.familyName,
+        picture: response.image.url
       };
     default: throw new Error('Unknow oauth source');
   }
