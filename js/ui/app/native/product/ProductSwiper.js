@@ -21,6 +21,10 @@ export default class ProductSwiper extends Component {
       text: 'Product 2',
       name: 'Car 2',
       image: 'http://www.countylabels.com/wp-content/uploads/2014/06/Products.jpg'
+    }, {
+      text: 'Product 3',
+      name: 'Car 3',
+      image: 'http://www.countylabels.com/wp-content/uploads/2014/06/Products.jpg'
     }];
   }
 
@@ -66,6 +70,16 @@ export default class ProductSwiper extends Component {
     );
   }
 
+  @autobind
+  dismissProduct(product) {
+    console.log('dismiss product', product.name);
+  }
+
+  @autobind
+  likeProduct(product) {
+    console.log('like product', product.name);
+  }
+
   render() {
     return (
       <Container>
@@ -73,6 +87,8 @@ export default class ProductSwiper extends Component {
           <DeckSwiper
             dataSource={this.getProducts()}
             renderItem={this.renderItem}
+            onSwipeLeft={this.dismissProduct}
+            onSwipeRight={this.likeProduct}
           />
         </View>
       </Container>

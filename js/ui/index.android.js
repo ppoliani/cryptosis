@@ -14,7 +14,9 @@ export default class Bartr extends Component {
       <Provider store={configureStore()}>
         <Container>
           <AppHeader />
-          <Router />
+          <Content scrollEnabled={false}>
+            <Router />
+          </Content>
           <AppFooter />
         </Container>
       </Provider>
