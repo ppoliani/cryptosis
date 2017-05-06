@@ -5,7 +5,6 @@ import TextField from 'material-ui/TextField';
 import ContentEditable from 'react-contenteditable';
 import {autobind} from 'core-decorators';
 import Button from 'material-ui/Button';
-import SubmitButton from './SubmitButton';
 
 import './form.scss';
 
@@ -40,8 +39,6 @@ class AddInvestment extends Component {
       justify: 'center',
       align: 'center'
     };
-
-    const Submit = SubmitButton('addInvestmentForm');
 
     return (
       <Layout container {...layoutProps}>

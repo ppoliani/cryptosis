@@ -3,7 +3,7 @@ import AddInvestment from './forms/AddInvestment';
 
 const onSubmit = async (values) => {
   await Promise.resolve();
-  console.log(value);
+  console.log(values);
 }
 
 export default class Investment extends Component {
