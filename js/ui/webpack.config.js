@@ -18,7 +18,7 @@ module.exports = () => {
       minChunks: Infinity,
       filename: 'vendor.bundle.js'
     }),
-    new webpack.NamedModulesPlugin(),
+    new webpack.NamedModulesPlugin()
   ];
   if (isProd) {
     plugins.push(
@@ -88,11 +88,11 @@ module.exports = () => {
           },
         },
         {
-          test: /\.css$/,
-          exclude: /node_modules/,
+          test: /\.scss$/,
           use: [
             'style-loader',
-            'css-loader'
+            'css-loader',
+            'sass-loader'
           ]
         },
         {

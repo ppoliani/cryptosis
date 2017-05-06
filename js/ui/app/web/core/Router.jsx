@@ -6,9 +6,10 @@ import {
   Redirect,
   withRouter
 } from 'react-router-dom'
+import {getItem} from '../../storage';
 import Login from '../auth/Login';
 import OverView from '../dashboard/OverView';
-import {getItem} from '../../storage';
+import Layout from '../core/Layout';
 
 class AuthGuard extends Component {
   constructor(props, state) {
@@ -43,7 +44,7 @@ class AuthGuard extends Component {
 }
 
 const PrivateRoute = ({component: Component, ...rest}) =>
-  <Route {...rest} render={props => <AuthGuard {...props} component={Component} /> }/>
+  <Route {...rest} render={props => <AuthGuard {...props} component={Layout(Component)} /> }/>
 
 export default () =>
   <Router>

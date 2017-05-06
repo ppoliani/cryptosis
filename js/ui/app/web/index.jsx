@@ -1,20 +1,19 @@
 import {Provider} from 'react-redux';
 import ReactDOM from 'react-dom';
 import React from 'react';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import withTheme from 'material-ui/styles/withTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Router from './core/Router';
 import configureStore from '../data/';
 
 import './index.html';
-import './app.css';
+import './app.scss';
 
 injectTapEventPlugin();
 
 ReactDOM.render(
-  <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+  <MuiThemeProvider muiTheme={withTheme()}>
     <Provider store={configureStore()}>
       <Router />
     </Provider>

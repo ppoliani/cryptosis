@@ -5,7 +5,7 @@ import GoogleLogin from 'react-google-login';
 import {login} from '../../helpers/auth';
 import {setItem} from '../../storage';
 
-import './login.css';
+import './login.scss';
 
 import fetch from '../../helpers/api';
 
