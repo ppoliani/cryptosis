@@ -9,7 +9,7 @@ export default (url, method='GET', body={}, headers={}) =>
         method,
         headers: Object.assign({}, {
           'content-type': 'application/json',
-          'Authorization': `Bearer ${getItem('@bartr:access_token')}`
+          'Authorization': `Bearer ${getItem('@investreck:access_token')}`
         }, headers)
       };
 

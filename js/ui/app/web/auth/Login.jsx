@@ -18,7 +18,7 @@ class Login extends Component {
           console.log('Could not login via fb', error)
         },
         ({token}) => {
-          setItem('@bartr:access_token', token)
+          setItem('@investreck:access_token', token)
         }
       )
       .run();

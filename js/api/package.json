@@ -6,7 +6,7 @@
     "start": "NODE_ENV='development' ./node_modules/.bin/nodemon ./bin/index.js",
     "test": "node_modules/.bin/ava ./**/*.test.js"
   },
-  "description": "The api for the Barter UI",
+  "description": "The api for the Investreck UI",
   "main": "index.js",
   "repository": {},
   "author": "Pavlos Polianidis",

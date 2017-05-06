@@ -8,7 +8,7 @@ import AppHeader from './app/native/layout/Header';
 import AppFooter from './app/native/layout/Footer';
 import Router from './app/native/Router';
 
-export default class Bartr extends Component {
+export default class Investreck extends Component {
   render() {
     return (
       <Provider store={configureStore()}>
@@ -24,4 +24,4 @@ export default class Bartr extends Component {
   }
 }
 
-AppRegistry.registerComponent('bartr', () => Bartr);
+AppRegistry.registerComponent('investreck', () => Investreck);

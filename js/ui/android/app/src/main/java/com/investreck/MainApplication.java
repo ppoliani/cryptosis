@@ -1,4 +1,4 @@
-package com.bartr;
+package com.investreck;
 
 import android.app.Application;
 import android.util.Log;

@@ -1,4 +1,4 @@
-rootProject.name = 'bartr'
+rootProject.name = 'investreck'
 
 include ':app'
 include ':react-native-facebook-login'

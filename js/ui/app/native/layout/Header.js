@@ -6,7 +6,7 @@ export default class AppHeader extends Component {
     return (
       <Header>
         <Body>
-          <Title>Bartr</Title>
+          <Title>Investreck</Title>
         </Body>
       </Header>
     );

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import configureStore from './app/data/';
 
-export default class Bartr extends Component {
+export default class Investreck extends Component {
   render() {
     return (
       <Provider store={configureStore()}>
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('bartr', () => Bartr);
+AppRegistry.registerComponent('investreck', () => Investreck);
