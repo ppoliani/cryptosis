@@ -10,6 +10,7 @@ import {getItem} from '../../storage';
 import Login from '../auth/Login';
 import OverView from '../dashboard/OverView';
 import Layout from '../core/Layout';
+import Investment from '../investment';
 
 class AuthGuard extends Component {
   constructor(props, state) {
@@ -48,8 +49,9 @@ const PrivateRoute = ({component: Component, ...rest}) =>
 
 export default () =>
   <Router>
-    <div>
+    <div style={{height: '100%'}}>
       <PrivateRoute exact path="/" component={OverView}/>
+      <PrivateRoute path="/investments" component={Investment}/>
       <Route path="/login" component={Login}/>
     </div>
   </Router>;

@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import {autobind} from 'core-decorators';
+import {createStyleSheet} from 'jss-theme-reactor';
+import Paper from 'material-ui/Paper';
 import Header from './Header';
 import SideBar from './SideBar';
+import Layout from 'material-ui/Layout';
 
-export default NestedComponent => class Layout extends Component {
+export default NestedComponent => class LayoutComponent extends Component {
   constructor(props, state) {
     super(props, state);
 
@@ -14,7 +17,7 @@ export default NestedComponent => class Layout extends Component {
 
   @autobind
   onSidebarClick(link, e) {
-    e.preventDefault();
+    // e.preventDefault();
     console.log(link);
     //redirect to given link using react router
   }
@@ -26,16 +29,26 @@ export default NestedComponent => class Layout extends Component {
 
   render() {
     const {isSiderBarOpen} = this.state;
+    const layoutProps = {
+      direction: 'column',
+      align: 'stretch'
+    };
 
     return (
       <div>
         <Header toggleSidebar={this.toggleSidebar}/>
-          <SideBar
-            toggleSidebar={this.toggleSidebar}
-            isOpen={isSiderBarOpen}
-            onSidebarClick={this.onSidebarClick}
-          />
-          <NestedComponent />
+        <div className="main-content">
+          <Layout container {...layoutProps}>
+            <Paper className='main-content__page'>
+              <NestedComponent />
+            </Paper>
+          </Layout>
+        </div>
+        <SideBar
+          toggleSidebar={this.toggleSidebar}
+          isOpen={isSiderBarOpen}
+          onSidebarClick={this.onSidebarClick}
+        />
       </div>
     );
   }

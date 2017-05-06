@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Drawer from 'material-ui/Drawer';
 import InboxIcon from 'material-ui-icons/Inbox';
 import StarIcon from 'material-ui-icons/Star';
+import {Link} from 'react-router-dom';
 import {
   List,
   ListItem,
@@ -21,13 +22,17 @@ export default class SideBar extends Component {
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText primary="Dashboard" onClick={partial(onSidebarClick, 'dashboard')} />
+          <Link to="/">
+            <ListItemText primary="Dashboard" onClick={partial(onSidebarClick, 'dashboard')} />
+          </Link>
         </ListItem>
         <ListItem button>
           <ListItemIcon>
             <StarIcon />
           </ListItemIcon>
-          <ListItemText primary="Investements" onClick={partial(onSidebarClick, 'investements')} />
+          <Link to="/investments">
+            <ListItemText primary="Investments" onClick={partial(onSidebarClick, 'investments')} />
+          </Link>
         </ListItem>
       </div>
     );
