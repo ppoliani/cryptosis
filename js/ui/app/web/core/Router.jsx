@@ -10,7 +10,9 @@ import {getItem} from '../../storage';
 import Login from '../auth/Login';
 import OverView from '../dashboard/OverView';
 import Layout from '../core/Layout';
-import Investment from '../investment';
+import InvestmentPage from '../investment/InvestmentPage';
+import BrokerPage from '../investment/BrokerPage';
+import InvestmentTypePage from '../investment/InvestmentTypePage';
 
 class AuthGuard extends Component {
   constructor(props, state) {
