@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {autobind} from 'core-decorators';
 import Paper from 'material-ui/Paper';
+import {Grid, Col, Row} from 'react-flexbox-grid';
 import Header from './Header';
 import SideBar from './SideBar';
-import Layout from 'material-ui/Layout';
 
 export default NestedComponent => class LayoutComponent extends Component {
   constructor(props, state) {
@@ -28,26 +28,25 @@ export default NestedComponent => class LayoutComponent extends Component {
 
   render() {
     const {isSiderBarOpen} = this.state;
-    const layoutProps = {
-      direction: 'column',
-      align: 'stretch'
-    };
 
     return (
       <div>
         <Header toggleSidebar={this.toggleSidebar}/>
         <div className="main-content">
-          <Layout container {...layoutProps}>
-            <Paper className='main-content__page'>
-              <NestedComponent />
-            </Paper>
-          </Layout>
+          <Paper className='main-content__page'>
+            <Grid>
+              <Row>
+                <Col xs>
+                  <NestedComponent />
+                </Col>
+              </Row>
+            </Grid>
+          </Paper>
         </div>
         <SideBar
           toggleSidebar={this.toggleSidebar}
           isOpen={isSiderBarOpen}
-          onSidebarExit={this.onSidebarExit}
-        />
+          onSidebarExit={this.onSidebarExit} />
       </div>
     );
   }

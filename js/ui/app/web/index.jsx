@@ -1,10 +1,10 @@
 import {Provider} from 'react-redux';
 import ReactDOM from 'react-dom';
 import React from 'react';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import createMuiTheme from 'material-ui/styles/theme';
-import createPalette from 'material-ui/styles/palette';
-import {blue, pink} from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {cyan500} from 'material-ui/styles/colors';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Router from './core/Router';
 import configureStore from '../data/';
@@ -14,14 +14,17 @@ import './app.scss';
 
 injectTapEventPlugin();
 
-const palette = createPalette({
-  primary: blue,
-  accent: pink,
-  type: 'dark',
+const muiTheme = getMuiTheme({
+  palette: {
+    textColor: cyan500,
+  },
+  appBar: {
+    height: 50,
+  },
 });
 
 ReactDOM.render(
-  <MuiThemeProvider theme={createMuiTheme({ palette })}>
+  <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
     <Provider store={configureStore()}>
       <Router />
     </Provider>

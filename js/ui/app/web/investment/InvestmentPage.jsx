@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Layout from 'material-ui/Layout';
-import Button from 'material-ui/Button';
+import {Grid, Row, Col} from 'react-flexbox-grid';
+import Button from 'material-ui/FlatButton';
 import {autobind} from 'core-decorators'
 import PageWithPanel from '../common/PageWithPanel';
 import InvestmentForm from './form/InvestmentForm';
@@ -26,10 +26,10 @@ export default class InvestmentPage extends Component {
 
   getPanelContent() {
     return (
-      <Layout item xs={12}>
+      <Col xs={12}>
         <h1>New Investment</h1>
         <InvestmentForm onSubmit={onSubmit}/>
-      </Layout>
+      </Col>
     )
   }
 
@@ -39,14 +39,16 @@ export default class InvestmentPage extends Component {
         PanelContent={this.getPanelContent()}
         togglePanel={this.togglePanel}
         isPanelOpen={this.state.isPanelOpen}>
-          <Layout item xs={12}>
-            <Layout container justify="flex-end">
-              <Button type="submit" raised className="right" onClick={this.togglePanel}>New</Button>
-            </Layout>
-          </Layout>
-          <Layout item xs={12}>
-            Here will be the table with all investements
-          </Layout>
+          <Row>
+            <Col xs>
+              <Button type="submit" className="right" onClick={this.togglePanel}>New</Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs>
+              Here will be the table with all investements
+            </Col>
+          </Row>
       </PageWithPanel>
     );
   }

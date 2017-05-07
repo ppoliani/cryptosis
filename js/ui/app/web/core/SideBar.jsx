@@ -14,43 +14,23 @@ import {partial} from '../../helpers/fn';
 
 const getInvestementItems = onSidebarExit => (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <SendIcon />
-      </ListItemIcon>
-      <Link to="/investments">
-        <ListItemText primary="Investments" onClick={partial(onSidebarExit, 'investments')} />
-      </Link>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <SendIcon />
-      </ListItemIcon>
-      <Link to="/brokers">
-        <ListItemText primary="Brokers" onClick={partial(onSidebarExit, 'brokers')} />
-      </Link>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <SendIcon />
-      </ListItemIcon>
-      <Link to="/investment-types">
-        <ListItemText primary="Investment Types" onClick={partial(onSidebarExit, 'investementTypes')} />
-      </Link>
-    </ListItem>
+    <Link to="/investments">
+      <ListItem leftIcon={<SendIcon />} primaryText="Investments" onClick={partial(onSidebarExit, 'investments')} />
+    </Link>
+    <Link to="/brokers">
+      <ListItem leftIcon={<SendIcon />} primaryText="Brokers"  onClick={partial(onSidebarExit, 'brokers')}/>
+    </Link>
+    <Link to="/investment-types">
+      <ListItem leftIcon={<SendIcon />} primaryText="Investment Types" onClick={partial(onSidebarExit, 'investementTypes')} />
+    </Link>
   </div>
 );
 
 const getListItems = onSidebarExit => (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <SendIcon />
-      </ListItemIcon>
-      <Link to="/">
-        <ListItemText primary="Dashboard" onClick={partial(onSidebarExit, 'dashboard')} />
-      </Link>
-    </ListItem>
+    <Link to="/">
+      <ListItem leftIcon={<SendIcon />} primaryText="Dashboard" onClick={partial(onSidebarExit, 'dashboard')} />
+    </Link>
     <Divider />
     {getInvestementItems(onSidebarExit)}
   </div>

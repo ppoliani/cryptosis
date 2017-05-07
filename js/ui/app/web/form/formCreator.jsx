@@ -1,7 +1,7 @@
 import React from 'react';
 import {Field, reduxForm} from 'redux-form';
-import Layout from 'material-ui/Layout';
-import Button from 'material-ui/Button';
+import {Grid, Row, Col} from 'react-flexbox-grid';
+import Button from 'material-ui/RaisedButton';
 import {renderInput, renderTextArea, renderDropdown} from './helpers';
 import {pipe, partial} from '../../helpers/fn';
 
@@ -20,7 +20,7 @@ const getFieldRenderer = field => {
 }
 
 const createFields = fields => fields.map(
-  field => <Layout item key={field.name} xs={12/fields.length}>
+  field => <Col key={field.name} xs={12/fields.length}>
       <Field
         name={field.name}
         label={field.label}
@@ -28,7 +28,7 @@ const createFields = fields => fields.map(
         custom={{options: field.options, content: field.content}}
         validate={field.validate}
         type={field.type}/>
-    </Layout>
+    </Col>
 )
 
 const getLastIndex = arr => arr.length === 0 ? 0 : arr.length - 1;
@@ -57,9 +57,9 @@ const groupFields = (numOfCols, fields) => fields.reduce(
 )
 
 const renderColumns = (numOfCols, groupedFields) => groupedFields.map(
-  (group, i) => <Layout container direction="row" key={i}>
+  (group, i) => <Row key={i}>
     {createFields(group)}
-  </Layout>
+  </Row>
 );
 
 const createForm = (numOfCols, fields) => props => {
@@ -68,30 +68,20 @@ const createForm = (numOfCols, fields) => props => {
     fields
   };
 
-  const layoutProps = {
-    direction: 'column',
-    justify: 'center',
-    align: 'center'
-  };
-
   return (
-    <Layout container {...layoutProps}>
-      <Layout item xs={12}>
-        <form onSubmit={props.handleSubmit}>
-          {
-            pipe(
-              partial(renderColumns, numOfCols),
-              groupFields(numOfCols, fields)
-            )
-          }
-          <Layout container>
-            <Layout item xs={12}>
-              <Button type="submit" raised primary className="right">Submit</Button>
-            </Layout>
-          </Layout>
-        </form>
-      </Layout>
-    </Layout>
+    <Row>
+      <form onSubmit={props.handleSubmit}>
+        {
+          pipe(
+            partial(renderColumns, numOfCols),
+            groupFields(numOfCols, fields)
+          )
+        }
+        <Row>
+          <Button type="submit" primary className="right">Submit</Button>
+        </Row>
+      </form>
+    </Row>
   );
 };
 

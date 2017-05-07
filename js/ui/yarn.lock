@@ -1847,12 +1847,6 @@ css-selector-tokenizer@^0.7.0:
     fastparse "^1.1.1"
     regexpu-core "^1.0.0"
 
-css-vendor@^0.3.8:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/css-vendor/-/css-vendor-0.3.8.tgz#6421cfd3034ce664fe7673972fd0119fc28941fa"
-  dependencies:
-    is-in-browser "^1.0.2"
-
 css-what@1.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/css-what/-/css-what-1.0.0.tgz#d7cc2df45180666f99d2b14462639469e00f736c"
@@ -2696,6 +2690,10 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
+flexboxgrid@^6.3.0:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/flexboxgrid/-/flexboxgrid-6.3.1.tgz#e99898afc07b7047722bb81a958a5fba4d4e20fd"
+
 folktale@^2.0.0-alpha3:
   version "2.0.0-alpha3"
   resolved "https://registry.yarnpkg.com/folktale/-/folktale-2.0.0-alpha3.tgz#45f51feb486f00aa3d1d6f0f51eb45406c344899"
@@ -3469,10 +3467,6 @@ is-gzip@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-gzip/-/is-gzip-1.0.0.tgz#6ca8b07b99c77998025900e555ced8ed80879a83"
 
-is-in-browser@1.0.2, is-in-browser@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/is-in-browser/-/is-in-browser-1.0.2.tgz#f688bea8f1e5aadc3244ebc870d188cfb9b613cf"
-
 is-natural-number@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/is-natural-number/-/is-natural-number-2.1.1.tgz#7d4c5728377ef386c3e194a9911bf57c6dc335e7"
@@ -3998,80 +3992,6 @@ jsprim@^1.2.2:
     extsprintf "1.0.2"
     json-schema "0.2.3"
     verror "1.3.6"
-
-jss-camel-case@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/jss-camel-case/-/jss-camel-case-4.0.0.tgz#39ef2a137aaa1e2f160ab826845305f8efabcfd5"
-
-jss-compose@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/jss-compose/-/jss-compose-3.0.1.tgz#0ac07f20baf1d523c211016d383dab08dcfe4186"
-  dependencies:
-    warning "^3.0.0"
-
-jss-default-unit@^6.0.0:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/jss-default-unit/-/jss-default-unit-6.1.1.tgz#a9a04887a3860d2a8ceb73ddfbc2ddcf808bacb2"
-
-jss-expand@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/jss-expand/-/jss-expand-3.0.1.tgz#90f1b30ad0ab700e666ea54f7186341c50d7feed"
-
-jss-extend@^4.0.0:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/jss-extend/-/jss-extend-4.0.1.tgz#6b716a1b217ba32715dbcb69940ec67b35c415dc"
-  dependencies:
-    warning "^3.0.0"
-
-jss-global@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/jss-global/-/jss-global-1.0.1.tgz#36731778f6d8649110611f7c178dbcd60fd92b24"
-
-jss-nested@^4.0.0:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/jss-nested/-/jss-nested-4.0.1.tgz#f50cc206430c8a920ccd54e3b756f7fc72455130"
-  dependencies:
-    warning "^3.0.0"
-
-jss-preset-default@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/jss-preset-default/-/jss-preset-default-2.0.0.tgz#0368d99626b31067e8d04ab3c7cb17ba8354d422"
-  dependencies:
-    jss-camel-case "^4.0.0"
-    jss-compose "^3.0.0"
-    jss-default-unit "^6.0.0"
-    jss-expand "^3.0.0"
-    jss-extend "^4.0.0"
-    jss-global "^1.0.0"
-    jss-nested "^4.0.0"
-    jss-props-sort "^4.0.0"
-    jss-vendor-prefixer "^5.0.0"
-
-jss-props-sort@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/jss-props-sort/-/jss-props-sort-4.0.0.tgz#ef4239c6795ca304c18dce9e0395a1789ed9f78a"
-
-jss-theme-reactor@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/jss-theme-reactor/-/jss-theme-reactor-0.11.1.tgz#48eb9465ec37ca3dfdc415a08f005d06363f2b31"
-  dependencies:
-    jss "^7.0.3"
-    jss-preset-default "^2.0.0"
-    jss-vendor-prefixer "^5.1.0"
-    murmurhash-js "^1.0.0"
-
-jss-vendor-prefixer@^5.0.0, jss-vendor-prefixer@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/jss-vendor-prefixer/-/jss-vendor-prefixer-5.1.0.tgz#59b73544de81e6b2efd71f6d3b744671826865a2"
-  dependencies:
-    css-vendor "^0.3.8"
-
-jss@^7.0.3:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/jss/-/jss-7.1.1.tgz#b04ce8bfa60123a8b423e0edf17af8d008a5e8e5"
-  dependencies:
-    is-in-browser "1.0.2"
-    warning "3.0.0"
 
 jstransform@^11.0.3:
   version "11.0.3"
@@ -4636,10 +4556,6 @@ multipipe@^0.1.2:
   resolved "https://registry.yarnpkg.com/multipipe/-/multipipe-0.1.2.tgz#2a8f2ddf70eed564dff2d57f1e1a137d9f05078b"
   dependencies:
     duplexer2 "0.0.2"
-
-murmurhash-js@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/murmurhash-js/-/murmurhash-js-1.0.0.tgz#b06278e21fc6c37fa5313732b0412bcb6ae15f51"
 
 mute-stream@0.0.5:
   version "0.0.5"
@@ -5461,7 +5377,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7:
+prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8:
   version "15.5.8"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
   dependencies:
@@ -5623,6 +5539,13 @@ react-event-listener@^0.4.5:
 react-facebook-login@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/react-facebook-login/-/react-facebook-login-3.5.0.tgz#6a3199e025bac814b2617fe3ae15f86799a402f8"
+
+react-flexbox-grid@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/react-flexbox-grid/-/react-flexbox-grid-1.1.3.tgz#4e61c7ff68d1eb1ae131c01a7c29b39803c54a0e"
+  dependencies:
+    flexboxgrid "^6.3.0"
+    prop-types "^15.5.8"
 
 react-google-login@^2.8.5:
   version "2.8.5"
@@ -7217,7 +7140,7 @@ ware@^1.2.0:
   dependencies:
     wrap-fn "^0.1.0"
 
-warning@3.0.0, warning@^3.0.0:
+warning@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/warning/-/warning-3.0.0.tgz#32e5377cb572de4ab04753bdf8821c01ed605b7c"
   dependencies:

@@ -96,6 +96,11 @@ module.exports = () => {
           ]
         },
         {
+          test: /\.css$/,
+          loader: 'style-loader!css-loader',
+          include: /flexboxgrid/
+        },
+        {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
           use: [
@@ -110,10 +115,7 @@ module.exports = () => {
       modules: [
         path.resolve(__dirname, 'node_modules'),
         sourcePath
-      ],
-      alias: {
-        Layout: path.resolve(__dirname, 'app/lib/Layout')
-      }
+      ]
     },
 
     plugins,

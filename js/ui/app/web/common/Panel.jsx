@@ -1,32 +1,24 @@
 import React, {Component} from 'react';
+import AppBar from 'material-ui/AppBar';
+import Button from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
-import Layout from 'material-ui/Layout';
+import {Grid, Row} from 'react-flexbox-grid';
 import './panel.scss';
-
-const layoutProps = {
-  direction: 'column',
-  justify: 'center',
-  align: 'center',
-  gutter: 24
-};
 
 export default class Panel extends Component {
   render() {
     const {isOpen, togglePanel, onPanelExit, children} = this.props;
 
     return (
-      <Layout item xs={12}>
+      <Row>
         <Drawer
           open={isOpen}
-          anchor="top"
-          onRequestClose={togglePanel}>
-            <Layout container {...layoutProps}>
-              <Layout item xs={12} className='side-panel'>
-                {children}
-              </Layout>
-            </Layout>
+          openSecondary={true}
+          width={450}>
+            <Button label="Close" onClick={togglePanel}/>
+            {children}
         </Drawer>
-      </Layout>
+      </Row>
     );
   }
 }
