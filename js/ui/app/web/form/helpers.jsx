@@ -1,35 +1,50 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
-import ContentEditable from 'react-contenteditable';
+import DatePicker from 'material-ui/DatePicker';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
-const renderErrorIfNeeded = field => field.meta.touched && field.meta.error
-  ? <span className="form-validation__error">{field.meta.error}</span>
+const getError = field => field.meta.touched && field.meta.error
+  ? field.meta.error
   : null;
 
 export const renderInput = field => {
-  const error = renderErrorIfNeeded(field);
-  const props = error ? {error: Boolean(error)} : [];
+  let props = {
+    id: field.name,
+    floatingLabelText: field.label,
+    hintText: field.label,
+    type: field.type,
+    errorText: getError(field)
+  }
+
+  if(field.custom.multiline) {
+    props = Object.assign({}, props, { multiLine: true, rows: 2 });
+  }
 
   return <div>
     <TextField
       {...field.input}
-      type={field.type}
-      id={field.name}
-      {...props}
-      label={field.label} />
-    {renderErrorIfNeeded(field)}
+      {...props} />
   </div>
 }
 
-export const renderTextArea = field => <ContentEditable html={field.custom.content} className="form__content-editable"/>;
-
-export const renderDropdown = field => {
-return <select>
-  <option>Please select</option>
-  {
-    field.custom.options.map(
-      o => <option value={o.value} key={o.value}>{o.text}</option>
-    )
+export const renderDatePicker = field =>  {
+  const props = {
+    id: field.name,
+    hintText: field.label
   }
-</select>
-}
+  return <DatePicker {...props} />;
+};
+
+export const renderDropdown = field => (
+  <SelectField
+    floatingLabelText={field.label}
+    value={-1}>
+      <MenuItem value={-1} primaryText="Please select" />
+      {
+        field.custom.options.map(
+          o => <MenuItem value={o.value} key={o.value} primaryText={o.text} />
+        )
+      }
+  </SelectField>
+);

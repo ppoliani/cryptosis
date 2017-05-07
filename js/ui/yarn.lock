@@ -5511,10 +5511,6 @@ react-clone-referenced-element@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.0.1.tgz#2bba8c69404c5e4a944398600bcc4c941f860682"
 
-react-contenteditable@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-2.0.2.tgz#0acf68920931c227d1c9c85ae429981920f8fd92"
-
 react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"

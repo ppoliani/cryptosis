@@ -11,10 +11,10 @@ export default [{
   label: 'Broker',
   validate: [required]
 }, {
-  type: 'text',
+  type: 'date',
   name: 'date',
-  label: 'dd/mm/yyyy',
-  validate: [required, date]
+  label: 'Date',
+  validate: [required]
 }, {
   type: 'text',
   name: 'moneyInvested',
@@ -39,7 +39,7 @@ export default [{
 }, {
   type: 'textarea',
   name: 'notes',
-  content: 'Notes',
-  validate: [required],
+  multiline: true,
+  label: 'Notes',
   stretch: true
 }];

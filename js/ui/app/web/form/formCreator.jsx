@@ -2,16 +2,17 @@ import React from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/RaisedButton';
-import {renderInput, renderTextArea, renderDropdown} from './helpers';
+import {renderInput, renderDropdown, renderDatePicker} from './helpers';
 import {pipe, partial} from '../../helpers/fn';
 
 const getFieldRenderer = field => {
   switch(field.type) {
     case 'text':
     case 'email':
-      return renderInput;
     case 'textarea':
-      return renderTextArea;
+      return renderInput;
+    case 'date':
+      return renderDatePicker;
     case 'dropdown':
       return renderDropdown;
     default:
@@ -25,7 +26,7 @@ const createFields = fields => fields.map(
         name={field.name}
         label={field.label}
         component={getFieldRenderer(field)}
-        custom={{options: field.options, content: field.content}}
+        custom={{options: field.options, content: field.content, multiline: field.multiline}}
         validate={field.validate}
         type={field.type}/>
     </Col>
@@ -70,17 +71,21 @@ const createForm = (numOfCols, fields) => props => {
 
   return (
     <Row>
-      <form onSubmit={props.handleSubmit}>
-        {
-          pipe(
-            partial(renderColumns, numOfCols),
-            groupFields(numOfCols, fields)
-          )
-        }
-        <Row>
-          <Button type="submit" primary className="right">Submit</Button>
+      <Col xs>
+        <Row center="xs">
+          <form onSubmit={props.handleSubmit}>
+            {
+              pipe(
+                partial(renderColumns, numOfCols),
+                groupFields(numOfCols, fields)
+              )
+            }
+            <Row>
+              <Button type="submit" primary className="right">Submit</Button>
+            </Row>
+          </form>
         </Row>
-      </form>
+      </Col>
     </Row>
   );
 };
