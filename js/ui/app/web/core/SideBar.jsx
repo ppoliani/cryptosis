@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Drawer from 'material-ui/Drawer';
-import InboxIcon from 'material-ui-icons/Inbox';
-import StarIcon from 'material-ui-icons/Star';
+import SendIcon from 'material-ui-icons/Send';
+import Divider from 'material-ui/Divider';
 import {Link} from 'react-router-dom';
 import {
   List,
@@ -12,40 +12,59 @@ import {
 import './sidebar.scss';
 import {partial} from '../../helpers/fn';
 
+const getInvestementItems = onSidebarClick => (
+  <div>
+    <ListItem button>
+      <ListItemIcon>
+        <SendIcon />
+      </ListItemIcon>
+      <Link to="/investments">
+        <ListItemText primary="Investments" onClick={partial(onSidebarClick, 'investments')} />
+      </Link>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <SendIcon />
+      </ListItemIcon>
+      <Link to="/brokers">
+        <ListItemText primary="Brokers" onClick={partial(onSidebarClick, 'brokers')} />
+      </Link>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <SendIcon />
+      </ListItemIcon>
+      <Link to="/investment-types">
+        <ListItemText primary="Investment Types" onClick={partial(onSidebarClick, 'investementTypes')} />
+      </Link>
+    </ListItem>
+  </div>
+);
+
+const getListItems = onSidebarClick => (
+  <div>
+    <ListItem button>
+      <ListItemIcon>
+        <SendIcon />
+      </ListItemIcon>
+      <Link to="/">
+        <ListItemText primary="Dashboard" onClick={partial(onSidebarClick, 'dashboard')} />
+      </Link>
+    </ListItem>
+    <Divider />
+    {getInvestementItems(onSidebarClick)}
+  </div>
+);
+
 export default class SideBar extends Component {
-  getListItems() {
-    const {onSidebarClick} = this.props;
-
-    return (
-      <div>
-        <ListItem button>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <Link to="/">
-            <ListItemText primary="Dashboard" onClick={partial(onSidebarClick, 'dashboard')} />
-          </Link>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <StarIcon />
-          </ListItemIcon>
-          <Link to="/investments">
-            <ListItemText primary="Investments" onClick={partial(onSidebarClick, 'investments')} />
-          </Link>
-        </ListItem>
-      </div>
-    );
-  }
-
   render() {
-    const {isOpen, toggleSidebar} = this.props;
+    const {isOpen, toggleSidebar, onSidebarClick} = this.props;
     return (
       <Drawer
         open={isOpen}
         onRequestClose={toggleSidebar}>
           <div className='sidebar'>
-            {this.getListItems()}
+            {getListItems(onSidebarClick)}
           </div>
       </Drawer>
     );

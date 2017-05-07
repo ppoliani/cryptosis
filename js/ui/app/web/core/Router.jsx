@@ -51,7 +51,9 @@ export default () =>
   <Router>
     <div style={{height: '100%'}}>
       <PrivateRoute exact path="/" component={OverView}/>
-      <PrivateRoute path="/investments" component={Investment}/>
+      <PrivateRoute path="/investments" component={InvestmentPage}/>
+      <PrivateRoute path="/brokers" component={BrokerPage}/>
+      <PrivateRoute path="/investment-types" component={InvestmentTypePage}/>
       <Route path="/login" component={Login}/>
     </div>
   </Router>;
