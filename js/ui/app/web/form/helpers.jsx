@@ -3,7 +3,7 @@ import TextField from 'material-ui/TextField';
 import ContentEditable from 'react-contenteditable';
 
 const renderErrorIfNeeded = field => field.meta.touched && field.meta.error
-  ? <span className="error">{field.meta.error}</span>
+  ? <span className="form-validation__error">{field.meta.error}</span>
   : null;
 
 export const renderInput = field => {

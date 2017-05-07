@@ -1,4 +1,4 @@
-import {required, date} from '../validator';
+import {required, date, number} from '../validator';
 
 export default [{
   type: 'text',
@@ -19,22 +19,22 @@ export default [{
   type: 'text',
   name: 'moneyInvested',
   label: 'Money Invested',
-  validate: [required]
+  validate: [required, number]
 }, {
   type: 'text',
   name: 'expenses',
   label: 'Expenses',
-  validate: [required]
+  validate: [required, number]
 }, {
   type: 'text',
   name: 'quantity',
   label: 'Quantity',
-  validate: [required]
+  validate: [required, number]
 }, {
   type: 'text',
   name: 'price',
   label: 'Price',
-  validate: [required],
+  validate: [required, number],
   stretch: true
 }, {
   type: 'textarea',
