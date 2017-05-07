@@ -24,6 +24,10 @@ body {
 
 .right {
   float: right;
+
+  &::after {
+    clear: both;
+  }
 }
 
 a {

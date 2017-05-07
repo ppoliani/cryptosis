@@ -12,14 +12,14 @@ import {
 import './sidebar.scss';
 import {partial} from '../../helpers/fn';
 
-const getInvestementItems = onSidebarClick => (
+const getInvestementItems = onSidebarExit => (
   <div>
     <ListItem button>
       <ListItemIcon>
         <SendIcon />
       </ListItemIcon>
       <Link to="/investments">
-        <ListItemText primary="Investments" onClick={partial(onSidebarClick, 'investments')} />
+        <ListItemText primary="Investments" onClick={partial(onSidebarExit, 'investments')} />
       </Link>
     </ListItem>
     <ListItem button>
@@ -27,7 +27,7 @@ const getInvestementItems = onSidebarClick => (
         <SendIcon />
       </ListItemIcon>
       <Link to="/brokers">
-        <ListItemText primary="Brokers" onClick={partial(onSidebarClick, 'brokers')} />
+        <ListItemText primary="Brokers" onClick={partial(onSidebarExit, 'brokers')} />
       </Link>
     </ListItem>
     <ListItem button>
@@ -35,36 +35,36 @@ const getInvestementItems = onSidebarClick => (
         <SendIcon />
       </ListItemIcon>
       <Link to="/investment-types">
-        <ListItemText primary="Investment Types" onClick={partial(onSidebarClick, 'investementTypes')} />
+        <ListItemText primary="Investment Types" onClick={partial(onSidebarExit, 'investementTypes')} />
       </Link>
     </ListItem>
   </div>
 );
 
-const getListItems = onSidebarClick => (
+const getListItems = onSidebarExit => (
   <div>
     <ListItem button>
       <ListItemIcon>
         <SendIcon />
       </ListItemIcon>
       <Link to="/">
-        <ListItemText primary="Dashboard" onClick={partial(onSidebarClick, 'dashboard')} />
+        <ListItemText primary="Dashboard" onClick={partial(onSidebarExit, 'dashboard')} />
       </Link>
     </ListItem>
     <Divider />
-    {getInvestementItems(onSidebarClick)}
+    {getInvestementItems(onSidebarExit)}
   </div>
 );
 
 export default class SideBar extends Component {
   render() {
-    const {isOpen, toggleSidebar, onSidebarClick} = this.props;
+    const {isOpen, toggleSidebar, onSidebarExit} = this.props;
     return (
       <Drawer
         open={isOpen}
         onRequestClose={toggleSidebar}>
           <div className='sidebar'>
-            {getListItems(onSidebarClick)}
+            {getListItems(onSidebarExit)}
           </div>
       </Drawer>
     );

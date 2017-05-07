@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {autobind} from 'core-decorators';
-import {createStyleSheet} from 'jss-theme-reactor';
 import Paper from 'material-ui/Paper';
 import Header from './Header';
 import SideBar from './SideBar';
@@ -16,7 +15,7 @@ export default NestedComponent => class LayoutComponent extends Component {
   }
 
   @autobind
-  onSidebarClick(link, e) {
+  onSidebarExit(link, e) {
     // e.preventDefault();
     console.log(link);
     //redirect to given link using react router
@@ -47,7 +46,7 @@ export default NestedComponent => class LayoutComponent extends Component {
         <SideBar
           toggleSidebar={this.toggleSidebar}
           isOpen={isSiderBarOpen}
-          onSidebarClick={this.onSidebarClick}
+          onSidebarExit={this.onSidebarExit}
         />
       </div>
     );

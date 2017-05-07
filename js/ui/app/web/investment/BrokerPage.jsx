@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import AddBroker from './form/AddBroker';
+import AddBroker from './form/AddBrokerForm';
 
 const onSubmit = async (values) => {
   await Promise.resolve();
