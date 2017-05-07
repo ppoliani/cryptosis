@@ -110,7 +110,10 @@ module.exports = () => {
       modules: [
         path.resolve(__dirname, 'node_modules'),
         sourcePath
-      ]
+      ],
+      alias: {
+        Layout: path.resolve(__dirname, 'app/lib/Layout')
+      }
     },
 
     plugins,
