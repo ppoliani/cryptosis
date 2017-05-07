@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field, reduxForm} from 'redux-form';
+import {Field} from 'redux-form';
 import Layout from 'material-ui/Layout';
 import Button from 'material-ui/Button';
 import {renderInput, renderTextArea} from './helpers';
@@ -8,6 +8,7 @@ import {pipe, partial} from '../../helpers/fn';
 const getFieldRenderer = field => {
   switch(field.type) {
     case 'text':
+    case 'email':
       return renderInput;
     case 'textarea':
       return renderTextArea;

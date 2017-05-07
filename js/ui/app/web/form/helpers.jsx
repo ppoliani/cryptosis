@@ -13,6 +13,7 @@ export const renderInput = field => {
   return <div>
     <TextField
       {...field.input}
+      type={field.type}
       id={field.name}
       {...props}
       label={field.label} />
