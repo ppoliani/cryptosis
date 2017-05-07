@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field} from 'redux-form';
+import {Field, reduxForm} from 'redux-form';
 import Layout from 'material-ui/Layout';
 import Button from 'material-ui/Button';
 import {renderInput, renderTextArea} from './helpers';
@@ -60,16 +60,40 @@ const renderColumns = (numOfCols, groupedFields) => groupedFields.map(
   </Layout>
 );
 
-export default create = ({numOfCols, fields, handleSubmit}) => <form onSubmit={handleSubmit}>
-  {
-    pipe(
-      partial(renderColumns, numOfCols),
-      groupFields(numOfCols, fields)
-    )
-  }
-  <Layout container>
-    <Layout item xs={12}>
-      <Button type="submit" raised primary className="right">Submit</Button>
+const createForm = (numOfCols, fields) => props => {
+  const formProps = {
+    numOfCols,
+    fields
+  };
+
+  const layoutProps = {
+    direction: 'column',
+    justify: 'center',
+    align: 'center'
+  };
+
+  return (
+    <Layout container {...layoutProps}>
+      <Layout item xs={12}>
+        <form onSubmit={props.handleSubmit}>
+          {
+            pipe(
+              partial(renderColumns, numOfCols),
+              groupFields(numOfCols, fields)
+            )
+          }
+          <Layout container>
+            <Layout item xs={12}>
+              <Button type="submit" raised primary className="right">Submit</Button>
+            </Layout>
+          </Layout>
+        </form>
+      </Layout>
     </Layout>
-  </Layout>
-</form>
+  );
+};
+
+
+export default (name, numOfCols, fields) => reduxForm({
+  form: name
+})(createForm(numOfCols, fields))
