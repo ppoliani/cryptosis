@@ -1,4 +1,4 @@
-import {required} from '../validator';
+import {required, date} from '../validator';
 
 export default [{
   type: 'text',
@@ -14,7 +14,7 @@ export default [{
   type: 'text',
   name: 'date',
   label: 'dd/mm/yyyy',
-  validate: [required]
+  validate: [required, date]
 }, {
   type: 'text',
   name: 'moneyInvested',
