@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import Layout from 'material-ui/Layout';
 import Button from 'material-ui/Button';
-import {autobind} from 'core-decorators';
-import AddInvestment from './form/AddInvestmentForm';
+import {autobind} from 'core-decorators'
 import PageWithPanel from '../common/PageWithPanel';
+import InvestmentForm from './form/InvestmentForm';
 
 const onSubmit = async (values) => {
   await Promise.resolve();
@@ -28,7 +28,7 @@ export default class InvestmentPage extends Component {
     return (
       <Layout item xs={12}>
         <h1>New Investment</h1>
-        <AddInvestment onSubmit={onSubmit}/>
+        <InvestmentForm onSubmit={onSubmit}/>
       </Layout>
     )
   }

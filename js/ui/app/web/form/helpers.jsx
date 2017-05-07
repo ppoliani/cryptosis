@@ -21,4 +21,15 @@ export const renderInput = field => {
   </div>
 }
 
-export const renderTextArea = field => <ContentEditable html={field.content} className="form__content-editable"/>;
+export const renderTextArea = field => <ContentEditable html={field.custom.content} className="form__content-editable"/>;
+
+export const renderDropdown = field => {
+return <select>
+  <option>Please select</option>
+  {
+    field.custom.options.map(
+      o => <option value={o.value} key={o.value}>{o.text}</option>
+    )
+  }
+</select>
+}

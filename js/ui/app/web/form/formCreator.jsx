@@ -2,7 +2,7 @@ import React from 'react';
 import {Field, reduxForm} from 'redux-form';
 import Layout from 'material-ui/Layout';
 import Button from 'material-ui/Button';
-import {renderInput, renderTextArea} from './helpers';
+import {renderInput, renderTextArea, renderDropdown} from './helpers';
 import {pipe, partial} from '../../helpers/fn';
 
 const getFieldRenderer = field => {
@@ -12,6 +12,8 @@ const getFieldRenderer = field => {
       return renderInput;
     case 'textarea':
       return renderTextArea;
+    case 'dropdown':
+      return renderDropdown;
     default:
       throw new Error('No such field type');
   }
@@ -23,7 +25,7 @@ const createFields = fields => fields.map(
         name={field.name}
         label={field.label}
         component={getFieldRenderer(field)}
-        content={field.content}
+        custom={{options: field.options, content: field.content}}
         validate={field.validate}
         type={field.type}/>
     </Layout>
