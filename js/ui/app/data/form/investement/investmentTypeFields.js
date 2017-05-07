@@ -20,7 +20,8 @@ export default [{
 }, {
   type: 'textarea',
   name: 'Notes',
-  label: 'Email',
+  label: 'Notes',
   stetch: true,
+  multiline: true,
   content: 'Notes'
 }];
