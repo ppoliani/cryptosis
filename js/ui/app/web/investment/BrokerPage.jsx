@@ -5,7 +5,7 @@ import {autobind} from 'core-decorators';
 import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import pureComponent from '../mixins/pureComponent';
-import AyncPanel from '../common/AsyncPanel';
+import AsyncPanel from '../common/AsyncPanel';
 import PageWithPanel from '../common/PageWithPanel';
 import BrokerForm from './form/BrokerForm';
 import {saveBroker} from '../../data/broker/brokerActions';
@@ -33,14 +33,14 @@ class BrokerPage extends Component {
 
   getPanelContent() {
     return (
-      <AyncPanel asyncResult={this.props.saveBrokerResult}>
+      <AsyncPanel asyncResult={this.props.saveBrokerResult}>
         <Col xs={12}>
           <h1>New Broker</h1>
           <Col>
             <BrokerForm onSubmit={this.onBrokerSave} />
           </Col>
         </Col>
-      </AyncPanel>
+      </AsyncPanel>
     );
   }
 

@@ -18,7 +18,11 @@ export const renderInput = field => {
   }
 
   if(field.custom.multiline) {
-    props = Object.assign({}, props, { multiLine: true, rows: 2 });
+    props = Object.assign({}, props, {
+      multiLine: true,
+      floatingLabelText: null,
+      rows: 2
+    });
   }
 
   return <div>
@@ -31,28 +35,40 @@ export const renderInput = field => {
 export const renderDatePicker = field =>  {
   const props = {
     id: field.name,
-    hintText: field.label
+    hintText: field.label,
+    value: field.input.value || {}
   }
 
   const onChange = (_, value) => field.input.onChange(value);
 
-  return <DatePicker
-    {...field.input}
-    value={field.input.value || {}}
-    {...props}
-    onChange={onChange} />;
+  return (
+    <DatePicker
+      {...field.input}
+      {...props}
+      onChange={onChange} />
+  );
 };
 
-export const renderDropdown = field => (
+export const renderDropdown = field => {
+  const props = {
+    id: field.name,
+    hintText: field.label
+  }
+
+  const onChange = (_, __, value) => {
+    field.input.onChange(value);
+  }
+
+ return (
   <SelectField
-    floatingLabelText={field.label}
-    value={-1}
-    {...field.input}>
-      <MenuItem value={-1} primaryText="Please select" />
-      {
-        field.custom.options.map(
-          o => <MenuItem value={o.value} key={o.value} primaryText={o.text} />
-        )
-      }
-  </SelectField>
-);
+    {...field.input}
+    {...props}
+    onChange={onChange}>
+        {
+          field.custom.options.map(
+            o => <MenuItem value={o.value} key={o.value} primaryText={o.text} />
+          )
+        }
+    </SelectField>
+ );
+};

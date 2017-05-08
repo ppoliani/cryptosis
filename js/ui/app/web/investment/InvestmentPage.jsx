@@ -6,9 +6,9 @@ import Button from 'material-ui/FlatButton';
 import {autobind} from 'core-decorators'
 import pureComponent from '../mixins/pureComponent';
 import PageWithPanel from '../common/PageWithPanel';
-import AyncPanel from '../common/AsyncPanel';
+import AsyncPanel from '../common/AsyncPanel';
 import InvestmentForm from './form/InvestmentForm';
-import {savePosition} from '../../data/position/positionActions';
+import {saveInvestment} from '../../data/investment/investmentActions';
 
 @pureComponent
 class InvestmentPage extends Component {
@@ -26,18 +26,18 @@ class InvestmentPage extends Component {
   }
 
   @autobind
-  onInvestmentSave(position) {
-    this.props.savePosition(position);
+  onInvestmentSave(investement) {
+    this.props.saveInvestment(investement);
   }
 
   getPanelContent() {
     return (
-      <AyncPanel asyncResult={this.props.savePositionResult}>
+      <AsyncPanel asyncResult={this.props.saveInvestmentResult}>
         <Col xs={12}>
           <h1>New Investment</h1>
           <InvestmentForm onSubmit={this.onInvestmentSave}/>
         </Col>
-      </AyncPanel>
+      </AsyncPanel>
     );
   }
 
@@ -62,9 +62,9 @@ class InvestmentPage extends Component {
   }
 }
 
-const mapStateToProps = state => state.position.toObject();
+const mapStateToProps = state => state.investment.toObject();
 const mapDispatchToProps = dispatch => ({
-  savePosition: compose(dispatch, savePosition)
+  saveInvestment: compose(dispatch, saveInvestment)
 });
 
 export default connect(

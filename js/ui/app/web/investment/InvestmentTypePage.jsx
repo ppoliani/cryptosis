@@ -1,16 +1,22 @@
 import React, {Component} from 'react';
 import {autobind} from 'core-decorators';
+import {connect} from 'react-redux';
+import {compose} from 'folktale/core/lambda';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import PageWithPanel from '../common/PageWithPanel';
+import pureComponent from '../mixins/pureComponent';
+import AsyncPanel from '../common/AsyncPanel';
 import InvestmentTypeForm from './form/InvestmentTypeForm';
+import {saveInvestmentType} from '../../data/investment/investmentActions';
 
 const onSubmit = async (values) => {
   await Promise.resolve();
   console.log(values);
 }
 
-export default class BrokerPage extends Component {
+@pureComponent
+class InvestmentTypePage extends Component {
   constructor(props, state) {
     super(props, state);
 
@@ -24,12 +30,19 @@ export default class BrokerPage extends Component {
     this.setState({isPanelOpen: !this.state.isPanelOpen});
   }
 
+  @autobind
+  onInvestmentTypeSave(investmentType) {
+    this.props.saveInvestmentType(investmentType);
+  }
+
   getPanelContent() {
     return (
-      <Col xs={12}>
-        <h1>New Investment Type</h1>
-        <InvestmentTypeForm onSubmit={onSubmit}/>
-      </Col>
+      <AsyncPanel asyncResult={this.props.saveInvestmentTypeResult}>
+        <Col xs={12}>
+          <h1>New Investment Type</h1>
+          <InvestmentTypeForm onSubmit={this.onInvestmentTypeSave}/>
+        </Col>
+      </AsyncPanel>
     )
   }
 
@@ -53,3 +66,17 @@ export default class BrokerPage extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  investmentTypes: state.investment.get('types'),
+  saveInvestmentTypeResult: state.investment.get('saveInvestmentTypeResult')
+});
+
+const mapDispatchToProps = dispatch => ({
+  saveInvestmentType: compose(dispatch, saveInvestmentType)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InvestmentTypePage);
