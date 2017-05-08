@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import classnames from 'classnames';
 import {compose} from 'folktale/core/lambda';
 import {autobind} from 'core-decorators';
-import {Grid, Row, Col} from 'react-flexbox-grid';
+import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
-import AsyncPanelMixin from '../mixins/AsyncPanelMixin';
+import pureComponent from '../mixins/pureComponent';
+import NotificationMixin from '../mixins/NotificationMixin';
+import AyncPanel from '../common/AsyncPanel'
 import PageWithPanel from '../common/PageWithPanel';
 import BrokerForm from './form/BrokerForm';
 import {saveBroker} from '../../data/broker/brokerActions';
-import pureComponent from '../mixins/pureComponent';
+
 
 @pureComponent
-@AsyncPanelMixin
+@NotificationMixin
 class BrokerPage extends Component {
   constructor(props, state) {
     super(props, state);
@@ -34,17 +35,17 @@ class BrokerPage extends Component {
 
   getPanelContent() {
     const {saveBrokerResult} = this.props;
-    const classList = {'fade-out': this.shouldFadeOut(saveBrokerResult)};
 
     return (
-      <Col xs={12}>
-        <h1>New Broker</h1>
-        <Col className={classnames(classList)}>
-          <BrokerForm onSubmit={this.onBrokerSave} />
+      <AyncPanel asyncResult={saveBrokerResult}>
+        <Col xs={12}>
+          <h1>New Broker</h1>
+          <Col>
+            <BrokerForm onSubmit={this.onBrokerSave} />
+          </Col>
         </Col>
-        {this.renderActionStatus(saveBrokerResult)}
-      </Col>
-    )
+      </AyncPanel>
+    );
   }
 
   render() {

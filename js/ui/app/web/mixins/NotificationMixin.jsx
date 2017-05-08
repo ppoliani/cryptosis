@@ -19,23 +19,5 @@ export default mixin({
         autoHideDuration={4000}
       />
     });
-  },
-
-  renderActionStatus(asyncResult) {
-    return asyncResult.matchWith({
-      Empty: () => null,
-      Loading: () => <Spinner />,
-      Success: () => null,
-      Failure: () => null
-    });
-  },
-
-  shouldFadeOut(asyncResult) {
-    return asyncResult.matchWith({
-      Empty: () => false,
-      Loading: () => true,
-      Success: () => false,
-      Failure: () => false
-    });
   }
 })
