@@ -1,5 +1,5 @@
 import {createStore, applyMiddleware, compose} from 'redux';
-import taskMiddleware from './middlewares/taskMiddleware';
+import taskMiddleware from '../middlewares/taskMiddleware';
 import reducer from './reducer';
 
 const createDevStoreWithMiddleware = applyMiddleware(

@@ -1,4 +1,4 @@
-import AsyncData from '../AsyncData';
+import AsyncData from '../core/AsyncData';
 
 const isTask = val => val && typeof val.run === 'function';
 

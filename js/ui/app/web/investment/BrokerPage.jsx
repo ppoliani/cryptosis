@@ -1,16 +1,19 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {compose} from 'folktale/core/lambda';
 import {autobind} from 'core-decorators';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import PageWithPanel from '../common/PageWithPanel';
 import BrokerForm from './form/BrokerForm';
+import {saveBroker} from '../../data/broker/brokerActions';
 
 const onSubmit = async (values) => {
   await Promise.resolve();
   console.log(values);
 }
 
-export default class BrokerPage extends Component {
+class BrokerPage extends Component {
   constructor(props, state) {
     super(props, state);
 
@@ -24,11 +27,17 @@ export default class BrokerPage extends Component {
     this.setState({isPanelOpen: !this.state.isPanelOpen});
   }
 
+  @autobind
+  onBrokerSave(broker) {
+    this.props.saveBroker(broker);
+    console.log('>>>>>>>>>', broker);
+  }
+
   getPanelContent() {
     return (
       <Col xs={12}>
         <h1>New Broker</h1>
-        <BrokerForm onSubmit={onSubmit}/>
+        <BrokerForm onSubmit={this.onBrokerSave}/>
       </Col>
     )
   }
@@ -53,3 +62,13 @@ export default class BrokerPage extends Component {
     );
   }
 }
+
+const mapStateToProps = state => state.broker.toObject();
+const mapDispatchToProps = dispatch => ({
+  saveBroker: compose(dispatch, saveBroker)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BrokerPage);

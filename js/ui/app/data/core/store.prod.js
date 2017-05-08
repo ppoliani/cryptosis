@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
-import taskMiddleware from './middlewares/taskMiddleware';
+import taskMiddleware from '../middlewares/taskMiddleware';
 import reducer from './reducer';
 
 // create a store that has redux-thunk middleware enabled

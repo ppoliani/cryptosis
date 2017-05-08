@@ -7,7 +7,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {cyan500} from 'material-ui/styles/colors';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Router from './core/Router';
-import configureStore from '../core/data/';
+import configureStore from '../data';
 
 import './index.html';
 import './app.scss';

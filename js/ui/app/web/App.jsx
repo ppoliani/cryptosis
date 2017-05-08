@@ -31,7 +31,7 @@ class App extends Component {
 
 const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => ({
-    startSearch: compose(dispatch, getSearchResults)
+  startSearch: compose(dispatch, getSearchResults)
 });
 
 export default connect(

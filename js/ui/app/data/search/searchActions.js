@@ -27,4 +27,4 @@ export const getSearchResultsRoot = fetch => {
   );
 };
 
-export const getSearchResults = partial(getSearchResultsRoot, fetch);
+export const getSearchResults = getSearchResultsRoot(fetch);
