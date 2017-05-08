@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import classnames from 'classnames';
 import {compose} from 'folktale/core/lambda';
 import {autobind} from 'core-decorators';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
+import Spinner from '../common/Spinner';
 import PageWithPanel from '../common/PageWithPanel';
 import BrokerForm from './form/BrokerForm';
 import {saveBroker} from '../../data/broker/brokerActions';
@@ -30,14 +32,40 @@ class BrokerPage extends Component {
   @autobind
   onBrokerSave(broker) {
     this.props.saveBroker(broker);
-    console.log('>>>>>>>>>', broker);
+  }
+
+  renderActionStatus() {
+    const {saveBrokerResult} = this.props;
+
+    return saveBrokerResult.matchWith({
+      Empty: () => null,
+      Loading: () => <Spinner />,
+      Success: ({data: broker}) => console.log('Success', broker),
+      Failure: ({error}) => console.log('Failure', error)
+    });
+  }
+
+  shouldFadeOut() {
+    const {saveBrokerResult} = this.props;
+
+    return saveBrokerResult.matchWith({
+      Empty: () => false,
+      Loading: () => true,
+      Success: () => false,
+      Failure: () => false
+    });
   }
 
   getPanelContent() {
+    const classList = {'fade-out': this.shouldFadeOut()};
+
     return (
       <Col xs={12}>
         <h1>New Broker</h1>
-        <BrokerForm onSubmit={this.onBrokerSave}/>
+        <Col className={classnames(classList)}>
+          <BrokerForm onSubmit={this.onBrokerSave} />
+        </Col>
+        {this.renderActionStatus()}
       </Col>
     )
   }

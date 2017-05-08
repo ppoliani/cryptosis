@@ -8,7 +8,7 @@ const handleSaveBroker = (state, {payload: brokerResult}) =>
   brokerResult.matchWith({
     Empty: identity,
     Loading: () => state.set('saveBrokerResult', brokerResult),
-    Success: ({broker}) => state
+    Success: ({data: broker}) => state
       .set('saveBrokerResult', brokerResult)
       .set(['brokers', broker.id], broker),
     Failure: () => state.set('saveBrokerResult', brokerResult),

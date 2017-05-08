@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
+    "classnames": "^2.2.5",
     "core-decorators": "^0.15.0",
     "folktale": "^2.0.0-beta1",
     "immutable": "^3.8.1",
