@@ -5,15 +5,13 @@ import {autobind} from 'core-decorators';
 import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import pureComponent from '../mixins/pureComponent';
-import NotificationMixin from '../mixins/NotificationMixin';
-import AyncPanel from '../common/AsyncPanel'
+import AyncPanel from '../common/AsyncPanel';
 import PageWithPanel from '../common/PageWithPanel';
 import BrokerForm from './form/BrokerForm';
 import {saveBroker} from '../../data/broker/brokerActions';
 
 
 @pureComponent
-@NotificationMixin
 class BrokerPage extends Component {
   constructor(props, state) {
     super(props, state);
@@ -34,10 +32,8 @@ class BrokerPage extends Component {
   }
 
   getPanelContent() {
-    const {saveBrokerResult} = this.props;
-
     return (
-      <AyncPanel asyncResult={saveBrokerResult}>
+      <AyncPanel asyncResult={this.props.saveBrokerResult}>
         <Col xs={12}>
           <h1>New Broker</h1>
           <Col>
@@ -64,13 +60,6 @@ class BrokerPage extends Component {
               Here will be the table with all Brokers
             </Col>
           </Row>
-          {
-            this.renderNotification(
-              this.props.saveBrokerResult,
-              'Broker added successfully!',
-              'Error while adding a new broker!'
-            )
-          }
       </PageWithPanel>
     );
   }

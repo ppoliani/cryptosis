@@ -33,13 +33,19 @@ export const renderDatePicker = field =>  {
     id: field.name,
     hintText: field.label
   }
-  return <DatePicker {...props} />;
+
+  delete field.input.value;
+
+  return <DatePicker
+    {...field.input}
+    {...props} />;
 };
 
 export const renderDropdown = field => (
   <SelectField
     floatingLabelText={field.label}
-    value={-1}>
+    value={-1}
+    {...field.input}>
       <MenuItem value={-1} primaryText="Please select" />
       {
         field.custom.options.map(

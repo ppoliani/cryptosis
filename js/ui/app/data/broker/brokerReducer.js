@@ -14,8 +14,8 @@ const handleSaveBroker = (state, {payload: brokerResult}) =>
     Failure: () => state.set('saveBrokerResult', brokerResult),
   });
 
-const setBrokersList = (state, action) => state.set('brokers', action.payload);
-const updateBroker = (state, action) => state.updateIn(['brokers', ], list => list.push(broker));
+const setBrokersList = (state, {payload: brokers}) => state.set('brokers', brokers);
+const updateBroker = (state, {payload: broker}) => state.updateIn(['brokers', broker.id], list => list.push(broker));
 
 const BrokerData = Map({
   saveBrokerResult: AsyncData.Empty(),

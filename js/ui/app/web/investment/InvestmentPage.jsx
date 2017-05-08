@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {compose} from 'folktale/core/lambda';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import {autobind} from 'core-decorators'
+import pureComponent from '../mixins/pureComponent';
 import PageWithPanel from '../common/PageWithPanel';
+import AyncPanel from '../common/AsyncPanel';
 import InvestmentForm from './form/InvestmentForm';
+import {savePosition} from '../../data/position/positionActions';
 
-const onSubmit = async (values) => {
-  await Promise.resolve();
-  console.log(values);
-}
-
-export default class InvestmentPage extends Component {
+@pureComponent
+class InvestmentPage extends Component {
   constructor(props, state) {
     super(props, state);
 
@@ -24,13 +25,20 @@ export default class InvestmentPage extends Component {
     this.setState({isPanelOpen: !this.state.isPanelOpen});
   }
 
+  @autobind
+  onInvestmentSave(position) {
+    this.props.savePosition(position);
+  }
+
   getPanelContent() {
     return (
-      <Col xs={12}>
-        <h1>New Investment</h1>
-        <InvestmentForm onSubmit={onSubmit}/>
-      </Col>
-    )
+      <AyncPanel asyncResult={this.props.savePositionResult}>
+        <Col xs={12}>
+          <h1>New Investment</h1>
+          <InvestmentForm onSubmit={this.onInvestmentSave}/>
+        </Col>
+      </AyncPanel>
+    );
   }
 
   render() {
@@ -53,3 +61,13 @@ export default class InvestmentPage extends Component {
     );
   }
 }
+
+const mapStateToProps = state => state.position.toObject();
+const mapDispatchToProps = dispatch => ({
+  savePosition: compose(dispatch, savePosition)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InvestmentPage);

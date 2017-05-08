@@ -4,6 +4,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
+  "exclude": [
+    "js/ui/node_modules",
+    "js/api/node_modules"
+  ],
 
   "include": [
     "js/ui/**/*.js",
