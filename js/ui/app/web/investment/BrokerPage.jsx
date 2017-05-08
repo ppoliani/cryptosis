@@ -5,17 +5,14 @@ import {compose} from 'folktale/core/lambda';
 import {autobind} from 'core-decorators';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
-import Snackbar from 'material-ui/Snackbar';
-import Spinner from '../common/Spinner';
+import AsyncPanelMixin from '../mixins/AsyncPanelMixin';
 import PageWithPanel from '../common/PageWithPanel';
 import BrokerForm from './form/BrokerForm';
 import {saveBroker} from '../../data/broker/brokerActions';
+import pureComponent from '../mixins/pureComponent';
 
-const onSubmit = async (values) => {
-  await Promise.resolve();
-  console.log(values);
-}
-
+@pureComponent
+@AsyncPanelMixin
 class BrokerPage extends Component {
   constructor(props, state) {
     super(props, state);
@@ -35,49 +32,9 @@ class BrokerPage extends Component {
     this.props.saveBroker(broker);
   }
 
-  renderNotification() {
-    const {saveBrokerResult} = this.props;
-
-    return saveBrokerResult.matchWith({
-      Empty: () => null,
-      Loading: () => null,
-      Success: ({data: broker}) => <Snackbar
-        open={true}
-        message="Broker added successfully!"
-        autoHideDuration={4000}
-      />,
-      Failure: ({error}) => <Snackbar
-        open={true}
-        message="Error while adding a new broker!"
-        autoHideDuration={4000}
-      />
-    });
-  }
-
-  renderActionStatus() {
-    const {saveBrokerResult} = this.props;
-
-    return saveBrokerResult.matchWith({
-      Empty: () => null,
-      Loading: () => <Spinner />,
-      Success: ({data: broker}) => null,
-      Failure: ({error}) => null
-    });
-  }
-
-  shouldFadeOut() {
-    const {saveBrokerResult} = this.props;
-
-    return saveBrokerResult.matchWith({
-      Empty: () => false,
-      Loading: () => true,
-      Success: () => false,
-      Failure: () => false
-    });
-  }
-
   getPanelContent() {
-    const classList = {'fade-out': this.shouldFadeOut()};
+    const {saveBrokerResult} = this.props;
+    const classList = {'fade-out': this.shouldFadeOut(saveBrokerResult)};
 
     return (
       <Col xs={12}>
@@ -85,7 +42,7 @@ class BrokerPage extends Component {
         <Col className={classnames(classList)}>
           <BrokerForm onSubmit={this.onBrokerSave} />
         </Col>
-        {this.renderActionStatus()}
+        {this.renderActionStatus(saveBrokerResult)}
       </Col>
     )
   }
@@ -106,7 +63,13 @@ class BrokerPage extends Component {
               Here will be the table with all Brokers
             </Col>
           </Row>
-          {this.renderNotification()}
+          {
+            this.renderNotification(
+              this.props.saveBrokerResult,
+              'Broker added successfully!',
+              'Error while adding a new broker!'
+            )
+          }
       </PageWithPanel>
     );
   }
