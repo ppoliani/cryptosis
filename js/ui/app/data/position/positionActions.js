@@ -17,7 +17,8 @@ const savePositionRoot = fetch => {
   );
 }
 
-const fakeFetch = () => task(resolver => {
+const fakeFetch = (_, __, position) => task(resolver => {
+  console.log('>>>', position);
   setTimeout(
     () => resolver.resolve({id: 1}),
     2000

@@ -34,11 +34,13 @@ export const renderDatePicker = field =>  {
     hintText: field.label
   }
 
-  delete field.input.value;
+  const onChange = (_, value) => field.input.onChange(value);
 
   return <DatePicker
     {...field.input}
-    {...props} />;
+    value={field.input.value || {}}
+    {...props}
+    onChange={onChange} />;
 };
 
 export const renderDropdown = field => (
