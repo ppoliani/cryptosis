@@ -20,7 +20,7 @@ const saveBrokerRoot = fetch => {
 const fakeFetch = () => task(resolver => {
   setTimeout(
     () => resolver.resolve({id: 1}),
-    3000
+    2000
   );
 });
 

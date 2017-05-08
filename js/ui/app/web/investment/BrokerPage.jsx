@@ -5,6 +5,7 @@ import {compose} from 'folktale/core/lambda';
 import {autobind} from 'core-decorators';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 import Spinner from '../common/Spinner';
 import PageWithPanel from '../common/PageWithPanel';
 import BrokerForm from './form/BrokerForm';
@@ -34,14 +35,33 @@ class BrokerPage extends Component {
     this.props.saveBroker(broker);
   }
 
+  renderNotification() {
+    const {saveBrokerResult} = this.props;
+
+    return saveBrokerResult.matchWith({
+      Empty: () => null,
+      Loading: () => null,
+      Success: ({data: broker}) => <Snackbar
+        open={true}
+        message="Broker added successfully!"
+        autoHideDuration={4000}
+      />,
+      Failure: ({error}) => <Snackbar
+        open={true}
+        message="Error while adding a new broker!"
+        autoHideDuration={4000}
+      />
+    });
+  }
+
   renderActionStatus() {
     const {saveBrokerResult} = this.props;
 
     return saveBrokerResult.matchWith({
       Empty: () => null,
       Loading: () => <Spinner />,
-      Success: ({data: broker}) => console.log('Success', broker),
-      Failure: ({error}) => console.log('Failure', error)
+      Success: ({data: broker}) => null,
+      Failure: ({error}) => null
     });
   }
 
@@ -86,6 +106,7 @@ class BrokerPage extends Component {
               Here will be the table with all Brokers
             </Col>
           </Row>
+          {this.renderNotification()}
       </PageWithPanel>
     );
   }
