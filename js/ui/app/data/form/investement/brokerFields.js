@@ -17,4 +17,10 @@ export default [{
   type: 'text',
   name: 'telephone',
   label: 'Telephone'
+}, {
+  type: 'textarea',
+  name: 'notes',
+  multiline: true,
+  label: 'Notes',
+  stretch: true
 }];

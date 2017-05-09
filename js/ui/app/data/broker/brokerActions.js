@@ -17,11 +17,4 @@ const saveBrokerRoot = fetch => {
   );
 }
 
-const fakeFetch = () => task(resolver => {
-  setTimeout(
-    () => resolver.resolve({id: 1}),
-    2000
-  );
-});
-
-export const saveBroker = saveBrokerRoot(fakeFetch);
+export const saveBroker = saveBrokerRoot(fetch);

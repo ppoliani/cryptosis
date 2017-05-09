@@ -27,6 +27,7 @@ const initAuth = () => {
         });
       }
       catch(error) {
+        // TODO: if JwtError.Expired() remove the old JWT from database
         logger.error(`Error while verifying access token: ${error}`);
         done(HttpError(401, 'Unauthorized'));
       }

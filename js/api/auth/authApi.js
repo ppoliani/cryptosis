@@ -21,7 +21,7 @@ const login = async (checkAccessToken, getOrSaveSocialMediaAccount, createToken,
             .matchWith({
               Just: ({value: [token]}) => {
                 ctx.body = {token};
-              }, 
+              },
               Nothing: () => {
                 throw new Error();
               }

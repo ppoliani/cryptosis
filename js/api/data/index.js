@@ -2,7 +2,8 @@ const Maybe = require('folktale/data/maybe');
 const {initDB} = require('./db');
 
 const repositories = [
-  require('./accountRepository')
+  require('./accountRepository'),
+  require('./brokerRepository')
 ];
 
 // CypherResult a -> Maybe a
