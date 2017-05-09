@@ -3,7 +3,8 @@ const {initDB} = require('./db');
 
 const repositories = [
   require('./accountRepository'),
-  require('./brokerRepository')
+  require('./brokerRepository'),
+  require('./investmentRepository')
 ];
 
 // CypherResult a -> Maybe a

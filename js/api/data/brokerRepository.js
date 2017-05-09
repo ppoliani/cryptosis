@@ -10,24 +10,14 @@ const saveBroker = async broker => {
   return  await runQuery(
     DbDriver,
     `
-      OPTIONAL MATCH (:Broker {name:{name}})
-      MERGE (b:Broker {name:{name}, website:{website}, email:{email}, telephone:{telephone}, notes:{notes}})
+      MERGE (b:Broker {name:{name}})
+      ON CREATE SET b.created = timestamp(), b.website=${broker.website}, b.email=${broker.email}, b.telephone=${telephone}, b.notes=${notes}
+      ON MATCH SET b.updated = timestamp(), b.website=${broker.website}, b.email=${broker.email}, b.telephone=${telephone}, b.notes=${notes}
       RETURN b{ .*, id: ID(b) }
     `,
     broker
   );
 }
 
-const updateBroker = async broker => {
-  return  await runQuery(
-    DbDriver,
-    `
-      MATCH (b:Broker {id:{id}})
-      RETURN b
-    `,
-    broker
-  );
-}
-
-module.exports = {init, saveBroker, updateBroker};
+module.exports = {init, saveBroker};
 

@@ -3,7 +3,8 @@ const {entries} = require('./utils');
 
 const routes = [
   require('../auth/authRoutes'),
-  require('../broker/brokerRoutes')
+  require('../broker/brokerRoutes'),
+  require('../investment/investmentRoutes')
 ];
 
 const setup = router => {
