@@ -6,18 +6,16 @@ const init = driver => {
   DbDriver = driver;
 }
 
-const saveInvestment = async investment => {
+const saveInvestment = async i => {
   return await runQuery(
     DbDriver,
     `
-      MERGE (i:Investment {date:{date}, moneyInvested:{moneyInvested}, expenses:{expenses}, quantity:{quantity}, price: {price}, notes:{notes}})-[:HAS_TYPE]->(:InvestmentType {name:${investment.investmentType})
-      WITH i
-      CREATE i-[:HAS_BROKER]->(:Broker {name:${investment.broker})
-      ON CREATE SET i.created = timestamp()
-      ON MATCH SET i.updated = timestamp()
+      MERGE (:Broker {name:"${i.broker}"})<-[:HAS_BROKER]-(i)-[:HAS_TYPE]->(:InvestmentType {name:"${i.investmentType}"})
+      ON CREATE SET i.created = timestamp(), i.date=${i.date}, i.moneyInvested=${i.moneyInvested}, i.expenses=${i.expenses}, i.quantity=${i.quantity}, i.notes="${i.notes}"
+      ON MATCH SET i.updated = timestamp(), i.date=${i.date}, i.moneyInvested=${i.moneyInvested}, i.expenses=${i.expenses}, i.quantity=${i.quantity}, i.notes="${i.notes}"
       RETURN i{ .*, id: ID(i) }
     `,
-    investment
+    i
   );
 }
 
