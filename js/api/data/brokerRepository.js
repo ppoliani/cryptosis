@@ -10,9 +10,7 @@ const saveBroker = async broker => {
   return  await runQuery(
     DbDriver,
     `
-      MERGE (b:Broker {name:{name}})
-      ON CREATE SET b.created = timestamp(), b.website=${broker.website}, b.email=${broker.email}, b.telephone=${telephone}, b.notes=${notes}
-      ON MATCH SET b.updated = timestamp(), b.website=${broker.website}, b.email=${broker.email}, b.telephone=${telephone}, b.notes=${notes}
+      CREATE (b:Broker {name:{name}, website:{website}, email:{email}, telephone:{telephone}, notes:{notes}})
       RETURN b{ .*, id: ID(b) }
     `,
     broker

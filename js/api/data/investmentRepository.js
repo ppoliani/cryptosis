@@ -10,9 +10,9 @@ const saveInvestment = async i => {
   return await runQuery(
     DbDriver,
     `
-      MERGE (:Broker {name:"${i.broker}"})<-[:HAS_BROKER]-(i)-[:HAS_TYPE]->(:InvestmentType {name:"${i.investmentType}"})
-      ON CREATE SET i.created = timestamp(), i.date=${i.date}, i.moneyInvested=${i.moneyInvested}, i.expenses=${i.expenses}, i.quantity=${i.quantity}, i.notes="${i.notes}"
-      ON MATCH SET i.updated = timestamp(), i.date=${i.date}, i.moneyInvested=${i.moneyInvested}, i.expenses=${i.expenses}, i.quantity=${i.quantity}, i.notes="${i.notes}"
+      MATCH (b:Broker), (t:InvestmentType)
+      WHERE b.name="${i.broker}" AND t.name="${i.investmentType}"
+      CREATE (b)<-[:HAS_BROKER]-(i:Investment {date:{date}, moneyInvested:{moneyInvested}, expenses:{expenses}, quantity:{quantity}, notes:{notes}})-[:HAS_TYPE]->(t)
       RETURN i{ .*, id: ID(i) }
     `,
     i
