@@ -10,7 +10,7 @@ const saveBroker = async broker => {
   return  await runQuery(
     DbDriver,
     `
-      CREATE (b:Broker {name:{name}, website:{website}, email:{email}, telephone:{telephone}, notes:{notes}})
+      CREATE (b:Broker {name:{name}, website:{website}, email:{email}, telephone:{telephone}, notes:{notes}, created:timestamp(), updated:timestamp()})
       RETURN b{ .*, id: ID(b) }
     `,
     broker
@@ -23,7 +23,7 @@ const updateBroker = async broker => {
     `
       MATCH (b:Broker)
       WHERE ID(b) = ${broker.id}
-      SET b = {name:{name}, website:{website}, email:{email}, telephone:{telephone}, notes:{notes}}
+      SET b = {name:{name}, website:{website}, email:{email}, telephone:{telephone}, notes:{notes}, updated:timestamp()}
       RETURN b{ .*, id: ID(b) }
     `,
     broker

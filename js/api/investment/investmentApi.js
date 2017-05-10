@@ -1,48 +1,50 @@
-const {HttpError} = require('../core/api');
+const {partial} = require('../core/fn');
+const {createSimpleEnpoint, HTTP_NO_CONTENT} = require('../core/api');
+const repository= require('../data/investmentRepository');
+const {unwrapCypherResult} = require('../data');
 const logger = require('../core/logger');
 
-const createInvestment = async (saveInvestment, unwrapCypherResult, ctx, next) => {
-  const investement = ctx.request.body;
-
-  try {
-    const investementResult = await saveInvestment(investement);
-
-    unwrapCypherResult(investementResult)
-      .matchWith({
-        Just: ({value: [result]}) => {
-          ctx.body = {result};
-        },
-        Nothing: () => {
-          throw new Error();
-        }
-      });
+const createInvestment = partial(
+  createSimpleEnpoint,
+  repository.saveInvestment,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error saving investment for user:'
   }
-  catch(error) {
-    ctx.status = 500;
-    ctx.body = HttpError(500, `Error saving a investement for user: ${ctx.state.user}`);
+)
+
+const createInvestmentType = partial(
+  createSimpleEnpoint,
+  repository.saveInvestmentType,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error saving investment type for user:'
   }
+)
+
+const updateInvestmentType = partial(
+  createSimpleEnpoint,
+  repository.updateInvestmentType,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error updating investment type for user:'
+  }
+)
+
+const deleteInvestmentType = partial(
+  createSimpleEnpoint,
+  repository.deleteInvestmentType,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error deleting investment type for user:',
+    param: 'id',
+    status: HTTP_NO_CONTENT
+  }
+)
+
+module.exports = {
+  createInvestment,
+  createInvestmentType,
+  updateInvestmentType,
+  deleteInvestmentType
 };
-
-const createInvestmentType = async (saveInvestmentType, unwrapCypherResult, ctx, next) => {
-  const investementType = ctx.request.body;
-
-  try {
-    const investementTypeResult = await saveInvestmentType(investementType);
-
-    unwrapCypherResult(investementTypeResult)
-      .matchWith({
-        Just: ({value: [result]}) => {
-          ctx.body = {result};
-        },
-        Nothing: () => {
-          throw new Error();
-        }
-      });
-  }
-  catch(error) {
-    ctx.status = 500;
-    ctx.body = HttpError(500, `Error saving a investementType for user: ${ctx.state.user}`);
-  }
-};
-
-module.exports = {createInvestment, createInvestmentType};

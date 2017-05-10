@@ -13,7 +13,7 @@ const routes = {
     fn: updateBroker
   },
 
-  '/brokers/:brokerId': {
+  '/brokers/:id': {
     method: 'delete',
     // auth: true,
     fn: deleteBroker

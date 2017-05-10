@@ -28,7 +28,7 @@ const deleteBroker = partial(
   unwrapCypherResult,
   {
     errorMessage: 'Error updating broker for user:',
-    param: 'brokerId',
+    param: 'id',
     status: HTTP_NO_CONTENT
   }
 )

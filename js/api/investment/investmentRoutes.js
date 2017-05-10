@@ -1,19 +1,33 @@
-const {partial} = require('../core/fn');
-const {unwrapCypherResult} = require('../data');
-const {saveInvestment, saveInvestmentType} = require('../data/investmentRepository');
-const {createInvestment, createInvestmentType} = require('./investmentApi');
+const {
+  createInvestment,
+  createInvestmentType,
+  updateInvestmentType,
+  deleteInvestmentType
+} = require('./investmentApi');
 
 const routes = {
   '/investments': {
     method: 'post',
     // auth: true,
-    fn: partial(createInvestment, saveInvestment, unwrapCypherResult)
+    fn: createInvestment
   },
 
   '/investment/types': {
     method: 'post',
     // auth: true,
-    fn: partial(createInvestmentType, saveInvestmentType, unwrapCypherResult)
+    fn: createInvestmentType
+  },
+
+  '/investment/types$': {
+    method: 'put',
+    // auth: true,
+    fn: updateInvestmentType
+  },
+
+  '/investment/types/:id': {
+    method: 'delete',
+    // auth: true,
+    fn: deleteInvestmentType
   }
 };
 

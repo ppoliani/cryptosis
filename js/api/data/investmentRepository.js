@@ -12,7 +12,7 @@ const saveInvestment = async i => {
     `
       MATCH (b:Broker), (t:InvestmentType)
       WHERE b.name="${i.broker}" AND t.name="${i.investmentType}"
-      CREATE (b)<-[:HAS_BROKER]-(i:Investment {date:{date}, moneyInvested:{moneyInvested}, expenses:{expenses}, quantity:{quantity}, notes:{notes}})-[:HAS_TYPE]->(t)
+      CREATE (b)<-[:HAS_BROKER]-(i:Investment {date:{date}, moneyInvested:{moneyInvested}, expenses:{expenses}, quantity:{quantity}, notes:{notes}, created:timestamp(), updated:timestamp()})-[:HAS_TYPE]->(t)
       RETURN i{ .*, id: ID(i) }
     `,
     i
@@ -23,14 +23,42 @@ const saveInvestmentType = async investmentType => {
   return await runQuery(
     DbDriver,
     `
-      MERGE (t:InvestmentType {name:{name}})
-      ON CREATE SET t.created=timestamp(), t.type="${investmentType.type}", t.notes="${investmentType.notes}"
-      ON MATCH SET t.updated=timestamp(), t.type="${investmentType.type}", t.notes="${investmentType.notes}"
+      CREATE (t:InvestmentType {name:{name}, type:{type}, notes:{notes}, created:timestamp(), updated:timestamp()})
       RETURN t{ .*, id: ID(t) }
     `,
     investmentType
   );
 }
 
-module.exports = {init, saveInvestment, saveInvestmentType};
+const updateInvestmentType= async investmentType => {
+  return  await runQuery(
+    DbDriver,
+    `
+      MATCH (t:InvestmentType)
+      WHERE ID(t) = ${investmentType.id}
+      SET t = {name:{name}, type:{type}, note:{notes}, updated:timestamp()}
+      RETURN t{ .*, id: ID(t) }
+    `,
+    investmentType
+  )
+}
+
+const deleteInvestmentType= async investmentTypeId => {
+  return  await runQuery(
+    DbDriver,
+    `
+      MATCH (t:InvestmentType)
+      WHERE ID(t) = ${investmentTypeId}
+      DETACH DELETE t
+    `
+  )
+}
+
+module.exports = {
+  init,
+  saveInvestment,
+  saveInvestmentType,
+  updateInvestmentType,
+  deleteInvestmentType
+};
 
