@@ -21,7 +21,7 @@ const initAuth = () => {
         await unwrapCypherResult(result).matchWith({
           Just: async ({value: [_, account]}) => {
             const decodedToken = await decodeToken(accessToken);
-            done(null, account);
+            done(null, Object.assign({}, account, {id: decodedToken.userId})); // userId is the id of the user node
           },
           Nothing: () => { throw new Error(); }
         });

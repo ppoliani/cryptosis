@@ -17,7 +17,7 @@ const getOrSaveSocialMediaAccount = async (source, authResponse) => {
     DbDriver,
     `
       MERGE (u:User)-[${getSocialMediaRelationship(source)}]->(s:SocialMediaAccount {userId:{userId}, name:{name}, firsName:{firstName}, lastName:{lastName}, email:{email}, picture:{picture}})
-      RETURN s
+      RETURN s{ .*, id: ID(u) }
     `,
     authResponse
   );

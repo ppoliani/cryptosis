@@ -52,10 +52,13 @@ const contructUpdateMatchString = entity =>
   ]
   .join('')
 
+const getInteger = int => int.toNumber();
+
 module.exports = {
   unwrapCypherResult,
   contructCreateMatchString,
   contructUpdateMatchString,
-  createMatchObj
+  createMatchObj,
+  getInteger
 };
 

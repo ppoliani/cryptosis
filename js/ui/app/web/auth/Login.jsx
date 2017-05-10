@@ -10,15 +10,20 @@ import './login.scss';
 import fetch from '../../helpers/api';
 
 class Login extends Component {
+  redirect() {
+    window.location.href = '/';
+  }
+
   @autobind
   responseFacebook(response) {
     login('fb', response.accessToken)
       .bimap(
         error => {
-          console.log('Could not login via fb', error)
+          console.log('Could not login via fb', error);
         },
         ({token}) => {
-          setItem('@investreck:access_token', token)
+          setItem('@investreck:access_token', token);
+          this.redirect();
         }
       )
       .run();
@@ -38,7 +43,8 @@ class Login extends Component {
           console.log('Could not login via google', error)
         },
         ({token}) => {
-          window.localStorage.setItem('bartr_access_token', token)
+          setItem('@investreck:access_token', token);
+          this.redirect();
         }
       )
       .run();

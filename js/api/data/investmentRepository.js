@@ -7,13 +7,14 @@ const init = driver => {
   DbDriver = driver;
 }
 
-const saveInvestment = async (investment, userId) => {
+const saveInvestment = async (investment, user) => {
   return await runQuery(
     DbDriver,
     `
       MATCH (b:Broker), (t:InvestmentType), (u:User)
-      WHERE b.name="${investment.broker}" AND t.name="${investment.investmentType}" AND ID(u)=${userId}
+      WHERE b.name="${investment.broker}" AND t.name="${investment.investmentType}" AND ID(u)=${Number(user.id)}
       CREATE (b)<-[:HAS_BROKER]-(i:Investment ${contructCreateMatchString(investment)})-[:HAS_TYPE]->(t)
+      CREATE (u)-[:HAS_INVESTMENT]->(i)
       RETURN i{ .*, id: ID(i) }
     `,
     createMatchObj(investment)

@@ -17,7 +17,6 @@ export default NestedComponent => class LayoutComponent extends Component {
   @autobind
   onSidebarExit(link, e) {
     // e.preventDefault();
-    console.log(link);
     //redirect to given link using react router
   }
 
