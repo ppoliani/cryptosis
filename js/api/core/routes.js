@@ -14,7 +14,7 @@ const setup = router => {
         ? [passport.authenticate('bearer', {session: false}), ...middlewares]
         : middlewares;
 
-      router[method](endpoint, ...middlewares, fn);
+      router[method](endpoint.replace(/[$]*/g,''), ...middlewares, fn);
     }
   });
 

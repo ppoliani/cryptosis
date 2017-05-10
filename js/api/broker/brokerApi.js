@@ -1,26 +1,36 @@
-const {HttpError} = require('../core/api');
+const {partial} = require('../core/fn');
+const {createSimpleEnpoint, HTTP_NO_CONTENT} = require('../core/api');
+const repository = require('../data/brokerRepository');
+const {unwrapCypherResult} = require('../data');
 const logger = require('../core/logger');
 
-const createBroker = async (saveBroker, unwrapCypherResult, ctx, next) => {
-  const broker = ctx.request.body;
-
-  try {
-    const brokerResult = await saveBroker(broker);
-
-    unwrapCypherResult(brokerResult)
-      .matchWith({
-        Just: ({value: [result]}) => {
-          ctx.body = {result};
-        },
-        Nothing: () => {
-          throw new Error();
-        }
-      });
+const createBroker = partial(
+  createSimpleEnpoint,
+  repository.saveBroker,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error saving broker for user:'
   }
-  catch(error) {
-    ctx.status = 500;
-    ctx.body = HttpError(500, `Error saving a broker for user: ${ctx.state.user}`);
-  }
-};
+)
 
-module.exports = {createBroker};
+const updateBroker = partial(
+  createSimpleEnpoint,
+  repository.updateBroker,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error updating broker for user:'
+  }
+)
+
+const deleteBroker = partial(
+  createSimpleEnpoint,
+  repository.deleteBroker,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error updating broker for user:',
+    param: 'brokerId',
+    status: HTTP_NO_CONTENT
+  }
+)
+
+module.exports = {createBroker, updateBroker, deleteBroker};
