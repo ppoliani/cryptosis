@@ -9,7 +9,27 @@ const createInvestment = partial(
   repository.saveInvestment,
   unwrapCypherResult,
   {
-    errorMessage: 'Error saving investment for user:'
+    errorMessage: 'Error saving investment for user'
+  }
+)
+
+const updateInvestment = partial(
+  createSimpleEnpoint,
+  repository.updateInvestment,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error updating investment for user'
+  }
+)
+
+const deleteInvestment = partial(
+  createSimpleEnpoint,
+  repository.deleteInvestment,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error deleting investment for user:',
+    param: 'id',
+    status: HTTP_NO_CONTENT
   }
 )
 
@@ -36,7 +56,7 @@ const deleteInvestmentType = partial(
   repository.deleteInvestmentType,
   unwrapCypherResult,
   {
-    errorMessage: 'Error deleting investment type for user:',
+    errorMessage: 'Error deleting investment type for user',
     param: 'id',
     status: HTTP_NO_CONTENT
   }
@@ -44,6 +64,8 @@ const deleteInvestmentType = partial(
 
 module.exports = {
   createInvestment,
+  updateInvestment,
+  deleteInvestment,
   createInvestmentType,
   updateInvestmentType,
   deleteInvestmentType

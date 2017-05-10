@@ -9,7 +9,7 @@ const createBroker = partial(
   repository.saveBroker,
   unwrapCypherResult,
   {
-    errorMessage: 'Error saving broker for user:'
+    errorMessage: 'Error saving broker for user'
   }
 )
 
@@ -18,7 +18,7 @@ const updateBroker = partial(
   repository.updateBroker,
   unwrapCypherResult,
   {
-    errorMessage: 'Error updating broker for user:'
+    errorMessage: 'Error updating broker for user'
   }
 )
 
@@ -27,7 +27,7 @@ const deleteBroker = partial(
   repository.deleteBroker,
   unwrapCypherResult,
   {
-    errorMessage: 'Error updating broker for user:',
+    errorMessage: 'Error updating broker for user',
     param: 'id',
     status: HTTP_NO_CONTENT
   }
