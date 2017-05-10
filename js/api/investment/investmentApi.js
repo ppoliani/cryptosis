@@ -1,11 +1,11 @@
 const {partial} = require('../core/fn');
-const {createSimpleEnpoint, HTTP_NO_CONTENT} = require('../core/api');
+const {createSimpleEndpoint, HTTP_NO_CONTENT} = require('../core/api');
 const repository= require('../data/investmentRepository');
 const {unwrapCypherResult} = require('../data');
 const logger = require('../core/logger');
 
 const createInvestment = partial(
-  createSimpleEnpoint,
+  createSimpleEndpoint,
   repository.saveInvestment,
   unwrapCypherResult,
   {
@@ -14,7 +14,7 @@ const createInvestment = partial(
 )
 
 const updateInvestment = partial(
-  createSimpleEnpoint,
+  createSimpleEndpoint,
   repository.updateInvestment,
   unwrapCypherResult,
   {
@@ -23,7 +23,7 @@ const updateInvestment = partial(
 )
 
 const deleteInvestment = partial(
-  createSimpleEnpoint,
+  createSimpleEndpoint,
   repository.deleteInvestment,
   unwrapCypherResult,
   {
@@ -34,7 +34,7 @@ const deleteInvestment = partial(
 )
 
 const createInvestmentType = partial(
-  createSimpleEnpoint,
+  createSimpleEndpoint,
   repository.saveInvestmentType,
   unwrapCypherResult,
   {
@@ -43,7 +43,7 @@ const createInvestmentType = partial(
 )
 
 const updateInvestmentType = partial(
-  createSimpleEnpoint,
+  createSimpleEndpoint,
   repository.updateInvestmentType,
   unwrapCypherResult,
   {
@@ -52,7 +52,7 @@ const updateInvestmentType = partial(
 )
 
 const deleteInvestmentType = partial(
-  createSimpleEnpoint,
+  createSimpleEndpoint,
   repository.deleteInvestmentType,
   unwrapCypherResult,
   {

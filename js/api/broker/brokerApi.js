@@ -1,11 +1,11 @@
 const {partial} = require('../core/fn');
-const {createSimpleEnpoint, HTTP_NO_CONTENT} = require('../core/api');
+const {createSimpleEndpoint, HTTP_NO_CONTENT} = require('../core/api');
 const repository = require('../data/brokerRepository');
 const {unwrapCypherResult} = require('../data');
 const logger = require('../core/logger');
 
 const createBroker = partial(
-  createSimpleEnpoint,
+  createSimpleEndpoint,
   repository.saveBroker,
   unwrapCypherResult,
   {
@@ -14,7 +14,7 @@ const createBroker = partial(
 )
 
 const updateBroker = partial(
-  createSimpleEnpoint,
+  createSimpleEndpoint,
   repository.updateBroker,
   unwrapCypherResult,
   {
@@ -23,7 +23,7 @@ const updateBroker = partial(
 )
 
 const deleteBroker = partial(
-  createSimpleEnpoint,
+  createSimpleEndpoint,
   repository.deleteBroker,
   unwrapCypherResult,
   {

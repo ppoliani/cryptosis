@@ -22,13 +22,13 @@ const HttpError = (status, message) => ({status, message: { error: message }});
 const readFromBody = ctx => ctx.request.body;
 const readUrlParam = (param, ctx) => ctx.params[param];
 
-const createSimpleEnpoint = async (crudAction, unwrapCypherResult, options, ctx, next) => {
+const createSimpleEndpoint = async (crudAction, unwrapCypherResult, options, ctx, next) => {
   const parameter = options.param
     ? readUrlParam(options.param, ctx)
     : readFromBody(ctx);
 
   try {
-    const actionResult = await crudAction(parameter);
+    const actionResult = await crudAction(parameter, ctx.state.user);
 
     if(options.status === HTTP_NO_CONTENT) {
       ctx.status = HTTP_NO_CONTENT;
@@ -54,6 +54,6 @@ const createSimpleEnpoint = async (crudAction, unwrapCypherResult, options, ctx,
 module.exports = {
   HttpError,
   HTTP_NO_CONTENT,
-  createSimpleEnpoint,
+  createSimpleEndpoint,
   fetch: _fetch
 };
