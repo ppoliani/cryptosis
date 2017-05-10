@@ -1,5 +1,5 @@
 const test = require('ava');
-const {unwrapCypherResult} = require('./index');
+const {unwrapCypherResult} = require('./utils');
 
 test('unwrapCypherResult should return Nothing if is an empty array', t => {
   unwrapCypherResult([]).matchWith({

@@ -3,19 +3,19 @@ const {createBroker, updateBroker, deleteBroker} = require('./brokerApi');
 const routes = {
   '/brokers': {
     method: 'post',
-    // auth: true,
+    auth: true,
     fn: createBroker
   },
 
   '/brokers$': {
     method: 'put',
-    // auth: true,
+    auth: true,
     fn: updateBroker
   },
 
   '/brokers/:id': {
     method: 'delete',
-    // auth: true,
+    auth: true,
     fn: deleteBroker
   }
 };

@@ -1,3 +1,4 @@
+const {contructCreateMatchString, contructUpdateMatchString, createMatchObj} = require('./utils');
 const {runQuery} = require('./query');
 
 let DbDriver;
@@ -12,10 +13,10 @@ const saveInvestment = async (investment, userId) => {
     `
       MATCH (b:Broker), (t:InvestmentType), (u:User)
       WHERE b.name="${investment.broker}" AND t.name="${investment.investmentType}" AND ID(u)=${userId}
-      CREATE (b)<-[:HAS_BROKER]-(i:Investment {date:{date}, moneyInvested:{moneyInvested}, expenses:{expenses}, quantity:{quantity}, notes:{notes}, created:timestamp(), updated:timestamp()})-[:HAS_TYPE]->(t)
+      CREATE (b)<-[:HAS_BROKER]-(i:Investment ${contructCreateMatchString(investment)})-[:HAS_TYPE]->(t)
       RETURN i{ .*, id: ID(i) }
     `,
-    investment
+    createMatchObj(investment)
   );
 }
 
@@ -25,7 +26,7 @@ const updateInvestment = async investment => {
     `
       MATCH (i:Investment), (b:Broker), (t:InvestmentType)
       WHERE ID(i) = ${investment.id} AND b.name="${investment.broker}" AND t.name="${investment.investmentType}"
-      SET i = {date:{date}, moneyInvested:{moneyInvested}, expenses:{expenses}, quantity:{quantity}, notes:{notes}, updated:timestamp()}
+      SET i = ${contructCreateMatchString(investment)}
       WITH i, b, t
       MATCH (b2:Broker)<-[hb:HAS_BROKER]-(i)-[ht:HAS_TYPE]->(t2:InvestmentType)
       DELETE hb, ht
@@ -33,7 +34,7 @@ const updateInvestment = async investment => {
       CREATE (b)<-[:HAS_BROKER]-(i)-[:HAS_TYPE]->(t)
       RETURN i{ .*, id: ID(i) }
     `,
-    investment
+    createMatchObj(investment)
   );
 }
 
@@ -53,10 +54,10 @@ const saveInvestmentType = async investmentType => {
   return await runQuery(
     DbDriver,
     `
-      CREATE (t:InvestmentType {name:{name}, type:{type}, notes:{notes}, created:timestamp(), updated:timestamp()})
+      CREATE (t:InvestmentType ${contructCreateMatchString(investmentType)})
       RETURN t{ .*, id: ID(t) }
     `,
-    investmentType
+    createMatchObj(investmentType)
   );
 }
 
@@ -66,10 +67,10 @@ const updateInvestmentType= async investmentType => {
     `
       MATCH (t:InvestmentType)
       WHERE ID(t) = ${investmentType.id}
-      SET t = {name:{name}, type:{type}, note:{notes}, updated:timestamp()}
+      SET t = ${contructCreateMatchString(investmentType)}
       RETURN t{ .*, id: ID(t) }
     `,
-    investmentType
+    createMatchObj(investmentType)
   )
 }
 

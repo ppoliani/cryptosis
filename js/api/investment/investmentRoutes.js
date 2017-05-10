@@ -10,37 +10,37 @@ const {
 const routes = {
   '/investments': {
     method: 'post',
-    // auth: true,
+    auth: true,
     fn: createInvestment
   },
 
   '/investments$': {
     method: 'put',
-    // auth: true,
+    auth: true,
     fn: updateInvestment
   },
 
   '/investments/:id': {
     method: 'delete',
-    // auth: true,
+    auth: true,
     fn: deleteInvestment
   },
 
   '/investment/types': {
     method: 'post',
-    // auth: true,
+    auth: true,
     fn: createInvestmentType
   },
 
   '/investment/types$': {
     method: 'put',
-    // auth: true,
+    auth: true,
     fn: updateInvestmentType
   },
 
   '/investment/types/:id': {
     method: 'delete',
-    // auth: true,
+    auth: true,
     fn: deleteInvestmentType
   }
 };

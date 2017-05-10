@@ -1,5 +1,5 @@
 const {getOrSaveSocialMediaAccount, createToken} = require('../data/accountRepository');
-const {unwrapCypherResult} = require('../data');
+const {unwrapCypherResult} = require('../data/utils');
 const {checkAccessToken} = require('./authService');
 const {partial} = require('../core/fn');
 const {login} = require('./authApi');

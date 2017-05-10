@@ -1,3 +1,4 @@
+const {contructCreateMatchString, contructUpdateMatchString, createMatchObj} = require('./utils');
 const {runQuery} = require('./query');
 
 let DbDriver;
@@ -10,10 +11,10 @@ const saveBroker = async broker => {
   return  await runQuery(
     DbDriver,
     `
-      CREATE (b:Broker {name:{name}, website:{website}, email:{email}, telephone:{telephone}, notes:{notes}, created:timestamp(), updated:timestamp()})
+      CREATE (b:Broker ${contructCreateMatchString(broker)})
       RETURN b{ .*, id: ID(b) }
     `,
-    broker
+    createMatchObj(broker)
   )
 }
 
@@ -23,10 +24,10 @@ const updateBroker = async broker => {
     `
       MATCH (b:Broker)
       WHERE ID(b) = ${broker.id}
-      SET b = {name:{name}, website:{website}, email:{email}, telephone:{telephone}, notes:{notes}, updated:timestamp()}
+      SET b = ${contructUpdateMatchString(broker)}
       RETURN b{ .*, id: ID(b) }
     `,
-    broker
+    createMatchObj(broker)
   )
 }
 

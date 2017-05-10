@@ -1,7 +1,7 @@
 const {partial} = require('../core/fn');
 const {createSimpleEndpoint, HTTP_NO_CONTENT} = require('../core/api');
 const repository = require('../data/brokerRepository');
-const {unwrapCypherResult} = require('../data');
+const {unwrapCypherResult} = require('../data/utils');
 const logger = require('../core/logger');
 
 const createBroker = partial(
