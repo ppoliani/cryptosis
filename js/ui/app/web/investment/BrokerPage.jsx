@@ -8,7 +8,7 @@ import pureComponent from '../mixins/pureComponent';
 import AsyncPanel from '../common/AsyncPanel';
 import PageWithPanel from '../common/PageWithPanel';
 import BrokerForm from './form/BrokerForm';
-import {saveBroker} from '../../data/broker/brokerActions';
+import {getBrokers, saveBroker} from '../../data/broker/brokerActions';
 
 
 @pureComponent
@@ -19,6 +19,11 @@ class BrokerPage extends Component {
     this.state = {
       isPanelOpen: false
     };
+  }
+
+  componentDidMount() {
+    const {skip, limit} = this.state;
+    this.props.getBrokers({skip, limit});
   }
 
   @autobind
@@ -67,6 +72,7 @@ class BrokerPage extends Component {
 
 const mapStateToProps = state => state.broker.toObject();
 const mapDispatchToProps = dispatch => ({
+  getBrokers: compose(dispatch, getBrokers),
   saveBroker: compose(dispatch, saveBroker)
 });
 

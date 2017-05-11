@@ -1,6 +1,19 @@
 import 'whatwg-fetch'
+import {List} from 'immutable';
 import {task} from 'folktale/data/task';
 import {getItem} from '../storage';
+
+export const constructUrl = (url, params) =>
+  `
+  ?${
+    params
+      .reduce(
+        (acc, v, k) => acc.push(`${k}=${v}`),
+        List()
+      )
+      .join('&')
+  }
+  `
 
 export default (url, method='GET', body={}, headers={}) =>
   task(async resolver => {
