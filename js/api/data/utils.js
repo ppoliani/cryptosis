@@ -17,6 +17,22 @@ const unwrapCypherResult = result => {
   }
 };
 
+// same as above but return a Map instead
+const unwrapCypherResultToMap = result => {
+  try {
+    return Maybe.fromNullable(
+      result[0]._fields.reduce(
+        (acc, field) => acc.set(getInteger(field.identity), normalize(field.properties)),
+        Map()
+      )
+      .toObject()
+    );
+  }
+  catch(_) {
+    return Maybe.Nothing();
+  }
+};
+
 // normalize the data we get from neo4j
 const normalize = entity => Map(entity)
   .map(v => neo4j.isInt(v) ? getInteger(v) : v)
@@ -62,6 +78,7 @@ const getInteger = int => int.toNumber();
 
 module.exports = {
   unwrapCypherResult,
+  unwrapCypherResultToMap,
   contructCreateMatchString,
   contructUpdateMatchString,
   createMatchObj,

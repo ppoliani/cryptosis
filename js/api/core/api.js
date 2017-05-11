@@ -36,7 +36,10 @@ const createSimpleEndpoint = async (crudAction, unwrapCypherResult, options, ctx
     else {
       unwrapCypherResult(actionResult)
         .matchWith({
-          Just: ({value: [result]}) => {
+          Just: ({value}) => {
+            // unwrapCypherResult might be unwrapCypherResultToMap; in which case
+            // we can not destructure an array.
+            const result = Array.isArray(value) ? value[0] : value;
             ctx.body = {result};
           },
           Nothing: () => {
@@ -47,7 +50,7 @@ const createSimpleEndpoint = async (crudAction, unwrapCypherResult, options, ctx
   }
   catch(error) {
     ctx.status = 500;
-    ctx.body = HttpError(500, `${options.errorMessage}: ${ctx.state.user}`);
+    ctx.body = HttpError(500, `${options.errorMessage}: ${ctx.state.user.userId}`);
   }
 }
 

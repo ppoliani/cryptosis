@@ -7,11 +7,16 @@ import AsyncData from '../core/AsyncData';
 const handleSetBrokers = (state, {payload: brokerResult}) =>
   brokerResult.matchWith({
     Empty: identity,
-    Loading: () => state.set('fetchBrokerResult', brokerResult),
-    Success: ({data: broker}) => state
-      .set('fetchBrokerResult', brokerResult)
-      .concat(['brokers'], broker),
-    Failure: () => state.set('fetchBrokerResult', brokerResult),
+    Loading: () => state.set('fetchBrokersResult', brokerResult),
+    Success: ({data}) =>  {
+      return state
+      .set('fetchBrokersResult', brokerResult)
+      .updateIn(
+        ['brokers'],
+        brokers => brokers.concat(Map(data.result))
+      )
+    },
+    Failure: () => state.set('fetchBrokersResult', brokerResult),
   });
 
 const handleSaveBroker = (state, {payload: brokerResult}) =>
@@ -28,9 +33,9 @@ const setBrokersList = (state, {payload: brokers}) => state.set('brokers', broke
 const updateBroker = (state, {payload: broker}) => state.updateIn(['brokers', broker.id], list => list.push(broker));
 
 const BrokerData = Map({
-  fetchBrokerResult: AsyncData.Empty(),
+  fetchBrokersResult: AsyncData.Empty(),
   saveBrokerResult: AsyncData.Empty(),
-  brokers: AsyncData.Empty()
+  brokers: Map()
 });
 
 export default handleActions({
