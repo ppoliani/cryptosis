@@ -17,7 +17,9 @@ class BrokerPage extends Component {
     super(props, state);
 
     this.state = {
-      isPanelOpen: false
+      isPanelOpen: false,
+      limit: 10,
+      skip: 0
     };
   }
 

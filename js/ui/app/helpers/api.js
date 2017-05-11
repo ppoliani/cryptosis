@@ -5,7 +5,7 @@ import {getItem} from '../storage';
 
 export const constructUrl = (url, params) =>
   `
-  ?${
+  ${url}?${
     params
       .reduce(
         (acc, v, k) => acc.push(`${k}=${v}`),

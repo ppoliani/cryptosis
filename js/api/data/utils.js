@@ -1,4 +1,5 @@
 const neo4j = require('neo4j-driver').v1;
+const {Map} = require('immutable');
 const Maybe = require('folktale/data/maybe');
 const {entries} = require('../core/utils');
 
@@ -7,7 +8,7 @@ const unwrapCypherResult = result => {
   try {
     return Maybe.fromNullable(
       result[0]._fields.reduce((acc, field)=> {
-        return [...acc, field.properties || field]
+        return [...acc, normalize(field.properties) || field]
       }, [])
     );
   }
@@ -15,6 +16,11 @@ const unwrapCypherResult = result => {
     return Maybe.Nothing();
   }
 };
+
+// normalize the data we get from neo4j
+const normalize = entity => Map(entity)
+  .map(v => neo4j.isInt(v) ? getInteger(v) : v)
+  .toObject();
 
 // creates a string that will be used in Cypher
 const createMatchString = entity =>
