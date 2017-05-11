@@ -23,12 +23,12 @@ const readFromBody = ctx => ctx.request.body;
 const readUrlParam = (param, ctx) => ctx.params[param];
 
 const createSimpleEndpoint = async (crudAction, unwrapCypherResult, options, ctx, next) => {
-  const parameter = options.param
+  const resource = options.param
     ? readUrlParam(options.param, ctx)
     : readFromBody(ctx);
 
   try {
-    const actionResult = await crudAction(parameter, ctx.state.user);
+    const actionResult = await crudAction({resource, ctx});
 
     if(options.status === HTTP_NO_CONTENT) {
       ctx.status = HTTP_NO_CONTENT;

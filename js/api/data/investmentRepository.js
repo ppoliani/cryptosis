@@ -7,12 +7,12 @@ const init = driver => {
   DbDriver = driver;
 }
 
-const saveInvestment = async (investment, user) => {
+const saveInvestment = async ({resource:investment, ctx}) => {
   return await runQuery(
     DbDriver,
     `
       MATCH (b:Broker), (t:InvestmentType), (u:User)
-      WHERE b.name="${investment.broker}" AND t.name="${investment.investmentType}" AND ID(u)=${Number(user.id)}
+      WHERE b.name="${investment.broker}" AND t.name="${investment.investmentType}" AND ID(u)=${Number(ctx.state.user.id)}
       CREATE (b)<-[:HAS_BROKER]-(i:Investment ${contructCreateMatchString(investment)})-[:HAS_TYPE]->(t)
       CREATE (u)-[:HAS_INVESTMENT]->(i)
       RETURN i{ .*, id: ID(i) }
@@ -21,7 +21,7 @@ const saveInvestment = async (investment, user) => {
   );
 }
 
-const updateInvestment = async investment => {
+const updateInvestment = async ({resource:investment}) => {
   return await runQuery(
     DbDriver,
     `
@@ -39,7 +39,7 @@ const updateInvestment = async investment => {
   );
 }
 
-const deleteInvestment = async investmentId => {
+const deleteInvestment = async ({resource:investmentId})  => {
   return  await runQuery(
     DbDriver,
     `
@@ -51,7 +51,7 @@ const deleteInvestment = async investmentId => {
 }
 
 
-const saveInvestmentType = async investmentType => {
+const saveInvestmentType = async ({resource:investmentType})  => {
   return await runQuery(
     DbDriver,
     `
@@ -62,7 +62,7 @@ const saveInvestmentType = async investmentType => {
   );
 }
 
-const updateInvestmentType= async investmentType => {
+const updateInvestmentType= async ({resource:investmentType})  => {
   return  await runQuery(
     DbDriver,
     `
@@ -75,7 +75,7 @@ const updateInvestmentType= async investmentType => {
   )
 }
 
-const deleteInvestmentType= async investmentTypeId => {
+const deleteInvestmentType= async ({resource:investmentTypeId})  => {
   return  await runQuery(
     DbDriver,
     `

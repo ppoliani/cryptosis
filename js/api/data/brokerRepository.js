@@ -7,7 +7,22 @@ const init = driver => {
   DbDriver = driver;
 }
 
-const saveBroker = async broker => {
+const getBrokers = async ({ctx}) => {
+  const {skip, limit} = ctx.request.query;
+
+  return  await runQuery(
+    DbDriver,
+    `
+      MATCH (b:Broker)
+      RETURN b
+      ORDER BY b.name
+      SKIP ${skip}
+      LIMIT ${limit}
+    `
+  )
+}
+
+const saveBroker = async ({resource:broker}) => {
   return  await runQuery(
     DbDriver,
     `
@@ -18,7 +33,7 @@ const saveBroker = async broker => {
   )
 }
 
-const updateBroker = async broker => {
+const updateBroker = async ({resource:broker}) => {
   return  await runQuery(
     DbDriver,
     `
@@ -31,7 +46,7 @@ const updateBroker = async broker => {
   )
 }
 
-const deleteBroker = async brokerId => {
+const deleteBroker = async ({resource:brokerId}) => {
   return  await runQuery(
     DbDriver,
     `
@@ -42,5 +57,11 @@ const deleteBroker = async brokerId => {
   )
 }
 
-module.exports = {init, saveBroker, updateBroker, deleteBroker};
+module.exports = {
+  init,
+  getBrokers,
+  saveBroker,
+  updateBroker,
+  deleteBroker
+};
 

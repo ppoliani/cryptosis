@@ -4,6 +4,15 @@ const repository = require('../data/brokerRepository');
 const {unwrapCypherResult} = require('../data/utils');
 const logger = require('../core/logger');
 
+const getBrokers = partial(
+  createSimpleEndpoint,
+  repository.getBrokers,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error fetching brokers for user'
+  }
+);
+
 const createBroker = partial(
   createSimpleEndpoint,
   repository.saveBroker,
@@ -33,4 +42,9 @@ const deleteBroker = partial(
   }
 )
 
-module.exports = {createBroker, updateBroker, deleteBroker};
+module.exports = {
+  getBrokers,
+  createBroker,
+  updateBroker,
+  deleteBroker
+};
