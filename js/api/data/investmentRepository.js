@@ -7,6 +7,21 @@ const init = driver => {
   DbDriver = driver;
 }
 
+const getInvestments = async ({ctx}) => {
+  const {skip, limit} = ctx.request.query;
+
+  return  await runQuery(
+    DbDriver,
+    `
+      MATCH (i:Investment)
+      RETURN i
+      ORDER BY i.date
+      SKIP ${skip}
+      LIMIT ${limit}
+    `
+  )
+}
+
 const saveInvestment = async ({resource:investment, ctx}) => {
   return await runQuery(
     DbDriver,
@@ -50,6 +65,20 @@ const deleteInvestment = async ({resource:investmentId})  => {
   )
 }
 
+const getInvestmentTypes = async ({ctx}) => {
+  const {skip, limit} = ctx.request.query;
+
+  return  await runQuery(
+    DbDriver,
+    `
+      MATCH (t:InvestmentType)
+      RETURN t
+      ORDER BY t.name
+      SKIP ${skip}
+      LIMIT ${limit}
+    `
+  )
+}
 
 const saveInvestmentType = async ({resource:investmentType})  => {
   return await runQuery(
@@ -88,9 +117,11 @@ const deleteInvestmentType= async ({resource:investmentTypeId})  => {
 
 module.exports = {
   init,
+  getInvestments,
   saveInvestment,
   updateInvestment,
   deleteInvestment,
+  getInvestmentTypes,
   saveInvestmentType,
   updateInvestmentType,
   deleteInvestmentType

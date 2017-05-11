@@ -8,7 +8,7 @@ const {
 const routes = {
   '/brokers': {
     method: 'get',
-    // auth: true,
+    auth: true,
     fn: getBrokers
   },
 

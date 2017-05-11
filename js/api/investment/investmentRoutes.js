@@ -1,7 +1,9 @@
 const {
+  getInvestments,
   createInvestment,
   updateInvestment,
   deleteInvestment,
+  getInvestmentTypes,
   createInvestmentType,
   updateInvestmentType,
   deleteInvestmentType
@@ -9,12 +11,18 @@ const {
 
 const routes = {
   '/investments': {
+    method: 'get',
+    auth: true,
+    fn: getInvestments
+  },
+
+  '/investments$': {
     method: 'post',
     auth: true,
     fn: createInvestment
   },
 
-  '/investments$': {
+  '/investments$$': {
     method: 'put',
     auth: true,
     fn: updateInvestment
@@ -27,12 +35,18 @@ const routes = {
   },
 
   '/investment/types': {
+    method: 'get',
+    auth: true,
+    fn: getInvestmentTypes
+  },
+
+  '/investment/types$': {
     method: 'post',
     auth: true,
     fn: createInvestmentType
   },
 
-  '/investment/types$': {
+  '/investment/types$$': {
     method: 'put',
     auth: true,
     fn: updateInvestmentType

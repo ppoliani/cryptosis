@@ -4,6 +4,15 @@ const repository= require('../data/investmentRepository');
 const {unwrapCypherResult} = require('../data/utils');
 const logger = require('../core/logger');
 
+const getInvestments = partial(
+  createSimpleEndpoint,
+  repository.getInvestments,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error fetching investments for user'
+  }
+)
+
 const createInvestment = partial(
   createSimpleEndpoint,
   repository.saveInvestment,
@@ -30,6 +39,15 @@ const deleteInvestment = partial(
     errorMessage: 'Error deleting investment for user:',
     param: 'id',
     status: HTTP_NO_CONTENT
+  }
+)
+
+const getInvestmentTypes = partial(
+  createSimpleEndpoint,
+  repository.getInvestmentTypes,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error fetching investment types for user'
   }
 )
 
@@ -63,9 +81,11 @@ const deleteInvestmentType = partial(
 )
 
 module.exports = {
+  getInvestments,
   createInvestment,
   updateInvestment,
   deleteInvestment,
+  getInvestmentTypes,
   createInvestmentType,
   updateInvestmentType,
   deleteInvestmentType
