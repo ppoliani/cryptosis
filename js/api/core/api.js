@@ -34,21 +34,13 @@ const createSimpleEndpoint = async (crudAction, unwrapCypherResult, options, ctx
       ctx.status = HTTP_NO_CONTENT;
     }
     else {
-      await unwrapCypherResult(actionResult)
+      unwrapCypherResult(actionResult)
         .matchWith({
-          Just: async ({value}) => {
+          Just: ({value}) => {
             // unwrapCypherResult might be unwrapCypherResultToMap; in which case
             // we can not destructure an array.
             const result = Array.isArray(value) ? value[0] : value;
-
-            await (new Promise(resolve => {
-              setTimeout(() => {
-                ctx.body = {result};
-                resolve();
-              }, 3000);
-            }))
-
-
+            ctx.body = {result};
           },
           Nothing: () => {
             throw new Error();

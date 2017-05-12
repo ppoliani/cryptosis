@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/RaisedButton';
@@ -22,13 +22,13 @@ const getFieldRenderer = field => {
 
 const createFields = fields => fields.map(
   field => <Col key={field.name} xs={12/fields.length}>
-      <Field
-        name={field.name}
-        label={field.label}
-        component={getFieldRenderer(field)}
-        custom={{options: field.options, content: field.content, multiline: field.multiline}}
-        validate={field.validate}
-        type={field.type}/>
+    <Field
+      name={field.name}
+      label={field.label}
+      component={getFieldRenderer(field)}
+      custom={{value: field.value, options: field.options, content: field.content, multiline: field.multiline}}
+      validate={field.validate}
+      type={field.type}/>
     </Col>
 )
 
@@ -63,6 +63,10 @@ const renderColumns = (numOfCols, groupedFields) => groupedFields.map(
   </Row>
 );
 
+const extendWithValues = (fields, values) => {
+  return fields;
+}
+
 const createForm = (numOfCols, fields) => props => {
   const formProps = {
     numOfCols,
@@ -77,7 +81,7 @@ const createForm = (numOfCols, fields) => props => {
             {
               pipe(
                 partial(renderColumns, numOfCols),
-                groupFields(numOfCols, fields)
+                groupFields(numOfCols, extendWithValues(fields, props.values))
               )
             }
             <Row>

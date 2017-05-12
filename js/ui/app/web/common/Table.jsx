@@ -9,11 +9,13 @@ export default props => (
       columns={props.columns}
       data={props.data}
       showCheckboxes={false}
-      onCellClick={this.handleCellClick}
-      onCellDoubleClick={this.handleCellDoubleClick}
-      onFilterValueChange={this.handleFilterValueChange}
-      onSortOrderChange={this.handleSortOrderChange}
+      onCellClick={props.handleCellClick}
       page={props.page}
       count={props.limit}
     />
 )
+
+// Aditional props
+// {onCellDoubleClick={this.handleCellDoubleClick}}
+// {onFilterValueChange={this.handleFilterValueChange}}
+// {onSortOrderChange={this.handleSortOrderChange}}

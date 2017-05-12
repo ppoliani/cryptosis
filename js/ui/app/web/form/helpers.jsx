@@ -8,9 +8,10 @@ const getError = field => field.meta.touched && field.meta.error
   ? field.meta.error
   : null;
 
-export const renderInput = field => {
+export const renderInput = (field) => {
   let props = {
     id: field.name,
+    value: field.custom.value,
     floatingLabelText: field.label,
     hintText: field.label,
     type: field.type,

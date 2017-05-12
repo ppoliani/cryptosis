@@ -9,7 +9,7 @@ import pureComponent from '../mixins/pureComponent';
 import AsyncPanel from '../common/AsyncPanel';
 import {partial} from '../../helpers/fn';
 import PageWithPanel from '../common/PageWithPanel';
-import BrokerForm from './form/BrokerForm';
+import createBrokerForm from './form/BrokerForm';
 import Table from '../common/Table';
 import Container from '../common/Container';
 import {getBrokers, saveBroker} from '../../data/broker/brokerActions';
@@ -41,8 +41,8 @@ class BrokerPage extends Component {
   }
 
   @autobind
-  togglePanel() {
-    this.setState({isPanelOpen: !this.state.isPanelOpen});
+  togglePanel(_, selectedBroker={}) {
+    this.setState({isPanelOpen: !this.state.isPanelOpen, selectedBroker});
   }
 
   @autobind
@@ -51,6 +51,8 @@ class BrokerPage extends Component {
   }
 
   getPanelContent() {
+    const BrokerForm = createBrokerForm(this.state.selectedBroker);
+
     return (
       <AsyncPanel asyncResult={this.props.saveBrokerResult}>
         <Col xs={12}>
@@ -65,7 +67,14 @@ class BrokerPage extends Component {
 
   @autobind
   onBrokerDelete(data, e) {
+    e.stopPropagation();
     console.log(data);
+  }
+
+  @autobind
+  handleCellClick(e, _, broker) {
+    console.log(broker);
+    this.togglePanel(e, broker);
   }
 
   getBrokersData() {
@@ -87,11 +96,11 @@ class BrokerPage extends Component {
     return (
       <Container title='Brokers' subtitle='Full list of brokers'>
         <AsyncPanel asyncResult={this.props.fetchBrokersResult}>
-            <Table
-              columns={columns}
-              data={this.getBrokersData()}
-            />
-
+          <Table
+            columns={columns}
+            data={this.getBrokersData()}
+            handleCellClick={this.handleCellClick}
+          />
         </AsyncPanel>
       </Container>
     )
