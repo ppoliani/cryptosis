@@ -1,6 +1,5 @@
 const data = require('folktale/core/adt/data');
 const jwt = require('jsonwebtoken');
-const {getInteger} = require('../data/utils');
 
 const JWT_LIFE_SPAN = process.env.JWT_LIFE_SPAN;
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -12,7 +11,7 @@ const JwtError = data('JwtError', {
 
 const generateToken = account => {
   const tokenValue = {
-    userId: getInteger(account.id),
+    userId: account.id,
     name: account.name
   };
 

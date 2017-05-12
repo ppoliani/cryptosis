@@ -8,7 +8,7 @@ const unwrapCypherResult = result => {
   try {
     return Maybe.fromNullable(
       result[0]._fields.reduce((acc, field)=> {
-        return [...acc, normalize(field.properties) || field]
+        return [...acc, normalize(field.properties || field)]
       }, [])
     );
   }
@@ -34,9 +34,11 @@ const unwrapCypherResultToMap = result => {
 };
 
 // normalize the data we get from neo4j
-const normalize = entity => Map(entity)
-  .map(v => neo4j.isInt(v) ? getInteger(v) : v)
-  .toObject();
+const normalize = entity => typeof(entity) === 'object'
+  ? Map(entity)
+    .map(v => neo4j.isInt(v) ? getInteger(v) : v)
+    .toObject()
+  : entity;
 
 // creates a string that will be used in Cypher
 const createMatchString = entity =>
