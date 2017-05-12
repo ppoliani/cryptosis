@@ -15,7 +15,7 @@ export const constructUrl = (url, params) =>
   }
   `
 
-export default (url, method='GET', body={}, headers={}) =>
+export default (method, url, body={}, headers={}) =>
   task(async resolver => {
     try {
       const options = {

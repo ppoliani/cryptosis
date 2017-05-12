@@ -22,7 +22,7 @@ const unwrapCypherResultToMap = result => {
   try {
     return Maybe.fromNullable(
       result[0]._fields.reduce(
-        (acc, field) => acc.set(getInteger(field.identity), normalize(field.properties)),
+        (acc, field) => acc.set(getInteger(field.identity), normalize(field.properties || field)),
         Map()
       )
       .toObject()

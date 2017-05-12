@@ -26,7 +26,7 @@ const createFields = fields => fields.map(
       name={field.name}
       label={field.label}
       component={getFieldRenderer(field)}
-      custom={{value: field.value, options: field.options, content: field.content, multiline: field.multiline}}
+      custom={{options: field.options, content: field.content, multiline: field.multiline}}
       validate={field.validate}
       type={field.type}/>
     </Col>
@@ -95,6 +95,7 @@ const createForm = (numOfCols, fields) => props => {
 };
 
 
-export default (name, numOfCols, fields) => reduxForm({
-  form: name
+export default (name, numOfCols, fields, initialValues) => reduxForm({
+  form: name,
+  initialValues
 })(createForm(numOfCols, fields))

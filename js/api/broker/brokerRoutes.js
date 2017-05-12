@@ -18,7 +18,7 @@ const routes = {
     fn: createBroker
   },
 
-  '/brokers$$': {
+  '/brokers/:id$': {
     method: 'put',
     auth: true,
     fn: updateBroker

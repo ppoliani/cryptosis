@@ -1,21 +1,19 @@
 import {handleActions} from 'redux-actions';
 import {Map} from 'immutable';
 import identity from 'folktale/core/lambda/identity';
-import {GET_BROKERS, SAVE_NEW_BROKER} from './brokerActions';
+import {GET_BROKERS, SAVE_NEW_BROKER, UPDATE_BROKER} from './brokerActions';
 import AsyncData from '../core/AsyncData';
 
 const handleSetBrokers = (state, {payload: brokerResult}) =>
   brokerResult.matchWith({
     Empty: identity,
     Loading: () => state.set('fetchBrokersResult', brokerResult),
-    Success: ({data}) =>  {
-      return state
+    Success: ({data}) =>  state
       .set('fetchBrokersResult', brokerResult)
       .updateIn(
         ['brokers'],
         brokers => brokers.concat(Map(data.result))
-      )
-    },
+      ),
     Failure: () => state.set('fetchBrokersResult', brokerResult),
   });
 
@@ -23,9 +21,11 @@ const handleSaveBroker = (state, {payload: brokerResult}) =>
   brokerResult.matchWith({
     Empty: identity,
     Loading: () => state.set('saveBrokerResult', brokerResult),
-    Success: ({data: broker}) => state
+    Success: ({data}) => {
+      return state
       .set('saveBrokerResult', brokerResult)
-      .set(['brokers', broker.id], broker),
+      .updateIn(['brokers'], brokers =>  brokers.set(data.result.id, data.result));
+    },
     Failure: () => state.set('saveBrokerResult', brokerResult),
   });
 
@@ -40,6 +40,7 @@ const BrokerData = Map({
 
 export default handleActions({
   [GET_BROKERS]: handleSetBrokers,
-  [SAVE_NEW_BROKER]: handleSaveBroker
+  [SAVE_NEW_BROKER]: handleSaveBroker,
+  [UPDATE_BROKER]: handleSaveBroker
 }, BrokerData);
 

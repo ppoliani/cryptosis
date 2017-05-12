@@ -7,12 +7,13 @@ import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import pureComponent from '../mixins/pureComponent';
 import AsyncPanel from '../common/AsyncPanel';
-import {partial} from '../../helpers/fn';
+import {partial, pipe} from '../../helpers/fn';
+import {filterObject} from '../../helpers/utils';
 import PageWithPanel from '../common/PageWithPanel';
 import createBrokerForm from './form/BrokerForm';
 import Table from '../common/Table';
 import Container from '../common/Container';
-import {getBrokers, saveBroker} from '../../data/broker/brokerActions';
+import {getBrokers, saveBroker, updateBroker} from '../../data/broker/brokerActions';
 
 const columns = [
   {key: 'name', label: 'Name'},
@@ -47,7 +48,18 @@ class BrokerPage extends Component {
 
   @autobind
   onBrokerSave(broker) {
-    this.props.saveBroker(broker);
+    const {saveBroker, updateBroker} = this.props;
+    if(broker.id) {
+      // exclude the action prop shich was added above
+     pipe(
+       updateBroker,
+       filterObject(broker, ['action'])
+      );
+    }
+    else {
+      saveBroker(broker);
+    }
+
   }
 
   getPanelContent() {
@@ -66,21 +78,19 @@ class BrokerPage extends Component {
   }
 
   @autobind
-  onBrokerDelete(data, e) {
+  onBrokerDelete(broker, e) {
     e.stopPropagation();
-    console.log(data);
   }
 
   @autobind
   handleCellClick(e, _, broker) {
-    console.log(broker);
     this.togglePanel(e, broker);
   }
 
   getBrokersData() {
     return this.props.brokers.reduce(
       (acc, v, id) => acc.push(
-        Object.assign(v, {
+        Object.assign({}, v, {
           id,
           action: (
             <Button label="Delete" primary={true} onClick={partial(this.onBrokerDelete, v)} />
@@ -130,7 +140,8 @@ class BrokerPage extends Component {
 const mapStateToProps = state => state.broker.toObject();
 const mapDispatchToProps = dispatch => ({
   getBrokers: compose(dispatch, getBrokers),
-  saveBroker: compose(dispatch, saveBroker)
+  saveBroker: compose(dispatch, saveBroker),
+  updateBroker: compose(dispatch, updateBroker)
 });
 
 export default connect(

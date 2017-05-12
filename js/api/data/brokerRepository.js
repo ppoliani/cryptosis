@@ -27,7 +27,7 @@ const saveBroker = async ({resource:broker}) => {
     DbDriver,
     `
       CREATE (b:Broker ${contructCreateMatchString(broker)})
-      RETURN b{ .*, id: ID(b) }
+      RETURN b
     `,
     createMatchObj(broker)
   )
@@ -40,7 +40,7 @@ const updateBroker = async ({resource:broker}) => {
       MATCH (b:Broker)
       WHERE ID(b) = ${broker.id}
       SET b = ${contructUpdateMatchString(broker)}
-      RETURN b{ .*, id: ID(b) }
+      RETURN b
     `,
     createMatchObj(broker)
   )

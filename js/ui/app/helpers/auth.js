@@ -1,8 +1,8 @@
 import fetch from '../helpers/api';
 
 export const login = (source, token) => fetch(
-  `${process.env.API_URL}/login`,
   'POST',
+  `${process.env.API_URL}/login`,
   {},
   {'X-Auth-Source': source, 'X-Auth-Token': token}
 );

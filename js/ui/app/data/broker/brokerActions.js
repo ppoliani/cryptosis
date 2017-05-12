@@ -10,10 +10,11 @@ const BROKER_ENDPOINT = `${process.env.API_URL}/brokers`;
 
 export const GET_BROKERS = 'BROKER::GET_BROKERS';
 export const SAVE_NEW_BROKER = 'BROKER::SAVE_NEW_BROKER';
+export const UPDATE_BROKER = 'BROKER::UPDATE_BROKER';
 
 const getBrokersRoot = fetch => {
   const getUrl = ({skip, limit}) => constructUrl(BROKER_ENDPOINT, Map({skip, limit}));
-  const fetchData = compose(fetch, getUrl);
+  const fetchData = compose(partial(fetch, 'GET'), getUrl);
 
   return createAction(
     GET_BROKERS,
@@ -22,7 +23,7 @@ const getBrokersRoot = fetch => {
 };
 
 const saveBrokerRoot = fetch => {
-  const saveBrokerRequest = partial(fetch, BROKER_ENDPOINT, 'POST');
+  const saveBrokerRequest = partial(fetch, 'POST', BROKER_ENDPOINT);
 
   return createAction(
     SAVE_NEW_BROKER,
@@ -30,5 +31,17 @@ const saveBrokerRoot = fetch => {
   );
 }
 
-export const saveBroker = saveBrokerRoot(fetch);
+const updateBrokerRoot = fetch => {
+  const getUrl = broker => `${BROKER_ENDPOINT}/${broker.id}`;
+  const fetchData = broker => fetch('PUT', getUrl(broker), broker);
+
+  return createAction(
+    UPDATE_BROKER,
+    fetchData
+  );
+}
+
 export const getBrokers = getBrokersRoot(fetch);
+export const saveBroker = saveBrokerRoot(fetch);
+export const updateBroker = updateBrokerRoot(fetch);
+
