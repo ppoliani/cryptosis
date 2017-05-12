@@ -59,7 +59,7 @@ class BrokerPage extends Component {
     else {
       saveBroker(broker);
     }
-
+    this.togglePanel();
   }
 
   getPanelContent() {
