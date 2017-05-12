@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {List} from 'immutable';
 import {connect} from 'react-redux';
 import {compose} from 'folktale/core/lambda';
 import {autobind} from 'core-decorators';
@@ -6,10 +7,21 @@ import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import pureComponent from '../mixins/pureComponent';
 import AsyncPanel from '../common/AsyncPanel';
+import {partial} from '../../helpers/fn';
 import PageWithPanel from '../common/PageWithPanel';
 import BrokerForm from './form/BrokerForm';
+import Table from '../common/Table';
+import Container from '../common/Container';
 import {getBrokers, saveBroker} from '../../data/broker/brokerActions';
 
+const columns = [
+  {key: 'name', label: 'Name'},
+  {key: 'website', label: 'Website'},
+  {key: 'email', label: 'Email'},
+  {key: 'telephone', label: 'Telephone'},
+  {key: 'notes', label: 'Notes'},
+  {key: 'action', label: 'Action'}
+];
 
 @pureComponent
 class BrokerPage extends Component {
@@ -51,6 +63,40 @@ class BrokerPage extends Component {
     );
   }
 
+  @autobind
+  onBrokerDelete(data, e) {
+    console.log(data);
+  }
+
+  getBrokersData() {
+    return this.props.brokers.reduce(
+      (acc, v, id) => acc.push(
+        Object.assign(v, {
+          id,
+          action: (
+            <Button label="Delete" primary={true} onClick={partial(this.onBrokerDelete, v)} />
+          )
+        })
+      ),
+      List()
+    )
+    .toArray()
+  }
+
+  renderBrokerTable() {
+    return (
+      <Container title='Brokers' subtitle='Full list of brokers'>
+        <AsyncPanel asyncResult={this.props.fetchBrokersResult}>
+            <Table
+              columns={columns}
+              data={this.getBrokersData()}
+            />
+
+        </AsyncPanel>
+      </Container>
+    )
+  }
+
   render() {
     return (
       <PageWithPanel
@@ -59,12 +105,12 @@ class BrokerPage extends Component {
         isPanelOpen={this.state.isPanelOpen}>
           <Row>
             <Col xs>
-              <Button type="submit" className="right" onClick={this.togglePanel}>New</Button>
+              <Button type='submit' className='right' onClick={this.togglePanel}>New</Button>
             </Col>
           </Row>
           <Row>
             <Col xs>
-              Here will be the table with all Brokers
+              {this.renderBrokerTable()}
             </Col>
           </Row>
       </PageWithPanel>

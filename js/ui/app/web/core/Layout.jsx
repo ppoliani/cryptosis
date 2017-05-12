@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import {Grid, Col, Row} from 'react-flexbox-grid';
 import Header from './Header';
 import SideBar from './SideBar';
+import './layout.scss';
 
 export default NestedComponent => class LayoutComponent extends Component {
   constructor(props, state) {
@@ -34,7 +35,7 @@ export default NestedComponent => class LayoutComponent extends Component {
         <div className="main-content">
           <Paper className='main-content__page'>
             <Grid>
-              <Row>
+              <Row middle="xs">
                 <Col xs>
                   <NestedComponent />
                 </Col>
