@@ -49,11 +49,9 @@ const handleDeleteInvestmentType  = (state, {payload: investmentTypeResult}) =>
   investmentTypeResult.matchWith({
     Empty: identity,
     Loading: () => state.set('deleteInvestmentTypeResult', investmentTypeResult),
-    Success: ({data}) => {
-      return state
+    Success: ({data}) => state
       .set('deleteInvestmentTypeResult', investmentTypeResult)
-      .updateIn(['investmentTypes'], investmentTypes => investmentTypes.delete(data.result.id))
-    },
+      .updateIn(['investmentTypes'], investmentTypes => investmentTypes.delete(data.result.id)),
     Failure: () => state.set('deleteInvestmentTypeResult', investmentTypeResult),
   });
 

@@ -98,7 +98,7 @@ const updateInvestmentType= async ({resource:investmentType})  => {
       MATCH (t:InvestmentType)
       WHERE ID(t) = ${investmentType.id}
       SET t = ${contructCreateMatchString(investmentType)}
-      RETURN t{ .*, id: ID(t) }
+      RETURN t
     `,
     createMatchObj(investmentType)
   )

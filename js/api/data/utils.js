@@ -1,6 +1,7 @@
 const neo4j = require('neo4j-driver').v1;
 const {Map} = require('immutable');
 const Maybe = require('folktale/data/maybe');
+const {flatten} = require('../core/fn');
 const {entries} = require('../core/utils');
 
 // CypherResult a -> Maybe a

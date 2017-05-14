@@ -46,13 +46,13 @@ const routes = {
     fn: createInvestmentType
   },
 
-  '/investment/types$$': {
+  '/investment/types/:id': {
     method: 'put',
     auth: true,
     fn: updateInvestmentType
   },
 
-  '/investment/types/:id': {
+  '/investment/types/:id$': {
     method: 'delete',
     auth: true,
     fn: deleteInvestmentType
