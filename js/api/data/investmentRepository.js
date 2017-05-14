@@ -72,7 +72,7 @@ const getInvestmentTypes = async ({ctx}) => {
     DbDriver,
     `
       MATCH (t:InvestmentType)
-      RETURN t
+      RETURN t{ .*, id: ID(t) }
       ORDER BY t.name
       SKIP ${skip}
       LIMIT ${limit}

@@ -1,13 +1,13 @@
 const {partial} = require('../core/fn');
 const {createSimpleEndpoint, HTTP_NO_CONTENT} = require('../core/api');
 const repository= require('../data/investmentRepository');
-const {unwrapCypherResult} = require('../data/utils');
+const {unwrapCypherResult, unwrapCypherResultToMap} = require('../data/utils');
 const logger = require('../core/logger');
 
 const getInvestments = partial(
   createSimpleEndpoint,
   repository.getInvestments,
-  unwrapCypherResult,
+  unwrapCypherResultToMap,
   {
     errorMessage: 'Error fetching investments for user'
   }
@@ -45,7 +45,7 @@ const deleteInvestment = partial(
 const getInvestmentTypes = partial(
   createSimpleEndpoint,
   repository.getInvestmentTypes,
-  unwrapCypherResult,
+  unwrapCypherResultToMap,
   {
     errorMessage: 'Error fetching investment types for user'
   }

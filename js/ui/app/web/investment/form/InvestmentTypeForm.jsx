@@ -3,4 +3,4 @@ import createForm from '../../form/formBuilder';
 import fields from '../../../data/form/investement/investmentTypeFields';
 import './form.scss';
 
-export default createForm('investmentTypeForm', 1, fields);
+export default values => createForm('investmentTypeForm', 1, fields, values);

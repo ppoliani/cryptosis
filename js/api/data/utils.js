@@ -18,14 +18,15 @@ const unwrapCypherResult = result => {
 };
 
 // same as above but return a Map instead
-const unwrapCypherResultToMap = result => {
+const unwrapCypherResultToMap = records => {
   try {
     return Maybe.fromNullable(
-      result[0]._fields.reduce(
-        (acc, field) => acc.set(getInteger(field.id), normalize(field.properties || field)),
-        Map()
-      )
-      .toObject()
+      flatten(records.map(r => r._fields))
+        .reduce(
+          (acc, field) => acc.set(getInteger(field.id), normalize(field.properties || field)),
+          Map()
+        )
+        .toObject()
     );
   }
   catch(_) {

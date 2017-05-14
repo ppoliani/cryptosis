@@ -19,7 +19,7 @@ export default [{
   }]
 }, {
   type: 'textarea',
-  name: 'Notes',
+  name: 'notes',
   label: 'Notes',
   stetch: true,
   multiline: true,

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {List} from 'immutable';
 import {connect} from 'react-redux';
 import {compose} from 'folktale/core/lambda';
-import {autobind} from 'core-decorators';
 import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import pureComponent from '../mixins/pureComponent';
@@ -39,14 +38,13 @@ class BrokerPage extends Component {
     this.props.getBrokers({skip, limit});
   }
 
-  @autobind
-  togglePanel(_, selectedBroker={}) {
+  togglePanel = (_, selectedBroker={}) => {
     this.setState({isPanelOpen: !this.state.isPanelOpen, selectedBroker});
   }
 
-  @autobind
-  onBrokerSave(broker) {
+  onBrokerSave = broker => {
     const {saveBroker, updateBroker} = this.props;
+
     if(broker.id) {
       // exclude the action prop shich was added above
      pipe(
@@ -57,6 +55,7 @@ class BrokerPage extends Component {
     else {
       saveBroker(broker);
     }
+
     this.togglePanel();
   }
 
@@ -79,14 +78,12 @@ class BrokerPage extends Component {
     this.props.deleteBroker(broker);
   }
 
-  @autobind
-  onBrokerDeleteClick(broker, e) {
+  onBrokerDeleteClick = (broker, e) => {
     e.stopPropagation();
     this.openDialog(partial(this.onBrokerDelete, broker))
   }
 
-  @autobind
-  handleCellClick(e, _, broker) {
+  handleCellClick = (e, _, broker) => {
     this.togglePanel(e, broker);
   }
 
