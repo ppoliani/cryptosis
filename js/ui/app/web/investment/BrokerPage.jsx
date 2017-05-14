@@ -13,6 +13,7 @@ import PageWithPanel from '../common/PageWithPanel';
 import createBrokerForm from './form/BrokerForm';
 import Table from '../common/Table';
 import Container from '../common/Container';
+import DialogBoxMixin from '../mixins/DialogBoxMixin';
 import {getBrokers, saveBroker, updateBroker} from '../../data/broker/brokerActions';
 
 const columns = [
@@ -24,16 +25,13 @@ const columns = [
   {key: 'action', label: 'Action'}
 ];
 
+@DialogBoxMixin
 @pureComponent
 class BrokerPage extends Component {
-  constructor(props, state) {
-    super(props, state);
-
-    this.state = {
-      isPanelOpen: false,
-      limit: 10,
-      skip: 0
-    };
+  state = {
+    isPanelOpen: false,
+    limit: 10,
+    skip: 0
   }
 
   componentDidMount() {
@@ -77,9 +75,14 @@ class BrokerPage extends Component {
     );
   }
 
+  onBrokerDelete = (broker) => {
+    console.log('Send delete request', broker);
+  }
+
   @autobind
-  onBrokerDelete(broker, e) {
+  onBrokerDeleteClick(broker, e) {
     e.stopPropagation();
+    this.openDialog(partial(this.onBrokerDelete, broker))
   }
 
   @autobind
@@ -93,7 +96,7 @@ class BrokerPage extends Component {
         Object.assign({}, v, {
           id,
           action: (
-            <Button label="Delete" primary={true} onClick={partial(this.onBrokerDelete, v)} />
+            <Button label="Delete" primary={true} onClick={partial(this.onBrokerDeleteClick, v)} />
           )
         })
       ),
@@ -132,6 +135,7 @@ class BrokerPage extends Component {
               {this.renderBrokerTable()}
             </Col>
           </Row>
+          {this.renderDialogBox('Are you sure you want to delete this broker?')}
       </PageWithPanel>
     );
   }
