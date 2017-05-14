@@ -44,9 +44,7 @@ const updateBrokerRoot = fetch => {
 }
 
 const deleteBrokerRoot = fetch => {
-  const fetchData = broker => {
-    return fetch('DELETE', getUrl(broker))
-  };
+  const fetchData = broker => fetch('DELETE', getUrl(broker), broker);
 
   return createAction(
     DELETE_BROKER,
