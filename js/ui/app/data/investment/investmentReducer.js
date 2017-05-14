@@ -56,6 +56,7 @@ const handleDeleteInvestmentType  = (state, {payload: investmentTypeResult}) =>
   });
 
 const InvestmentData = Map({
+  fetchInvestmentResult: AsyncData.Empty(),
   saveInvestmentResult: AsyncData.Empty(),
   fetchInvestmentTypeResult: AsyncData.Empty(),
   saveInvestmentTypeResult: AsyncData.Empty(),

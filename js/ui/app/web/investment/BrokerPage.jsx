@@ -46,7 +46,7 @@ class BrokerPage extends Component {
     const {saveBroker, updateBroker} = this.props;
 
     if(broker.id) {
-      // exclude the action prop shich was added above
+      // exclude the action prop which was added above
      pipe(
        updateBroker,
        filterObject(broker, ['action'])

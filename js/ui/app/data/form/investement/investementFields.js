@@ -1,15 +1,17 @@
 import {required, date, number} from '../validator';
 
 export default [{
-  type: 'text',
+  type: 'dropdown',
   name: 'investmentType',
   label: 'Investement Type',
-  validate: [required]
+  validate: [required],
+  options: []
 }, {
-  type: 'text',
+  type: 'dropdown',
   name: 'broker',
   label: 'Broker',
-  validate: [required]
+  validate: [required],
+  options: []
 }, {
   type: 'date',
   name: 'date',

@@ -1,47 +1,122 @@
 import React, {Component} from 'react';
+import {List} from 'immutable';
 import {connect} from 'react-redux';
 import {compose} from 'folktale/core/lambda';
-import {Grid, Row, Col} from 'react-flexbox-grid';
+import {AsyncDataAll} from '../../data/core/AsyncData';
+import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
-import {autobind} from 'core-decorators'
 import pureComponent from '../mixins/pureComponent';
 import PageWithPanel from '../common/PageWithPanel';
 import AsyncPanel from '../common/AsyncPanel';
-import InvestmentForm from './form/InvestmentForm';
-import {saveInvestment} from '../../data/investment/investmentActions';
+import createInvestmentForm from './form/InvestmentForm';
+import Table from '../common/Table';
+import Container from '../common/Container';
+import DialogBoxMixin from '../mixins/DialogBoxMixin';
+import {saveInvestment, getInvestmentTypes} from '../../data/investment/investmentActions';
+import {getBrokers} from '../../data/broker/brokerActions';
 
+const columns = [
+  {key: 'investmentType', label: 'Investment Type'},
+  {key: 'broker', label: 'Broker'},
+  {key: 'date', label: 'Date'},
+  {key: 'moneyInvested', label: 'Money Invested'},
+  {key: 'expenses', label: 'Expenses'},
+  {key: 'quantity', label: 'Quantity'},
+  {key: 'price', label: 'Price'},
+  {key: 'notes', label: 'Notes'},
+  {key: 'action', label: 'Action'}
+];
+
+@DialogBoxMixin
 @pureComponent
 class InvestmentPage extends Component {
-  constructor(props, state) {
-    super(props, state);
-
-    this.state = {
-      isPanelOpen: false
-    };
+  state = {
+    isPanelOpen: false,
+    limit: 10,
+    skip: 0
   }
 
-  @autobind
-  togglePanel() {
-    this.setState({isPanelOpen: !this.state.isPanelOpen});
+  componentDidMount() {
+    const {skip, limit} = this.state;
+    this.props.getBrokers({skip, limit});
+    this.props.getInvestmentTypes({skip, limit});
   }
 
-  @autobind
-  onInvestmentSave(investement) {
-    this.props.saveInvestment(investement);
+  togglePanel = (_, selectedInvestment={}) => {
+    this.setState({isPanelOpen: !this.state.isPanelOpen, selectedInvestment});
+  }
+
+  onInvestmentSave = investement => {
+    const {saveInvestment, updateInvestment} = this.props;
+
+    if(investment.id) {
+     pipe(
+       updateInvestment,
+       filterObject(investment, ['action'])
+      );
+    }
+    else {
+      saveInvestment(investment);
+    }
+
+    this.togglePanel();
   }
 
   getPanelContent() {
+    // const InvestmentForm = createInvestmentForm({}/*brokers and types options*/, this.state.selectedInvestment);
+
     return (
-      <AsyncPanel asyncResult={this.props.saveInvestmentResult}>
+      <AsyncPanel asyncResult={this.props.investments.saveInvestmentResult}>
         <Col xs={12}>
           <h1>New Investment</h1>
-          <InvestmentForm onSubmit={this.onInvestmentSave}/>
+          {/*<InvestmentForm onSubmit={this.onInvestmentSave}/>*/}
         </Col>
       </AsyncPanel>
     );
   }
 
+  handleCellClick = (e, _, investment) => {
+    this.togglePanel(e, investment);
+  }
+
+  getInvestmentsData() {
+    return this.props.investments.investments.reduce(
+      (acc, v, id) => acc.push(
+        Object.assign({}, v, {
+          id,
+          action: (
+            <Button label="Delete" primary={true} onClick={partial(this.onInvestmentDeleteClick, v)} />
+          )
+        })
+      ),
+      List()
+    )
+    .toArray()
+  }
+
+  renderInvestementsTable() {
+    return (
+      <Container title='Investments' subtitle='Full list of all investments'>
+        <AsyncPanel asyncResult={this.props.investments.fetchInvestmentResult}>
+          <Table
+            columns={columns}
+            data={this.getInvestmentsData()}
+            handleCellClick={this.handleCellClick}
+          />
+        </AsyncPanel>
+      </Container>
+    )
+  }
+
   render() {
+    AsyncDataAll([this.props.investments.fetchInvestmentTypeResult, this.props.fetchBrokersResult])
+      .matchWith({
+        Empty: () => console.log('>>>>>>>>>>>>>>>>> Empty'),
+        Loading: () => console.log('>>>>>>>>>>>>>>>>> Loading'),
+        Success: () => console.log('>>>>>>>>>>>>>>>>> Success'),
+        Failure: () => console.log('>>>>>>>>>>>>>>>>> Failure')
+      });
+
     return (
       <PageWithPanel
         PanelContent={this.getPanelContent()}
@@ -54,17 +129,24 @@ class InvestmentPage extends Component {
           </Row>
           <Row>
             <Col xs>
-              Here will be the table with all investements
+              {this.renderInvestementsTable()}
             </Col>
           </Row>
+          {this.renderDialogBox('Are you sure you want to delete this investment?')}
       </PageWithPanel>
     );
   }
 }
 
-const mapStateToProps = state => state.investment.toObject();
+const mapStateToProps = state => ({
+  investments: state.investment.toObject(),
+  fetchBrokersResult: state.broker.get('fetchBrokersResult'),
+});
+
 const mapDispatchToProps = dispatch => ({
-  saveInvestment: compose(dispatch, saveInvestment)
+  saveInvestment: compose(dispatch, saveInvestment),
+  getBrokers: compose(dispatch, getBrokers),
+  getInvestmentTypes: compose(dispatch, getInvestmentTypes)
 });
 
 export default connect(
