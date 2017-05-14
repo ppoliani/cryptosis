@@ -14,7 +14,7 @@ import createBrokerForm from './form/BrokerForm';
 import Table from '../common/Table';
 import Container from '../common/Container';
 import DialogBoxMixin from '../mixins/DialogBoxMixin';
-import {getBrokers, saveBroker, updateBroker} from '../../data/broker/brokerActions';
+import {getBrokers, saveBroker, updateBroker, deleteBroker} from '../../data/broker/brokerActions';
 
 const columns = [
   {key: 'name', label: 'Name'},
@@ -75,8 +75,8 @@ class BrokerPage extends Component {
     );
   }
 
-  onBrokerDelete = (broker) => {
-    console.log('Send delete request', broker);
+  onBrokerDelete = broker => {
+    this.props.deleteBroker(broker);
   }
 
   @autobind
@@ -145,7 +145,8 @@ const mapStateToProps = state => state.broker.toObject();
 const mapDispatchToProps = dispatch => ({
   getBrokers: compose(dispatch, getBrokers),
   saveBroker: compose(dispatch, saveBroker),
-  updateBroker: compose(dispatch, updateBroker)
+  updateBroker: compose(dispatch, updateBroker),
+  deleteBroker: compose(dispatch, deleteBroker)
 });
 
 export default connect(

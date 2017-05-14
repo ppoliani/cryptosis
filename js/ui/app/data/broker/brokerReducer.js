@@ -1,14 +1,14 @@
 import {handleActions} from 'redux-actions';
 import {Map} from 'immutable';
 import identity from 'folktale/core/lambda/identity';
-import {GET_BROKERS, SAVE_NEW_BROKER, UPDATE_BROKER} from './brokerActions';
+import {GET_BROKERS, SAVE_NEW_BROKER, UPDATE_BROKER, DELETE_BROKER} from './brokerActions';
 import AsyncData from '../core/AsyncData';
 
 const handleSetBrokers = (state, {payload: brokerResult}) =>
   brokerResult.matchWith({
     Empty: identity,
     Loading: () => state.set('fetchBrokersResult', brokerResult),
-    Success: ({data}) =>  state
+    Success: ({data}) => state
       .set('fetchBrokersResult', brokerResult)
       .updateIn(
         ['brokers'],
@@ -21,26 +21,38 @@ const handleSaveBroker = (state, {payload: brokerResult}) =>
   brokerResult.matchWith({
     Empty: identity,
     Loading: () => state.set('saveBrokerResult', brokerResult),
-    Success: ({data}) => {
-      return state
+    Success: ({data}) => state
       .set('saveBrokerResult', brokerResult)
-      .updateIn(['brokers'], brokers =>  brokers.set(data.result.id, data.result));
-    },
+      .updateIn(['brokers'], brokers =>  brokers.set(data.result.id, data.result)),
     Failure: () => state.set('saveBrokerResult', brokerResult),
   });
 
 const setBrokersList = (state, {payload: brokers}) => state.set('brokers', brokers);
 const updateBroker = (state, {payload: broker}) => state.updateIn(['brokers', broker.id], list => list.push(broker));
 
+const handleDeleteBroker = (state, {payload: brokerResult}) =>
+  brokerResult.matchWith({
+    Empty: identity,
+    Loading: () => state.set('deleteBrokerResult', brokerResult),
+    Success: ({data}) => {
+      return state
+      .set('deleteBrokerResult', brokerResult)
+      .deleteIn(['brokers', data.result.id]);
+    },
+    Failure: () => state.set('deleteBrokerResult', brokerResult),
+  });
+
 const BrokerData = Map({
   fetchBrokersResult: AsyncData.Empty(),
   saveBrokerResult: AsyncData.Empty(),
+  deleteBrokerResult: AsyncData.Empty(),
   brokers: Map()
 });
 
 export default handleActions({
   [GET_BROKERS]: handleSetBrokers,
   [SAVE_NEW_BROKER]: handleSaveBroker,
-  [UPDATE_BROKER]: handleSaveBroker
+  [UPDATE_BROKER]: handleSaveBroker,
+  [DELETE_BROKER]: handleDeleteBroker
 }, BrokerData);
 

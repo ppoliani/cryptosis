@@ -29,5 +29,4 @@ export default mixin({
       message={message}
       onSubmit={() => this.onSubmit()} />
   }
-
 });

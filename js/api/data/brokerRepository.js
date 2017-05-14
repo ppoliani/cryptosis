@@ -14,7 +14,7 @@ const getBrokers = async ({ctx}) => {
     DbDriver,
     `
       MATCH (b:Broker)
-      RETURN b
+      RETURN b{ .*, id: ID(b) }
       ORDER BY b.name
       SKIP ${skip}
       LIMIT ${limit}

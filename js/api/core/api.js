@@ -43,7 +43,7 @@ const createSimpleEndpoint = async (crudAction, unwrapCypherResult, options, ctx
             ctx.body = {result};
           },
           Nothing: () => {
-            throw new Error();
+            ctx.status = 204;
           }
         });
     }

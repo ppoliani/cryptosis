@@ -11,6 +11,9 @@ const BROKER_ENDPOINT = `${process.env.API_URL}/brokers`;
 export const GET_BROKERS = 'BROKER::GET_BROKERS';
 export const SAVE_NEW_BROKER = 'BROKER::SAVE_NEW_BROKER';
 export const UPDATE_BROKER = 'BROKER::UPDATE_BROKER';
+export const DELETE_BROKER = 'BROKER::DELETE_BROKER';
+
+const getUrl = broker => `${BROKER_ENDPOINT}/${broker.id}`;
 
 const getBrokersRoot = fetch => {
   const getUrl = ({skip, limit}) => constructUrl(BROKER_ENDPOINT, Map({skip, limit}));
@@ -32,7 +35,6 @@ const saveBrokerRoot = fetch => {
 }
 
 const updateBrokerRoot = fetch => {
-  const getUrl = broker => `${BROKER_ENDPOINT}/${broker.id}`;
   const fetchData = broker => fetch('PUT', getUrl(broker), broker);
 
   return createAction(
@@ -41,7 +43,19 @@ const updateBrokerRoot = fetch => {
   );
 }
 
+const deleteBrokerRoot = fetch => {
+  const fetchData = broker => {
+    return fetch('DELETE', getUrl(broker))
+  };
+
+  return createAction(
+    DELETE_BROKER,
+    fetchData
+  );
+}
+
 export const getBrokers = getBrokersRoot(fetch);
 export const saveBroker = saveBrokerRoot(fetch);
 export const updateBroker = updateBrokerRoot(fetch);
+export const deleteBroker = deleteBrokerRoot(fetch);
 
