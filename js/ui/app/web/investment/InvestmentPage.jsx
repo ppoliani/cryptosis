@@ -140,7 +140,8 @@ class InvestmentPage extends Component {
   getInvestmentsData() {
     return this.props.investments.get('investments').reduce(
       (acc, v, id) => acc.push(
-        v.set('date', dateformat(v.get('date'), 'MM/DD/YYYY'))
+        v.set('id', id)
+          .set('date', dateformat(v.get('date'), 'MM/DD/YYYY'))
           .set('action', <Button label="Delete" primary={true} onClick={partial(this.onInvestmentDeleteClick, v)} />)
           .toJS()
         ),
