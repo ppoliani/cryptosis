@@ -1,5 +1,6 @@
 import {createAction} from 'redux-actions';
 import compose from 'folktale/core/lambda/compose';
+import map from 'folktale/core/fantasy-land/map';
 import {Map} from 'immutable';
 import fetch, {constructUrl} from '../../helpers/api';
 import {partial} from '../../helpers/fn';
@@ -18,7 +19,8 @@ export const SAVE_NEW_INVESTMENT_TYPE = 'INVESTMENT::SAVE_NEW_INVESTMENT_TYPE';
 export const UPDATE_INVESTMENT_TYPE = 'INVESTMENT::UPDATE_INVESTMENT_TYPE';
 export const DELETE_INVESTMENT_TYPE = 'INVESTMENT::DELETE_INVESTMENT_TYPE';
 
-const getInestmentTypeUrl = investmentType => `${INVESTMENT_TYPE_ENDPOINT}/${investmentType.id}`;
+const getInvestmentUrl = investment => `${INVESTMENT_ENDPOINT}/${investment.get('id')}`;
+const getInestmentTypeUrl = investmentType => `${INVESTMENT_TYPE_ENDPOINT}/${investmentType.get('id')}`;
 
 const getInvestmentsRoot = fetch => {
   const getUrl = ({skip, limit}) => constructUrl(INVESTMENT_ENDPOINT, Map({skip, limit}));
@@ -30,12 +32,30 @@ const getInvestmentsRoot = fetch => {
   );
 }
 
+const updateInvestmentRoot = fetch => {
+  const fetchData = investment => fetch('PUT', getInvestmentUrl(investment), investment);
+
+  return createAction(
+    UPDATE_INVESTMENT,
+    fetchData
+  );
+}
+
 const saveInvestmentRoot = fetch => {
   const saveInvestmentResult = partial(fetch, 'POST', INVESTMENT_ENDPOINT);
 
   return createAction(
     SAVE_NEW_INVESTMENT,
     saveInvestmentResult
+  );
+}
+
+const deleteInvestmentRoot = fetch => {
+  const fetchData = investment => fetch('DELETE', getInvestmentUrl(investment), investment.toJS());
+
+  return createAction(
+    DELETE_INVESTMENT,
+    fetchData
   );
 }
 
@@ -68,7 +88,7 @@ const updateInvestmentTypeRoot = fetch => {
 }
 
 const deleteInvestmentTypeRoot = fetch => {
-  const fetchData = investmentType => fetch('DELETE', getInestmentTypeUrl(investmentType), investmentType);
+  const fetchData = investmentType => fetch('DELETE', getInestmentTypeUrl(investmentType), investmentType.toJS());
 
   return createAction(
     DELETE_INVESTMENT_TYPE,
@@ -78,6 +98,9 @@ const deleteInvestmentTypeRoot = fetch => {
 
 export const getInvestments = getInvestmentsRoot(fetch);
 export const saveInvestment = saveInvestmentRoot(fetch);
+export const updateInvestment = updateInvestmentRoot(fetch);
+export const deleteInvestment = deleteInvestmentRoot(fetch);
+
 export const getInvestmentTypes = getInvestmentTypesRoot(fetch);
 export const saveInvestmentType = saveInvestmentTypeRoot(fetch);
 export const updateInvestmentType = updateInvestmentTypeRoot(fetch);

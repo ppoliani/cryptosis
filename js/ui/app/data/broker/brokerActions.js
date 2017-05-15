@@ -12,7 +12,7 @@ export const SAVE_NEW_BROKER = 'BROKER::SAVE_NEW_BROKER';
 export const UPDATE_BROKER = 'BROKER::UPDATE_BROKER';
 export const DELETE_BROKER = 'BROKER::DELETE_BROKER';
 
-const getUrl = broker => `${BROKER_ENDPOINT}/${broker.id}`;
+const getUrl = broker => `${BROKER_ENDPOINT}/${broker.get('id')}`;
 
 const getBrokersRoot = fetch => {
   const getUrl = ({skip, limit}) => constructUrl(BROKER_ENDPOINT, Map({skip, limit}));
@@ -43,7 +43,7 @@ const updateBrokerRoot = fetch => {
 }
 
 const deleteBrokerRoot = fetch => {
-  const fetchData = broker => fetch('DELETE', getUrl(broker), broker);
+  const fetchData = broker => fetch('DELETE', getUrl(broker), broker.toJS());
 
   return createAction(
     DELETE_BROKER,

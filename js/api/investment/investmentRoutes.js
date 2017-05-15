@@ -22,13 +22,13 @@ const routes = {
     fn: createInvestment
   },
 
-  '/investments$$': {
+  '/investments/:id': {
     method: 'put',
     auth: true,
     fn: updateInvestment
   },
 
-  '/investments/:id': {
+  '/investments/:id$': {
     method: 'delete',
     auth: true,
     fn: deleteInvestment

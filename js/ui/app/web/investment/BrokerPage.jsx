@@ -90,12 +90,9 @@ class BrokerPage extends Component {
   getBrokersData() {
     return this.props.brokers.reduce(
       (acc, v, id) => acc.push(
-        Object.assign({}, v, {
-          id,
-          action: (
-            <Button label="Delete" primary={true} onClick={partial(this.onBrokerDeleteClick, v)} />
-          )
-        })
+        v.set('id', id)
+          .set('action', <Button label="Delete" primary={true} onClick={partial(this.onBrokerDeleteClick, v)} />)
+          .toJS()
       ),
       List()
     )

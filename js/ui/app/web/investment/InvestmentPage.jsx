@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {List} from 'immutable';
+import dateformat from 'date-fns/format';
 import {partial, pipe} from '../../helpers/fn';
+import {filterObject} from '../../helpers/utils';
 import {connect} from 'react-redux';
 import {compose} from 'folktale/core/lambda';
 import {AsyncDataAll, AsyncDataSome} from '../../data/core/AsyncData';
@@ -17,6 +19,8 @@ import {getBrokers} from '../../data/broker/brokerActions';
 import {
   getInvestments,
   saveInvestment,
+  updateInvestment,
+  deleteInvestment,
   getInvestmentTypes
 } from '../../data/investment/investmentActions';
 
@@ -78,8 +82,8 @@ class InvestmentPage extends Component {
   getOptionsFromMap(records) {
     return records.reduce(
       (acc, v, k) => acc.push({
-        value: v.name,
-        text: v.name
+        value: v.get('name'),
+        text: v.get('name')
       }),
       List()
     )
@@ -120,6 +124,15 @@ class InvestmentPage extends Component {
     );
   }
 
+  onInvestmentDelete = investment => {
+    this.props.deleteInvestment(investment);
+  }
+
+  onInvestmentDeleteClick = (investment, e) => {
+    e.stopPropagation();
+    this.openDialog(partial(this.onInvestmentDelete, investment))
+  }
+
   handleCellClick = (e, _, investment) => {
     this.togglePanel(e, investment);
   }
@@ -127,19 +140,17 @@ class InvestmentPage extends Component {
   getInvestmentsData() {
     return this.props.investments.get('investments').reduce(
       (acc, v, id) => acc.push(
-        Object.assign({}, v, {
-          id,
-          action: (
-            <Button label="Delete" primary={true} onClick={partial(this.onInvestmentDeleteClick, v)} />
-          )
-        })
-      ),
+        v.set('date', dateformat(v.get('date'), 'MM/DD/YYYY'))
+          .set('action', <Button label="Delete" primary={true} onClick={partial(this.onInvestmentDeleteClick, v)} />)
+          .toJS()
+        ),
       List()
     )
-    .toArray()
+    .toArray();
   }
 
   renderInvestementsTable() {
+    const data = this.getInvestmentsData();
     return (
       <Container title='Investments' subtitle='Full list of all investments'>
         <AsyncPanel asyncResult={this.props.investments.get('fetchInvestmentsResult')}>
@@ -184,6 +195,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getInvestments: compose(dispatch, getInvestments),
   saveInvestment: compose(dispatch, saveInvestment),
+  updateInvestment: compose(dispatch, updateInvestment),
+  deleteInvestment: compose(dispatch, deleteInvestment),
   getBrokers: compose(dispatch, getBrokers),
   getInvestmentTypes: compose(dispatch, getInvestmentTypes)
 });

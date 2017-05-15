@@ -48,7 +48,7 @@ const updateInvestment = async ({resource:investment}) => {
       DELETE hb, ht
       WITH i, b, t
       CREATE (b)<-[:HAS_BROKER]-(i)-[:HAS_TYPE]->(t)
-      RETURN i{ .*, id: ID(i) }
+      RETURN i
     `,
     createMatchObj(investment)
   );

@@ -91,12 +91,9 @@ class InvestmentTypePage extends Component {
   getInvestmentTypeData() {
     return this.props.investmentTypes.reduce(
       (acc, v, id) => acc.push(
-        Object.assign({}, v, {
-          id,
-          action: (
-            <Button label="Delete" primary={true} onClick={partial(this.onInvestmentTypeDeleteClick, v)} />
-          )
-        })
+        v.set('id', id)
+          .set('action', <Button label="Delete" primary={true} onClick={partial(this.onInvestmentTypeDeleteClick, v)} />)
+          .toJS()
       ),
       List()
     )
