@@ -52,7 +52,7 @@ module.exports = () => {
   }
 
   return {
-    devtool: isProd ? 'source-map' : 'cheap-module-source-map',
+    devtool: isProd ? 'source-map' : 'source-map',
     context: sourcePath,
 
     entry: {

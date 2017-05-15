@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {List} from 'immutable';
 import {connect} from 'react-redux';
 import {compose} from 'folktale/core/lambda';
-import {AsyncDataAll} from '../../data/core/AsyncData';
+import {AsyncDataAll, AsyncDataSome} from '../../data/core/AsyncData';
 import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import pureComponent from '../mixins/pureComponent';
@@ -62,14 +62,49 @@ class InvestmentPage extends Component {
     this.togglePanel();
   }
 
+  getCombinedAsyncResult() {
+    return AsyncDataAll([
+      this.props.investments.get('fetchInvestmentTypeResult'),
+      this.props.fetchBrokersResult
+    ]);
+  }
+
+  getOptionsFromMap(records) {
+    return records.reduce(
+      (acc, v, k) => acc.push({
+        value: v.name,
+        text: v.name
+      }),
+      List()
+    )
+    .toJS();
+  }
+
+  createDynamicForm() {
+    const {brokers, investments} = this.props;
+
+    return this.getCombinedAsyncResult()
+      .matchWith({
+        Empty: () => null,
+        Loading: () => null,
+        Success: () => createInvestmentForm(this.getOptionsFromMap(brokers), this.getOptionsFromMap(investments.get('investmentTypes')), this.state.selectedInvestment),
+        Failure: ({error}) => console.log('Error building the form', error)
+      });
+  }
+
   getPanelContent() {
-    // const InvestmentForm = createInvestmentForm({}/*brokers and types options*/, this.state.selectedInvestment);
+    const asyncResult = AsyncDataSome([
+      this.getCombinedAsyncResult(),
+      this.props.investments.get('saveInvestmentResult')
+    ]);
+
+    const InvestmentForm = this.createDynamicForm();
 
     return (
-      <AsyncPanel asyncResult={this.props.investments.saveInvestmentResult}>
+      <AsyncPanel asyncResult={asyncResult}>
         <Col xs={12}>
           <h1>New Investment</h1>
-          {/*<InvestmentForm onSubmit={this.onInvestmentSave}/>*/}
+          {InvestmentForm && <InvestmentForm onSubmit={this.onInvestmentSave} />}
         </Col>
       </AsyncPanel>
     );
@@ -80,7 +115,7 @@ class InvestmentPage extends Component {
   }
 
   getInvestmentsData() {
-    return this.props.investments.investments.reduce(
+    return this.props.investments.get('investments').reduce(
       (acc, v, id) => acc.push(
         Object.assign({}, v, {
           id,
@@ -97,7 +132,7 @@ class InvestmentPage extends Component {
   renderInvestementsTable() {
     return (
       <Container title='Investments' subtitle='Full list of all investments'>
-        <AsyncPanel asyncResult={this.props.investments.fetchInvestmentResult}>
+        <AsyncPanel asyncResult={this.props.investments.get('fetchInvestmentResult')}>
           <Table
             columns={columns}
             data={this.getInvestmentsData()}
@@ -109,14 +144,6 @@ class InvestmentPage extends Component {
   }
 
   render() {
-    AsyncDataAll([this.props.investments.fetchInvestmentTypeResult, this.props.fetchBrokersResult])
-      .matchWith({
-        Empty: () => console.log('>>>>>>>>>>>>>>>>> Empty'),
-        Loading: () => console.log('>>>>>>>>>>>>>>>>> Loading'),
-        Success: () => console.log('>>>>>>>>>>>>>>>>> Success'),
-        Failure: () => console.log('>>>>>>>>>>>>>>>>> Failure')
-      });
-
     return (
       <PageWithPanel
         PanelContent={this.getPanelContent()}
@@ -139,7 +166,8 @@ class InvestmentPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  investments: state.investment.toObject(),
+  investments: state.investment,
+  brokers: state.broker.get('brokers'),
   fetchBrokersResult: state.broker.get('fetchBrokersResult'),
 });
 

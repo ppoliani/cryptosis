@@ -1,18 +1,6 @@
 import {required, date, number} from '../validator';
 
-export default [{
-  type: 'dropdown',
-  name: 'investmentType',
-  label: 'Investement Type',
-  validate: [required],
-  options: []
-}, {
-  type: 'dropdown',
-  name: 'broker',
-  label: 'Broker',
-  validate: [required],
-  options: []
-}, {
+const fields = [{
   type: 'date',
   name: 'date',
   label: 'Date',
@@ -45,3 +33,20 @@ export default [{
   label: 'Notes',
   stretch: true
 }];
+
+export default (brokerOptions, investmentTypesOptions) => [
+  {
+    type: 'dropdown',
+    name: 'investmentType',
+    label: 'Investement Type',
+    validate: [required],
+    options: brokerOptions
+  }, {
+    type: 'dropdown',
+    name: 'broker',
+    label: 'Broker',
+    validate: [required],
+    options: investmentTypesOptions
+  },
+  ...fields
+];

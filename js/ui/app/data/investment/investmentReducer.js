@@ -37,11 +37,9 @@ const handleSaveInvestmentType = (state, {payload: saveInvestmentTypeResult}) =>
   saveInvestmentTypeResult.matchWith({
     Empty: identity,
     Loading: () => state.set('saveInvestmentTypeResult', saveInvestmentTypeResult),
-    Success: ({data}) => {
-      return state
+    Success: ({data}) => state
       .set('saveInvestmentTypeResult', saveInvestmentTypeResult)
-      .updateIn(['investmentTypes'], investmentTypes => investmentTypes.set(data.result.id, data.result))
-    },
+      .updateIn(['investmentTypes'], investmentTypes => investmentTypes.set(data.result.id, data.result)),
     Failure: () => state.set('saveInvestmentTypeResult', saveInvestmentTypeResult),
   });
 
