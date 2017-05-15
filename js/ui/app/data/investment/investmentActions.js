@@ -8,7 +8,10 @@ import {task} from 'folktale/data/task';
 const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;
 const INVESTMENT_TYPE_ENDPOINT = `${process.env.API_URL}/investment/types`;
 
+export const GET_INVESTMENTS = 'INVESTMENT::GET_INVESTMENTS';
 export const SAVE_NEW_INVESTMENT = 'INVESTMENT::SAVE_NEW_INVESTMENT';
+export const UPDATE_INVESTMENT = 'INVESTMENT::UPDATE_INVESTMENT';
+export const DELETE_INVESTMENT = 'INVESTMENT::DELETE_INVESTMENT';
 
 export const GET_INVESTMENT_TYPES = 'INVESTMENT::GET_INVESTMENT_TYPES';
 export const SAVE_NEW_INVESTMENT_TYPE = 'INVESTMENT::SAVE_NEW_INVESTMENT_TYPE';
@@ -16,6 +19,16 @@ export const UPDATE_INVESTMENT_TYPE = 'INVESTMENT::UPDATE_INVESTMENT_TYPE';
 export const DELETE_INVESTMENT_TYPE = 'INVESTMENT::DELETE_INVESTMENT_TYPE';
 
 const getInestmentTypeUrl = investmentType => `${INVESTMENT_TYPE_ENDPOINT}/${investmentType.id}`;
+
+const getInvestmentsRoot = fetch => {
+  const getUrl = ({skip, limit}) => constructUrl(INVESTMENT_ENDPOINT, Map({skip, limit}));
+  const fetchData = compose(partial(fetch, 'GET'), getUrl);
+
+  return createAction(
+    GET_INVESTMENTS,
+    fetchData
+  );
+}
 
 const saveInvestmentRoot = fetch => {
   const saveInvestmentResult = partial(fetch, 'POST', INVESTMENT_ENDPOINT);
@@ -63,6 +76,7 @@ const deleteInvestmentTypeRoot = fetch => {
   );
 }
 
+export const getInvestments = getInvestmentsRoot(fetch);
 export const saveInvestment = saveInvestmentRoot(fetch);
 export const getInvestmentTypes = getInvestmentTypesRoot(fetch);
 export const saveInvestmentType = saveInvestmentTypeRoot(fetch);

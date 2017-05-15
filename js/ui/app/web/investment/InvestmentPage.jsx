@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {List} from 'immutable';
+import {partial, pipe} from '../../helpers/fn';
 import {connect} from 'react-redux';
 import {compose} from 'folktale/core/lambda';
 import {AsyncDataAll, AsyncDataSome} from '../../data/core/AsyncData';
@@ -12,8 +13,12 @@ import createInvestmentForm from './form/InvestmentForm';
 import Table from '../common/Table';
 import Container from '../common/Container';
 import DialogBoxMixin from '../mixins/DialogBoxMixin';
-import {saveInvestment, getInvestmentTypes} from '../../data/investment/investmentActions';
 import {getBrokers} from '../../data/broker/brokerActions';
+import {
+  getInvestments,
+  saveInvestment,
+  getInvestmentTypes
+} from '../../data/investment/investmentActions';
 
 const columns = [
   {key: 'investmentType', label: 'Investment Type'},
@@ -38,6 +43,7 @@ class InvestmentPage extends Component {
 
   componentDidMount() {
     const {skip, limit} = this.state;
+    this.props.getInvestments({skip, limit});
     this.props.getBrokers({skip, limit});
     this.props.getInvestmentTypes({skip, limit});
   }
@@ -46,7 +52,7 @@ class InvestmentPage extends Component {
     this.setState({isPanelOpen: !this.state.isPanelOpen, selectedInvestment});
   }
 
-  onInvestmentSave = investement => {
+  onInvestmentSave = investment => {
     const {saveInvestment, updateInvestment} = this.props;
 
     if(investment.id) {
@@ -87,7 +93,11 @@ class InvestmentPage extends Component {
       .matchWith({
         Empty: () => null,
         Loading: () => null,
-        Success: () => createInvestmentForm(this.getOptionsFromMap(brokers), this.getOptionsFromMap(investments.get('investmentTypes')), this.state.selectedInvestment),
+        Success: () => createInvestmentForm(
+          this.getOptionsFromMap(investments.get('investmentTypes')),
+          this.getOptionsFromMap(brokers),
+          this.state.selectedInvestment
+        ),
         Failure: ({error}) => console.log('Error building the form', error)
       });
   }
@@ -132,7 +142,7 @@ class InvestmentPage extends Component {
   renderInvestementsTable() {
     return (
       <Container title='Investments' subtitle='Full list of all investments'>
-        <AsyncPanel asyncResult={this.props.investments.get('fetchInvestmentResult')}>
+        <AsyncPanel asyncResult={this.props.investments.get('fetchInvestmentsResult')}>
           <Table
             columns={columns}
             data={this.getInvestmentsData()}
@@ -172,6 +182,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  getInvestments: compose(dispatch, getInvestments),
   saveInvestment: compose(dispatch, saveInvestment),
   getBrokers: compose(dispatch, getBrokers),
   getInvestmentTypes: compose(dispatch, getInvestmentTypes)

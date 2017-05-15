@@ -2,6 +2,7 @@ import {handleActions} from 'redux-actions';
 import {Map} from 'immutable';
 import identity from 'folktale/core/lambda/identity';
 import {
+  GET_INVESTMENTS,
   SAVE_NEW_INVESTMENT,
   GET_INVESTMENT_TYPES,
   SAVE_NEW_INVESTMENT_TYPE,
@@ -14,10 +15,25 @@ const handleSaveInvestment = (state, {payload: saveInvestmentResult}) =>
   saveInvestmentResult.matchWith({
     Empty: identity,
     Loading: () => state.set('saveInvestmentResult', saveInvestmentResult),
-    Success: ({data: investment}) => state
+    Success: ({data}) => state
       .set('saveInvestmentResult', saveInvestmentResult)
-      .set(['investments', investment.id], investment),
+      .updateIn(
+        ['investments'],
+        investments => investments.set(data.result.id, data.result)),
     Failure: () => state.set('saveInvestmentResult', saveInvestmentResult),
+  });
+
+const handleSetInvestments = (state, {payload: investmentsResult}) =>
+  investmentsResult.matchWith({
+    Empty: identity,
+    Loading: () => state.set('fetchInvestmentsResult', investmentsResult),
+    Success: ({data}) => state
+      .set('fetchInvestmentsResult', investmentsResult)
+      .updateIn(
+        ['investments'],
+        investments => investments.concat(Map(data.result))
+      ),
+    Failure: () => state.set('fetchInvestmentTypeResult', investmentTypeResult),
   });
 
 const handleSetInvestmentTypes = (state, {payload: investmentTypeResult}) =>
@@ -54,7 +70,7 @@ const handleDeleteInvestmentType  = (state, {payload: investmentTypeResult}) =>
   });
 
 const InvestmentData = Map({
-  fetchInvestmentResult: AsyncData.Empty(),
+  fetchInvestmentsResult: AsyncData.Empty(),
   saveInvestmentResult: AsyncData.Empty(),
   fetchInvestmentTypeResult: AsyncData.Empty(),
   saveInvestmentTypeResult: AsyncData.Empty(),
@@ -64,6 +80,7 @@ const InvestmentData = Map({
 });
 
 export default handleActions({
+  [GET_INVESTMENTS]: handleSetInvestments,
   [SAVE_NEW_INVESTMENT]: handleSaveInvestment,
   [GET_INVESTMENT_TYPES]: handleSetInvestmentTypes,
   [SAVE_NEW_INVESTMENT_TYPE]: handleSaveInvestmentType,
