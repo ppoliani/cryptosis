@@ -25,13 +25,32 @@ class Overview extends Component {
       });
   }
 
+  getTotalInvested() {
+    return this.props.portfolio
+      .get('total')
+      .matchWith({
+        Just: ({value: total}) => Math.floor(total.get('totalAssets').reduce((acc, v) => acc + v, 0)),
+        Nothing: () => 0
+      });
+  }
+
+  getTotalPortfolioValue() {
+    return this.props.portfolio
+      .get('total')
+      .matchWith({
+        Just: ({value: total}) => Math.floor(total.get('currentValue').reduce((acc, v) => acc + v, 0)),
+        Nothing: () => 0
+      });
+  }
+
   renderPortfolioValue() {
     const {investment} = this.props;
 
     return (
-      <Container title='Portfolio' subtitle='Total Value'>
+      <Container title='Portfolio' subtitle=''>
         <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
-          Total portfolio value
+          <h2>Total Invested: £{this.getTotalInvested()}</h2>
+          <h2>Total Portfolio Value: £{this.getTotalPortfolioValue()}</h2>
         </AsyncPanel>
       </Container>
     );
@@ -57,6 +76,7 @@ class Overview extends Component {
 
 const mapStateToProps = state => ({
   stream: state.stream,
+  portfolio: state.portfolio,
   investment: state.investment
 });
 
