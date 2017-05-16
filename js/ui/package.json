@@ -37,6 +37,7 @@
     "react-router-dom": "^4.1.1",
     "react-router-native": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1",
+    "recharts": "^0.22.4",
     "redux": "^3.6.0",
     "redux-actions": "^1.2.1",
     "redux-form": "^6.6.3",

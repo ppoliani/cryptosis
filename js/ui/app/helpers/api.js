@@ -15,15 +15,23 @@ export const constructUrl = (url, params) =>
   }
   `
 
-export default (method, url, body={}, headers={}) =>
+const getAuthHeader = auth => auth
+  ? {
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${getItem('@investreck:access_token')}`
+    }
+  : {}
+
+export default (method, url, body={}, auth=true, headers={}) =>
   task(async resolver => {
     try {
       const options = {
         method,
-        headers: Object.assign({}, {
-          'content-type': 'application/json',
-          'Authorization': `Bearer ${getItem('@investreck:access_token')}`
-        }, headers)
+        headers: Object.assign(
+          {},
+          getAuthHeader(auth),
+          headers
+        )
       };
 
       // dissalow body inclusion for methods that don't support it

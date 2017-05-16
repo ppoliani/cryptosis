@@ -12,7 +12,7 @@ const getPartialInvestments = async ({ctx}) => {
     DbDriver,
     `
       MATCH (i:Investment)
-      RETURN {id: ID(i), investmentType: i.investmentType, price: i.price, quantity: i.quantity, expenses: i.expenses}
+      RETURN {id: ID(i), investmentType: i.investmentType, price: i.price, quantity: i.quantity, expenses: i.expenses, date: i.date}
     `
   )
 }

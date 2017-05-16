@@ -34,7 +34,7 @@ export default NestedComponent => class LayoutComponent extends Component {
         <Header toggleSidebar={this.toggleSidebar}/>
         <div className="main-content">
           <Paper className='main-content__page'>
-            <Grid>
+            <Grid fluid>
               <Row middle="xs">
                 <Col xs>
                   <NestedComponent />
