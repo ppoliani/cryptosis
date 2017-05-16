@@ -7,6 +7,16 @@ const init = driver => {
   DbDriver = driver;
 }
 
+const getPartialInvestments = async ({ctx}) => {
+  return  await runQuery(
+    DbDriver,
+    `
+      MATCH (i:Investment)
+      RETURN {id: ID(i), price: i.price, quantity: i.quantity, expenses: i.expenses}
+    `
+  )
+}
+
 const getInvestments = async ({ctx}) => {
   const {skip, limit} = ctx.request.query;
 
@@ -117,6 +127,7 @@ const deleteInvestmentType= async ({resource:investmentTypeId})  => {
 
 module.exports = {
   init,
+  getPartialInvestments,
   getInvestments,
   saveInvestment,
   updateInvestment,

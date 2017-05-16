@@ -1,9 +1,11 @@
 import {createStore, applyMiddleware, compose} from 'redux';
+import thunk from 'redux-thunk';
 import taskMiddleware from '../middlewares/taskMiddleware';
 import reducer from './reducer';
 
 const createDevStoreWithMiddleware = applyMiddleware(
-  taskMiddleware
+  taskMiddleware,
+  thunk
 )(createStore);
 
 const configureStore = () => {

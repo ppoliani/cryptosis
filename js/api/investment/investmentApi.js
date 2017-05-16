@@ -4,6 +4,15 @@ const repository= require('../data/investmentRepository');
 const {unwrapCypherResult, unwrapCypherResultToMap} = require('../data/utils');
 const logger = require('../core/logger');
 
+const getPartialInvestments = partial(
+  createSimpleEndpoint,
+  repository.getPartialInvestments,
+  unwrapCypherResultToMap,
+  {
+    errorMessage: 'Error fetching partial investments for user'
+  }
+)
+
 const getInvestments = partial(
   createSimpleEndpoint,
   repository.getInvestments,
@@ -81,6 +90,7 @@ const deleteInvestmentType = partial(
 )
 
 module.exports = {
+  getPartialInvestments,
   getInvestments,
   createInvestment,
   updateInvestment,

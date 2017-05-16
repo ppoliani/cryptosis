@@ -2,6 +2,7 @@ import {handleActions} from 'redux-actions';
 import {Map, fromJS} from 'immutable';
 import identity from 'folktale/core/lambda/identity';
 import {
+  GET_PARTIAL_INVESTMENTS,
   GET_INVESTMENTS,
   SAVE_NEW_INVESTMENT,
   UPDATE_INVESTMENT,
@@ -18,6 +19,21 @@ const stringToDate = records => records.map(
     return v.set('date', new Date(v.get('date')))
   }
 )
+
+const handleSetPartialInvestments = (state, {payload: investmentsResult}) =>
+  investmentsResult.matchWith({
+    Empty: identity,
+    Loading: () => state.set('fetchPartialInvestmentsResult', investmentsResult),
+    Success: ({data}) => state
+      .set('fetchPartialInvestmentsResult', investmentsResult)
+      .updateIn(
+        ['partialInvestments'],
+        partialInvestments => partialInvestments.concat(
+          fromJS(data.result)
+        )
+      ),
+    Failure: () => state.set('fetchInvestmentTypeResult', investmentsResult),
+  });
 
 const handleSaveInvestment = (state, {payload: saveInvestmentResult}) =>
   saveInvestmentResult.matchWith({
@@ -43,7 +59,7 @@ const handleSetInvestments = (state, {payload: investmentsResult}) =>
           stringToDate(fromJS(data.result))
         )
       ),
-    Failure: () => state.set('fetchInvestmentTypeResult', investmentTypeResult),
+    Failure: () => state.set('fetchInvestmentTypeResult', investmentsResult),
   });
 
 const handleDeleteInvestment = (state, {payload: investmentResult}) =>
@@ -91,16 +107,19 @@ const handleDeleteInvestmentType  = (state, {payload: investmentTypeResult}) =>
   });
 
 const InvestmentData = Map({
+  fetchPartialInvestmentsResult: AsyncData.Empty(),
   fetchInvestmentsResult: AsyncData.Empty(),
   saveInvestmentResult: AsyncData.Empty(),
   fetchInvestmentTypeResult: AsyncData.Empty(),
   saveInvestmentTypeResult: AsyncData.Empty(),
   deleteInvestmentTypeResult: AsyncData.Empty(),
+  partialInvestments: Map(),
   investments: Map(),
   investmentTypes: Map()
 });
 
 export default handleActions({
+  [GET_PARTIAL_INVESTMENTS]: handleSetPartialInvestments,
   [GET_INVESTMENTS]: handleSetInvestments,
   [SAVE_NEW_INVESTMENT]: handleSaveInvestment,
   [UPDATE_INVESTMENT]: handleSaveInvestment,

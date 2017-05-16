@@ -1,25 +1,71 @@
 import React, {Component} from 'react';
-import {merge} from 'most';
-import {connect} from '../../sockets/cryptoCompare';
+import {connect} from 'react-redux';
+import {Grid, Row, Col} from 'react-flexbox-grid';
+import {compose, identity} from 'folktale/core/lambda';
+import Container from '../common/Container';
+import AsyncPanel from '../common/AsyncPanel';
+import {getPartialInvestments} from '../../data/investment/investmentActions';
+import {startPortfolioStream} from '../../data/stream/streamActions';
 
-export default class Overview extends Component {
+class Overview extends Component {
   componentDidMount() {
-    const btc$ = connect('BTC', 'Coinfloor')
-    const eth$ = connect('ETH', 'Kraken');
-
-    merge(btc$, eth$)
-      .map(v => ({
-        price: v.PRICE,
-        market: v.MARKET,
-        symbol: v.FROMSYMBOL
-      }))
-      .forEach(values => {
-        console.log(values);
-      })
+    const {startPortfolioStream, getPartialInvestments} = this.props;
+    getPartialInvestments();
+    startPortfolioStream();
   }
+
+  componentWillUnmount() {
+    const {stream} = this.props;
+
+    stream
+      .get('portfolioSubscription')
+      .matchWith({
+        Just: ({value}) => value.unsubscribe(),
+        Nothing: identity
+      });
+  }
+
+  renderPortfolioValue() {
+    const {investment} = this.props;
+
+    return (
+      <Container title='Portfolio' subtitle='Total Value'>
+        <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
+          Total portfolio value
+        </AsyncPanel>
+      </Container>
+    );
+  }
+
   render() {
     return (
-      <p>Dashboard</p>
+      <Grid fluid>
+       <Row>
+          <Col xs>
+            <p>Dashboard</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs>
+            {this.renderPortfolioValue()}
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  stream: state.stream,
+  investment: state.investment
+});
+
+const mapDispatchToProps = dispatch => ({
+  getPartialInvestments: compose(dispatch, getPartialInvestments),
+  startPortfolioStream: compose(dispatch, startPortfolioStream)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Overview);

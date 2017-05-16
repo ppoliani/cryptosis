@@ -1,4 +1,5 @@
 const {
+  getPartialInvestments,
   getInvestments,
   createInvestment,
   updateInvestment,
@@ -10,6 +11,12 @@ const {
 } = require('./investmentApi');
 
 const routes = {
+  '/investments/partial': {
+    method: 'get',
+    auth: true,
+    fn: getPartialInvestments
+  },
+
   '/investments': {
     method: 'get',
     auth: true,
