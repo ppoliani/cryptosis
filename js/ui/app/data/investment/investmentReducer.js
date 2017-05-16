@@ -26,12 +26,7 @@ const handleSetPartialInvestments = (state, {payload: investmentsResult}) =>
     Loading: () => state.set('fetchPartialInvestmentsResult', investmentsResult),
     Success: ({data}) => state
       .set('fetchPartialInvestmentsResult', investmentsResult)
-      .updateIn(
-        ['partialInvestments'],
-        partialInvestments => partialInvestments.concat(
-          fromJS(data.result)
-        )
-      ),
+      .set('partialInvestments',  fromJS(data.result)),
     Failure: () => state.set('fetchInvestmentTypeResult', investmentsResult),
   });
 
@@ -53,12 +48,7 @@ const handleSetInvestments = (state, {payload: investmentsResult}) =>
     Loading: () => state.set('fetchInvestmentsResult', investmentsResult),
     Success: ({data}) => state
       .set('fetchInvestmentsResult', investmentsResult)
-      .updateIn(
-        ['investments'],
-        investments => investments.concat(
-          stringToDate(fromJS(data.result))
-        )
-      ),
+      .set('investments', stringToDate(fromJS(data.result))),
     Failure: () => state.set('fetchInvestmentTypeResult', investmentsResult),
   });
 
@@ -79,10 +69,7 @@ const handleSetInvestmentTypes = (state, {payload: investmentTypeResult}) =>
     Loading: () => state.set('fetchInvestmentTypeResult', investmentTypeResult),
     Success: ({data}) => state
       .set('fetchInvestmentTypeResult', investmentTypeResult)
-      .updateIn(
-        ['investmentTypes'],
-        investmentTypes => investmentTypes.concat(fromJS(data.result))
-      ),
+      .set('investmentTypes', fromJS(data.result)),
     Failure: () => state.set('fetchInvestmentTypeResult', investmentTypeResult),
   });
 

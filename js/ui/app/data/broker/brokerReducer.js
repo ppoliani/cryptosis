@@ -10,10 +10,7 @@ const handleSetBrokers = (state, {payload: brokerResult}) =>
     Loading: () => state.set('fetchBrokersResult', brokerResult),
     Success: ({data}) => state
       .set('fetchBrokersResult', brokerResult)
-      .updateIn(
-        ['brokers'],
-        brokers => brokers.concat(fromJS(data.result))
-      ),
+      .set('brokers', fromJS(data.result)),
     Failure: () => state.set('fetchBrokersResult', brokerResult),
   });
 

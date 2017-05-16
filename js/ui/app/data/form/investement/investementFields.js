@@ -7,11 +7,6 @@ const fields = [{
   validate: [required]
 }, {
   type: 'text',
-  name: 'moneyInvested',
-  label: 'Money Invested',
-  validate: [required, number]
-}, {
-  type: 'text',
   name: 'expenses',
   label: 'Expenses',
   validate: [required, number]

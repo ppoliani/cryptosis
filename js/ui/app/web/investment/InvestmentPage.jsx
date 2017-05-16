@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {List} from 'immutable';
+import {List, fromJS} from 'immutable';
 import dateformat from 'date-fns/format';
 import {partial, pipe} from '../../helpers/fn';
 import {filterObject} from '../../helpers/utils';
@@ -28,7 +28,6 @@ const columns = [
   {key: 'investmentType', label: 'Investment Type'},
   {key: 'broker', label: 'Broker'},
   {key: 'date', label: 'Date'},
-  {key: 'moneyInvested', label: 'Money Invested'},
   {key: 'expenses', label: 'Expenses'},
   {key: 'quantity', label: 'Quantity'},
   {key: 'price', label: 'Price'},
@@ -66,7 +65,7 @@ class InvestmentPage extends Component {
       );
     }
     else {
-      saveInvestment(investment);
+      saveInvestment(fromJS(investment));
     }
 
     this.togglePanel();
