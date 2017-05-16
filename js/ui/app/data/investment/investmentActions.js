@@ -61,9 +61,11 @@ const updateInvestmentRoot = fetch => {
 
 const saveInvestmentRoot = fetch => {
   const saveInvestmentResult = partial(fetch, 'POST', INVESTMENT_ENDPOINT);
-  const transform = investment => {
-    return investment;
-  }
+  const transform = investment => investment.map(
+    (v, k) => ['price', 'quantity', 'expenses', 'moneyInvested'].includes(k)
+      ? Number(v)
+      : v
+  )
 
   return createAction(
     SAVE_NEW_INVESTMENT,

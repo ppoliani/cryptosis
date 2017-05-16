@@ -26,7 +26,11 @@ export const startPortfolioStream = () => (dispatch, getState) => {
     symbol: data.FROMSYMBOL
   })
 
-  const getPrices = (btc, eth) => ([getPriceObj(btc), getPriceObj(eth)]);
+  const getPrices = (btc, eth) => ({
+    BTX: getPriceObj(btc),
+    ETH: getPriceObj(eth)
+  });
+
   const subscription = combine(getPrices, btc$, eth$)
     .chain(prices => calculateTotalPortfolioValue({investments: getInvestments(), prices}))
     .subscribe(observer);
