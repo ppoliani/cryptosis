@@ -20,7 +20,7 @@ class Overview extends Component {
   componentDidMount() {
     const {startPortfolioStream, startLast30DaysStream} = this.props;
     startPortfolioStream();
-    setTimeout(startLast30DaysStream, 2000);
+    startLast30DaysStream();
   }
 
   componentWillUnmount() {

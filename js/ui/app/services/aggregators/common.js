@@ -35,6 +35,8 @@ export const calculateCurrentValuePerType = (investments, prices) => investments
   Map()
 )
 
+export const getPercentageChange = (diff, initial) => (diff / initial) * 100;
+
 // we need to find the total portfolio value on the given date.
 // Investments that didn't exist on that date should not contribute to the figure
 export const getTotalValueAfterDate = (investments, symbol, date, priceOfDay) =>

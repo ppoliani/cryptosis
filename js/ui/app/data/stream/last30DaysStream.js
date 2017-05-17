@@ -7,7 +7,7 @@ import {setLast30Days} from '../portfolio/portfolioActions';
 import {getPartialInvestment$, getBTC$, getETH$} from './common';
 
 export const SET_LAST_30_DAYS_SUBSCRIPTION = 'STREAM::SET_LAST_30_DAYS_SUBSCRIPTION';
-export const setLast30DaysSubscription = createAction(SET_LAST_30_DAYS_SUBSCRIPTION);
+const setLast30DaysSubscription = createAction(SET_LAST_30_DAYS_SUBSCRIPTION);
 
 export const startLast30DaysStream = () => dispatch => {
   const observer = {

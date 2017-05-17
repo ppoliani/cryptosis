@@ -8,7 +8,7 @@ import {setInvestmentCurrentValue} from '../portfolio/portfolioActions';
 import {getPartialInvestment$, getPriceObjFromStreamData} from './common';
 
 export const SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION= 'STREAM::SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION';
-export const setInvestmentCurrentValueSuscription = createAction(SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION);
+const setInvestmentCurrentValueSuscription = createAction(SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION);
 
 
 // value for each investment individually
@@ -18,7 +18,7 @@ export const startInvestmentCurrentValueStream = () => dispatch => {
 
   const observer = {
     next: compose(dispatch, setInvestmentCurrentValue),
-    error: errorValue => console.log(`Error in the observer of the portfolio stream: ${errorValue}`)
+    error: errorValue => console.log(`Error in the observer of the investment values stream: ${errorValue}`)
   }
 
   const getPrices = (investments, btc, eth)  => ({

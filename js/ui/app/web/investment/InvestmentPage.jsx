@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {List, fromJS} from 'immutable';
+import {List, fromJS, Map} from 'immutable';
 import dateformat from 'date-fns/format';
 import {partial, pipe} from '../../helpers/fn';
 import {filterObject} from '../../helpers/utils';
@@ -16,6 +16,7 @@ import Table from '../common/Table';
 import Container from '../common/Container';
 import DialogBoxMixin from '../mixins/DialogBoxMixin';
 import {getBrokers} from '../../data/broker/brokerActions';
+import {startInvestmentCurrentValueStream} from '../../data/stream/investmentValueStream';
 import {
   getInvestments,
   saveInvestment,
@@ -32,6 +33,7 @@ const columns = [
   {key: 'quantity', label: 'Quantity'},
   {key: 'price', label: 'Price'},
   {key: 'notes', label: 'Notes'},
+  {key: 'status', label: 'Status'},
   {key: 'action', label: 'Action'}
 ];
 
@@ -46,9 +48,11 @@ class InvestmentPage extends Component {
 
   componentDidMount() {
     const {skip, limit} = this.state;
-    this.props.getInvestments({skip, limit});
-    this.props.getBrokers({skip, limit});
-    this.props.getInvestmentTypes({skip, limit});
+    const {getInvestments, getBrokers, getInvestmentTypes, startInvestmentCurrentValueStream} = this.props;
+    getInvestments({skip, limit});
+    getBrokers({skip, limit});
+    getInvestmentTypes({skip, limit});
+    startInvestmentCurrentValueStream();
   }
 
   togglePanel = (_, selectedInvestment={}) => {
@@ -136,17 +140,34 @@ class InvestmentPage extends Component {
     this.togglePanel(e, investment);
   }
 
-  getInvestmentsData() {
+  renderInvestmentValue(id, investmentValues) {
+    const investmentValue = investmentValues.get(id);
+    return investmentValue
+      ? `£${investmentValue.get('value').toFixed(2)} (${investmentValue.get('percentage').toFixed(2)}%)`
+      : '';
+  }
+
+  // will include the value for each investment
+  getExtendedTableData(investmentValues) {
     return this.props.investments.get('investments').reduce(
       (acc, v, id) => acc.push(
         v.set('id', id)
           .set('date', dateformat(v.get('date'), 'MM/DD/YYYY'))
+          .set('status', this.renderInvestmentValue(id, investmentValues))
           .set('action', <Button label="Delete" primary={true} onClick={partial(this.onInvestmentDeleteClick, v)} />)
-          .toJS()
-        ),
+      ),
       List()
     )
-    .toArray();
+    .toJS();
+  }
+
+  getInvestmentsData() {
+    return this.props.portfolio
+      .get('investmentValues')
+      .matchWith({
+        Just: ({value}) => this.getExtendedTableData(value),
+        Nothing: () => this.getExtendedTableData(Map())
+      });
   }
 
   renderInvestementsTable() {
@@ -189,6 +210,7 @@ class InvestmentPage extends Component {
 const mapStateToProps = state => ({
   investments: state.investment,
   brokers: state.broker.get('brokers'),
+  portfolio: state.portfolio,
   fetchBrokersResult: state.broker.get('fetchBrokersResult'),
 });
 
@@ -198,7 +220,8 @@ const mapDispatchToProps = dispatch => ({
   updateInvestment: compose(dispatch, updateInvestment),
   deleteInvestment: compose(dispatch, deleteInvestment),
   getBrokers: compose(dispatch, getBrokers),
-  getInvestmentTypes: compose(dispatch, getInvestmentTypes)
+  getInvestmentTypes: compose(dispatch, getInvestmentTypes),
+  startInvestmentCurrentValueStream: compose(dispatch, startInvestmentCurrentValueStream)
 });
 
 export default connect(

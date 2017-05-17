@@ -1,15 +1,22 @@
-import {fromJS} from 'immutable';
+import {fromJS, Map} from 'immutable';
 import {create} from '@most/create'
 import curry from 'folktale/core/lambda/curry';
 import compose from 'folktale/core/lambda/compose'
 import {partial} from '../../helpers/fn';
-import {getTotalForInvestment, getCurrentTotalForInvestment} from './common';
+import {getTotalForInvestment, getCurrentTotalForInvestment, getPercentageChange} from './common';
 
 
-const getInvestmentValue = curry(2, (currentPrice, investment) =>
-  getCurrentTotalForInvestment(investment, currentPrice) - getTotalForInvestment(investment));
+const getInvestmentValue = curry(2, (currentPrice, investment) => {
+  const investmentValue = getTotalForInvestment(investment);
+  const diff = getCurrentTotalForInvestment(investment, currentPrice) - investmentValue;
 
-const getCurrentPrice = (prices, investment) => prices.getIn([investment.get('investmentType')], 'price');
+  return Map({
+    value: diff,
+    percentage: getPercentageChange(diff, investmentValue)
+  });
+});
+
+const getCurrentPrice = (prices, investment) => prices.getIn([investment.get('investmentType'), 'price']);
 
 export const calculateInvestmentValues = ({investments, prices}) =>
   create((add, end, error) => {
@@ -18,5 +25,5 @@ export const calculateInvestmentValues = ({investments, prices}) =>
     ));
     end();
 
-    return () => console.log('Unsubscribe calculateTotalPortfolioValue');
+    return () => console.log('Unsubscribe calculateInvestmentValues');
   });
