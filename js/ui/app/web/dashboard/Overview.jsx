@@ -8,7 +8,8 @@ import dateformat from 'date-fns/format';
 import Container from '../common/Container';
 import AsyncPanel from '../common/AsyncPanel';
 import {List, ListItem} from 'material-ui/List';
-import {startPortfolioStream, startLast30DaysStream} from '../../data/stream/streamActions';
+import {startPortfolioStream} from '../../data/stream/portfolioValueStream';
+import {startLast30DaysStream} from '../../data/stream/last30DaysStream';
 
 const colors = [
   '#8884d8',
