@@ -4,7 +4,7 @@ import dateformat from 'date-fns/format';
 import {partial, pipe} from '../../helpers/fn';
 import {filterObject} from '../../helpers/utils';
 import {connect} from 'react-redux';
-import {compose} from 'folktale/core/lambda';
+import {compose, identity} from 'folktale/core/lambda';
 import {AsyncDataAll, AsyncDataSome} from '../../data/core/AsyncData';
 import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
@@ -153,12 +153,15 @@ class InvestmentPage extends Component {
 
   renderInvestmentValue(id, investmentValues) {
     const investmentValue = investmentValues.get(id);
-    const value = investmentValue.get('value').toFixed(2);
-    const signedValue = value > 0 ? `£${value}` : `-£${Math.abs(value)}`;
 
-    return investmentValue
-      ? `${signedValue} (${investmentValue.get('percentage').toFixed(2)}%)`
-      : '';
+    if(investmentValue) {
+      const value = investmentValue.get('value').toFixed(2);
+      const signedValue = value > 0 ? `£${value}` : `-£${Math.abs(value)}`;
+
+      return `${signedValue} (${investmentValue.get('percentage').toFixed(2)}%)`;
+    }
+
+    return '';
   }
 
   // will include the value for each investment
@@ -222,6 +225,7 @@ class InvestmentPage extends Component {
 }
 
 const mapStateToProps = state => ({
+  stream: state.stream,
   investments: state.investment,
   brokers: state.broker.get('brokers'),
   portfolio: state.portfolio,
