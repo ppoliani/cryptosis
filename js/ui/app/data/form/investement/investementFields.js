@@ -22,6 +22,18 @@ const fields = [{
   validate: [required, number],
   stretch: true
 }, {
+  type: 'dropdown',
+  name: 'assetLife',
+  label: 'Asset Life',
+  validate: [required],
+  options: [{
+    value: 'Long Term',
+    text: 'Long Term Investment'
+  }, {
+    value: 'Short Term',
+    text: 'Short Term Trading Position'
+  }]
+}, {
   type: 'textarea',
   name: 'notes',
   multiline: true,
