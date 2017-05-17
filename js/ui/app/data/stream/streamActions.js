@@ -9,7 +9,7 @@ import {setPortfolioValue, setLast30Days} from '../portfolio/portfolioActions';
 
 const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;
 
-const fetchPartialInvestments = () => fromPromise(fetch('GET', `${INVESTMENT_ENDPOINT}/partial`).run().promise());
+const fetchPartialInvestments = fetch('GET', `${INVESTMENT_ENDPOINT}/partial`).run();
 
 const historicalDataUrl = (fromSymbol, toSymbol, timestamp, days) =>
   `https://min-api.cryptocompare.com/data/histoday?fsym=${fromSymbol}&tsym=${toSymbol}&limit=${days}&aggregate=1&toTs=${timestamp}`
@@ -23,7 +23,7 @@ export const setLast30DaysSubscription = createAction(SET_LAST_30_DAYS_SUBSCRIPT
 export const startPortfolioStream = () => (dispatch, getState) => {
   const btc$ = connect('BTC', 'Coinfloor');
   const eth$ = connect('ETH', 'Kraken');
-  const partialInvestments$ = fetchPartialInvestments();
+  const partialInvestments$ = fromPromise(fetchPartialInvestments.promise());
 
   const observer = {
     next: compose(dispatch, setPortfolioValue),
@@ -56,7 +56,7 @@ export const startPortfolioStream = () => (dispatch, getState) => {
 export const startLast30DaysStream = () => (dispatch, getState) => {
   const btc$ = fromPromise(fetch('GET', historicalDataUrl('BTC', 'GBP', +(new Date), 30), {}, false).run().promise());
   const eth$ = fromPromise(fetch('GET', historicalDataUrl('ETH', 'GBP', +(new Date), 30), {}, false).run().promise());
-  const partialInvestments$ = fetchPartialInvestments();
+  const partialInvestments$ = fromPromise(fetchPartialInvestments.promise());
 
   const observer = {
     next: compose(dispatch, setLast30Days),
