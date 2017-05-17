@@ -61,11 +61,9 @@ module.exports = () => {
         'react',
         'react-dom',
         'react-redux',
-        'redux-actions',
         'immutable',
         'babel-polyfill',
         'whatwg-fetch',
-        'folktale',
         'core-decorators'
       ]
     },

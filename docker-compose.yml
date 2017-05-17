@@ -1,0 +1,30 @@
+version: "2"
+
+services:
+  nginx:
+    container_name: nginx
+    image: hipster/nginx
+    build:
+      context: .
+      dockerfile: operations/.docker/nginx/Dockerfile
+    links:
+      - suave:suave
+    ports:
+      - "7372:80"
+    networks:
+      - hipster_network
+  node:
+    container_name: suave
+    working_dir: /app
+    image: hipster/suave
+    build:
+      context: .
+      dockerfile: operations/.docker/suave/Dockerfile
+    ports:
+      - "8083:8083"
+    networks:
+      - hipster_network
+
+networks:
+  hipster_network:
+    driver: bridge
