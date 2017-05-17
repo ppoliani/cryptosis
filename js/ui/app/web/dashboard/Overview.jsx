@@ -8,7 +8,6 @@ import dateformat from 'date-fns/format';
 import Container from '../common/Container';
 import AsyncPanel from '../common/AsyncPanel';
 import {List, ListItem} from 'material-ui/List';
-import {getPartialInvestments} from '../../data/investment/investmentActions';
 import {startPortfolioStream, startLast30DaysStream} from '../../data/stream/streamActions';
 
 const colors = [
@@ -18,10 +17,9 @@ const colors = [
 
 class Overview extends Component {
   componentDidMount() {
-    const {startPortfolioStream, getPartialInvestments, startLast30DaysStream} = this.props;
-    getPartialInvestments();
+    const {startPortfolioStream, startLast30DaysStream} = this.props;
     startPortfolioStream();
-    setTimeout(startLast30DaysStream, 2000); // TODO: find a better way to wait for getPartialInvestments to finish
+    setTimeout(startLast30DaysStream, 2000);
   }
 
   componentWillUnmount() {
@@ -168,7 +166,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getPartialInvestments: compose(dispatch, getPartialInvestments),
   startPortfolioStream: compose(dispatch, startPortfolioStream),
   startLast30DaysStream: compose(dispatch, startLast30DaysStream)
 });

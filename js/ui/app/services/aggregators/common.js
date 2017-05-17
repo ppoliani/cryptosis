@@ -16,7 +16,7 @@ const groupCurrentTotalValuePerTypeReducer = prices => (acc, v) => {
   return acc.update(
     type,
     0,
-    sum => sum + getCurrentTotalForInvestment(v, prices[type].price)
+    sum => sum + getCurrentTotalForInvestment(v, prices.getIn([type, 'price']))
   )
 }
 
