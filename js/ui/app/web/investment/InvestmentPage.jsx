@@ -32,9 +32,8 @@ const columns = [
   {key: 'expenses', label: 'Expenses'},
   {key: 'quantity', label: 'Quantity'},
   {key: 'price', label: 'Price'},
-  {key: 'notes', label: 'Notes'},
   {key: 'status', label: 'Status'},
-  {key: 'assetLife', label: 'Asset Life'},
+  {key: 'notes', label: 'Notes'},
   {key: 'action', label: 'Action'}
 ];
 

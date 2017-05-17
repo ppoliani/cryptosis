@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import Drawer from 'material-ui/Drawer';
-import SendIcon from 'material-ui-icons/Send';
+import AccountBalanceIcon from 'material-ui-icons/AccountBalance';
+import AndroidIcon from 'material-ui-icons/Android';
+import HomeIcon from 'material-ui-icons/Home';
+import PolymerIcon from 'material-ui-icons/Polymer';
 import Divider from 'material-ui/Divider';
 import {Link} from 'react-router-dom';
 import {
@@ -15,13 +18,13 @@ import {partial} from '../../helpers/fn';
 const getInvestementItems = onSidebarExit => (
   <div>
     <Link to="/investments">
-      <ListItem leftIcon={<SendIcon />} primaryText="Investments" onClick={partial(onSidebarExit, 'investments')} />
+      <ListItem leftIcon={<AccountBalanceIcon />} primaryText="Investments" onClick={partial(onSidebarExit, 'investments')} />
     </Link>
     <Link to="/brokers">
-      <ListItem leftIcon={<SendIcon />} primaryText="Brokers"  onClick={partial(onSidebarExit, 'brokers')}/>
+      <ListItem leftIcon={<AndroidIcon />} primaryText="Brokers"  onClick={partial(onSidebarExit, 'brokers')}/>
     </Link>
     <Link to="/investment-types">
-      <ListItem leftIcon={<SendIcon />} primaryText="Investment Types" onClick={partial(onSidebarExit, 'investementTypes')} />
+      <ListItem leftIcon={<PolymerIcon />} primaryText="Investment Types" onClick={partial(onSidebarExit, 'investementTypes')} />
     </Link>
   </div>
 );
@@ -29,7 +32,7 @@ const getInvestementItems = onSidebarExit => (
 const getListItems = onSidebarExit => (
   <div>
     <Link to="/">
-      <ListItem leftIcon={<SendIcon />} primaryText="Dashboard" onClick={partial(onSidebarExit, 'dashboard')} />
+      <ListItem leftIcon={<HomeIcon />} primaryText="Dashboard" onClick={partial(onSidebarExit, 'dashboard')} />
     </Link>
     <Divider />
     {getInvestementItems(onSidebarExit)}
