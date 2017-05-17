@@ -11,6 +11,7 @@ import Login from '../auth/Login';
 import OverView from '../dashboard/OverView';
 import Layout from '../core/Layout';
 import InvestmentPage from '../investment/InvestmentPage';
+import InvestmentOverviewPage from '../investment/InvestmentOverviewPage';
 import BrokerPage from '../investment/BrokerPage';
 import InvestmentTypePage from '../investment/InvestmentTypePage';
 
@@ -47,15 +48,16 @@ class AuthGuard extends Component {
 }
 
 const PrivateRoute = ({component: Component, ...rest}) =>
-  <Route {...rest} render={props => <AuthGuard {...props} component={Layout(Component)} /> }/>
+  <Route {...rest} render={props => <AuthGuard {...props} component={Layout(Component, props)} /> }/>
 
 export default () =>
   <Router>
     <div style={{height: '100%'}}>
       <PrivateRoute exact path="/" component={OverView}/>
-      <PrivateRoute path="/investments" component={InvestmentPage}/>
-      <PrivateRoute path="/brokers" component={BrokerPage}/>
-      <PrivateRoute path="/investment-types" component={InvestmentTypePage}/>
+      <PrivateRoute exact path="/investments/:id" component={InvestmentOverviewPage}/>
+      <PrivateRoute exact path="/investments" component={InvestmentPage}/>
+      <PrivateRoute exact path="/brokers" component={BrokerPage}/>
+      <PrivateRoute exact path="/investment-types" component={InvestmentTypePage}/>
       <Route path="/login" component={Login}/>
     </div>
   </Router>;

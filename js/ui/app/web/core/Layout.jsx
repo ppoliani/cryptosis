@@ -6,7 +6,7 @@ import Header from './Header';
 import SideBar from './SideBar';
 import './layout.scss';
 
-export default NestedComponent => class LayoutComponent extends Component {
+export default (NestedComponent, props={}) => class LayoutComponent extends Component {
   constructor(props, state) {
     super(props, state);
 
@@ -37,7 +37,7 @@ export default NestedComponent => class LayoutComponent extends Component {
             <Grid fluid>
               <Row middle="xs">
                 <Col xs>
-                  <NestedComponent />
+                  <NestedComponent {...props}/>
                 </Col>
               </Row>
             </Grid>

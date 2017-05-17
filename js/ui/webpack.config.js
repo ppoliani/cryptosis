@@ -70,6 +70,7 @@ module.exports = () => {
 
     output: {
       path: distPath,
+      publicPath: '/',
       filename: '[name].bundle.js',
     },
 
@@ -144,7 +145,7 @@ module.exports = () => {
         chunks: false,
         hash: false,
         modules: false,
-        publicPath: false,
+        publicPath: true,
         timings: true,
         version: false,
         warnings: true,
