@@ -55,6 +55,17 @@ class InvestmentPage extends Component {
     startInvestmentCurrentValueStream();
   }
 
+  componentWillUnmount() {
+    const {stream} = this.props;
+
+    stream
+      .get('investmentCurrentValueSubscription')
+      .matchWith({
+        Just: ({value}) => value.unsubscribe(),
+        Nothing: identity
+      });
+  }
+
   togglePanel = (_, selectedInvestment={}) => {
     this.setState({isPanelOpen: !this.state.isPanelOpen, selectedInvestment});
   }
@@ -142,8 +153,11 @@ class InvestmentPage extends Component {
 
   renderInvestmentValue(id, investmentValues) {
     const investmentValue = investmentValues.get(id);
+    const value = investmentValue.get('value').toFixed(2);
+    const signedValue = value > 0 ? `£${value}` : `-£${Math.abs(value)}`;
+
     return investmentValue
-      ? `£${investmentValue.get('value').toFixed(2)} (${investmentValue.get('percentage').toFixed(2)}%)`
+      ? `${signedValue} (${investmentValue.get('percentage').toFixed(2)}%)`
       : '';
   }
 

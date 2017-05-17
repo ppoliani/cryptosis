@@ -24,7 +24,7 @@ const groupCurrentTotalValuePerTypeReducer = prices => (acc, v) => {
 export const getCurrentTotalForInvestment = (investment, currentPrice) => investment.get('quantity') * currentPrice;
 
 // Investment PriceOfPurchase -> Value
-export const getTotalForInvestment = i => i.get('price') * i.get('quantity');
+export const getTotalForInvestment = i => i.get('price') * i.get('quantity') + i.get('expenses');
 
 // Finds the total money invested per type of investment
 export const calculateTotalPerType = investments => investments.reduce(groupTotalValuePerTypeReducer, Map())
