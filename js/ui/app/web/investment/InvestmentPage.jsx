@@ -166,8 +166,8 @@ class InvestmentPage extends Component {
   }
 
   // will include the value for each investment
-  getExtendedTableData(investmentValues) {
-    return this.props.investments.get('investments').reduce(
+  getExtendedTableData = (investments, investmentValues) =>
+    investments.reduce(
       (acc, v, id) => acc.push(
         v.set('id', id)
           .set('date', dateformat(v.get('date'), 'MM/DD/YYYY'))
@@ -177,30 +177,46 @@ class InvestmentPage extends Component {
       List()
     )
     .toJS();
-  }
 
-  getInvestmentsData() {
-    return this.props.portfolio
+
+  getInvestmentsData = investments => this.props.portfolio
       .get('investmentValues')
       .matchWith({
-        Just: ({value}) => this.getExtendedTableData(value),
-        Nothing: () => this.getExtendedTableData(Map())
+        Just: ({value}) => this.getExtendedTableData(investments, value),
+        Nothing: () => this.getExtendedTableData(investments, Map())
       });
+
+  getInvestmentsByAssetLife(assetLife) {
+    return this.props.investments
+      .get('investments')
+      .filter(i => i.get('assetLife') === assetLife);
   }
 
-  renderInvestementsTable() {
-    const data = this.getInvestmentsData();
-    return (
-      <Container title='Investments' subtitle='Full list of all investments'>
-        <AsyncPanel asyncResult={this.props.investments.get('fetchInvestmentsResult')}>
-          <Table
-            columns={columns}
-            data={this.getInvestmentsData()}
-            handleCellClick={this.handleCellClick}
-          />
-        </AsyncPanel>
-      </Container>
-    )
+  renderInvestementsTable = (subtitle, data) => (
+    <Container title='Investments' subtitle={subtitle}>
+      <AsyncPanel asyncResult={this.props.investments.get('fetchInvestmentsResult')}>
+        <Table
+          columns={columns}
+          data={data}
+          handleCellClick={this.handleCellClick}
+        />
+      </AsyncPanel>
+    </Container>
+  )
+
+  renderTable(assetLife) {
+    return this.props.investments.get('fetchInvestmentsResult')
+      .matchWith({
+        Empty: () => {},
+        Loading: () => {},
+        Success: ({value}) =>
+           pipe(
+              partial(this.renderInvestementsTable, assetLife),
+              this.getInvestmentsData,
+              this.getInvestmentsByAssetLife(assetLife)
+            ),
+        Failure: () => {}
+      })
   }
 
   render() {
@@ -216,7 +232,12 @@ class InvestmentPage extends Component {
           </Row>
           <Row>
             <Col xs>
-              {this.renderInvestementsTable()}
+              {this.renderTable('Long Term')}
+            </Col>
+          </Row>
+          <Row>
+            <Col xs>
+              {this.renderTable('Short Term')}
             </Col>
           </Row>
           {this.renderDialogBox('Are you sure you want to delete this investment?')}
