@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start:dev": "NODE_ENV='development' ./node_modules/.bin/nodemon ./bin/index.js",
-    "start": "NODE_ENV='production' ./node_modules/.bin/nodemon ./bin/index.js",
+    "start": "NODE_ENV='production' ./node_modules/.bin/pm2 start ./bin/index.js",
     "test": "node_modules/.bin/ava ./**/*.test.js"
   },
   "description": "The api for the Investreck UI",
@@ -32,6 +32,7 @@
     "node-fetch": "^1.6.3",
     "nodemon": "^1.11.0",
     "passport-http-bearer": "^1.0.1",
+    "pm2": "^2.4.6",
     "uws": "0.14.5",
     "winston": "^2.3.1"
   },
