@@ -19,7 +19,7 @@ WORKDIR /usr/src/app
 # Install app dependencies
 COPY js/api/package.json /usr/src/app/
 
-RUN yarn global pm2
+RUN yarn add global pm2
 RUN yarn install
 
 # Bundle app source
