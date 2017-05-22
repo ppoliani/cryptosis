@@ -20,8 +20,12 @@ module.exports = () => {
     }),
     new webpack.NamedModulesPlugin()
   ];
+
   if (isProd) {
     plugins.push(
+      new DotenvPlugin({
+        path: './.env.production'
+      }),
       new webpack.LoaderOptionsPlugin({
         minimize: true,
         debug: false

@@ -5,6 +5,7 @@ COPY operations/config/nginx.conf /etc/nginx/nginx.conf
 
 # Install essential tools
 RUN apt-get -qq update && \
+    apt-get -qq install sudo && \
     apt-get -qq install apt-transport-https && \
     apt-get -qq install build-essential && \
     apt-get -qq install git
@@ -14,8 +15,8 @@ RUN apt-get -qq install curl && \
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
 
 # install yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && apt-get install yarn
 
 ENV NVM_DIR /home/node/.nvm

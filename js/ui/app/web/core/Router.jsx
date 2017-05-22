@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom'
 import {getItem} from '../../storage';
 import Login from '../auth/Login';
-import OverView from '../dashboard/OverView';
+import OverView from '../dashboard/Overview';
 import Layout from '../core/Layout';
 import InvestmentPage from '../investment/InvestmentPage';
 import InvestmentOverviewPage from '../investment/InvestmentOverviewPage';
