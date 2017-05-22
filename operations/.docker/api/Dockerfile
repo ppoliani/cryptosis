@@ -22,6 +22,6 @@ COPY js/api/package.json /usr/src/app/
 RUN yarn install
 
 # Bundle app source
-COPY . /usr/src/app
+COPY js/api/ /usr/src/app
 
 CMD [ "yarn", "start" ]

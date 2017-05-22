@@ -15,13 +15,12 @@ services:
       - investrackr_network
   node:
     container_name: api
-    working_dir: /usr/src/app/
     image: investrackr/api
     build:
       context: .
       dockerfile: operations/.docker/api/Dockerfile
     ports:
-      - "8083:3000"
+      - "8083:5000"
     networks:
       - investrackr_network
 
