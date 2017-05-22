@@ -19,7 +19,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     apt-get update && apt-get install yarn
 
 ENV NVM_DIR /home/node/.nvm
-ENV NODE_VERSION 7.7.4
+ENV NODE_VERSION 7.10.0
 
 # setup nvm
 RUN . ~/.nvm/nvm.sh && \

@@ -8,23 +8,23 @@ services:
       context: .
       dockerfile: operations/.docker/nginx/Dockerfile
     links:
-      - api:api
+      - node:api
     ports:
-      - "3000:80"
+      - "80:80"
     networks:
       - investrackr_network
   node:
-    container_name: suave
-    working_dir: /app
-    image: investrackr/suave
+    container_name: api
+    working_dir: /usr/src/app/
+    image: investrackr/api
     build:
       context: .
-      dockerfile: operations/.docker/suave/Dockerfile
+      dockerfile: operations/.docker/api/Dockerfile
     ports:
-      - "8083:8083"
+      - "8083:3000"
     networks:
       - investrackr_network
 
 networks:
-  hipster_network:
+  investrackr_network:
     driver: bridge
