@@ -7,7 +7,7 @@
     "test": "jest",
     "web:start": "PLATFORM_ENV=web env-cmd ./.env webpack-dev-server",
     "web:build": "PLATFORM_ENV=web env-cmd ./.env.production webpack",
-    "web:prod": "PLATFORM_ENV=web  env-cmd ./.env.production webpack-dev-server --env.prod=true",
+    "web:prod": "PLATFORM_ENV=web  env-cmd ./.env.production webpack-dev-server",
     "native:android": "PLATFORM_ENV=mobile env-cmd ./.env react-native run-android"
   },
   "dependencies": {

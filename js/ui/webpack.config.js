@@ -6,8 +6,7 @@ const sourcePath = path.join(__dirname, './');
 const distPath = path.join(__dirname, './app/web/dist');
 
 module.exports = () => {
-  const nodeEnv = process.env.prod ? 'production' : 'development';
-  const isProd = nodeEnv === 'production';
+  const isProd = process.env.NODE_ENV === 'production';
 
   const plugins = [
     new DotenvPlugin({
