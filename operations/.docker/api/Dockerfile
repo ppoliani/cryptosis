@@ -19,10 +19,9 @@ WORKDIR /usr/src/app
 # Install app dependencies
 COPY js/api/package.json /usr/src/app/
 
-RUN yarn add global pm2
 RUN yarn install
 
 # Bundle app source
 COPY js/api/ /usr/src/app
 
-CMD ["pm2-docker", "./bin/index.js"]
+CMD ["yarn", "start"]
