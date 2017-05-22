@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start:dev": "NODE_ENV='development' ./node_modules/.bin/nodemon ./bin/index.js",
-    "start": "NODE_ENV='production' ./node_modules/.bin/pm2 start ./bin/index.js",
+    "start": "NODE_ENV='production' node ./bin/index.js",
     "test": "node_modules/.bin/ava ./**/*.test.js"
   },
   "description": "The api for the Investreck UI",
