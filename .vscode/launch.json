@@ -17,6 +17,7 @@
         "GOOGLE_LOGIN_URL": "https://www.googleapis.com/plus/v1/people/me?access_token",
         "DB_USERNAME": "barter",
         "DB_PASSWORD": "barter_password",
+        "DB_URL": "bolt://localhost:7687",
         "SESSION_KEY": "WdF0YZhpypVz+fNSXlvOdEHQRifJ+U8XMmcYRWFm/hU=",
         "JWT_SECRET": "34mMFlo4QLl3VKmIlCR7AwIhIVC/YnJRgfZmCMcnQBY=",
         "JWT_LIFE_SPAN": "7d"
