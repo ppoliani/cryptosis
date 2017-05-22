@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-require('dotenv').config();
+if(process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
 
 const Koa = require('koa');
 const uhttp = require('http');
