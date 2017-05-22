@@ -39,7 +39,9 @@ RUN yarn run web:build
 RUN mkdir www && \
     cp app/web/index.html www && \
     cp -r app/web/dist/app.bundle.js www && \
-    cp -r app/web/dist/vendor.bundle.js www
+    cp -r app/web/dist/app.bundle.js www && \
+    cp -r app/web/dist/vendor.bundle.js.map www
+    cp -r app/web/dist/vendor.bundle.js.map www && \
 
 ENTRYPOINT ["nginx"]
 CMD ["-g", "daemon off;"]
