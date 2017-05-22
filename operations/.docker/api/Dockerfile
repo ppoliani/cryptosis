@@ -23,6 +23,7 @@ RUN yarn install
 
 ENV NODE_ENV production
 ENV SERVER_PORT 5000
+ENV 
 
 # Bundle app source
 COPY js/api/ /usr/src/app
