@@ -10,7 +10,7 @@ RUN apt-get -qq update && \
 # install yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && apt-get -qq install yarn
+    apt-get update && apt-get -qq install -y yarn
 
 # Create app directory
 RUN mkdir -p /usr/src/app
