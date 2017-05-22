@@ -31,6 +31,7 @@ const login = async (checkAccessToken, getOrSaveSocialMediaAccount, createToken,
       });
   }
   catch(error) {
+    logger.error(`Access Denied: ${error.message}`)
     ctx.status = 403;
     ctx.body = HttpError(403, 'Access Denied');
   }
