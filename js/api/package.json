@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV='development' ./node_modules/.bin/nodemon ./bin/index.js",
+    "start:dev": "NODE_ENV='development' ./node_modules/.bin/nodemon ./bin/index.js",
+    "start": "NODE_ENV='production' ./node_modules/.bin/nodemon ./bin/index.js",
     "test": "node_modules/.bin/ava ./**/*.test.js"
   },
   "description": "The api for the Investreck UI",
@@ -14,10 +15,10 @@
   "dependencies": {
     "boom": "^4.3.1",
     "dotenv": "^4.0.0",
-    "folktale": "^2.0.0-alpha3",
+    "folktale": "^2.0.0-beta1",
     "global": "^4.3.1",
     "immutable": "^3.8.1",
-    "jsonwebtoken": "^7.3.0",
+    "jsonwebtoken": "^7.4.1",
     "kcors": "2",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
