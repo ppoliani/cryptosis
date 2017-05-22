@@ -41,7 +41,7 @@ RUN mkdir www && \
     cp -r app/web/dist/app.bundle.js www && \
     cp -r app/web/dist/app.bundle.js www && \
     cp -r app/web/dist/vendor.bundle.js.map www && \
-    cp -r app/web/dist/vendor.bundle.js.map www && \
+    cp -r app/web/dist/vendor.bundle.js.map www
 
 ENTRYPOINT ["nginx"]
 CMD ["-g", "daemon off;"]
