@@ -25,5 +25,4 @@ RUN yarn install
 # Bundle app source
 COPY js/api/ /usr/src/app
 
-RUN yarn global pm2
 CMD ["pm2-docker", "./bin/index.js"]
