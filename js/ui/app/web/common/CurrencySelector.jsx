@@ -16,7 +16,7 @@ const CurrencySelectorForm = () => {
        <Field
         name="currency"
         component={renderDropdown}
-        custom={{options}}
+        custom={{options, selected: 'gbp'}}
         type='dropdown'
         label='Currency' />
     </form>
@@ -24,5 +24,6 @@ const CurrencySelectorForm = () => {
 }
 
 export default reduxForm({
-  form: 'currencySelector'
+  form: 'currencySelector',
+  initialValues: {currency: 'gbp'}
 })(CurrencySelectorForm)
