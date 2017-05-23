@@ -7,12 +7,8 @@ import SideBar from './SideBar';
 import './layout.scss';
 
 export default (NestedComponent, props={}) => class LayoutComponent extends Component {
-  constructor(props, state) {
-    super(props, state);
-
-    this.state = {
-      isSiderBarOpen: false
-    };
+  state = {
+    isSiderBarOpen: false
   }
 
   @autobind
@@ -31,7 +27,7 @@ export default (NestedComponent, props={}) => class LayoutComponent extends Comp
 
     return (
       <div>
-        <Header toggleSidebar={this.toggleSidebar}/>
+        <Header toggleSidebar={this.toggleSidebar} />
         <div className="main-content">
           <Paper className='main-content__page'>
             <Grid fluid>
