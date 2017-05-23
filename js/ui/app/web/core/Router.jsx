@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux';
+import {compose} from 'folktale/core/lambda';
 import {
   BrowserRouter as Router,
   Route,
@@ -14,6 +16,7 @@ import InvestmentPage from '../investment/InvestmentPage';
 import InvestmentOverviewPage from '../investment/InvestmentOverviewPage';
 import BrokerPage from '../investment/BrokerPage';
 import InvestmentTypePage from '../investment/InvestmentTypePage';
+import {setUserProfile} from '../../data/profile/profileActions';
 
 class AuthGuard extends Component {
   constructor(props, state) {
@@ -50,14 +53,36 @@ class AuthGuard extends Component {
 const PrivateRoute = ({component: Component, ...rest}) =>
   <Route {...rest} render={props => <AuthGuard {...props} component={Layout(Component, props)} /> }/>
 
-export default () =>
-  <Router>
-    <div style={{height: '100%'}}>
-      <PrivateRoute exact path="/" component={OverView}/>
-      <PrivateRoute exact path="/investments/:id" component={InvestmentOverviewPage}/>
-      <PrivateRoute exact path="/investments" component={InvestmentPage}/>
-      <PrivateRoute exact path="/brokers" component={BrokerPage}/>
-      <PrivateRoute exact path="/investment-types" component={InvestmentTypePage}/>
-      <Route path="/login" component={Login}/>
-    </div>
-  </Router>;
+class RouterComponent extends Component {
+  componentWillMount() {
+    this.props.setUserProfile(JSON.parse(getItem('@investreck:user')));
+  }
+
+  render() {
+    return (
+      <Router>
+        <div style={{height: '100%'}}>
+          <PrivateRoute exact path="/" component={OverView}/>
+          <PrivateRoute exact path="/investments/:id" component={InvestmentOverviewPage}/>
+          <PrivateRoute exact path="/investments" component={InvestmentPage}/>
+          <PrivateRoute exact path="/brokers" component={BrokerPage}/>
+          <PrivateRoute exact path="/investment-types" component={InvestmentTypePage}/>
+          <Route path="/login" component={Login}/>
+        </div>
+      </Router>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  userProfile: state.userProfile
+})
+
+const mapDispatchToProps = dispatch => ({
+  setUserProfile: compose(dispatch, setUserProfile)
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RouterComponent);

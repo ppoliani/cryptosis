@@ -26,6 +26,7 @@ class Login extends Component {
         },
         ({token, account}) => {
           setItem('@investreck:access_token', token);
+          setItem('@investreck:user', JSON.stringify(account));
           this.props.setUserProfile(account)
           this.redirect();
         }
@@ -48,6 +49,7 @@ class Login extends Component {
         },
         ({token}) => {
           setItem('@investreck:access_token', token);
+          setItem('@investreck:user', JSON.stringify(account));
           this.props.setUserProfile(account);
           this.redirect();
         }

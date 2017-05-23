@@ -3,8 +3,9 @@ import {connect} from 'react-redux';
 import {compose} from 'folktale/core/lambda';
 import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
-import {getSearchResults} from '../data/search/searchActions'
-import Search from './search/Search';
+import {setUserProfile} from '../data/profile/profileActions';
+
+import {getItem} from '../../storage';
 
 const style = {
   height: '100vh',
@@ -15,6 +16,10 @@ const style = {
 };
 
 class App extends Component {
+  componenentWillMount() {
+    this.props.setUserProfile(getItem('@investreck:user'))
+  }
+
   render() {
     const {search, startSearch} = this.props;
 
@@ -31,7 +36,8 @@ class App extends Component {
 
 const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => ({
-  startSearch: compose(dispatch, getSearchResults)
+  startSearch: compose(dispatch, getSearchResults),
+  setUserProfile: compose(dispatch, setUserProfile)
 });
 
 export default connect(
