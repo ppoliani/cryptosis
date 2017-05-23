@@ -20,7 +20,7 @@ const login = async (checkAccessToken, getOrSaveSocialMediaAccount, createToken,
           unwrapCypherResult(token)
             .matchWith({
               Just: ({value: [token]}) => {
-                ctx.body = {token};
+                ctx.body = {token, account};
               },
               Nothing: () => {
                 throw new Error();

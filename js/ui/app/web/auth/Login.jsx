@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {compose, identity} from 'folktale/core/lambda';
 import {autobind} from 'core-decorators';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import {login} from '../../helpers/auth';
 import {setItem} from '../../storage';
+import {setUserProfile} from '../../data/profile/profileActions';
 
 import './login.scss';
 
@@ -11,7 +14,7 @@ import fetch from '../../helpers/api';
 
 class Login extends Component {
   redirect() {
-    window.location.href = '/';
+    this.props.history.push('/');
   }
 
   @autobind
@@ -21,8 +24,9 @@ class Login extends Component {
         error => {
           console.log('Could not login via fb', error);
         },
-        ({token}) => {
+        ({token, account}) => {
           setItem('@investreck:access_token', token);
+          this.props.setUserProfile(account)
           this.redirect();
         }
       )
@@ -44,6 +48,7 @@ class Login extends Component {
         },
         ({token}) => {
           setItem('@investreck:access_token', token);
+          this.props.setUserProfile(account);
           this.redirect();
         }
       )
@@ -68,4 +73,15 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  userProfile: state.userProfile
+})
+
+const mapDispatchToProps = dispatch => ({
+  setUserProfile: compose(dispatch, setUserProfile)
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

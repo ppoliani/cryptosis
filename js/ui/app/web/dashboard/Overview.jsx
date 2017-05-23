@@ -6,9 +6,6 @@ import PortfolioChart from './PortfolioChart';
 import PortfolioSummary from './PortfolioSummary';
 import PriceSummary from './PriceSummary';
 import InvestmentSummary from './InvestmentSummary';
-import Container from '../common/Container';
-import AsyncPanel from '../common/AsyncPanel';
-import {List, ListItem} from 'material-ui/List';
 import {startPortfolioStream} from '../../data/stream/portfolioValueStream';
 import {startLast30DaysStream} from '../../data/stream/last30DaysStream';
 

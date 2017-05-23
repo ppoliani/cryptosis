@@ -17,7 +17,6 @@ export default class InvestmentSummary extends Component {
                 <ListItem>Total Invested: £{Math.floor(v.toFixed(2))}</ListItem>
                 <ListItem>Current Value: £{Math.floor(total.get('currentValue').get(k))}</ListItem>
               </List>
-              <Divider />
             </div>
         ))
         .toList()
