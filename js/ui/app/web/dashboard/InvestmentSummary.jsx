@@ -24,8 +24,9 @@ export default class InvestmentSummary extends Component {
                 <Subheader>{k}</Subheader>
                 <ListItem>Total Invested: £{totalInvested}</ListItem>
                 <ListItem>Current Value: £{current}</ListItem>
-                <ListItem>Value %: {this.getPercentageChange(totalInvested, current).toFixed(2)}</ListItem>
+                <ListItem>Value %: {this.getPercentageChange(totalInvested, current).toFixed(2)}%</ListItem>
               </List>
+              <Divider />
             </div>
           )
         })

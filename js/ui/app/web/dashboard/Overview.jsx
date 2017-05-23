@@ -8,6 +8,7 @@ import PriceSummary from './PriceSummary';
 import InvestmentSummary from './InvestmentSummary';
 import {startPortfolioStream} from '../../data/stream/portfolioValueStream';
 import {startLast30DaysStream} from '../../data/stream/last30DaysStream';
+import CurrencySelector from '../common/CurrencySelector';
 
 class Overview extends Component {
   componentDidMount() {
@@ -34,11 +35,19 @@ class Overview extends Component {
       });
   }
 
+  componentDidUpdate() {
+    const values = this.props.form.currencySelector.values;
+    console.log('>>>>>>', values && values.currency)
+  }
+
   render() {
     const {investment, portfolio, prices} = this.props;
 
     return (
       <Col>
+        <Row between='xs' className='row-spacing'>
+          <CurrencySelector />
+        </Row>
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing'>
             <PortfolioChart
@@ -69,6 +78,7 @@ class Overview extends Component {
 }
 
 const mapStateToProps = state => ({
+  form: state.form,
   stream: state.stream,
   portfolio: state.portfolio,
   investment: state.investment,
