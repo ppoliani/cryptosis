@@ -11,7 +11,8 @@ const getPartialInvestments = async ({ctx}) => {
   return  await runQuery(
     DbDriver,
     `
-      MATCH (i:Investment)
+      MATCH (u:User)-[:HAS_INVESTMENT]->(i:Investment)
+      WHERE ID(u)=${Number(ctx.state.user.id)}
       RETURN {id: ID(i), investmentType: i.investmentType, price: i.price, quantity: i.quantity, expenses: i.expenses, date: i.date}
     `
   )
@@ -23,7 +24,8 @@ const getInvestments = async ({ctx}) => {
   return  await runQuery(
     DbDriver,
     `
-      MATCH (i:Investment)
+      MATCH (u:User)-[:HAS_INVESTMENT]->(i:Investment)
+      WHERE ID(u)=${Number(ctx.state.user.id)}
       RETURN i{ .*, id: ID(i)}
       ORDER BY i.date
       SKIP ${skip}
