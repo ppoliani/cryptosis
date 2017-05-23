@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 import {compose, identity} from 'folktale/core/lambda';
 import PortfolioChart from './PortfolioChart';
+import PortfolioSummary from './PortfolioSummary';
 import Container from '../common/Container';
 import AsyncPanel from '../common/AsyncPanel';
 import {List, ListItem} from 'material-ui/List';
@@ -34,28 +35,6 @@ class Overview extends Component {
       });
   }
 
-  getTotalInvested() {
-    return this.props.portfolio
-      .get('total')
-      .matchWith({
-        Just: ({value: total}) => Math.floor(total.get('totalAssets').reduce((acc, v) => acc + v, 0)),
-        Nothing: () => 0
-      });
-  }
-
-  getTotalPortfolioValue() {
-    return this.props.portfolio
-      .get('total')
-      .matchWith({
-        Just: ({value: total}) => Math.floor(total.get('currentValue').reduce((acc, v) => acc + v, 0)),
-        Nothing: () => 0
-      });
-  }
-
-  getPercentageChange(initial, current) {
-    return (current - initial) / initial * 100;
-  }
-
   renderCurrentPrices() {
     const {investment, prices} = this.props;
 
@@ -79,25 +58,6 @@ class Overview extends Component {
     )
   }
 
-  renderPortfolioValue() {
-    const {investment} = this.props;
-    const totalInvested = this.getTotalInvested();
-    const totalPortfolioValue = this.getTotalPortfolioValue();
-
-    return (
-      <Container title='Portfolio' subtitle='Aggregates'>
-        <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
-          <List>
-            <ListItem primaryText={`Total Invested: £${totalInvested}`} />
-            <ListItem primaryText={`Total Portfolio Value: £${totalPortfolioValue}`} />
-            <ListItem primaryText={`Change: £${totalPortfolioValue - totalInvested}`} />
-            <ListItem primaryText={`Change (%): ${this.getPercentageChange(totalInvested, totalPortfolioValue).toFixed(2)}%`} />
-          </List>
-        </AsyncPanel>
-      </Container>
-    )
-  }
-
   render() {
     const {investment, portfolio} = this.props;
 
@@ -114,7 +74,9 @@ class Overview extends Component {
               {this.renderCurrentPrices()}
             </Col>
             <Col>
-              {this.renderPortfolioValue()}
+              <PortfolioSummary
+                portfolio={portfolio}
+                investment={investment} />
             </Col>
           </Col>
         </Row>
