@@ -4,6 +4,7 @@ import {Grid, Row, Col} from 'react-flexbox-grid';
 import {compose, identity} from 'folktale/core/lambda';
 import PortfolioChart from './PortfolioChart';
 import PortfolioSummary from './PortfolioSummary';
+import PriceSummary from './PriceSummary';
 import Container from '../common/Container';
 import AsyncPanel from '../common/AsyncPanel';
 import {List, ListItem} from 'material-ui/List';
@@ -35,31 +36,8 @@ class Overview extends Component {
       });
   }
 
-  renderCurrentPrices() {
-    const {investment, prices} = this.props;
-
-    return (
-      <Container title='Prices' subtitle='Live'>
-        <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
-          <List>
-            {
-              prices.get('live').matchWith({
-                Just: ({value: prices}) => prices.map((v, k, i) => {
-                  return <ListItem key={k}>{k}: {v.get('price')}</ListItem>
-                })
-                .toList()
-                .toJS(),
-                Nothing: () => {}
-              })
-            }
-          </List>
-        </AsyncPanel>
-      </Container>
-    )
-  }
-
   render() {
-    const {investment, portfolio} = this.props;
+    const {investment, portfolio, prices} = this.props;
 
     return (
       <Col>
@@ -71,7 +49,9 @@ class Overview extends Component {
           </Col>
           <Col lg={4} xs={12}>
             <Col className='row-spacing'>
-              {this.renderCurrentPrices()}
+              <PriceSummary
+                investment={investment}
+                prices={prices}/>
             </Col>
             <Col>
               <PortfolioSummary
