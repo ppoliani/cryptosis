@@ -192,8 +192,8 @@ class InvestmentPage extends Component {
               <Button type="submit" className="right" onClick={this.togglePanel}>New</Button>
             </Col>
           </Row>
-          <Row>
-            <Col xs>
+          <Row className='row-spacing'>
+            <Col>
               {this.renderTable('Long Term')}
             </Col>
           </Row>

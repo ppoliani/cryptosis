@@ -1,3 +1,9 @@
+@import '../../../node_modules/include-media/dist/_include-media.scss';
+
 .main-content__page {
-  height: 100vh;
+  min-height: 100vh;
+}
+
+.row-spacing {
+  margin: 0 0 15px 0;
 }

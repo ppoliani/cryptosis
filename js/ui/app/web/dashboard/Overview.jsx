@@ -63,6 +63,20 @@ class Overview extends Component {
     return (current - initial) / initial * 100;
   }
 
+  renderCurrentPrices() {
+    const {investment} = this.props;
+
+    return (
+      <Container title='Prices' subtitle='Live'>
+        <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
+          <List>
+            <ListItem>ETH: £1222</ListItem>
+          </List>
+        </AsyncPanel>
+      </Container>
+    )
+  }
+
   renderPortfolioValue() {
     const {investment} = this.props;
     const totalInvested = this.getTotalInvested();
@@ -152,7 +166,12 @@ class Overview extends Component {
             {this.renderPortfolioChart()}
           </Col>
           <Col lg={4} xs={12}>
-            {this.renderPortfolioValue()}
+            <Col className='row-spacing'>
+              {this.renderCurrentPrices()}
+            </Col>
+            <Col>
+              {this.renderPortfolioValue()}
+            </Col>
           </Col>
         </Row>
       </Col>
