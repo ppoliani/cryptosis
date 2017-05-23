@@ -5,6 +5,7 @@ import compose from 'folktale/core/lambda/compose';
 import {connect} from '../../services/sockets/cryptoCompare';
 import {calculateTotalPortfolioValue} from '../../services/aggregators';
 import {setPortfolioValue} from '../portfolio/portfolioActions';
+import {setPrices} from '../prices/priceActions';
 import {getPartialInvestment$, getPriceObjFromStreamData} from './common';
 
 export const SET_PORTFOLIO_SUBSCRIPTION = 'STREAM::SET_PORTFOLIO_SUBSCRIPTION';
@@ -29,7 +30,10 @@ export const startPortfolioStream = () => dispatch => {
     }
   }
 
+  const keepPrices = obj => obj.prices;
+
   const subscription = combine(getPrices, getPartialInvestment$(), btc$, eth$)
+    .tap(compose.all(dispatch, setPrices, keepPrices))
     .chain(calculateTotalPortfolioValue)
     .subscribe(observer);
 

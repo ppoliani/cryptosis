@@ -64,13 +64,22 @@ class Overview extends Component {
   }
 
   renderCurrentPrices() {
-    const {investment} = this.props;
+    const {investment, prices} = this.props;
 
     return (
       <Container title='Prices' subtitle='Live'>
         <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
           <List>
-            <ListItem>ETH: £1222</ListItem>
+            {
+              prices.get('live').matchWith({
+                Just: ({value: prices}) => prices.map((v, k, i) => {
+                  return <ListItem key={k}>{k}: {v.get('price')}</ListItem>
+                })
+                .toList()
+                .toJS(),
+                Nothing: () => {}
+              })
+            }
           </List>
         </AsyncPanel>
       </Container>
@@ -162,7 +171,7 @@ class Overview extends Component {
     return (
       <Col>
         <Row between='xs'>
-          <Col lg={8} xs={12}>
+          <Col lg={8} xs={12} className='row-spacing'>
             {this.renderPortfolioChart()}
           </Col>
           <Col lg={4} xs={12}>
@@ -182,7 +191,8 @@ class Overview extends Component {
 const mapStateToProps = state => ({
   stream: state.stream,
   portfolio: state.portfolio,
-  investment: state.investment
+  investment: state.investment,
+  prices: state.prices
 });
 
 const mapDispatchToProps = dispatch => ({
