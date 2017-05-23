@@ -54,7 +54,7 @@ class Overview extends Component {
                 investment={investment}
                 prices={prices}/>
             </Col>
-            <Col>
+            <Col className='row-spacing'>
               <PortfolioSummary
                 portfolio={portfolio}
                 investment={investment} />
