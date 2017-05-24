@@ -23,7 +23,7 @@ export const startLast30DaysStream = currency => dispatch => {
   }))
 
   const getPrices = (investments, btc, eth)  => ({
-    investments: fromJS(investments.result),
+    investments: fromJS(investments.result).filter(v => v.get('currency') === currency),
     prices: fromJS({
       BTX: getPriceObj('BTX', btc),
       ETH: getPriceObj('ETH', eth)

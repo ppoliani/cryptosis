@@ -13,7 +13,7 @@ const getPartialInvestments = async ({ctx}) => {
     `
       MATCH (u:User)-[:HAS_INVESTMENT]->(i:Investment)
       WHERE ID(u)=${Number(ctx.state.user.id)}
-      RETURN {id: ID(i), investmentType: i.investmentType, price: i.price, quantity: i.quantity, expenses: i.expenses, date: i.date}
+      RETURN {id: ID(i), investmentType: i.investmentType, currency: i.currency, price: i.price, quantity: i.quantity, expenses: i.expenses, date: i.date}
     `
   )
 }

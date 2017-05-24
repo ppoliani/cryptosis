@@ -14,18 +14,27 @@ const DEFAULT_CURRENCY = 'GBP';
 
 class Overview extends Component {
   componentDidMount() {
-    const {startPortfolioStream, startLast30DaysStream} = this.props;
-
-    startPortfolioStream(DEFAULT_CURRENCY);
-    startLast30DaysStream(DEFAULT_CURRENCY);
+    this.subscribe(DEFAULT_CURRENCY);
   }
 
   componentWillUnmount() {
     this.unsubscribe();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    const currency = this.getSelectedCurrency(this.props.form);
 
+    if(this.getSelectedCurrency(prevProps.form) !== currency) {
+      this.unsubscribe(currency);
+      this.subscribe(currency);
+    }
+  }
+
+  subscribe(currency) {
+    const {startPortfolioStream, startLast30DaysStream} = this.props;
+
+    startPortfolioStream(currency);
+    startLast30DaysStream(currency);
   }
 
   unsubscribe() {
@@ -46,8 +55,8 @@ class Overview extends Component {
       });
   }
 
-  getSelectedCurrency() {
-    const values = this.props.form.currencySelector.values;
+  getSelectedCurrency(form) {
+    const values = form.currencySelector && form.currencySelector.values;
     return values ? values.currency : DEFAULT_CURRENCY;
   }
 
