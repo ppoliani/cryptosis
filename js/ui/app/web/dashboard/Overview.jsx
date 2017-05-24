@@ -10,14 +10,25 @@ import {startPortfolioStream} from '../../data/stream/portfolioValueStream';
 import {startLast30DaysStream} from '../../data/stream/last30DaysStream';
 import CurrencySelector from '../common/CurrencySelector';
 
+const DEFAULT_CURRENCY = 'GBP';
+
 class Overview extends Component {
   componentDidMount() {
     const {startPortfolioStream, startLast30DaysStream} = this.props;
-    startPortfolioStream();
-    startLast30DaysStream();
+
+    startPortfolioStream(DEFAULT_CURRENCY);
+    startLast30DaysStream(DEFAULT_CURRENCY);
   }
 
   componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  componentDidUpdate() {
+
+  }
+
+  unsubscribe() {
     const {stream} = this.props;
 
     stream
@@ -35,9 +46,9 @@ class Overview extends Component {
       });
   }
 
-  componentDidUpdate() {
+  getSelectedCurrency() {
     const values = this.props.form.currencySelector.values;
-    console.log('>>>>>>', values && values.currency)
+    return values ? values.currency : DEFAULT_CURRENCY;
   }
 
   render() {

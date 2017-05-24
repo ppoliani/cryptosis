@@ -9,7 +9,7 @@ import {getPartialInvestment$, getBTC$, getETH$} from './common';
 export const SET_LAST_30_DAYS_SUBSCRIPTION = 'STREAM::SET_LAST_30_DAYS_SUBSCRIPTION';
 const setLast30DaysSubscription = createAction(SET_LAST_30_DAYS_SUBSCRIPTION);
 
-export const startLast30DaysStream = () => dispatch => {
+export const startLast30DaysStream = currency => dispatch => {
   const observer = {
     next: compose(dispatch, setLast30Days),
     error: errorValue => console.log(`Error in the observer of the portfolio stream: ${errorValue}`)
@@ -30,7 +30,7 @@ export const startLast30DaysStream = () => dispatch => {
     })
   })
 
-  const subscription = combine(getPrices, getPartialInvestment$(), getBTC$(), getETH$())
+  const subscription = combine(getPrices, getPartialInvestment$(), getBTC$(currency), getETH$(currency))
     .chain(calculateHistoricPortfolioValues)
     .subscribe(observer);
 

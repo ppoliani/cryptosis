@@ -11,9 +11,9 @@ import {getPartialInvestment$, getPriceObjFromStreamData} from './common';
 export const SET_PORTFOLIO_SUBSCRIPTION = 'STREAM::SET_PORTFOLIO_SUBSCRIPTION';
 const setPortfolioSubscription = createAction(SET_PORTFOLIO_SUBSCRIPTION);
 
-export const startPortfolioStream = () => dispatch => {
-  const btc$ = connect('BTC', 'Coinfloor');
-  const eth$ = connect('ETH', 'Kraken');
+export const startPortfolioStream = currency => dispatch => {
+  const btc$ = connect('BTC', 'Coinfloor', currency);
+  const eth$ = connect('ETH', 'Kraken', currency);
 
   const observer = {
     next: compose(dispatch, setPortfolioValue),

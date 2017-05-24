@@ -12,9 +12,9 @@ const setInvestmentCurrentValueSuscription = createAction(SET_INVESTMENT_CURRENT
 
 
 // value for each investment individually
-export const startInvestmentCurrentValueStream = () => dispatch => {
-  const btc$ = connect('BTC', 'Coinfloor');
-  const eth$ = connect('ETH', 'Kraken');
+export const startInvestmentCurrentValueStream = currency => dispatch => {
+  const btc$ = connect('BTC', 'Coinfloor', currency);
+  const eth$ = connect('ETH', 'Kraken', currency);
 
   const observer = {
     next: compose(dispatch, setInvestmentCurrentValue),

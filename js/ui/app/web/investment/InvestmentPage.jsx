@@ -35,6 +35,7 @@ const columns = [
   {key: 'notes', label: 'Notes'},
   {key: 'action', label: 'Action'}
 ];
+const DEFAULT_CURRENCY = 'GBP';
 
 @DialogBoxMixin
 @pureComponent
@@ -51,7 +52,7 @@ class InvestmentPage extends Component {
     getInvestments({skip, limit});
     getBrokers({skip, limit});
     getInvestmentTypes({skip, limit});
-    startInvestmentCurrentValueStream();
+    startInvestmentCurrentValueStream(DEFAULT_CURRENCY);
   }
 
   componentWillUnmount() {
@@ -63,6 +64,11 @@ class InvestmentPage extends Component {
         Just: ({value}) => value.unsubscribe(),
         Nothing: identity
       });
+  }
+
+  getSelectedCurrency() {
+    const values = this.props.form.currencySelector.values;
+    return values ? values.currency : DEFAULT_CURRENCY;
   }
 
   togglePanel = (_, selectedInvestment={}) => {
@@ -209,6 +215,7 @@ class InvestmentPage extends Component {
 }
 
 const mapStateToProps = state => ({
+  form: state.form,
   stream: state.stream,
   investments: state.investment,
   brokers: state.broker.get('brokers'),

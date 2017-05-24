@@ -58,8 +58,8 @@ const unpack = value => {
   return unpackedCurrent;
 };
 
-export const connect = (symbol, exchangeName) => {
-  const subscription = [`2~${exchangeName}~${symbol}~GBP`];
+export const connect = (symbol, exchangeName, toSymbol) => {
+  const subscription = [`2~${exchangeName}~${symbol}~${toSymbol}`];
   const socket = io.connect(URL);
   socket.emit('SubAdd', {subs:subscription});
 
