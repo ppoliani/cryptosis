@@ -14,7 +14,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && \
 
 # Create app directory
 RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/api
 
 # Install app dependencies
 COPY js/api/package.json /usr/src/app/
@@ -22,6 +22,7 @@ COPY js/api/package.json /usr/src/app/
 RUN yarn install
 
 # Bundle app source
-COPY js/api/ /usr/src/app
+COPY js/api/ /usr/src/app/api/
+COPY js/common/ /usr/src/app/common/
 
 CMD ["yarn", "start"]
