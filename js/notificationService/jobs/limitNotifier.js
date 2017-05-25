@@ -71,7 +71,8 @@ const filterCurrency = (investments, currency, unwrapCypherListNodeResult, send)
             })
         )
         .get('investments')
-    );
+    )
+
 const start = async (currency, unwrapCypherResult, unwrapCypherListNodeResult, getAllPartialInvestments, send) => {
   try{
     const btc$ = connect(io, 'BTC', 'Coinfloor', currency);
@@ -92,7 +93,7 @@ const start = async (currency, unwrapCypherResult, unwrapCypherListNodeResult, g
 
     return combine(getPrices, fromPromise(getInvestments(unwrapCypherResult)), btc$, eth$)
       .map(checkLimits)
-      .skipRepeatsWith((a, b) => is(a, b))
+      .skipRepeatsWith(is)
       .subscribe(observer);
   }
   catch(error) {
