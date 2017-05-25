@@ -14,7 +14,7 @@ import {
   ListItemIcon
 } from 'material-ui/List';
 import './sidebar.scss';
-import {partial} from '../../../../common/utils/fn';
+import {partial} from '../../../../common/core/fn';
 
 const getInvestementItems = (onSidebarExit, userProfile) =>
   userProfile.get('info')

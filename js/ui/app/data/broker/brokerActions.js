@@ -2,7 +2,7 @@ import {createAction} from 'redux-actions';
 import compose from 'folktale/core/lambda/compose';
 import {Map} from 'immutable';
 import fetch, {constructUrl} from '../../helpers/api';
-import {partial} from '../../../../common/utils/fn';
+import {partial} from '../../../../common/core/fn';
 import {task} from 'folktale/data/task';
 
 const BROKER_ENDPOINT = `${process.env.API_URL}/brokers`;

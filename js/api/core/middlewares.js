@@ -1,4 +1,4 @@
-const logger = require('./logger');
+const logger = require('../../common/core/logger');
 const cors = require('kcors');
 const bodyParser = require('koa-bodyparser');
 

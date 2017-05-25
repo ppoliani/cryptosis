@@ -1,5 +1,6 @@
 const identity = require('folktale/core/lambda/identity');
-const logger = require('../core/logger');
+const {generateToken} = require('../auth/jwt');
+const logger = require('../../common/core/logger');
 const {HttpError} = require('../core/api');
 
 const login = async (checkAccessToken, getOrSaveSocialMediaAccount, createToken, unwrapCypherResult, ctx, next) => {
@@ -15,7 +16,7 @@ const login = async (checkAccessToken, getOrSaveSocialMediaAccount, createToken,
     await unwrapCypherResult(account)
       .matchWith({
         Just: async ({value: [account]}) => {
-          const token = await createToken(source, account);
+          const token = await createToken(source, account, generateToken);
 
           unwrapCypherResult(token)
             .matchWith({

@@ -2,7 +2,7 @@ import {fromJS, Map} from 'immutable';
 import {create} from '@most/create'
 import curry from 'folktale/core/lambda/curry';
 import compose from 'folktale/core/lambda/compose'
-import {partial} from '../utils/fn';
+import {partial} from '../core/fn';
 import {getTotalForInvestment, getCurrentTotalForInvestment, getPercentageChange} from './common';
 
 

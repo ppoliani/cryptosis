@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const logger = require('../core/logger');
+const logger = require('../../common/core/logger');
 
 const _fetch = async (url, method='GET', headers) => {
   try {

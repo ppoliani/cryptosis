@@ -1,6 +1,6 @@
 import {Map} from 'immutable';
 import isBefore from 'date-fns/is_before'
-import {partial} from '../utils/fn';
+import {partial} from '../core/fn';
 
 // { [id]: Investment  } -> { [InvestmentType] -> Value }
 const groupTotalValuePerTypeReducer = (acc, v) =>

@@ -14,7 +14,7 @@ const morgan = require('morgan');
 const ctk = require('koa-connect');
 const applyMiddlewares = require('../core/middlewares');
 const setupRoutes = require('../core/routes');
-const logger = require('../core/logger');
+const logger = require('../../common/core/logger');
 const {initDB, initRepositories} = require('../../common/data');
 const {initAuth} = require('../auth');
 

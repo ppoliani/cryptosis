@@ -1,5 +1,5 @@
 const passport = require('koa-passport');
-const {entries} = require('./utils');
+const {entries} = require('../../common/core/utils');
 
 const routes = [
   require('../auth/authRoutes'),

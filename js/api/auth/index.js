@@ -1,8 +1,8 @@
 const passport = require('koa-passport');
 const BearerStrategy = require('passport-http-bearer').Strategy;
-const logger = require('../core/logger');
-const {getTokenAndCorrespondingAccounts} = require('../data/accountRepository');
-const {unwrapCypherResult} = require('../data/utils');
+const logger = require('../../common/core/logger');
+const {getTokenAndCorrespondingAccounts} = require('../../common/data/accountRepository');
+const {unwrapCypherResult} = require('../../common/data/utils');
 const {HttpError} = require('../core/api');
 const {decodeToken} = require('../auth/jwt');
 

@@ -6,7 +6,7 @@ import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import pureComponent from '../mixins/pureComponent';
 import AsyncPanel from '../common/AsyncPanel';
-import {partial, pipe} from '../../../../common/utils/fn';
+import {partial, pipe} from '../../../../common/core/fn';
 import {filterObject} from '../../helpers/utils';
 import PageWithPanel from '../common/PageWithPanel';
 import createBrokerForm from './form/BrokerForm';

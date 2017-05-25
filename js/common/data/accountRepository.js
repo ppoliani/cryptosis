@@ -1,5 +1,4 @@
 const {runQuery} = require('./query');
-const {generateToken} = require('../auth/jwt');
 
 let DbDriver;
 
@@ -25,7 +24,7 @@ const getOrSaveSocialMediaAccount = async (source, authResponse) => {
   );
 };
 
-const createToken = async (source, account) => {
+const createToken = async (source, account, generateToken) => {
   const token = generateToken(account);
   return await runQuery(
     DbDriver,
