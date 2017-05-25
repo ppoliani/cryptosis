@@ -32,7 +32,10 @@ RUN . ~/.nvm/nvm.sh && \
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
-ADD js/ui .
+ADD js/ui /ui
+ADD js/common /common
+WORKDIR /ui
+
 RUN yarn install
 RUN yarn run web:build
 

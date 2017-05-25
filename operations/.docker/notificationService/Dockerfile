@@ -16,18 +16,19 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && \
 RUN mkdir -p /usr/src/app
 
 # Install app dependencies
-COPY js/api/package.json /usr/src/app
+COPY js/notificationService/package.json /usr/src/app
 
 # Bundle app source
-COPY js/api/ /usr/src/app/api/
+COPY js/notificationService/ /usr/src/app/notificationService/
 COPY js/common/ /usr/src/app/common/
+
+WORKDIR /usr/src/app/notificationService
+RUN yarn install
 
 # this will ultimately be a seperate package; for the time being, make sure all deps are installed
 WORKDIR /usr/src/app/common
 RUN yarn install
 
-WORKDIR /usr/src/app/api
-RUN yarn install
-
+WORKDIR /usr/src/app/notificationService
 
 CMD ["yarn", "start"]
