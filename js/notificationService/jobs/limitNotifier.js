@@ -1,6 +1,6 @@
 const {combine, fromPromise} = require('most');
 const io = require('socket.io-client');
-const {fromJS, Map, List} = require('immutable');
+const {fromJS, Map, List, is} = require('immutable');
 const logger = require('../../common/core/logger');
 const {connect} = require('../../common/sockets/cryptoCompare');
 const Maybe = require('folktale/data/maybe');
@@ -91,8 +91,9 @@ const start = async (currency, unwrapCypherResult, unwrapCypherListNodeResult, g
       })
 
     return combine(getPrices, fromPromise(getInvestments(unwrapCypherResult)), btc$, eth$)
-    .map(checkLimits)
-    .subscribe(observer);
+      .map(checkLimits)
+      .skipRepeatsWith((a, b) => is(a, b))
+      .subscribe(observer);
   }
   catch(error) {
     logger.error(error);
