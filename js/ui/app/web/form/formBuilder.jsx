@@ -3,7 +3,7 @@ import {Field, reduxForm} from 'redux-form';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/RaisedButton';
 import {renderInput, renderDropdown, renderDatePicker} from './helpers';
-import {pipe, partial} from '../../helpers/fn';
+import {pipe, partial} from '../../../../common/utils/fn';
 
 const getFieldRenderer = field => {
   switch(field.type) {

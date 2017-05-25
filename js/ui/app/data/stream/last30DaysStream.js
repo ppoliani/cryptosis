@@ -2,7 +2,7 @@ import {createAction} from 'redux-actions';
 import {combine} from 'most';
 import {fromJS} from 'immutable';
 import compose from 'folktale/core/lambda/compose';
-import {calculateHistoricPortfolioValues} from '../../services/aggregators';
+import {calculateHistoricPortfolioValues} from '../../../../common/aggregators';
 import {setLast30Days} from '../portfolio/portfolioActions';
 import {getPartialInvestment$, getBTC$, getETH$} from './common';
 

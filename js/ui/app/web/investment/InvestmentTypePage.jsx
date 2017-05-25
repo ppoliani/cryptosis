@@ -7,7 +7,7 @@ import Button from 'material-ui/FlatButton';
 import PageWithPanel from '../common/PageWithPanel';
 import pureComponent from '../mixins/pureComponent';
 import AsyncPanel from '../common/AsyncPanel';
-import {partial, pipe} from '../../helpers/fn';
+import {partial, pipe} from '../../../../common/utils/fn';
 import {filterObject} from '../../helpers/utils';
 import createInvestmentTypeForm from './form/InvestmentTypeForm';
 import DialogBoxMixin from '../mixins/DialogBoxMixin';

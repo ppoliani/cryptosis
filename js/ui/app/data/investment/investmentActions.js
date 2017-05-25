@@ -3,7 +3,7 @@ import compose from 'folktale/core/lambda/compose';
 import map from 'folktale/core/fantasy-land/map';
 import {Map} from 'immutable';
 import fetch, {constructUrl} from '../../helpers/api';
-import {partial} from '../../helpers/fn';
+import {partial} from '../../../../common/utils/fn';
 import {task} from 'folktale/data/task';
 
 const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;

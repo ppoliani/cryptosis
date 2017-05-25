@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {List, fromJS, Map} from 'immutable';
 import dateformat from 'date-fns/format';
-import {partial, pipe} from '../../helpers/fn';
+import {partial, pipe} from '../../../../common/utils/fn';
 import {filterObject} from '../../helpers/utils';
 import {connect} from 'react-redux';
 import {compose, identity} from 'folktale/core/lambda';

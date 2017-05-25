@@ -2,8 +2,8 @@ import {createAction} from 'redux-actions';
 import {combine} from 'most';
 import {fromJS} from 'immutable';
 import compose from 'folktale/core/lambda/compose';
-import {connect} from '../../services/sockets/cryptoCompare';
-import {calculateInvestmentValues} from '../../services/aggregators';
+import {connect} from '../../../../common/sockets/cryptoCompare';
+import {calculateInvestmentValues} from '../../../../common/aggregators';
 import {setInvestmentCurrentValue} from '../portfolio/portfolioActions';
 import {getPartialInvestment$, getPriceObjFromStreamData} from './common';
 
