@@ -7,7 +7,7 @@ const init = driver => {
   DbDriver = driver;
 }
 
-const getAllPartialInvestments = async ({ctx}) => {
+const getAllPartialInvestments = async () => {
   return  await runQuery(
     DbDriver,
     `

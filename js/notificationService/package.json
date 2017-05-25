@@ -1,7 +1,13 @@
 {
-  "name": "notificationService",
+  "name": "notification-service",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start:dev": "NODE_ENV='development' ./node_modules/.bin/nodemon ./bin/index.js",
+    "start": "NODE_ENV='production' node ./bin/index.js",
+    "test": "node_modules/.bin/ava ./**/*.test.js"
+  },
+  "main": ".bin/index.js",
   "license": "MIT",
   "dependencies": {
     "folktale": "^2.0.0-beta1",
