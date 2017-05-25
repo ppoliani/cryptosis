@@ -34,7 +34,7 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 ADD js/ui /ui
 ADD js/common /common
-WORKDIR /ui
+
 
 RUN yarn install
 RUN yarn run web:build
