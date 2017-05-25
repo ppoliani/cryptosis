@@ -7,6 +7,16 @@ const init = driver => {
   DbDriver = driver;
 }
 
+const getAllPartialInvestments = async ({ctx}) => {
+  return  await runQuery(
+    DbDriver,
+    `
+      MATCH (u:User)-[:HAS_INVESTMENT]->(i:Investment)
+      RETURN {id: ID(i), investments: collect(i)}
+    `
+  )
+}
+
 const getPartialInvestments = async ({ctx}) => {
   return  await runQuery(
     DbDriver,
@@ -129,6 +139,7 @@ const deleteInvestmentType= async ({resource:investmentTypeId})  => {
 
 module.exports = {
   init,
+  getAllPartialInvestments,
   getPartialInvestments,
   getInvestments,
   saveInvestment,

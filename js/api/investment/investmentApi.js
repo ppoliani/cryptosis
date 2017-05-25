@@ -1,7 +1,7 @@
 const {partial} = require('../core/fn');
 const {createSimpleEndpoint, HTTP_NO_CONTENT} = require('../core/api');
-const repository= require('../data/investmentRepository');
-const {unwrapCypherResult, unwrapCypherResultToMap} = require('../data/utils');
+const repository= require('../../common/data/investmentRepository');
+const {unwrapCypherResult, unwrapCypherResultToMap} = require('../../common/data/utils');
 const logger = require('../core/logger');
 
 const getPartialInvestments = partial(

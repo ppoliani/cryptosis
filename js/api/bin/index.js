@@ -15,7 +15,7 @@ const ctk = require('koa-connect');
 const applyMiddlewares = require('../core/middlewares');
 const setupRoutes = require('../core/routes');
 const logger = require('../core/logger');
-const {initDB, initRepositories} = require('../data');
+const {initDB, initRepositories} = require('../../common/data');
 const {initAuth} = require('../auth');
 
 (async () => {
