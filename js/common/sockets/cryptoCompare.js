@@ -1,5 +1,4 @@
-import io from 'socket.io-client';
-import {create} from '@most/create'
+const {create} = require('@most/create');
 
 const CURRENTAGG = '2';
 const URL = 'https://streamer.cryptocompare.com/';
@@ -58,7 +57,7 @@ const unpack = value => {
   return unpackedCurrent;
 };
 
-export const connect = (symbol, exchangeName, toSymbol) => {
+const connect = (io, symbol, exchangeName, toSymbol) => {
   const subscription = [`2~${exchangeName}~${symbol}~${toSymbol}`];
   const socket = io.connect(URL);
   socket.emit('SubAdd', {subs:subscription});
@@ -75,3 +74,5 @@ export const connect = (symbol, exchangeName, toSymbol) => {
     return () => socket.emit('SubRemove', {subs:subscription});
   });
 }
+
+module.exports = {connect};

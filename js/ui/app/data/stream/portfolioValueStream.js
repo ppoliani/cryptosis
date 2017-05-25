@@ -2,6 +2,7 @@ import {createAction} from 'redux-actions';
 import {combine} from 'most';
 import {fromJS} from 'immutable';
 import compose from 'folktale/core/lambda/compose';
+import io from 'socket.io-client';
 import {connect} from '../../../../common/sockets/cryptoCompare';
 import {calculateTotalPortfolioValue} from '../../../../common/aggregators';
 import {setPortfolioValue} from '../portfolio/portfolioActions';
@@ -12,8 +13,8 @@ export const SET_PORTFOLIO_SUBSCRIPTION = 'STREAM::SET_PORTFOLIO_SUBSCRIPTION';
 const setPortfolioSubscription = createAction(SET_PORTFOLIO_SUBSCRIPTION);
 
 export const startPortfolioStream = currency => dispatch => {
-  const btc$ = connect('BTC', 'Coinfloor', currency);
-  const eth$ = connect('ETH', 'Kraken', currency);
+  const btc$ = connect(io, 'BTC', 'Coinfloor', currency);
+  const eth$ = connect(io, 'ETH', 'Kraken', currency);
 
   const observer = {
     next: compose(dispatch, setPortfolioValue),

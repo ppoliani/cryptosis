@@ -2,6 +2,7 @@ import {createAction} from 'redux-actions';
 import {combine} from 'most';
 import {fromJS} from 'immutable';
 import compose from 'folktale/core/lambda/compose';
+import io from 'socket.io-client';
 import {connect} from '../../../../common/sockets/cryptoCompare';
 import {calculateInvestmentValues} from '../../../../common/aggregators';
 import {setInvestmentCurrentValue} from '../portfolio/portfolioActions';
@@ -13,8 +14,8 @@ const setInvestmentCurrentValueSuscription = createAction(SET_INVESTMENT_CURRENT
 
 // value for each investment individually
 export const startInvestmentCurrentValueStream = currency => dispatch => {
-  const btc$ = connect('BTC', 'Coinfloor', currency);
-  const eth$ = connect('ETH', 'Kraken', currency);
+  const btc$ = connect(io, 'BTC', 'Coinfloor', currency);
+  const eth$ = connect(io, 'ETH', 'Kraken', currency);
 
   const observer = {
     next: compose(dispatch, setInvestmentCurrentValue),
