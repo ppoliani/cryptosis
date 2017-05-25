@@ -49,4 +49,21 @@ const getTokenAndCorrespondingAccounts = async token => {
   );
 };
 
-module.exports = {init, getOrSaveSocialMediaAccount, createToken, getTokenAndCorrespondingAccounts}
+const getAccount = async userId => {
+  return await runQuery(
+    DbDriver,
+    `
+      MATCH (u:User), (s: SocialMediaAccount)
+      WHERE (u)-[:HAS_FB|:HAS_GOOGLE]->(s)
+      RETURN s
+    `
+  );
+}
+
+module.exports = {
+  init,
+  getAccount,
+  getOrSaveSocialMediaAccount,
+  createToken,
+  getTokenAndCorrespondingAccounts
+}

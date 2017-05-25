@@ -18,7 +18,7 @@ const unwrapCypherListNodeResult = fields => {
   }
 }
 
-const unwrapCypherNodeResult = field =>  normalize(field.properties || field);
+const unwrapCypherNodeResult = field => normalize(field.properties || field);
 
 // same as above but return a Map instead
 const unwrapCypherResultToMap = records => {

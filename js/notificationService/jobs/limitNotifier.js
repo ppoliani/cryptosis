@@ -9,7 +9,7 @@ const calculateTotalPortfolioValue = require('../../common/aggregators');
 const {getPriceObjFromStreamData} = require('../../common/aggregators/common');
 const {getInvestmentValues} = require('../../common/aggregators/investmentValues');
 
-const createInvestmentReportObj = (limit, percentage, investment) => investment.set(limit, percentage)
+const createInvestmentReportObj = (percentage, investment) => investment.set('current', percentage)
 
 const checkInvestmentLimit = (investment, prices) => {
   // getInvestmentValues expects a Map<InvestmentId, Investement>
@@ -23,10 +23,10 @@ const checkInvestmentLimit = (investment, prices) => {
   const upperLimit = Number(investment.get('upperLimit'));
 
   if(percentage <= lowerLimit) {
-    return Maybe.Just(createInvestmentReportObj('lowerLimit', percentage, investment));
+    return Maybe.Just(createInvestmentReportObj(percentage, investment));
   }
   else if(percentage >= upperLimit) {
-    return Maybe.Just(createInvestmentReportObj('upperLimit', percentage, investment));
+    return Maybe.Just(createInvestmentReportObj(percentage, investment));
   }
 
   return Maybe.Nothing();
@@ -59,7 +59,7 @@ const getInvestments = async unwrapCypherResult => {
     });
 }
 
-const filterCurrency = (investments, currency, unwrapCypherListNodeResult) =>
+const filterCurrency = (investments, currency, unwrapCypherListNodeResult, send) =>
   investments
     .map(
       i => i
@@ -72,13 +72,13 @@ const filterCurrency = (investments, currency, unwrapCypherListNodeResult) =>
         )
         .get('investments')
     );
-const start = async (currency, unwrapCypherResult, unwrapCypherListNodeResult, getAllPartialInvestments) => {
+const start = async (currency, unwrapCypherResult, unwrapCypherListNodeResult, getAllPartialInvestments, send) => {
   try{
     const btc$ = connect(io, 'BTC', 'Coinfloor', currency);
     const eth$ = connect(io, 'ETH', 'Kraken', currency);
 
     const observer = {
-      next: result => console.log(JSON.stringify(result)),
+      next: send,
       error: errorValue => console.log(`Error in the observer of the investment values stream: ${errorValue}`)
     }
 

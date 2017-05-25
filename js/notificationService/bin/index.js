@@ -8,6 +8,7 @@ const {unwrapCypherResultToMap, unwrapCypherListNodeResult} = require('../../com
 const logger = require('../../common/core/logger');
 const {getAllPartialInvestments} = require('../../common/data/investmentRepository');
 const {initDB, initRepositories} = require('../../common/data');
+const send = require('../notifiers/email');
 
 (async () => {
   try {
@@ -15,7 +16,7 @@ const {initDB, initRepositories} = require('../../common/data');
     logger.info('Succesfully conected to the db');
     initRepositories(driver);
 
-    start('GBP', unwrapCypherResultToMap, unwrapCypherListNodeResult, getAllPartialInvestments);
+    start('GBP', unwrapCypherResultToMap, unwrapCypherListNodeResult, getAllPartialInvestments, send);
   }
   catch(error) {
     logger.error(error)
