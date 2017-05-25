@@ -26,6 +26,21 @@
     },
     {
       "type": "node",
+      "request": "launch",
+      "name": "Launch Notifier",
+      "program": "${workspaceRoot}/js/notificationService/bin/index.js",
+      "cwd": "${workspaceRoot}",
+      "sourceMaps": true,
+      "restart": true,
+      "env": {
+        "NODE_ENV": "development",
+        "DB_USERNAME": "barter",
+        "DB_PASSWORD": "barter_password",
+        "DB_URL": "bolt://localhost:7687"
+      }
+    },
+    {
+      "type": "node",
       "request": "attach",
       "name": "Attach to Process",
       "address": "localhost",

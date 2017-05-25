@@ -1,6 +1,6 @@
-import {Map} from 'immutable';
-import isBefore from 'date-fns/is_before'
-import {partial} from '../core/fn';
+const {Map} = require('immutable');
+const isBefore = require('date-fns/is_before');
+const {partial} = require('../core/fn');
 
 // { [id]: Investment  } -> { [InvestmentType] -> Value }
 const groupTotalValuePerTypeReducer = (acc, v) =>
@@ -21,28 +21,46 @@ const groupCurrentTotalValuePerTypeReducer = prices => (acc, v) => {
 }
 
 // Investment CurrentPrice -> Value
-export const getCurrentTotalForInvestment = (investment, currentPrice) => investment.get('quantity') * currentPrice;
+const getCurrentTotalForInvestment = (investment, currentPrice) => investment.get('quantity') * currentPrice;
 
 // Investment PriceOfPurchase -> Value
-export const getTotalForInvestment = i => i.get('price') * i.get('quantity') + i.get('expenses');
+const getTotalForInvestment = i => i.get('price') * i.get('quantity') + i.get('expenses');
 
 // Finds the total money invested per type of investment
-export const calculateTotalPerType = investments => investments.reduce(groupTotalValuePerTypeReducer, Map())
+const calculateTotalPerType = investments => investments.reduce(groupTotalValuePerTypeReducer, Map())
 
 // Finds the total value per type of investment based on the current buy price
-export const calculateCurrentValuePerType = (investments, prices) => investments.reduce(
+const calculateCurrentValuePerType = (investments, prices) => investments.reduce(
   groupCurrentTotalValuePerTypeReducer(prices),
   Map()
 )
 
-export const getPercentageChange = (diff, initial) => (diff / initial) * 100;
+const getPercentageChange = (diff, initial) => (diff / initial) * 100;
 
 // we need to find the total portfolio value on the given date.
 // Investments that didn't exist on that date should not contribute to the figure
-export const getTotalValueAfterDate = (investments, symbol, date, priceOfDay) =>
+const getTotalValueAfterDate = (investments, symbol, date, priceOfDay) =>
   investments
     .filter(i => i.get('investmentType') === symbol && isBefore(i.get('date'), date))
     .reduce(
       (sum, investment) => sum + (getCurrentTotalForInvestment(investment, priceOfDay) - getTotalForInvestment(investment)),
       0
     )
+
+const getPriceObjFromStreamData = data => ({
+  price: data.PRICE,
+  market: data.MARKET,
+  symbol: data.FROMSYMBOL
+})
+
+
+
+module.exports = {
+  getCurrentTotalForInvestment,
+  getTotalForInvestment,
+  calculateTotalPerType,
+  calculateCurrentValuePerType,
+  getPercentageChange,
+  getTotalValueAfterDate,
+  getPriceObjFromStreamData
+}

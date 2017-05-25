@@ -1,22 +1,24 @@
 const neo4j = require('neo4j-driver').v1;
-const {Map} = require('immutable');
+const {Map, List} = require('immutable');
 const Maybe = require('folktale/data/maybe');
 const {flatten} = require('../core/fn');
 const {entries} = require('../core/utils');
 
 // CypherResult a -> Maybe a
-const unwrapCypherResult = result => {
+const unwrapCypherResult = result => unwrapCypherListNodeResult(result[0]._fields);
+
+const unwrapCypherListNodeResult = fields => {
   try {
     return Maybe.fromNullable(
-      result[0]._fields.reduce((acc, field)=> {
-        return [...acc, normalize(field.properties || field)]
-      }, [])
+      fields.reduce((acc, field)=> acc.push(unwrapCypherNodeResult(field)), List())
     );
   }
   catch(_) {
     return Maybe.Nothing();
   }
-};
+}
+
+const unwrapCypherNodeResult = field =>  normalize(field.properties || field);
 
 // same as above but return a Map instead
 const unwrapCypherResultToMap = records => {
@@ -24,10 +26,9 @@ const unwrapCypherResultToMap = records => {
     return Maybe.fromNullable(
       flatten(records.map(r => r._fields))
         .reduce(
-          (acc, field) => acc.set(getInteger(field.id), normalize(field.properties || field)),
+          (acc, field) => acc.set(getInteger(field.id), unwrapCypherNodeResult(field)),
           Map()
         )
-        .toObject()
     );
   }
   catch(_) {
@@ -39,7 +40,6 @@ const unwrapCypherResultToMap = records => {
 const normalize = entity => typeof(entity) === 'object'
   ? Map(entity)
     .map(v => neo4j.isInt(v) ? getInteger(v) : v)
-    .toObject()
   : entity;
 
 // creates a string that will be used in Cypher
@@ -81,6 +81,8 @@ const contructUpdateMatchString = entity =>
 const getInteger = int => int.toNumber();
 
 module.exports = {
+  unwrapCypherListNodeResult,
+  unwrapCypherNodeResult,
   unwrapCypherResult,
   unwrapCypherResultToMap,
   contructCreateMatchString,

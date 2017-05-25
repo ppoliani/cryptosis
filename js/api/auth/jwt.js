@@ -11,8 +11,8 @@ const JwtError = data('JwtError', {
 
 const generateToken = account => {
   const tokenValue = {
-    userId: account.id,
-    name: account.name
+    userId: account.get('id'),
+    name: account.get('name')
   };
 
   return jwt.sign(tokenValue, JWT_SECRET, {expiresIn: JWT_LIFE_SPAN});

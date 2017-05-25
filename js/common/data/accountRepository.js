@@ -29,7 +29,7 @@ const createToken = async (source, account, generateToken) => {
   return await runQuery(
     DbDriver,
     `
-    MATCH (u:User)-[${getSocialMediaRelationship(source)}]->(s:SocialMediaAccount {userId:"${account.userId}"})
+    MATCH (u:User)-[${getSocialMediaRelationship(source)}]->(s:SocialMediaAccount {userId:"${account.get('userId')}"})
     MERGE (u)-[rt:HAS_TOKEN]->(t:AccessToken)
     ON CREATE SET t.created = timestamp(), t.value="${token}"
     ON MATCH SET t.updated = timestamp(), t.value="${token}"

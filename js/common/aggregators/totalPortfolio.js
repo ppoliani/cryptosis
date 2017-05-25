@@ -1,8 +1,8 @@
-import {fromJS} from 'immutable';
-import {create} from '@most/create'
-import {calculateTotalPerType, calculateCurrentValuePerType} from './common';
+const {fromJS} = require('immutable');
+const {create} = require('@most/create');
+const {calculateTotalPerType, calculateCurrentValuePerType} = require('./common');
 
-export const calculateTotalPortfolioValue = ({investments, prices}) =>
+const calculateTotalPortfolioValue = ({investments, prices}) =>
   create((add, end, error) => {
     add(fromJS({
       totalAssets: calculateTotalPerType(investments),
@@ -12,3 +12,5 @@ export const calculateTotalPortfolioValue = ({investments, prices}) =>
 
     return () => console.log('Unsubscribe calculateTotalPortfolioValue');
   });
+
+module.exports = {calculateTotalPortfolioValue};

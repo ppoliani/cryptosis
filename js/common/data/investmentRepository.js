@@ -12,7 +12,7 @@ const getAllPartialInvestments = async () => {
     DbDriver,
     `
       MATCH (u:User)-[:HAS_INVESTMENT]->(i:Investment)
-      RETURN {id: ID(i), investments: collect(i)}
+      RETURN {id: ID(u), investments: collect(i)}
     `
   )
 }

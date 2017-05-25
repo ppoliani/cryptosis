@@ -1,3 +1,9 @@
-export {calculateHistoricPortfolioValues} from './historicPortfolio';
-export {calculateTotalPortfolioValue} from './totalPortfolio';
-export {calculateInvestmentValues} from './investmentValues';
+const {calculateHistoricPortfolioValues} = require('./historicPortfolio');
+const {calculateTotalPortfolioValue} = require('./totalPortfolio');
+const {calculateInvestmentValues} = require('./investmentValues');
+
+module.exports = {
+  calculateHistoricPortfolioValues,
+  calculateTotalPortfolioValue,
+  calculateInvestmentValues
+};
