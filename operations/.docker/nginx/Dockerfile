@@ -35,7 +35,6 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN mkdir -p /ui
 RUN mkdir -p /common
 
-COPY js/ui/package.json /ui
 ADD js/common /common
 ADD js/ui /ui
 
