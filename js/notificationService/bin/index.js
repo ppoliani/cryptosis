@@ -17,6 +17,7 @@ const send = require('../notifiers/email');
     initRepositories(driver);
 
     start('GBP', unwrapCypherResultToMap, unwrapCypherListNodeResult, getAllPartialInvestments, send);
+    start('EUR', unwrapCypherResultToMap, unwrapCypherListNodeResult, getAllPartialInvestments, send);
   }
   catch(error) {
     logger.error(error)
