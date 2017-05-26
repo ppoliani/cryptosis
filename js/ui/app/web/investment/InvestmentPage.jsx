@@ -16,6 +16,8 @@ import DialogBoxMixin from '../mixins/DialogBoxMixin';
 import PanelContent from './PanelContent';
 import {getBrokers} from '../../data/broker/brokerActions';
 import {startInvestmentCurrentValueStream} from '../../data/stream/investmentValueStream';
+import {renderInvestmentValue} from '../common/InvestmentValueHelpers';
+import CurrencySelector from '../common/CurrencySelector';
 import {
   getInvestments,
   saveInvestment,
@@ -46,11 +48,13 @@ class InvestmentPage extends Component {
 
   componentDidMount() {
     const {skip, limit} = this.state;
-    const {getInvestments, getBrokers, getInvestmentTypes, startInvestmentCurrentValueStream} = this.props;
+    const {form, getInvestments, getBrokers, getInvestmentTypes, startInvestmentCurrentValueStream} = this.props;
+    const currency = this.getSelectedCurrency(form);
+
     getInvestments({skip, limit});
     getBrokers({skip, limit});
     getInvestmentTypes({skip, limit});
-    startInvestmentCurrentValueStream(DEFAULT_CURRENCY);
+    startInvestmentCurrentValueStream(currency);
   }
 
   componentWillUnmount() {
@@ -64,8 +68,9 @@ class InvestmentPage extends Component {
       });
   }
 
-  getSelectedCurrency() {
-    const values = this.props.form.currencySelector.values;
+
+  getSelectedCurrency(form) {
+    const values = form.currencySelector && form.currencySelector.values;
     return values ? values.currency : DEFAULT_CURRENCY;
   }
 
@@ -102,26 +107,13 @@ class InvestmentPage extends Component {
     this.togglePanel(e, investment);
   }
 
-  renderInvestmentValue(id, investmentValues) {
-    const investmentValue = investmentValues.get(id);
-
-    if(investmentValue) {
-      const value = investmentValue.get('value').toFixed(2);
-      const signedValue = value > 0 ? `£${value}` : `-£${Math.abs(value)}`;
-
-      return `${signedValue} (${investmentValue.get('percentage').toFixed(2)}%)`;
-    }
-
-    return '';
-  }
-
   // will include the value for each investment
   getExtendedTableData = (investments, investmentValues) =>
     investments.reduce(
       (acc, v, id) => acc.push(
         v.set('id', id)
           .set('date', dateformat(v.get('date'), 'MM/DD/YYYY'))
-          .set('status', this.renderInvestmentValue(id, investmentValues))
+          .set('status', renderInvestmentValue(id, investmentValues))
           .set('action', <Button label="Delete" primary={true} onClick={partial(this.onInvestmentDeleteClick, v)} />)
       ),
       List()
@@ -191,8 +183,9 @@ class InvestmentPage extends Component {
         PanelContent={this.getPanelContent()}
         togglePanel={this.togglePanel}
         isPanelOpen={this.state.isPanelOpen}>
-          <Row>
+          <Row className='row-spacing'>
             <Col xs>
+              <CurrencySelector />
               <Button type="submit" className="right" onClick={this.togglePanel}>New</Button>
             </Col>
           </Row>

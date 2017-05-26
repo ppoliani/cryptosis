@@ -4,6 +4,9 @@ const entries  = function *(obj) {
   }
 }
 
+const getPercentageChange = (initial, current) => (current - initial) / initial * 100
+
 module.exports = {
-  entries
+  entries,
+  getPercentageChange
 };

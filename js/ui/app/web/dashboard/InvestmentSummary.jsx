@@ -4,12 +4,9 @@ import AsyncPanel from '../common/AsyncPanel';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
+import {getPercentageChange} from '../../../../common/core/utils';
 
 export default class InvestmentSummary extends Component {
-  getPercentageChange(initial, current) {
-    return (current - initial) / initial * 100;
-  }
-
   getInvestmentRows() {
     return this.props.portfolio
       .get('total')
@@ -24,7 +21,7 @@ export default class InvestmentSummary extends Component {
                 <Subheader>{k}</Subheader>
                 <ListItem>Total Invested: £{totalInvested}</ListItem>
                 <ListItem>Current Value: £{current}</ListItem>
-                <ListItem>Value %: {this.getPercentageChange(totalInvested, current).toFixed(2)}%</ListItem>
+                <ListItem>Value %: {getPercentageChange(totalInvested, current).toFixed(2)}%</ListItem>
               </List>
               <Divider />
             </div>
