@@ -11,6 +11,7 @@ const INVESTMENT_TYPE_ENDPOINT = `${process.env.API_URL}/investment/types`;
 
 export const GET_PARTIAL_INVESTMENTS = 'INVESTMENT::GET_PARTIAL_INVESTMENTS';
 export const GET_INVESTMENTS = 'INVESTMENT::GET_INVESTMENTS';
+export const GET_INVESTMENT = 'INVESTMENT::GET_INVESTMENT';
 export const SAVE_NEW_INVESTMENT = 'INVESTMENT::SAVE_NEW_INVESTMENT';
 export const UPDATE_INVESTMENT = 'INVESTMENT::UPDATE_INVESTMENT';
 export const DELETE_INVESTMENT = 'INVESTMENT::DELETE_INVESTMENT';
@@ -20,6 +21,7 @@ export const SAVE_NEW_INVESTMENT_TYPE = 'INVESTMENT::SAVE_NEW_INVESTMENT_TYPE';
 export const UPDATE_INVESTMENT_TYPE = 'INVESTMENT::UPDATE_INVESTMENT_TYPE';
 export const DELETE_INVESTMENT_TYPE = 'INVESTMENT::DELETE_INVESTMENT_TYPE';
 
+const getInvestmentIdUrl = investmentId => `${INVESTMENT_ENDPOINT}/${investmentId}`;
 const getInvestmentUrl = investment => `${INVESTMENT_ENDPOINT}/${investment.get('id')}`;
 const getInestmentTypeUrl = investmentType => `${INVESTMENT_TYPE_ENDPOINT}/${investmentType.get('id')}`;
 
@@ -28,6 +30,15 @@ const getPartialInvestmentsRoot = fetch => {
 
   return createAction(
     GET_PARTIAL_INVESTMENTS,
+    fetchData
+  );
+}
+
+const getInvestmentRoot = fetch => {
+  const fetchData = investmentId => fetch('GET', getInvestmentIdUrl(investmentId));
+
+  return createAction(
+    GET_INVESTMENT,
     fetchData
   );
 }
@@ -77,12 +88,12 @@ const saveInvestmentRoot = fetch => {
 }
 
 const deleteInvestmentRoot = fetch => {
-  const fetchData = investment => fetch('DELETE', getInvestmentUrl(investment), investment.toJS());
+  const fetchData = investment => fetch('DELETE', getInvestmentUrl(investment));
 
   return createAction(
     DELETE_INVESTMENT,
     fetchData
-  );
+  )
 }
 
 const getInvestmentTypesRoot = fetch => {
@@ -114,7 +125,7 @@ const updateInvestmentTypeRoot = fetch => {
 }
 
 const deleteInvestmentTypeRoot = fetch => {
-  const fetchData = investmentType => fetch('DELETE', getInestmentTypeUrl(investmentType), investmentType.toJS());
+  const fetchData = investmentType => fetch('DELETE', getInestmentTypeUrl(investmentType));
 
   return createAction(
     DELETE_INVESTMENT_TYPE,
@@ -124,6 +135,7 @@ const deleteInvestmentTypeRoot = fetch => {
 
 export const getPartialInvestments = getPartialInvestmentsRoot(fetch);
 export const getInvestments = getInvestmentsRoot(fetch);
+export const getInvestment = getInvestmentRoot(fetch);
 export const saveInvestment = saveInvestmentRoot(fetch);
 export const updateInvestment = updateInvestmentRoot(fetch);
 export const deleteInvestment = deleteInvestmentRoot(fetch);

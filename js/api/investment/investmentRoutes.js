@@ -1,6 +1,7 @@
 const {
   getPartialInvestments,
   getInvestments,
+  getInvestment,
   createInvestment,
   updateInvestment,
   deleteInvestment,
@@ -23,19 +24,25 @@ const routes = {
     fn: getInvestments
   },
 
+  '/investments/:id': {
+    method: 'get',
+    auth: true,
+    fn: getInvestment
+  },
+
   '/investments$': {
     method: 'post',
     auth: true,
     fn: createInvestment
   },
 
-  '/investments/:id': {
+  '/investments/:id$': {
     method: 'put',
     auth: true,
     fn: updateInvestment
   },
 
-  '/investments/:id$': {
+  '/investments/:id$$': {
     method: 'delete',
     auth: true,
     fn: deleteInvestment

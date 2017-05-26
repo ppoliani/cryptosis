@@ -4,6 +4,7 @@ import identity from 'folktale/core/lambda/identity';
 import {
   GET_PARTIAL_INVESTMENTS,
   GET_INVESTMENTS,
+  GET_INVESTMENT,
   SAVE_NEW_INVESTMENT,
   UPDATE_INVESTMENT,
   DELETE_INVESTMENT,
@@ -43,7 +44,6 @@ const handleSaveInvestment = (state, {payload: saveInvestmentResult}) =>
         }),
     Failure: () => state.set('saveInvestmentResult', saveInvestmentResult),
   });
-
 
 const handleSetInvestments = (state, {payload: investmentsResult}) =>
   investmentsResult.matchWith({
@@ -111,6 +111,7 @@ const InvestmentData = Map({
 export default handleActions({
   [GET_PARTIAL_INVESTMENTS]: handleSetPartialInvestments,
   [GET_INVESTMENTS]: handleSetInvestments,
+  [GET_INVESTMENT]: handleSaveInvestment,
   [SAVE_NEW_INVESTMENT]: handleSaveInvestment,
   [UPDATE_INVESTMENT]: handleSaveInvestment,
   [DELETE_INVESTMENT]: handleDeleteInvestment,

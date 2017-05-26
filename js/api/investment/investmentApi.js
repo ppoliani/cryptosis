@@ -22,6 +22,16 @@ const getInvestments = partial(
   }
 )
 
+const getInvestment = partial(
+  createSimpleEndpoint,
+  repository.getInvestment,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error fetching investment for user',
+    param: 'id'
+  }
+)
+
 const createInvestment = partial(
   createSimpleEndpoint,
   repository.saveInvestment,
@@ -92,6 +102,7 @@ const deleteInvestmentType = partial(
 module.exports = {
   getPartialInvestments,
   getInvestments,
+  getInvestment,
   createInvestment,
   updateInvestment,
   deleteInvestment,

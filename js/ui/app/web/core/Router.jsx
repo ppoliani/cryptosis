@@ -63,8 +63,8 @@ class RouterComponent extends Component {
       <Router>
         <div style={{height: '100%'}}>
           <PrivateRoute exact path="/" component={OverView}/>
-          <PrivateRoute exact path="/investments/:id" component={InvestmentOverviewPage}/>
           <PrivateRoute exact path="/investments" component={InvestmentPage}/>
+          <PrivateRoute exact path="/investments/:id" component={InvestmentOverviewPage}/>
           <PrivateRoute exact path="/brokers" component={BrokerPage}/>
           <PrivateRoute exact path="/investment-types" component={InvestmentTypePage}/>
           <Route path="/login" component={Login}/>

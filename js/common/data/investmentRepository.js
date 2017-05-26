@@ -28,6 +28,17 @@ const getPartialInvestments = async ({ctx}) => {
   )
 }
 
+const getInvestment = async ({resource:investmentId}) => {
+  return  await runQuery(
+    DbDriver,
+    `
+      MATCH (i:Investment)
+      WHERE ID(i) = ${investmentId}
+      RETURN i
+    `
+  )
+}
+
 const getInvestments = async ({ctx}) => {
   const {skip, limit} = ctx.request.query;
 
@@ -141,6 +152,7 @@ module.exports = {
   init,
   getAllPartialInvestments,
   getPartialInvestments,
+  getInvestment,
   getInvestments,
   saveInvestment,
   updateInvestment,
