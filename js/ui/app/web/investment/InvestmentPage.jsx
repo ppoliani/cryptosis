@@ -107,7 +107,6 @@ class InvestmentPage extends Component {
       (acc, v, id) => acc.push(
         v.set('id', id)
           .set('date', dateformat(v.get('date'), 'MM/DD/YYYY'))
-          .set('price', renderPrice(v.get('price'), v.get('currency')))
           .set('status', renderInvestmentValue(id, investmentValues, v.get('currency')))
           .set('action', <Button label="Delete" primary={true} onClick={partial(this.onInvestmentDeleteClick, v)} />)
       ),
