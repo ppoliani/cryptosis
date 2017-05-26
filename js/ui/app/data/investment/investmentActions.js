@@ -88,7 +88,7 @@ const saveInvestmentRoot = fetch => {
 }
 
 const deleteInvestmentRoot = fetch => {
-  const fetchData = investment => fetch('DELETE', getInvestmentUrl(investment));
+  const fetchData = investment => fetch('DELETE', getInvestmentUrl(investment), investment.toJS());
 
   return createAction(
     DELETE_INVESTMENT,
@@ -125,7 +125,7 @@ const updateInvestmentTypeRoot = fetch => {
 }
 
 const deleteInvestmentTypeRoot = fetch => {
-  const fetchData = investmentType => fetch('DELETE', getInestmentTypeUrl(investmentType));
+  const fetchData = investmentType => fetch('DELETE', getInestmentTypeUrl(investmentType), investmentType.toJS());
 
   return createAction(
     DELETE_INVESTMENT_TYPE,

@@ -9,9 +9,12 @@ const historicalDataUrl = (fromSymbol, toSymbol, timestamp, days) =>
 const fetchPartialInvestments = fetch('GET', `${INVESTMENT_ENDPOINT}/partial`);
 const fetchBTC = currency => fetch('GET', historicalDataUrl('BTC', currency, +(new Date), 30), {}, false);
 const fetchETH = currency => fetch('GET', historicalDataUrl('ETH', currency, +(new Date), 30), {}, false);
+const fetchXRP= currency => fetch('GET', historicalDataUrl('XRP', currency, +(new Date), 30), {}, false);
+
 
 export const getBTC$ = currency => fromPromise(fetchBTC(currency).run().promise());
 export const getETH$ = currency => fromPromise(fetchETH(currency).run().promise());
+export const getXRP$ = currency => fromPromise(fetchXRP(currency).run().promise());
 export const getPartialInvestment$ = () => fromPromise(fetchPartialInvestments.run().promise());
 
 export const getPriceObjFromStreamData = data => ({

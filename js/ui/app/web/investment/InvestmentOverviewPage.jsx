@@ -12,7 +12,7 @@ import Container from '../common/Container';
 import pureComponent from '../mixins/pureComponent';
 import {getInvestment} from '../../data/investment/investmentActions';
 import {getPercentageChange} from '../../../../common/core/utils';
-import {renderInvestmentValue} from '../common/InvestmentValueHelpers';
+import {renderInvestmentValue, renderPrice} from '../common/InvestmentValueHelpers';
 import {startInvestmentCurrentValueStream} from '../../data/stream/investmentValueStream';
 
 const DEFAULT_CURRENCY = 'GBP';
@@ -78,34 +78,39 @@ class InvestmentOverviewPage extends Component {
 
     return this.getMaybeInvestment()
       .matchWith({
-        Just: ({value: investment}) => (
-          <List>
+        Just: ({value: investment}) => {
+          const invst = investment.toJS();
+          const currency = invst.currency;
+
+          return (
+            <List>
             <Subheader>Type</Subheader>
-            <ListItem>{investment.get('investmentType')}</ListItem>
+            <ListItem>{invst.investmentType}</ListItem>
             <Subheader>Date</Subheader>
-            <ListItem>{dateformat(investment.get('date'), 'MM/DD/YYYY')}</ListItem>
+            <ListItem>{dateformat(invst.date, 'MM/DD/YYYY')}</ListItem>
             <Subheader>Quantity</Subheader>
-            <ListItem>{investment.get('quantity')}</ListItem>
+            <ListItem>{invst.quantity}</ListItem>
             <Subheader>Price</Subheader>
-            <ListItem>{investment.get('price')}</ListItem>
+            <ListItem>{renderPrice(invst.price, currency)}</ListItem>
             <Subheader>Expenses</Subheader>
-            <ListItem>{investment.get('expenses')}</ListItem>
+            <ListItem>{renderPrice(invst.expenses, currency)}</ListItem>
             <Subheader>Status</Subheader>
-            <ListItem>{renderInvestmentValue(investmentId, investmentData)}</ListItem>
+            <ListItem>{renderInvestmentValue(investmentId, investmentData, currency)}</ListItem>
             <Subheader>Broker</Subheader>
-            <ListItem>{investment.get('broker')}</ListItem>
+            <ListItem>{invst.broker}</ListItem>
             <Subheader>Asset Life</Subheader>
-            <ListItem>{investment.get('assetLife')}</ListItem>
+            <ListItem>{invst.assetLife}</ListItem>
             <Subheader>Lower Limit</Subheader>
-            <ListItem>{investment.get('lowerLimit')}%</ListItem>
+            <ListItem>{invst.lowerLimit}%</ListItem>
             <Subheader>Upper Limit</Subheader>
-            <ListItem>{investment.get('upperLimit')}%</ListItem>
+            <ListItem>{invst.upperLimit}%</ListItem>
             <Subheader>Currency</Subheader>
-            <ListItem>{investment.get('currency')}</ListItem>
+            <ListItem>{invst.currency}</ListItem>
             <Subheader>Notes</Subheader>
-            <ListItem>{investment.get('notes')}</ListItem>
+            <ListItem>{invst.notes}</ListItem>
           </List>
-        ),
+          )
+        },
         Nothing: () => []
       })
   }

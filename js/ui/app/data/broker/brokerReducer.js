@@ -20,7 +20,7 @@ const handleSaveBroker = (state, {payload: brokerResult}) =>
     Loading: () => state.set('saveBrokerResult', brokerResult),
     Success: ({data: {result: [result]}}) => state
       .set('saveBrokerResult', brokerResult)
-      .updateIn(['brokers'], brokers => brokers.set(data.result.id, fromJS(result))),
+      .updateIn(['brokers'], brokers => brokers.set(result.id, fromJS(result))),
     Failure: () => state.set('saveBrokerResult', brokerResult),
   });
 

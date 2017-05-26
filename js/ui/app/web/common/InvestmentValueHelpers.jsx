@@ -2,12 +2,13 @@ import React from 'react';
 
 const DEFAULT_CURRENCY = 'GBP';
 
-export const renderInvestmentValue = (id, investmentValues) => {
+export const renderInvestmentValue = (id, investmentValues, currency) => {
   const investmentValue = investmentValues.get(id);
+  const symbol = getCurrencySymbol(currency);
 
   if(investmentValue) {
     const value = investmentValue.get('value').toFixed(2);
-    const signedValue = value > 0 ? `£${value}` : `-£${Math.abs(value)}`;
+    const signedValue = value > 0 ? `${symbol}${value}` : `-${symbol}${Math.abs(value)}`;
 
     return `${signedValue} (${investmentValue.get('percentage').toFixed(2)}%)`;
   }
@@ -23,6 +24,7 @@ export const getSelectedCurrency = form => {
 export const renderPrice = (price, currency) => (
   <span>{`${getCurrencySymbol(currency)}${price}`}</span>
 )
+
 export const getCurrencySymbol = currency => {
   switch(currency) {
     case 'GBP':

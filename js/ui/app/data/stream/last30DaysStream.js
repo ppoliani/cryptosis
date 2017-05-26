@@ -4,7 +4,7 @@ import {fromJS} from 'immutable';
 import compose from 'folktale/core/lambda/compose';
 import {calculateHistoricPortfolioValues} from '../../../../common/aggregators';
 import {setLast30Days} from '../portfolio/portfolioActions';
-import {getPartialInvestment$, getBTC$, getETH$} from './common';
+import {getPartialInvestment$, getBTC$, getETH$, getXRP$} from './common';
 
 export const SET_LAST_30_DAYS_SUBSCRIPTION = 'STREAM::SET_LAST_30_DAYS_SUBSCRIPTION';
 const setLast30DaysSubscription = createAction(SET_LAST_30_DAYS_SUBSCRIPTION);
@@ -22,15 +22,16 @@ export const startLast30DaysStream = currency => dispatch => {
     day: i.time * 1000 // unix time to js
   }))
 
-  const getPrices = (investments, btc, eth)  => ({
+  const getPrices = (investments, btc, eth, xrp)  => ({
     investments: fromJS(investments.result).filter(v => v.get('currency') === currency),
     prices: fromJS({
       BTX: getPriceObj('BTX', btc),
-      ETH: getPriceObj('ETH', eth)
+      ETH: getPriceObj('ETH', eth),
+      XRP: getPriceObj('XRP', xrp)
     })
   })
 
-  const subscription = combine(getPrices, getPartialInvestment$(), getBTC$(currency), getETH$(currency))
+  const subscription = combine(getPrices, getPartialInvestment$(), getBTC$(currency), getETH$(currency), getXRP$(currency))
     .chain(calculateHistoricPortfolioValues)
     .subscribe(observer);
 

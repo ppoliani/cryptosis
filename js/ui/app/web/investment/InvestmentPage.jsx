@@ -16,7 +16,7 @@ import DialogBoxMixin from '../mixins/DialogBoxMixin';
 import PanelContent from './PanelContent';
 import {getBrokers} from '../../data/broker/brokerActions';
 import {startInvestmentCurrentValueStream} from '../../data/stream/investmentValueStream';
-import {renderInvestmentValue} from '../common/InvestmentValueHelpers';
+import {renderInvestmentValue, getSelectedCurrency, renderPrice} from '../common/InvestmentValueHelpers';
 import CurrencySelector from '../common/CurrencySelector';
 import {
   getInvestments,
@@ -49,7 +49,7 @@ class InvestmentPage extends Component {
   componentDidMount() {
     const {skip, limit} = this.state;
     const {form, getInvestments, getBrokers, getInvestmentTypes, startInvestmentCurrentValueStream} = this.props;
-    const currency = this.getSelectedCurrency(form);
+    const currency = getSelectedCurrency(form);
 
     getInvestments({skip, limit});
     getBrokers({skip, limit});
@@ -107,7 +107,8 @@ class InvestmentPage extends Component {
       (acc, v, id) => acc.push(
         v.set('id', id)
           .set('date', dateformat(v.get('date'), 'MM/DD/YYYY'))
-          .set('status', renderInvestmentValue(id, investmentValues))
+          .set('price', renderPrice(v.get('price'), v.get('currency')))
+          .set('status', renderInvestmentValue(id, investmentValues, v.get('currency')))
           .set('action', <Button label="Delete" primary={true} onClick={partial(this.onInvestmentDeleteClick, v)} />)
       ),
       List()
