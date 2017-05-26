@@ -42,6 +42,8 @@ const createHtmlContent = investments => `<table>
 const send = async limits =>
   limits.forEach(
     async (investments, userId) => {
+      if(investments.size === 0) return;
+
       const userProfile = await getAccount(userId);
 
       await unwrapCypherResult(userProfile)

@@ -34,13 +34,16 @@ const handleSaveInvestment = (state, {payload: saveInvestmentResult}) =>
   saveInvestmentResult.matchWith({
     Empty: identity,
     Loading: () => state.set('saveInvestmentResult', saveInvestmentResult),
-    Success: ({data}) => state
+    Success: ({data: {result: [result]}}) => state
       .set('saveInvestmentResult', saveInvestmentResult)
       .updateIn(
         ['investments'],
-        investments => investments.set(data.result.id, fromJS(data.result))),
+        investments => {
+          return investments.set(result.id, fromJS(result))
+        }),
     Failure: () => state.set('saveInvestmentResult', saveInvestmentResult),
   });
+
 
 const handleSetInvestments = (state, {payload: investmentsResult}) =>
   investmentsResult.matchWith({
@@ -56,9 +59,9 @@ const handleDeleteInvestment = (state, {payload: investmentResult}) =>
   investmentResult.matchWith({
     Empty: identity,
     Loading: () => state.set('deleteInvestmentResult', investmentResult),
-    Success: ({data}) => state
+    Success: ({data: {result}}) => state
       .set('deleteInvestmentResult', investmentResult)
-      .updateIn(['investments'], investments => investments.delete(data.result.id)),
+      .updateIn(['investments'], investments => investments.delete(result.id)),
     Failure: () => state.set('deleteInvestmentResult', investmentResult),
   });
 
@@ -67,9 +70,9 @@ const handleSetInvestmentTypes = (state, {payload: investmentTypeResult}) =>
   investmentTypeResult.matchWith({
     Empty: identity,
     Loading: () => state.set('fetchInvestmentTypeResult', investmentTypeResult),
-    Success: ({data}) => state
+    Success: ({data: {result}}) => state
       .set('fetchInvestmentTypeResult', investmentTypeResult)
-      .set('investmentTypes', fromJS(data.result)),
+      .set('investmentTypes', fromJS(result)),
     Failure: () => state.set('fetchInvestmentTypeResult', investmentTypeResult),
   });
 
@@ -77,9 +80,9 @@ const handleSaveInvestmentType = (state, {payload: saveInvestmentTypeResult}) =>
   saveInvestmentTypeResult.matchWith({
     Empty: identity,
     Loading: () => state.set('saveInvestmentTypeResult', saveInvestmentTypeResult),
-    Success: ({data}) => state
+    Success: ({data: {result: [result]}}) => state
       .set('saveInvestmentTypeResult', saveInvestmentTypeResult)
-      .updateIn(['investmentTypes'], investmentTypes => investmentTypes.set(data.result.id, fromJS(data.result))),
+      .updateIn(['investmentTypes'], investmentTypes => investmentTypes.set(result.id, fromJS(result))),
     Failure: () => state.set('saveInvestmentTypeResult', saveInvestmentTypeResult),
   });
 
@@ -87,9 +90,9 @@ const handleDeleteInvestmentType  = (state, {payload: investmentTypeResult}) =>
   investmentTypeResult.matchWith({
     Empty: identity,
     Loading: () => state.set('deleteInvestmentTypeResult', investmentTypeResult),
-    Success: ({data}) => state
+    Success: ({data: {result}}) => state
       .set('deleteInvestmentTypeResult', investmentTypeResult)
-      .updateIn(['investmentTypes'], investmentTypes => investmentTypes.delete(data.result.id)),
+      .updateIn(['investmentTypes'], investmentTypes => investmentTypes.delete(result.id)),
     Failure: () => state.set('deleteInvestmentTypeResult', investmentTypeResult),
   });
 

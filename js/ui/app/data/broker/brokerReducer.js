@@ -18,9 +18,9 @@ const handleSaveBroker = (state, {payload: brokerResult}) =>
   brokerResult.matchWith({
     Empty: identity,
     Loading: () => state.set('saveBrokerResult', brokerResult),
-    Success: ({data}) => state
+    Success: ({data: {result: [result]}}) => state
       .set('saveBrokerResult', brokerResult)
-      .updateIn(['brokers'], brokers => brokers.set(data.result.id, fromJS(data.result))),
+      .updateIn(['brokers'], brokers => brokers.set(data.result.id, fromJS(result))),
     Failure: () => state.set('saveBrokerResult', brokerResult),
   });
 
@@ -28,9 +28,9 @@ const handleDeleteBroker = (state, {payload: brokerResult}) =>
   brokerResult.matchWith({
     Empty: identity,
     Loading: () => state.set('deleteBrokerResult', brokerResult),
-    Success: ({data}) => state
+    Success: ({data: {result}}) => state
       .set('deleteBrokerResult', brokerResult)
-      .updateIn(['brokers'], brokers => brokers.delete(data.result.id)),
+      .updateIn(['brokers'], brokers => brokers.delete(result.id)),
     Failure: () => state.set('deleteBrokerResult', brokerResult),
   });
 

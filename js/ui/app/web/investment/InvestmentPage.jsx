@@ -28,11 +28,9 @@ const columns = [
   {key: 'investmentType', label: 'Investment Type'},
   {key: 'broker', label: 'Broker'},
   {key: 'date', label: 'Date'},
-  {key: 'expenses', label: 'Expenses'},
   {key: 'quantity', label: 'Quantity'},
   {key: 'price', label: 'Price'},
   {key: 'status', label: 'Status'},
-  {key: 'notes', label: 'Notes'},
   {key: 'action', label: 'Action'}
 ];
 const DEFAULT_CURRENCY = 'GBP';
@@ -81,7 +79,7 @@ class InvestmentPage extends Component {
     if(investment.id) {
      pipe(
        updateInvestment,
-       filterObject(investment, ['action'])
+       filterObject(investment, ['action', 'status'])
       );
     }
     else {
