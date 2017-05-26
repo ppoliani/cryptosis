@@ -1,3 +1,7 @@
+import React from 'react';
+
+const DEFAULT_CURRENCY = 'GBP';
+
 export const renderInvestmentValue = (id, investmentValues) => {
   const investmentValue = investmentValues.get(id);
 
@@ -9,4 +13,21 @@ export const renderInvestmentValue = (id, investmentValues) => {
   }
 
   return '';
+}
+
+export const getSelectedCurrency = form => {
+  const values = form.currencySelector && form.currencySelector.values;
+  return values ? values.currency : DEFAULT_CURRENCY;
+}
+
+export const renderPrice = (price, currency) => (
+  <span>{`${getCurrencySymbol(currency)}${price}`}</span>
+)
+export const getCurrencySymbol = currency => {
+  switch(currency) {
+    case 'GBP':
+      return '£';
+    case 'EUR':
+      return '€'
+  }
 }

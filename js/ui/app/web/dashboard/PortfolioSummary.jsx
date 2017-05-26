@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Container from '../common/Container';
 import AsyncPanel from '../common/AsyncPanel';
 import {List, ListItem} from 'material-ui/List';
+import {renderPrice} from '../common/InvestmentValueHelpers';
 
 export default class PortfolioSummary extends Component {
   getPercentageChange(initial, current) {
@@ -28,7 +29,7 @@ export default class PortfolioSummary extends Component {
 
 
   render() {
-    const {investment} = this.props;
+    const {investment, currency} = this.props;
     const totalInvested = this.getTotalInvested();
     const totalPortfolioValue = this.getTotalPortfolioValue();
 
@@ -36,10 +37,10 @@ export default class PortfolioSummary extends Component {
       <Container title='Portfolio' subtitle='Aggregates'>
         <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
           <List>
-            <ListItem primaryText={`Total Invested: £${totalInvested}`} />
-            <ListItem primaryText={`Total Portfolio Value: £${totalPortfolioValue}`} />
-            <ListItem primaryText={`Change: £${totalPortfolioValue - totalInvested}`} />
-            <ListItem primaryText={`Change (%): ${this.getPercentageChange(totalInvested, totalPortfolioValue).toFixed(2)}%`} />
+            <ListItem>Total Invested: {renderPrice(totalInvested, currency)}</ListItem>
+            <ListItem>Total Portfolio Value: {renderPrice(totalPortfolioValue, currency)}</ListItem>
+            <ListItem>Change: {renderPrice(totalPortfolioValue - totalInvested, currency)}</ListItem>
+            <ListItem>Change (%): {this.getPercentageChange(totalInvested, totalPortfolioValue).toFixed(2)}%</ListItem>
           </List>
         </AsyncPanel>
       </Container>

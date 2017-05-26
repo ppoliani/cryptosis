@@ -16,21 +16,23 @@ const setInvestmentCurrentValueSuscription = createAction(SET_INVESTMENT_CURRENT
 export const startInvestmentCurrentValueStream = currency => dispatch => {
   const btc$ = connect(io, 'BTC', 'Coinfloor', currency);
   const eth$ = connect(io, 'ETH', 'Kraken', currency);
+  const xrp$ = connect(io, 'XRP', 'Bitstamp', currency);
 
   const observer = {
     next: compose(dispatch, setInvestmentCurrentValue),
     error: errorValue => console.log(`Error in the observer of the investment values stream: ${errorValue}`)
   }
 
-  const getPrices = (investments, btc, eth)  => ({
+  const getPrices = (investments, btc, eth, xrp)  => ({
     investments: fromJS(investments.result).filter(v => v.get('currency') === currency),
     prices: fromJS({
       BTX: getPriceObjFromStreamData(btc),
-      ETH: getPriceObjFromStreamData(eth)
+      ETH: getPriceObjFromStreamData(eth),
+      XRP: getPriceObjFromStreamData(xrp)
     })
   })
 
-  const subscription = combine(getPrices, getPartialInvestment$(), btc$, eth$)
+  const subscription = combine(getPrices, getPartialInvestment$(), btc$, eth$, xrp$)
     .chain(calculateInvestmentValues)
     .subscribe(observer);
 

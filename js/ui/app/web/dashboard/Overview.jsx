@@ -9,6 +9,7 @@ import InvestmentSummary from './InvestmentSummary';
 import {startPortfolioStream} from '../../data/stream/portfolioValueStream';
 import {startLast30DaysStream} from '../../data/stream/last30DaysStream';
 import CurrencySelector from '../common/CurrencySelector';
+import {getSelectedCurrency} from '../common/InvestmentValueHelpers';
 
 const DEFAULT_CURRENCY = 'GBP';
 
@@ -22,9 +23,9 @@ class Overview extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const currency = this.getSelectedCurrency(this.props.form);
+    const currency = getSelectedCurrency(this.props.form);
 
-    if(this.getSelectedCurrency(prevProps.form) !== currency) {
+    if(getSelectedCurrency(prevProps.form) !== currency) {
       this.unsubscribe(currency);
       this.subscribe(currency);
     }
@@ -55,11 +56,6 @@ class Overview extends Component {
       });
   }
 
-  getSelectedCurrency(form) {
-    const values = form.currencySelector && form.currencySelector.values;
-    return values ? values.currency : DEFAULT_CURRENCY;
-  }
-
   render() {
     const {investment, portfolio, prices} = this.props;
 
@@ -77,16 +73,19 @@ class Overview extends Component {
           <Col lg={4} xs={12}>
             <Col className='row-spacing'>
               <PriceSummary
+                currency={getSelectedCurrency(this.props.form)}
                 investment={investment}
                 prices={prices}/>
             </Col>
             <Col className='row-spacing'>
               <PortfolioSummary
+                currency={getSelectedCurrency(this.props.form)}
                 portfolio={portfolio}
                 investment={investment} />
             </Col>
             <Col>
               <InvestmentSummary
+                currency={getSelectedCurrency(this.props.form)}
                 investment={investment}
                 portfolio={portfolio} />
             </Col>

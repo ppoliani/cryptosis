@@ -68,12 +68,6 @@ class InvestmentPage extends Component {
       });
   }
 
-
-  getSelectedCurrency(form) {
-    const values = form.currencySelector && form.currencySelector.values;
-    return values ? values.currency : DEFAULT_CURRENCY;
-  }
-
   togglePanel = (_, selectedInvestment={}) => {
     this.setState({isPanelOpen: !this.state.isPanelOpen, selectedInvestment});
   }
