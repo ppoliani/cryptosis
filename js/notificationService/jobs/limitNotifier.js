@@ -77,21 +77,23 @@ const start = async (currency, unwrapCypherResult, unwrapCypherListNodeResult, g
   try{
     const btc$ = connect(io, 'BTC', 'Coinfloor', currency);
     const eth$ = connect(io, 'ETH', 'Kraken', currency);
+    const xrp$ = connect(io, 'XRP', 'Bitstamp', currency);
 
     const observer = {
       next: send,
       error: errorValue => console.log(`Error in the observer of the investment values stream: ${errorValue}`)
     }
 
-    const getPrices = (investments, btc, eth) => ({
+    const getPrices = (investments, btc, eth, xrp) => ({
         investments: filterCurrency(investments, currency, unwrapCypherListNodeResult),
         prices: fromJS({
           BTX: getPriceObjFromStreamData(btc),
-          ETH: getPriceObjFromStreamData(eth)
+          ETH: getPriceObjFromStreamData(eth),
+          XRP: getPriceObjFromStreamData(xrp)
         })
       })
 
-    return combine(getPrices, fromPromise(getInvestments(unwrapCypherResult)), btc$, eth$)
+    return combine(getPrices, fromPromise(getInvestments(unwrapCypherResult)), btc$, eth$, xrp$)
       .map(checkLimits)
       .skipRepeatsWith(is)
       .subscribe(observer);

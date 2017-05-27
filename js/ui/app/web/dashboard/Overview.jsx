@@ -26,7 +26,7 @@ class Overview extends Component {
     const currency = getSelectedCurrency(this.props.form);
 
     if(getSelectedCurrency(prevProps.form) !== currency) {
-      this.unsubscribe(currency);
+      this.unsubscribe();
       this.subscribe(currency);
     }
   }

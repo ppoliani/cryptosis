@@ -48,24 +48,39 @@ class InvestmentPage extends Component {
 
   componentDidMount() {
     const {skip, limit} = this.state;
-    const {form, getInvestments, getBrokers, getInvestmentTypes, startInvestmentCurrentValueStream} = this.props;
+    const {form, getInvestments, getBrokers, getInvestmentTypes} = this.props;
     const currency = getSelectedCurrency(form);
 
     getInvestments({skip, limit});
     getBrokers({skip, limit});
     getInvestmentTypes({skip, limit});
-    startInvestmentCurrentValueStream(currency);
+    this.subscribe(currency);
   }
 
   componentWillUnmount() {
-    const {stream} = this.props;
+    this.unsubscribe();
+  }
 
-    stream
+  componentDidUpdate(prevProps) {
+    const currency = getSelectedCurrency(this.props.form);
+
+    if(getSelectedCurrency(prevProps.form) !== currency) {
+      this.unsubscribe();
+      this.subscribe(currency);
+    }
+  }
+
+  unsubscribe() {
+    this.props.stream
       .get('investmentCurrentValueSubscription')
       .matchWith({
         Just: ({value}) => value.unsubscribe(),
         Nothing: identity
       });
+  }
+
+  subscribe(currency) {
+    this.props.startInvestmentCurrentValueStream(currency);
   }
 
   togglePanel = (_, selectedInvestment={}) => {

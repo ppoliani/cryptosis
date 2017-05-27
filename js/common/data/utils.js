@@ -5,7 +5,9 @@ const {flatten} = require('../core/fn');
 const {entries} = require('../core/utils');
 
 // CypherResult a -> Maybe a
-const unwrapCypherResult = result => unwrapCypherListNodeResult(result[0]._fields);
+const unwrapCypherResult = result => result[0]
+  ? unwrapCypherListNodeResult(result[0]._fields)
+  : Maybe.Nothing();
 
 const unwrapCypherListNodeResult = fields => {
   try {
