@@ -22,6 +22,7 @@ export default class InvestmentSummary extends Component {
             <div key={k}>
               <List>
                 <Subheader>{k}</Subheader>
+                <ListItem>Holdings: </ListItem>
                 <ListItem>Total Invested: {renderPrice(totalInvested, currency)}</ListItem>
                 <ListItem>Current Value: {renderPrice(current, currency)}</ListItem>
                 <ListItem>Value %: {getPercentageChange(totalInvested, current).toFixed(2)}%</ListItem>

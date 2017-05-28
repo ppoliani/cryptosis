@@ -6,9 +6,9 @@ const getGain = (qty, buyPrice, sellPrice, expenses) => qty * sellPrice - qty * 
 
 test.beforeEach(t => {
   t.context.investments = Map({
-    '1': Map({quantity: 5, price: 1000, expenses: 0}),
-    '2': Map({quantity: 5, price: 1500, expenses: 10}),
-    '3': Map({quantity: 6, price: 2000, expenses: 0})
+    '1': Map({quantity: 5, price: 1000}),
+    '2': Map({quantity: 5, price: 1500}),
+    '3': Map({quantity: 6, price: 2000})
   });
 })
 

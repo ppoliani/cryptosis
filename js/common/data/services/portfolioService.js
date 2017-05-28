@@ -1,7 +1,9 @@
 const {Map} = require('immutable');
+const {partial} = require('../../../common/core/fn');
+const {unwrapCypherResultToMap} = require('../utils');
 const {getInvestmentValueChange} = require('../../../common/aggregators/common');
 
-const calculatePortfolioState = (investments, qtySold, priceSold) => investments
+const calculatePortfolioState = (qtySold, priceSold, investments) => investments
   .reduce((acc, investment, investmentId) => {
       const qty = acc.get('quantity');
 
@@ -23,8 +25,8 @@ const calculatePortfolioState = (investments, qtySold, priceSold) => investments
   .get('investments')
 
 
-const calculatePortfolioValueOnSellAdded = (investments, sell) => {
-
-}
+const calculatePortfolioValueOnSellAdded = (investmentsResult, sell) =>
+  unwrapCypherResultToMap(investmentsResult)
+    .map(partial(calculatePortfolioState, sell.qty, sell.price))
 
 module.exports = {calculatePortfolioState, calculatePortfolioValueOnSellAdded};

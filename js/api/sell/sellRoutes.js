@@ -21,7 +21,7 @@ const routes = {
 
   '/sells$': {
     method: 'post',
-    auth: true,
+    // auth: true,
     fn: createSell
   },
 
