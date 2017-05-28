@@ -2,7 +2,6 @@ const {partial} = require('../../common/core/fn');
 const {createSimpleEndpoint, HTTP_NO_CONTENT} = require('../core/api');
 const repository = require('../../common/data/brokerRepository');
 const {unwrapCypherResult, unwrapCypherResultToMap} = require('../../common/data/utils');
-const logger = require('../../common/core/logger');
 
 const getBrokers = partial(
   createSimpleEndpoint,
@@ -11,7 +10,7 @@ const getBrokers = partial(
   {
     errorMessage: 'Error fetching brokers for user'
   }
-);
+)
 
 const createBroker = partial(
   createSimpleEndpoint,
@@ -47,4 +46,4 @@ module.exports = {
   createBroker,
   updateBroker,
   deleteBroker
-};
+}
