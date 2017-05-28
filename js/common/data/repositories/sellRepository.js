@@ -1,6 +1,6 @@
 const {contructCreateMatchString, contructUpdateMatchString, createMatchObj} = require('../utils');
 const {calculatePortfolioValueOnSellAdded} = require('../services/portfolioService');
-const {getInvestmentsOfType} = require('./investmentRepository');
+const {getInvestmentsByParams} = require('./investmentRepository');
 const {runQuery} = require('../query');
 
 let DbDriver;
@@ -41,7 +41,13 @@ const updatePortfolioState = async data => {
 }
 
 const createSell = async ({resource:sell, ctx}) => {
-  const investments = await getInvestmentsOfType({type:sell.investmentType, ctx});
+  const params = {
+    investmentType: sell.investmentType,
+    assetLife: sell.assetLife,
+    currency: sell.currency
+  }
+
+  const investments = await getInvestmentsByParams({params, ctx});
   await updatePortfolioState(
     calculatePortfolioValueOnSellAdded(investments, sell)
   );

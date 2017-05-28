@@ -37,13 +37,15 @@ const calculateCurrentValuePerType = (investments, prices) => investments.reduce
 
 const getPercentageChange = (diff, initial) => (diff / initial) * 100;
 
+const getInvestmentValueChange = (qty, buyPrice, sellPrice) => qty * sellPrice - qty * buyPrice;
+
 // we need to find the total portfolio value on the given date.
 // Investments that didn't exist on that date should not contribute to the figure
 const getTotalValueAfterDate = (investments, symbol, date, priceOfDay) =>
   investments
     .filter(i => i.get('investmentType') === symbol && isBefore(i.get('date'), date))
     .reduce(
-      (sum, investment) => sum + (getCurrentTotalForInvestment(investment, priceOfDay) - getTotalForInvestment(investment)),
+      (sum, investment) => sum + getInvestmentValueChange(investment, priceOfDay),
       0
     )
 
@@ -56,6 +58,7 @@ const getPriceObjFromStreamData = data => ({
 
 
 module.exports = {
+  getInvestmentValueChange,
   getCurrentTotalForInvestment,
   getTotalForInvestment,
   calculateTotalPerType,

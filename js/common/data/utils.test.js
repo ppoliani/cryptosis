@@ -21,12 +21,12 @@ test('unwrapCypherResult should return Nothing if array has not fields property'
 
 test('unwrapCypherResult should return Just if fields exist and its an empty array', t => {
   unwrapCypherResult([{ _fields: [] }]).matchWith({
-    Just: ({value}) => t.deepEqual(value, [])
+    Just: ({value}) => t.deepEqual(value.toJS(), [])
   });
 });
 
 test('unwrapCypherResult should return Just including the properties of the fields', t => {
   unwrapCypherResult([{ _fields: [{ properties: {name: 'pavlos'} }] }]).matchWith({
-    Just: ({value}) => t.deepEqual(value, [{ 'name': 'pavlos' }])
+    Just: ({value}) => t.deepEqual(value.toJS(), [{ 'name': 'pavlos' }])
   });
 });

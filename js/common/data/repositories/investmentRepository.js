@@ -55,11 +55,11 @@ const getInvestments = async ({ctx}) => {
   )
 }
 
-const getInvestmentsOfType = async ({type, ctx}) => {
+const getInvestmentsByParams = async ({params, ctx}) => {
   return  await runQuery(
     DbDriver,
     `
-      MATCH (u:User)-[:HAS_INVESTMENT]->(i:Investment {investmentType: ${type}})
+      MATCH (u:User)-[:HAS_INVESTMENT]->(i:Investment ${params})
       WHERE ID(u)=${Number(ctx.state.user.id)}
       RETURN i{ .*, id: ID(i)}
       ORDER BY i.price
@@ -166,6 +166,7 @@ module.exports = {
   getPartialInvestments,
   getInvestment,
   getInvestments,
+  getInvestmentsByParams,
   saveInvestment,
   updateInvestment,
   deleteInvestment,
@@ -173,5 +174,5 @@ module.exports = {
   saveInvestmentType,
   updateInvestmentType,
   deleteInvestmentType
-};
+}
 

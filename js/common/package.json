@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "private": true,
+  "scripts": {
+    "test": "node_modules/.bin/ava"
+  },
   "license": "MIT",
   "dependencies": {
     "@most/create": "^2.0.1",
