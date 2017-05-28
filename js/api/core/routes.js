@@ -4,7 +4,8 @@ const {entries} = require('../../common/core/utils');
 const routes = [
   require('../auth/authRoutes'),
   require('../broker/brokerRoutes'),
-  require('../investment/investmentRoutes')
+  require('../investment/investmentRoutes'),
+  require('../sell/sellRoutes')
 ];
 
 const setup = router => {
