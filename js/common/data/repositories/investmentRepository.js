@@ -1,5 +1,5 @@
-const {contructCreateMatchString, contructUpdateMatchString, createMatchObj} = require('./utils');
-const {runQuery} = require('./query');
+const {contructCreateMatchString, contructUpdateMatchString, createMatchObj} = require('../utils');
+const {runQuery} = require('../query');
 
 let DbDriver;
 
@@ -51,6 +51,18 @@ const getInvestments = async ({ctx}) => {
       ORDER BY i.date
       SKIP ${skip}
       LIMIT ${limit}
+    `
+  )
+}
+
+const getInvestmentsOfType = async ({type, ctx}) => {
+  return  await runQuery(
+    DbDriver,
+    `
+      MATCH (u:User)-[:HAS_INVESTMENT]->(i:Investment {investmentType: ${type}})
+      WHERE ID(u)=${Number(ctx.state.user.id)}
+      RETURN i{ .*, id: ID(i)}
+      ORDER BY i.price
     `
   )
 }

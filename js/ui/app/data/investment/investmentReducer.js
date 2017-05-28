@@ -61,10 +61,9 @@ const handleDeleteInvestment = (state, {payload: investmentResult}) =>
     Loading: () => state.set('deleteInvestmentResult', investmentResult),
     Success: ({data: {result}}) => state
       .set('deleteInvestmentResult', investmentResult)
-      .updateIn(['investments'], investments => investments.delete(result.id)),
+      .updateIn(['investments'], investments => investments.delete(`${result.id}`)),
     Failure: () => state.set('deleteInvestmentResult', investmentResult),
   });
-
 
 const handleSetInvestmentTypes = (state, {payload: investmentTypeResult}) =>
   investmentTypeResult.matchWith({
@@ -92,7 +91,7 @@ const handleDeleteInvestmentType  = (state, {payload: investmentTypeResult}) =>
     Loading: () => state.set('deleteInvestmentTypeResult', investmentTypeResult),
     Success: ({data: {result}}) => state
       .set('deleteInvestmentTypeResult', investmentTypeResult)
-      .updateIn(['investmentTypes'], investmentTypes => investmentTypes.delete(result.id)),
+      .updateIn(['investmentTypes'], investmentTypes => investmentTypes.delete(`${result.id}`)),
     Failure: () => state.set('deleteInvestmentTypeResult', investmentTypeResult),
   });
 

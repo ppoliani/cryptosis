@@ -1,6 +1,6 @@
 const {partial} = require('../../common/core/fn');
 const {createSimpleEndpoint, HTTP_NO_CONTENT} = require('../core/api');
-const repository = require('../../common/data/sellRepository');
+const repository = require('../../common/data/repositories/sellRepository');
 const {unwrapCypherResult, unwrapCypherResultToMap} = require('../../common/data/utils');
 
 const getSells = partial(

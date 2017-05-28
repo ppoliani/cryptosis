@@ -1,6 +1,6 @@
 const {partial} = require('../../common/core/fn');
 const {createSimpleEndpoint, HTTP_NO_CONTENT} = require('../core/api');
-const repository= require('../../common/data/investmentRepository');
+const repository= require('../../common/data/repositories/investmentRepository');
 const {unwrapCypherResult, unwrapCypherResultToMap} = require('../../common/data/utils');
 const logger = require('../../common/core/logger');
 

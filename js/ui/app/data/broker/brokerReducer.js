@@ -30,7 +30,9 @@ const handleDeleteBroker = (state, {payload: brokerResult}) =>
     Loading: () => state.set('deleteBrokerResult', brokerResult),
     Success: ({data: {result}}) => state
       .set('deleteBrokerResult', brokerResult)
-      .updateIn(['brokers'], brokers => brokers.delete(result.id)),
+      .updateIn(['brokers'], brokers => {
+        return brokers.delete(`${result.id}`)
+      }),
     Failure: () => state.set('deleteBrokerResult', brokerResult),
   });
 

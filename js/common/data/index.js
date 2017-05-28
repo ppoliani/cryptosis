@@ -1,9 +1,9 @@
 const {initDB} = require('./db');
 
 const repositories = [
-  require('./accountRepository'),
-  require('./brokerRepository'),
-  require('./investmentRepository')
+  require('./repositories/accountRepository'),
+  require('./repositories/brokerRepository'),
+  require('./repositories/investmentRepository')
 ];
 
 const initRepositories = session => repositories.map(r => r.init(session));

@@ -1,4 +1,4 @@
-const {runQuery} = require('./query');
+const {runQuery} = require('../query');
 
 let DbDriver;
 

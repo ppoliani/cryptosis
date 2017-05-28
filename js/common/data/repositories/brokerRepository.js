@@ -1,5 +1,5 @@
-const {contructCreateMatchString, contructUpdateMatchString, createMatchObj} = require('./utils');
-const {runQuery} = require('./query');
+const {contructCreateMatchString, contructUpdateMatchString, createMatchObj} = require('../utils');
+const {runQuery} = require('../query');
 
 let DbDriver;
 
