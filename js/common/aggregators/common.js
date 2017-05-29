@@ -18,12 +18,12 @@ const groupTotalQtyPerTypeReducer = (acc, v) =>
   )
 
 // Investment CurrentPrice -> Value
-const getCurrentTotalForInvestment = (investment, currentPrice) => investment.get('quantity') * currentPrice;
+const getCurrentTotalForInvestment = (investment, currentPrice) => investment.get('quantity') * currentPrice
 
 // when we sell and get cash we need to sutract the expenses
 const includeExpenses = (i, value) => i.get('positionType') === 'buy'
-  ? value + i.get('expenses')
-  : value - i.get('expenses');
+    ? value + i.get('expenses')
+    : value - i.get('expenses')
 
 // Investment PriceOfPurchase -> Value
 const getTotalForInvestment = i => includeExpenses(i, i.get('price') * i.get('quantity'));
@@ -46,9 +46,9 @@ const calculateCurrentValuePerType = (investments, prices) => {
     .map((qty, type) => qty * prices.getIn([type, 'price']));
 }
 
-const getPercentageChange = (diff, initial) => (diff / initial) * 100;
+const getPercentageChange = (diff, initial) => (diff / initial) * 100
 
-const getInvestmentValueChange = (qty, buyPrice, sellPrice) => qty * sellPrice - qty * buyPrice;
+const getInvestmentValueChange = (qty, buyPrice, sellPrice) => qty * sellPrice - qty * buyPrice
 
 // we need to find the total portfolio value on the given date.
 // Investments that didn't exist on that date should not contribute to the figure
@@ -66,11 +66,15 @@ const getPriceObjFromStreamData = data => ({
   symbol: data.FROMSYMBOL
 })
 
+// total cash from the positions sold
+const calculateTotalCash = investments => calculateTotalPerType(filterSells(investments));
+
 // total invested per investment type - total cash per investment type
 const calculateNetCost = investments => {
   const totalInvested = calculateTotalPerType(filterBuys(investments));
   const totalCash = calculateTotalPerType(filterSells(investments));
 
+  // net cost includes expenses for both buy and sells
   return totalInvested.mergeWith(
     merger,
     totalCash
@@ -84,6 +88,7 @@ module.exports = {
   filterBuys,
   filterSells,
   calculateNetCost,
+  calculateTotalCash,
   getInvestmentValueChange,
   getCurrentTotalForInvestment,
   getTotalForInvestment,

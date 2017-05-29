@@ -27,11 +27,20 @@ export default class PortfolioSummary extends Component {
       });
   }
 
+  getTotalCash() {
+    return this.props.portfolio
+      .get('total')
+      .matchWith({
+        Just: ({value: total}) => Math.floor(total.get('totalCash').reduce((acc, v) => acc + v, 0)),
+        Nothing: () => 0
+      });
+  }
 
   render() {
     const {investment, currency} = this.props;
     const totalInvested = this.getTotalInvested();
     const totalPortfolioValue = this.getTotalPortfolioValue();
+    const totalCash = this.getTotalCash();
 
     return (
       <Container title='Portfolio' subtitle='Aggregates'>
@@ -39,6 +48,7 @@ export default class PortfolioSummary extends Component {
           <List>
             <ListItem>Net Cost: {renderPrice(totalInvested, currency)}</ListItem>
             <ListItem>Portfolio Value: {renderPrice(totalPortfolioValue, currency)}</ListItem>
+            <ListItem>Total Cash: {renderPrice(totalCash, currency)}</ListItem>
             <ListItem>Change: {renderPrice(totalPortfolioValue - totalInvested, currency)}</ListItem>
             <ListItem>Change (%): {this.getPercentageChange(totalInvested, totalPortfolioValue).toFixed(2)}%</ListItem>
           </List>
