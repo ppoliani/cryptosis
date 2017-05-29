@@ -39,7 +39,7 @@ export default class InvestmentSummary extends Component {
       .matchWith({
         Just: ({value: total}) => total.get('totalAssets').map((v, k) => {
           const totalInvested = Math.floor(v);
-          const current = Math.floor(total.get('currentValue').get(k));
+          const current = total.get('currentValue').get(k).toFixed(2);
 
           return (
             <div key={k}>
