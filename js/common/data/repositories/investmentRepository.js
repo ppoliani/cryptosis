@@ -55,18 +55,6 @@ const getInvestments = async ({ctx}) => {
   )
 }
 
-const getInvestmentsByParams = async ({params, ctx}) => {
-  return  await runQuery(
-    DbDriver,
-    `
-      MATCH (u:User)-[:HAS_INVESTMENT]->(i:Investment ${params})
-      WHERE ID(u)=${Number(ctx.state.user.id)}
-      RETURN i{ .*, id: ID(i)}
-      ORDER BY i.price
-    `
-  )
-}
-
 const saveInvestment = async ({resource:investment, ctx}) => {
   return await runQuery(
     DbDriver,
@@ -166,7 +154,6 @@ module.exports = {
   getPartialInvestments,
   getInvestment,
   getInvestments,
-  getInvestmentsByParams,
   saveInvestment,
   updateInvestment,
   deleteInvestment,

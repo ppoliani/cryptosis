@@ -2,6 +2,18 @@ import {required, date, number} from '../validator';
 import {currencyOptions} from '../../../data/constants/currencies';
 
 const fields = [{
+  type: 'dropdown',
+  name: 'positionType',
+  label: 'Position Type',
+  validate: [required],
+  options: [{
+    value: 'buy',
+    text: 'Buy'
+  }, {
+    value: 'sell',
+    text: 'Sell'
+  }]
+}, {
   type: 'date',
   name: 'date',
   label: 'Date',

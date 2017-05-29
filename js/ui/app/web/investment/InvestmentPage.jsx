@@ -29,6 +29,7 @@ import {
 const columns = [
   {key: 'investmentType', label: 'Investment Type'},
   {key: 'broker', label: 'Broker'},
+  {key: 'positionType', label: 'Position Type'},
   {key: 'date', label: 'Date'},
   {key: 'quantity', label: 'Quantity'},
   {key: 'price', label: 'Price'},
@@ -122,7 +123,7 @@ class InvestmentPage extends Component {
       (acc, v, id) => acc.push(
         v.set('id', id)
           .set('date', dateformat(v.get('date'), 'MM/DD/YYYY'))
-          .set('status', renderInvestmentValue(id, investmentValues, v.get('currency')))
+          .set('status', v.get('positionType') === 'buy' ? renderInvestmentValue(id, investmentValues, v.get('currency')): '')
           .set('action', <Button label="Delete" primary={true} onClick={partial(this.onInvestmentDeleteClick, v)} />)
       ),
       List()

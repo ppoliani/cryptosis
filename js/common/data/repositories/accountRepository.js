@@ -60,10 +60,21 @@ const getAccount = async userId => {
   );
 }
 
+const deleteToken = async token => {
+  return await runQuery(
+    DbDriver,
+    `
+      MATCH (t:AccessToken {value:"${token}"})
+      DETACH DELETE t
+    `
+  )
+}
+
 module.exports = {
   init,
   getAccount,
   getOrSaveSocialMediaAccount,
   createToken,
-  getTokenAndCorrespondingAccounts
+  getTokenAndCorrespondingAccounts,
+  deleteToken
 }

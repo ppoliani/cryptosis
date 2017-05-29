@@ -1,12 +1,25 @@
 const passport = require('koa-passport');
 const BearerStrategy = require('passport-http-bearer').Strategy;
+const {identity} = require('folktale/core/lambda')
 const logger = require('../../common/core/logger');
-const {getTokenAndCorrespondingAccounts} = require('../../common/data/repositories/accountRepository');
+const {getTokenAndCorrespondingAccounts, deleteToken} = require('../../common/data/repositories/accountRepository');
 const {unwrapCypherResult} = require('../../common/data/utils');
 const {HttpError} = require('../core/api');
 const {decodeToken} = require('../auth/jwt');
 
 const initAuth = () => {
+  const deleteTokenIfNeeded = async error => {
+    try {
+      await error.matchWith && error.matchWith({
+        Expired: async ({value:token}) => await deleteToken(token),
+        Decode: identity
+      })
+    }
+    catch(err) {
+      logger.error(`Could delete token that was expired: ${token}`)
+    }
+  }
+
   // 1. Check if token exists
   // 2. IF not send 401
   // 3. ELSE check expiry date
@@ -27,7 +40,7 @@ const initAuth = () => {
         });
       }
       catch(error) {
-        // TODO: if JwtError.Expired() remove the old JWT from database
+        await deleteTokenIfNeeded(error);
         logger.error(`Error while verifying access token: ${error}`);
         done(HttpError(401, 'Unauthorized'));
       }

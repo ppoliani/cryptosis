@@ -22,7 +22,7 @@ const decodeToken = token => new Promise((resolve, reject) => {
   jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if(err) {
       return err.name === 'TokenExpiredError'
-        ? reject(JwtError.Expired())
+        ? reject(JwtError.Expired(token))
         : reject(JwtError.Decode());
     }
     else {
