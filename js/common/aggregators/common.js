@@ -10,30 +10,41 @@ const groupTotalValuePerTypeReducer = (acc, v) =>
     sum => sum + getTotalForInvestment(v)
   )
 
-// { [id]: Investment  } -> { [InvestmentType] -> CurrentValue }
-const groupCurrentTotalValuePerTypeReducer = prices => (acc, v) => {
-  const type = v.get('investmentType');
-  return acc.update(
-    type,
+const groupTotalQtyPerTypeReducer = (acc, v) =>
+ acc.update(
+    v.get('investmentType'),
     0,
-    sum => sum + getCurrentTotalForInvestment(v, prices.getIn([type, 'price']))
+    qty => qty + v.get('quantity')
   )
-}
 
 // Investment CurrentPrice -> Value
 const getCurrentTotalForInvestment = (investment, currentPrice) => investment.get('quantity') * currentPrice;
 
+// when we sell and get cash we need to sutract the expenses
+const includeExpenses = (i, value) => i.get('positionType') === 'buy'
+  ? value + i.get('expenses')
+  : value - i.get('expenses');
+
 // Investment PriceOfPurchase -> Value
-const getTotalForInvestment = i => i.get('price') * i.get('quantity') + i.get('expenses');
+const getTotalForInvestment = i => includeExpenses(i, i.get('price') * i.get('quantity'));
 
 // Finds the total money invested per type of investment
 const calculateTotalPerType = investments => investments.reduce(groupTotalValuePerTypeReducer, Map())
 
+// Finds the total quntity per type of investment
+const calculateTotalQtyPerType = investments => investments.reduce(groupTotalQtyPerTypeReducer, Map())
+
+const merger = (val1, val2) => val1 - val2;
+
 // Finds the total value per type of investment based on the current buy price
-const calculateCurrentValuePerType = (investments, prices) => investments.reduce(
-  groupCurrentTotalValuePerTypeReducer(prices),
-  Map()
-)
+const calculateCurrentValuePerType = (investments, prices) => {
+  const totalQtyBoughPerType = calculateTotalQtyPerType(filterBuys(investments));
+  const totalQtySoldPerType = calculateTotalQtyPerType(filterSells(investments));
+
+  return totalQtyBoughPerType
+    .mergeWith(merger, totalQtySoldPerType)
+    .map((qty, type) => qty * prices.getIn([type, 'price']));
+}
 
 const getPercentageChange = (diff, initial) => (diff / initial) * 100;
 
@@ -55,9 +66,24 @@ const getPriceObjFromStreamData = data => ({
   symbol: data.FROMSYMBOL
 })
 
+// total invested per investment type - total cash per investment type
+const calculateNetCost = investments => {
+  const totalInvested = calculateTotalPerType(filterBuys(investments));
+  const totalCash = calculateTotalPerType(filterSells(investments));
 
+  return totalInvested.mergeWith(
+    merger,
+    totalCash
+  )
+};
+
+const filterBuys = investments => investments.filter(v => v.get('positionType') === 'buy')
+const filterSells = investments => investments.filter(v => v.get('positionType') === 'sell')
 
 module.exports = {
+  filterBuys,
+  filterSells,
+  calculateNetCost,
   getInvestmentValueChange,
   getCurrentTotalForInvestment,
   getTotalForInvestment,

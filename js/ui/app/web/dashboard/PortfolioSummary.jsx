@@ -37,8 +37,8 @@ export default class PortfolioSummary extends Component {
       <Container title='Portfolio' subtitle='Aggregates'>
         <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
           <List>
-            <ListItem>Total Invested: {renderPrice(totalInvested, currency)}</ListItem>
-            <ListItem>Total Portfolio Value: {renderPrice(totalPortfolioValue, currency)}</ListItem>
+            <ListItem>Net Cost: {renderPrice(totalInvested, currency)}</ListItem>
+            <ListItem>Portfolio Value: {renderPrice(totalPortfolioValue, currency)}</ListItem>
             <ListItem>Change: {renderPrice(totalPortfolioValue - totalInvested, currency)}</ListItem>
             <ListItem>Change (%): {this.getPercentageChange(totalInvested, totalPortfolioValue).toFixed(2)}%</ListItem>
           </List>
