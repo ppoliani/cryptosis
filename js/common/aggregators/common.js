@@ -31,20 +31,24 @@ const getTotalForInvestment = i => includeExpenses(i, i.get('price') * i.get('qu
 // Finds the total money invested per type of investment
 const calculateTotalPerType = investments => investments.reduce(groupTotalValuePerTypeReducer, Map())
 
-// Finds the total quntity per type of investment
+// finds the total quanityt inlcuding only buys or sells
 const calculateTotalQtyPerType = investments => investments.reduce(groupTotalQtyPerTypeReducer, Map())
 
 const merger = (val1, val2) => val1 - val2;
 
-// Finds the total value per type of investment based on the current buy price
-const calculateCurrentValuePerType = (investments, prices) => {
+// finds the total quanityt inlcuding buys and sels
+const calculatePortfolioTotalQtyPerType = investments => {
   const totalQtyBoughPerType = calculateTotalQtyPerType(filterBuys(investments));
   const totalQtySoldPerType = calculateTotalQtyPerType(filterSells(investments));
 
   return totalQtyBoughPerType
-    .mergeWith(merger, totalQtySoldPerType)
-    .map((qty, type) => qty * prices.getIn([type, 'price']));
+    .mergeWith(merger, totalQtySoldPerType);
 }
+
+// Finds the total value per type of investment based on the current buy price
+const calculateCurrentValuePerType = (investments, prices) =>
+  calculatePortfolioTotalQtyPerType(investments)
+    .map((qty, type) => qty * prices.getIn([type, 'price']))
 
 const getPercentageChange = (diff, initial) => (diff / initial) * 100
 
@@ -89,6 +93,7 @@ module.exports = {
   filterSells,
   calculateNetCost,
   calculateTotalCash,
+  calculatePortfolioTotalQtyPerType,
   getInvestmentValueChange,
   getCurrentTotalForInvestment,
   getTotalForInvestment,

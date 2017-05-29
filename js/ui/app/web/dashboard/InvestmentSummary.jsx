@@ -8,6 +8,29 @@ import {getPercentageChange} from '../../../../common/core/utils';
 import {renderPrice} from '../common/InvestmentValueHelpers';
 
 export default class InvestmentSummary extends Component {
+  getTotalCash(investmentType) {
+    return this.props.portfolio
+      .get('total')
+      .matchWith({
+        Just: ({value: total}) => Math.floor(
+          total
+            .get('totalCash')
+            .filter((v, k) => k === investmentType)
+            .reduce((acc, v) => acc + v, 0)
+        ),
+        Nothing: () => 0
+      });
+  }
+
+  getQty(investmentType) {
+    return this.props.portfolio
+      .get('total')
+      .matchWith({
+        Just: ({value: total}) => Math.floor(total.getIn(['qty', investmentType])),
+        Nothing: () => 0
+      });
+  }
+
   getInvestmentRows() {
     const {currency, portfolio} = this.props;
 
@@ -22,10 +45,11 @@ export default class InvestmentSummary extends Component {
             <div key={k}>
               <List>
                 <Subheader>{k}</Subheader>
-                <ListItem>Holdings: </ListItem>
-                <ListItem>Total Invested: {renderPrice(totalInvested, currency)}</ListItem>
+                <ListItem>Holdings: {this.getQty(k)}</ListItem>
+                <ListItem>Net Cost: {renderPrice(totalInvested, currency)}</ListItem>
                 <ListItem>Current Value: {renderPrice(current, currency)}</ListItem>
-                <ListItem>Value %: {getPercentageChange(totalInvested, current).toFixed(2)}%</ListItem>
+                <ListItem>Total Cash: {renderPrice(this.getTotalCash(k), currency)}</ListItem>
+                <ListItem>Change {getPercentageChange(totalInvested, current).toFixed(2)}%</ListItem>
               </List>
               <Divider />
             </div>
