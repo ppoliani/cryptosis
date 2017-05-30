@@ -29,4 +29,7 @@ const calculatePortfolioValueOnSellAdded = (investmentsResult, sell) =>
   unwrapCypherResultToMap(investmentsResult)
     .map(partial(calculatePortfolioState, sell.qty, sell.price))
 
-module.exports = {calculatePortfolioState, calculatePortfolioValueOnSellAdded};
+module.exports = {
+  calculatePortfolioState,
+  calculatePortfolioValueOnSellAdded
+};
