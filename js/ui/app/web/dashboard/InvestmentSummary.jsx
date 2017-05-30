@@ -6,31 +6,9 @@ import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import {getPercentageChange} from '../../../../common/core/utils';
 import {renderPrice} from '../common/InvestmentValueHelpers';
+import {getTotalCashForType, getQtyForType} from '../../../../common/metrics/portfolio';
 
 export default class InvestmentSummary extends Component {
-  getTotalCash(investmentType) {
-    return this.props.portfolio
-      .get('total')
-      .matchWith({
-        Just: ({value: total}) => Math.floor(
-          total
-            .get('totalCash')
-            .filter((v, k) => k === investmentType)
-            .reduce((acc, v) => acc + v, 0)
-        ),
-        Nothing: () => 0
-      });
-  }
-
-  getQty(investmentType) {
-    return this.props.portfolio
-      .get('total')
-      .matchWith({
-        Just: ({value: total}) => Math.floor(total.getIn(['qty', investmentType])),
-        Nothing: () => 0
-      });
-  }
-
   getInvestmentRows() {
     const {currency, portfolio} = this.props;
 
@@ -42,15 +20,15 @@ export default class InvestmentSummary extends Component {
             const exposure = Math.floor(v);
             const currentValue = total.get('currentValue').get(k);
             const totalInvested = total.get('totalInvested').get(k);
-            const totalCash = this.getTotalCash(k);
+            const totalCash = getTotalCashForType(portfolio, k);
             const currentLiquidValue = totalCash + currentValue;
-            const percentageChange =  (currentLiquidValue / totalInvested) * 100;
+            const percentageChange = (currentLiquidValue / totalInvested) * 100;
 
             return (
               <div key={k}>
                 <List>
                   <Subheader>{k}</Subheader>
-                  <ListItem>Holdings: {this.getQty(k)}</ListItem>
+                  <ListItem>Holdings: {getQtyForType(portfolio, k)}</ListItem>
                   <ListItem>Total Cash: {renderPrice(totalCash, currency)}</ListItem>
                   <ListItem>Total Amount Invested: {renderPrice(totalInvested, currency)}</ListItem>
                   <ListItem>Exposure: {renderPrice(exposure, currency)}</ListItem>

@@ -1,4 +1,4 @@
-getTotalExposure = portfolio =>
+const getTotalExposure = portfolio =>
   portfolio
     .get('total')
     .matchWith({
@@ -6,7 +6,7 @@ getTotalExposure = portfolio =>
       Nothing: () => 0
     })
 
-getTotalPortfolioValue = portfolio =>
+const getTotalPortfolioValue = portfolio =>
   portfolio
     .get('total')
     .matchWith({
@@ -14,7 +14,7 @@ getTotalPortfolioValue = portfolio =>
       Nothing: () => 0
     })
 
-getTotalCash = portfolio =>
+const getTotalCash = portfolio =>
   portfolio
     .get('total')
     .matchWith({
@@ -22,7 +22,7 @@ getTotalCash = portfolio =>
       Nothing: () => 0
     })
 
-getTotalInvested = portfolio =>
+const getTotalInvested = portfolio =>
   portfolio
     .get('total')
     .matchWith({
@@ -30,10 +30,32 @@ getTotalInvested = portfolio =>
       Nothing: () => 0
     })
 
+const getTotalCashForType = (portfolio, investmentType) =>
+  portfolio
+    .get('total')
+    .matchWith({
+      Just: ({value: total}) => Math.floor(
+        total
+          .get('totalCash')
+          .filter((v, k) => k === investmentType)
+          .reduce((acc, v) => acc + v, 0)
+      ),
+      Nothing: () => 0
+    })
+
+const getQtyForType = (portfolio, investmentType) =>
+  portfolio
+    .get('total')
+    .matchWith({
+      Just: ({value: total}) => Math.floor(total.getIn(['qty', investmentType])),
+      Nothing: () => 0
+    })
 
 module.exports = {
   getTotalExposure,
   getTotalPortfolioValue,
   getTotalCash,
-  getTotalInvested
+  getTotalInvested,
+  getTotalCashForType,
+  getQtyForType
 };
