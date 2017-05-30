@@ -10,12 +10,24 @@ const {
 
 const calculateTotalPortfolioValue = ({investments, prices}) =>
   create((add, end, error) => {
+    const longTermInvestments = investments.filter(i => i.get('assetLife') === 'Long Term');
+    const shortTermInvestments = investments.filter(i => i.get('assetLife') === 'Short Term');
+
     add(fromJS({
-      totalExposure: calculateNetCost(investments),
-      totalInvested: calculateTotalAmountInvested(investments),
-      currentValue: calculateCurrentValuePerType(investments, prices),
-      totalCash: calculateTotalCash(investments),
-      qty: calculatePortfolioTotalQtyPerType(investments)
+     longTerm: {
+      totalExposure: calculateNetCost(longTermInvestments),
+      totalInvested: calculateTotalAmountInvested(longTermInvestments),
+      currentValue: calculateCurrentValuePerType(longTermInvestments, prices),
+      totalCash: calculateTotalCash(longTermInvestments),
+      qty: calculatePortfolioTotalQtyPerType(longTermInvestments)
+     },
+     shortTerm: {
+      totalExposure: calculateNetCost(shortTermInvestments),
+      totalInvested: calculateTotalAmountInvested(shortTermInvestments),
+      currentValue: calculateCurrentValuePerType(shortTermInvestments, prices),
+      totalCash: calculateTotalCash(shortTermInvestments),
+      qty: calculatePortfolioTotalQtyPerType(shortTermInvestments)
+     }
     }));
     end();
 

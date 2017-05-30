@@ -1,4 +1,4 @@
-const {Map} = require('immutable');
+const {fromJS, Map} = require('immutable');
 const {create} = require('@most/create');
 const {getTotalValueAfterDate} = require('./common');
 
@@ -8,8 +8,9 @@ const {getTotalValueAfterDate} = require('./common');
 const getPortfolioValueForSymbol = (priceList, investments, symbol) =>
   priceList.map(p => {
     const {day, price} = p.toJS();
-    return Map({
-      day,
+
+    return fromJS({
+       day,
       value: getTotalValueAfterDate(investments, symbol, day, price)
     })
   })
@@ -19,15 +20,26 @@ const getPortfolioValueForSymbol = (priceList, investments, symbol) =>
 // e.g. {[id]: Investment} {ETH: Price[]} -> { ETH: [{day: 123, value: 2000}], BTC:  [{day: 123, value: 2000}]}
 const calculateHistoricPortfolioValues = ({investments, prices}) =>
   create((add, end, error) => {
-    const result = prices.reduce(
+    const longTermInvestments = investments.filter(i => i.get('assetLife') === 'Long Term');
+    const shortTermInvestments = investments.filter(i => i.get('assetLife') === 'Short Term');
+
+    const longTerm = prices.reduce(
       (acc, priceList, symbol) => acc.set(
         symbol,
-        getPortfolioValueForSymbol(priceList, investments, symbol)
+        getPortfolioValueForSymbol(priceList, longTermInvestments, symbol),
       ),
       Map()
     )
 
-    add(result);
+    const shortTerm = prices.reduce(
+      (acc, priceList, symbol) => acc.set(
+        symbol,
+        getPortfolioValueForSymbol(priceList, shortTermInvestments, symbol),
+      ),
+      Map()
+    )
+
+    add(fromJS({longTerm, shortTerm}));
     end();
 
     return () => console.log('Unsubscribe calculateHistoricPortfolioValues');

@@ -68,7 +68,8 @@ class Overview extends Component {
           <Col lg={8} xs={12} className='row-spacing'>
             <PortfolioChart
               investment={investment}
-              portfolio={portfolio} />
+              portfolio={portfolio}
+              assetLife='longTerm' />
           </Col>
           <Col lg={4} xs={12}>
             <Col className='row-spacing'>
@@ -81,13 +82,15 @@ class Overview extends Component {
               <PortfolioSummary
                 currency={getSelectedCurrency(this.props.form)}
                 portfolio={portfolio}
-                investment={investment} />
+                investment={investment}
+                assetLife='longTerm' />
             </Col>
             <Col>
               <InvestmentSummary
                 currency={getSelectedCurrency(this.props.form)}
                 investment={investment}
-                portfolio={portfolio} />
+                portfolio={portfolio}
+                assetLife='longTerm'/>
             </Col>
           </Col>
         </Row>

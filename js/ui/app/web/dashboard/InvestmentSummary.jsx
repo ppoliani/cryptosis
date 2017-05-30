@@ -11,17 +11,17 @@ import {getTotalCashForType, getQtyForType} from '../../../../common/metrics/por
 
 export default class InvestmentSummary extends Component {
   getInvestmentRows() {
-    const {currency, portfolio} = this.props;
+    const {currency, portfolio, assetLife} = this.props;
 
     return portfolio
-      .get('total')
+      .getIn(['total', assetLife])
       .matchWith({
         Just: ({value: total}) => total.get('totalExposure')
           .map((v, k) => {
             const exposure = Math.floor(v);
             const currentValue = total.get('currentValue').get(k);
             const totalInvested = total.get('totalInvested').get(k);
-            const totalCash = getTotalCashForType(portfolio, k);
+            const totalCash = getTotalCashForType(portfolio, k, assetLife);
             const currentLiquidValue = totalCash + currentValue;
             const percentageChange = renderInvestmentChange(currentLiquidValue, totalInvested, currency);
 
@@ -29,7 +29,7 @@ export default class InvestmentSummary extends Component {
               <div key={k}>
                 <List>
                   <Subheader>{k}</Subheader>
-                  <ListItem>Holdings: {getQtyForType(portfolio, k)}</ListItem>
+                  <ListItem>Holdings: {getQtyForType(portfolio, k, assetLife)}</ListItem>
                   <ListItem>Total Cash: {renderPrice(totalCash, currency)}</ListItem>
                   <ListItem>Total Amount Invested: {renderPrice(totalInvested, currency)}</ListItem>
                   <ListItem>Exposure: {renderPrice(exposure, currency)}</ListItem>

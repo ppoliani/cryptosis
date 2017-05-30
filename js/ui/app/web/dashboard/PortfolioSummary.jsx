@@ -14,11 +14,11 @@ import {
 
 export default class PortfolioSummary extends Component {
   render() {
-    const {investment, currency, portfolio} = this.props;
-    const totalExposure = getTotalExposure(portfolio);
-    const totalPortfolioValue = getTotalPortfolioValue(portfolio);
-    const totalCash = getTotalCash(portfolio);
-    const totalInvested = getTotalInvested(portfolio);
+    const {investment, currency, portfolio, assetLife} = this.props;
+    const totalExposure = getTotalExposure(portfolio, assetLife);
+    const totalPortfolioValue = getTotalPortfolioValue(portfolio, assetLife);
+    const totalCash = getTotalCash(portfolio, assetLife);
+    const totalInvested = getTotalInvested(portfolio, assetLife);
     const currentLiquidValue = totalCash + totalPortfolioValue;
     const percentageChange = renderInvestmentChange(currentLiquidValue, totalInvested, currency);
 

@@ -28,8 +28,10 @@ export default class PortfolioChart extends Component {
         ? oldVal.merge(newVal)
         : newVal;
 
-    return this.props.portfolio
-      .get('last30Days')
+    const {portfolio, assetLife} = this.props;
+
+    return portfolio
+      .getIn(['last30Days', assetLife])
       .matchWith({
         Just: ({value: aggregates}) => aggregates.reduce(
             (acc, priceList, symbol) => acc.mergeWith(
@@ -46,8 +48,10 @@ export default class PortfolioChart extends Component {
 
   // iterate over the keys and create a Line for each
   renderLines() {
-    return this.props.portfolio
-      .get('last30Days')
+    const {portfolio, assetLife} = this.props;
+
+    return portfolio
+      .getIn(['last30Days', assetLife])
       .matchWith({
         Just: ({value}) => [...value.keys()].map((k, i) => <Line key={k} type='natural' dot={false} dataKey={k} stroke={colors[i]} />),
         Nothing: () => {}
@@ -58,7 +62,7 @@ export default class PortfolioChart extends Component {
     const {investment} = this.props;
 
     return (
-      <Container title='Portfolio' subtitle='Total Value (last 30 days)'>
+      <Container title='Portfolio' subtitle='Current Liquid Value (last 30 days)'>
         <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
           <ResponsiveContainer width='100%' height={300}>
             <LineChart data={this.getPortfolioChartData()}>

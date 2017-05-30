@@ -3,7 +3,7 @@ import {getPercentageChange} from '../../../../common/core/utils';
 
 const DEFAULT_CURRENCY = 'GBP';
 
-const signedCurrency = (value, currency) =>  value > 0
+const signedCurrency = (value, currency) =>  value >= 0
   ? `${getCurrencySymbol(currency)}${value.toFixed(2)}`
   : `-${getCurrencySymbol(currency)}${Math.abs(value.toFixed(2))}`;
 
