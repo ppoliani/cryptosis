@@ -34,9 +34,10 @@ const calculateTotalPerType = investments => investments.reduce(groupTotalValueP
 // finds the total quanityt inlcuding only buys or sells
 const calculateTotalQtyPerType = investments => investments.reduce(groupTotalQtyPerTypeReducer, Map())
 
+const getValueForPrice = (price, qty) => qty * price;
 const merger = (val1, val2) => val1 - val2;
 
-// finds the total quanityt inlcuding buys and sels
+// finds the total quantity (buys - sells)
 const calculatePortfolioTotalQtyPerType = investments => {
   const totalQtyBoughPerType = calculateTotalQtyPerType(filterBuys(investments));
   const totalQtySoldPerType = calculateTotalQtyPerType(filterSells(investments));
@@ -48,7 +49,11 @@ const calculatePortfolioTotalQtyPerType = investments => {
 // Finds the total value per type of investment based on the current buy price
 const calculateCurrentValuePerType = (investments, prices) =>
   calculatePortfolioTotalQtyPerType(investments)
-    .map((qty, type) => qty * prices.getIn([type, 'price']))
+    .map((qty, type) => getValueForPrice(qty, prices.getIn([type, 'price'])))
+
+const calculateCurrentValueAtPrice = (investments, price) =>
+  calculatePortfolioTotalQtyPerType(investments)
+    .map(partial(getValueForPrice, price))
 
 const getPercentageChange = (diff, initial) => (diff / initial) * 100
 
@@ -56,11 +61,12 @@ const getInvestmentValueChange = (qty, buyPrice, sellPrice) => qty * sellPrice -
 
 // we need to find the total portfolio value on the given date.
 // Investments that didn't exist on that date should not contribute to the figure
-const getTotalValueAfterDate = (investments, symbol, date, priceOfDay) =>
-  calculateNetCost(
-    investments.filter(i => i.get('investmentType') === symbol && isBefore(i.get('date'), date))
-  )
-  .get(symbol)
+const getTotalValueAfterDate = (investments, investmentType, date, priceOfDay) => {
+  const filteredIvestments = investments
+    .filter(i => i.get('investmentType') === investmentType && isBefore(i.get('date'), date));
+
+  return calculateCurrentLiquidValueForType(filteredIvestments, priceOfDay, investmentType)
+}
 
 const getPriceObjFromStreamData = data => ({
   price: data.PRICE,
@@ -80,6 +86,14 @@ const calculateNetCost = investments =>
     merger,
     calculateTotalCash(investments)
   )
+
+// finds the current liquid value for the given investment type (described byt)
+const calculateCurrentLiquidValueForType = (investments, currentPrice, investmentType) => {
+  const currentTotalValue = calculateCurrentValueAtPrice(investments, currentPrice).get(investmentType) || 0;
+  const totalCash = calculateTotalCash(investments).get(investmentType) || 0;
+
+  return currentTotalValue + totalCash;
+}
 
 const filterBuys = investments => investments.filter(v => v.get('positionType') === 'buy')
 const filterSells = investments => investments.filter(v => v.get('positionType') === 'sell')
