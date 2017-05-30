@@ -22,7 +22,7 @@ export default class InvestmentSummary extends Component {
             const totalInvested = total.get('totalInvested').get(k);
             const totalCash = getTotalCashForType(portfolio, k);
             const currentLiquidValue = totalCash + currentValue;
-            const percentageChange = (currentLiquidValue / totalInvested) * 100;
+            const percentageChange = getPercentageChange(totalInvested, currentLiquidValue);
 
             return (
               <div key={k}>

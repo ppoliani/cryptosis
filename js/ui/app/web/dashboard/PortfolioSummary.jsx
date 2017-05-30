@@ -3,6 +3,7 @@ import {List, ListItem} from 'material-ui/List';
 import Container from '../common/Container';
 import AsyncPanel from '../common/AsyncPanel';
 import {renderPrice} from '../common/InvestmentValueHelpers';
+import {getPercentageChange} from '../../../../common/core/utils';
 import {
   getTotalExposure,
   getTotalPortfolioValue,
@@ -18,7 +19,6 @@ export default class PortfolioSummary extends Component {
     const totalCash = getTotalCash(portfolio);
     const totalInvested = getTotalInvested(portfolio);
     const currentLiquidValue = totalCash + totalPortfolioValue;
-    const percentageChange =  (currentLiquidValue / totalInvested) * 100;
 
     return (
       <Container title='Portfolio' subtitle='Aggregates'>
@@ -29,7 +29,7 @@ export default class PortfolioSummary extends Component {
             <ListItem>Total Amount Invested: {renderPrice(totalInvested, currency)}</ListItem>
             <ListItem>Portfolio Value: {renderPrice(totalPortfolioValue, currency)}</ListItem>
             <ListItem>Current Liquid Value(CLV): {renderPrice(currentLiquidValue, currency)}</ListItem>
-            <ListItem>Change: {percentageChange.toFixed(2)}%</ListItem>
+            <ListItem>Change: {getPercentageChange(totalInvested, currentLiquidValue).toFixed(2)}%</ListItem>
           </List>
         </AsyncPanel>
       </Container>
