@@ -4,13 +4,15 @@ const {
    calculateCurrentValuePerType,
    calculateNetCost,
    calculateTotalCash,
-   calculatePortfolioTotalQtyPerType
+   calculatePortfolioTotalQtyPerType,
+   calculateTotalAmountInvested
 } = require('./common');
 
 const calculateTotalPortfolioValue = ({investments, prices}) =>
   create((add, end, error) => {
     add(fromJS({
-      totalAssets: calculateNetCost(investments),
+      totalExposure: calculateNetCost(investments),
+      totalInvested: calculateTotalAmountInvested(investments),
       currentValue: calculateCurrentValuePerType(investments, prices),
       totalCash: calculateTotalCash(investments),
       qty: calculatePortfolioTotalQtyPerType(investments)

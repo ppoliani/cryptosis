@@ -37,26 +37,33 @@ export default class InvestmentSummary extends Component {
     return portfolio
       .get('total')
       .matchWith({
-        Just: ({value: total}) => total.get('totalAssets').map((v, k) => {
-          const totalInvested = Math.floor(v);
-          const current = total.get('currentValue').get(k).toFixed(2);
+        Just: ({value: total}) => total.get('totalExposure')
+          .map((v, k) => {
+            const exposure = Math.floor(v);
+            const currentValue = total.get('currentValue').get(k);
+            const totalInvested = total.get('totalInvested').get(k);
+            const totalCash = this.getTotalCash(k);
+            const currentLiquidValue = totalCash + currentValue;
+            const percentageChange =  (currentLiquidValue / totalInvested) * 100;
 
-          return (
-            <div key={k}>
-              <List>
-                <Subheader>{k}</Subheader>
-                <ListItem>Holdings: {this.getQty(k)}</ListItem>
-                <ListItem>Net Cost: {renderPrice(totalInvested, currency)}</ListItem>
-                <ListItem>Current Value: {renderPrice(current, currency)}</ListItem>
-                <ListItem>Total Cash: {renderPrice(this.getTotalCash(k), currency)}</ListItem>
-                <ListItem>Change {getPercentageChange(totalInvested, current).toFixed(2)}%</ListItem>
-              </List>
-              <Divider />
-            </div>
-          )
-        })
-        .toList()
-        .toJS(),
+            return (
+              <div key={k}>
+                <List>
+                  <Subheader>{k}</Subheader>
+                  <ListItem>Holdings: {this.getQty(k)}</ListItem>
+                  <ListItem>Total Cash: {renderPrice(totalCash, currency)}</ListItem>
+                  <ListItem>Total Amount Invested: {renderPrice(totalInvested, currency)}</ListItem>
+                  <ListItem>Exposure: {renderPrice(exposure, currency)}</ListItem>
+                  <ListItem>Current Value: {renderPrice(currentValue, currency)}</ListItem>
+                  <ListItem>Current Liquid Value(CLV): {renderPrice(currentLiquidValue, currency)}</ListItem>
+                  <ListItem>Change: {percentageChange.toFixed(2)}%</ListItem>
+                </List>
+                <Divider />
+              </div>
+            )
+          })
+          .toList()
+          .toJS(),
         Nothing: () => 0
       });
   }

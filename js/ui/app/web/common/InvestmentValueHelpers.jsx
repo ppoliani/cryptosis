@@ -21,8 +21,8 @@ export const getSelectedCurrency = form => {
   return values ? values.currency : DEFAULT_CURRENCY;
 }
 
-export const renderPrice = (price='Unavailable', currency) => price != undefined
-    ? <span>{`${getCurrencySymbol(currency)}${price}`}</span>
+export const renderPrice = (price=0, currency) => price != undefined
+    ? <span>{`${getCurrencySymbol(currency)}${price.toFixed(2)}`}</span>
     : <span>Unavailable</span>
 
 export const getCurrencySymbol = currency => {

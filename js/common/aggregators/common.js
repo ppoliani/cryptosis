@@ -57,12 +57,10 @@ const getInvestmentValueChange = (qty, buyPrice, sellPrice) => qty * sellPrice -
 // we need to find the total portfolio value on the given date.
 // Investments that didn't exist on that date should not contribute to the figure
 const getTotalValueAfterDate = (investments, symbol, date, priceOfDay) =>
-  investments
-    .filter(i => i.get('investmentType') === symbol && isBefore(i.get('date'), date))
-    .reduce(
-      (sum, investment) => sum + getInvestmentValueChange(investment, priceOfDay),
-      0
-    )
+  calculateNetCost(
+    investments.filter(i => i.get('investmentType') === symbol && isBefore(i.get('date'), date))
+  )
+  .get(symbol)
 
 const getPriceObjFromStreamData = data => ({
   price: data.PRICE,
@@ -71,19 +69,17 @@ const getPriceObjFromStreamData = data => ({
 })
 
 // total cash from the positions sold
-const calculateTotalCash = investments => calculateTotalPerType(filterSells(investments));
+const calculateTotalCash = investments => calculateTotalPerType(filterSells(investments))
+
+const calculateTotalAmountInvested = investments => calculateTotalPerType(filterBuys(investments))
 
 // total invested per investment type - total cash per investment type
-const calculateNetCost = investments => {
-  const totalInvested = calculateTotalPerType(filterBuys(investments));
-  const totalCash = calculateTotalPerType(filterSells(investments));
-
+const calculateNetCost = investments =>
   // net cost includes expenses for both buy and sells
-  return totalInvested.mergeWith(
+  calculateTotalAmountInvested(investments).mergeWith(
     merger,
-    totalCash
+    calculateTotalCash(investments)
   )
-};
 
 const filterBuys = investments => investments.filter(v => v.get('positionType') === 'buy')
 const filterSells = investments => investments.filter(v => v.get('positionType') === 'sell')
@@ -93,6 +89,7 @@ module.exports = {
   filterSells,
   calculateNetCost,
   calculateTotalCash,
+  calculateTotalAmountInvested,
   calculatePortfolioTotalQtyPerType,
   getInvestmentValueChange,
   getCurrentTotalForInvestment,
