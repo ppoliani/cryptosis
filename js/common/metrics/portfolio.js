@@ -47,7 +47,7 @@ const getQtyForType = (portfolio, investmentType) =>
   portfolio
     .get('total')
     .matchWith({
-      Just: ({value: total}) => Math.floor(total.getIn(['qty', investmentType])),
+      Just: ({value: total}) => total.getIn(['qty', investmentType]),
       Nothing: () => 0
     })
 

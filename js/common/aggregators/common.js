@@ -3,11 +3,11 @@ const isBefore = require('date-fns/is_before');
 const {partial} = require('../core/fn');
 
 // { [id]: Investment  } -> { [InvestmentType] -> Value }
-const groupTotalValuePerTypeReducer = (acc, v) =>
+const groupTotalValueInvestedPerTypeReducer = (acc, v) =>
   acc.update(
     v.get('investmentType'),
     0,
-    sum => sum + getTotalForInvestment(v)
+    sum => sum + getTotalAmountInvested(v)
   )
 
 const groupTotalQtyPerTypeReducer = (acc, v) =>
@@ -26,10 +26,10 @@ const includeExpenses = (i, value) => i.get('positionType') === 'buy'
     : value - i.get('expenses')
 
 // Investment PriceOfPurchase -> Value
-const getTotalForInvestment = i => includeExpenses(i, i.get('price') * i.get('quantity'));
+const getTotalAmountInvested = i => includeExpenses(i, i.get('price') * i.get('quantity'));
 
 // Finds the total money invested per type of investment
-const calculateTotalPerType = investments => investments.reduce(groupTotalValuePerTypeReducer, Map())
+const calculateTotalAmountInvestedPerType = investments => investments.reduce(groupTotalValueInvestedPerTypeReducer, Map())
 
 // finds the total quanityt inlcuding only buys or sells
 const calculateTotalQtyPerType = investments => investments.reduce(groupTotalQtyPerTypeReducer, Map())
@@ -49,7 +49,7 @@ const calculatePortfolioTotalQtyPerType = investments => {
 // Finds the total value per type of investment based on the current buy price
 const calculateCurrentValuePerType = (investments, prices) =>
   calculatePortfolioTotalQtyPerType(investments)
-    .map((qty, type) => getValueForPrice(qty, prices.getIn([type, 'price'])))
+    .map((qty, type) => getValueForPrice(prices.getIn([type, 'price']), qty))
 
 const calculateCurrentValueAtPrice = (investments, price) =>
   calculatePortfolioTotalQtyPerType(investments)
@@ -75,9 +75,9 @@ const getPriceObjFromStreamData = data => ({
 })
 
 // total cash from the positions sold
-const calculateTotalCash = investments => calculateTotalPerType(filterSells(investments))
+const calculateTotalCash = investments => calculateTotalAmountInvestedPerType(filterSells(investments))
 
-const calculateTotalAmountInvested = investments => calculateTotalPerType(filterBuys(investments))
+const calculateTotalAmountInvested = investments => calculateTotalAmountInvestedPerType(filterBuys(investments))
 
 // total invested per investment type - total cash per investment type
 const calculateNetCost = investments =>
@@ -107,8 +107,7 @@ module.exports = {
   calculatePortfolioTotalQtyPerType,
   getInvestmentValueChange,
   getCurrentTotalForInvestment,
-  getTotalForInvestment,
-  calculateTotalPerType,
+  calculateTotalAmountInvestedPerType,
   calculateCurrentValuePerType,
   getPercentageChange,
   getTotalValueAfterDate,
