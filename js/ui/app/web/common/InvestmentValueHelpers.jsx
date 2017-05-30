@@ -1,16 +1,21 @@
 import React from 'react';
+import {getPercentageChange} from '../../../../common/core/utils';
 
 const DEFAULT_CURRENCY = 'GBP';
 
+const signedCurrency = (value, currency) =>  value > 0
+  ? `${getCurrencySymbol(currency)}${value.toFixed(2)}`
+  : `-${getCurrencySymbol(currency)}${Math.abs(value.toFixed(2))}`;
+
+export const renderInvestmentChange = (current, initial, currency) =>
+    `${signedCurrency(current - initial, currency)} (${getPercentageChange(initial, current).toFixed(2)}%)`;
+
 export const renderInvestmentValue = (id, investmentValues, currency) => {
   const investmentValue = investmentValues.get(id);
-  const symbol = getCurrencySymbol(currency);
 
   if(investmentValue) {
     const value = investmentValue.get('value').toFixed(2);
-    const signedValue = value > 0 ? `${symbol}${value}` : `-${symbol}${Math.abs(value)}`;
-
-    return `${signedValue} (${investmentValue.get('percentage').toFixed(2)}%)`;
+    return `${signedCurrency(value, getCurrencySymbol(currency))} (${investmentValue.get('percentage').toFixed(2)}%)`;
   }
 
   return '';

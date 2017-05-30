@@ -5,6 +5,7 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import {getPercentageChange} from '../../../../common/core/utils';
+import {renderInvestmentChange} from '../common/InvestmentValueHelpers';
 import {renderPrice} from '../common/InvestmentValueHelpers';
 import {getTotalCashForType, getQtyForType} from '../../../../common/metrics/portfolio';
 
@@ -22,7 +23,7 @@ export default class InvestmentSummary extends Component {
             const totalInvested = total.get('totalInvested').get(k);
             const totalCash = getTotalCashForType(portfolio, k);
             const currentLiquidValue = totalCash + currentValue;
-            const percentageChange = getPercentageChange(totalInvested, currentLiquidValue);
+            const percentageChange = renderInvestmentChange(currentLiquidValue, totalInvested, currency);
 
             return (
               <div key={k}>
@@ -34,7 +35,7 @@ export default class InvestmentSummary extends Component {
                   <ListItem>Exposure: {renderPrice(exposure, currency)}</ListItem>
                   <ListItem>Current Value: {renderPrice(currentValue, currency)}</ListItem>
                   <ListItem>Current Liquid Value(CLV): {renderPrice(currentLiquidValue, currency)}</ListItem>
-                  <ListItem>Change: {percentageChange.toFixed(2)}%</ListItem>
+                  <ListItem>Change: {percentageChange}</ListItem>
                 </List>
                 <Divider />
               </div>
