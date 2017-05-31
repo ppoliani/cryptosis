@@ -2,14 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Grid, Row, Col} from 'react-flexbox-grid';
 import {compose, identity} from 'folktale/core/lambda';
-import PortfolioChart from './PortfolioChart';
-import PortfolioSummary from './PortfolioSummary';
-import PriceSummary from './PriceSummary';
-import InvestmentSummary from './InvestmentSummary';
 import {startPortfolioStream} from '../../data/stream/portfolioValueStream';
 import {startLast30DaysStream} from '../../data/stream/last30DaysStream';
 import CurrencySelector from '../common/CurrencySelector';
 import {getSelectedCurrency} from '../common/InvestmentValueHelpers';
+import TabView from './TabView';
 
 const DEFAULT_CURRENCY = 'GBP';
 
@@ -57,7 +54,7 @@ class Overview extends Component {
   }
 
   render() {
-    const {investment, portfolio, prices} = this.props;
+    const {investment, portfolio, prices, form} = this.props;
 
     return (
       <Col>
@@ -65,34 +62,11 @@ class Overview extends Component {
           <CurrencySelector />
         </Row>
         <Row between='xs'>
-          <Col lg={8} xs={12} className='row-spacing'>
-            <PortfolioChart
-              investment={investment}
-              portfolio={portfolio}
-              assetLife='longTerm' />
-          </Col>
-          <Col lg={4} xs={12}>
-            <Col className='row-spacing'>
-              <PriceSummary
-                currency={getSelectedCurrency(this.props.form)}
-                investment={investment}
-                prices={prices}/>
-            </Col>
-            <Col className='row-spacing'>
-              <PortfolioSummary
-                currency={getSelectedCurrency(this.props.form)}
-                portfolio={portfolio}
-                investment={investment}
-                assetLife='longTerm' />
-            </Col>
-            <Col>
-              <InvestmentSummary
-                currency={getSelectedCurrency(this.props.form)}
-                investment={investment}
-                portfolio={portfolio}
-                assetLife='longTerm'/>
-            </Col>
-          </Col>
+          <TabView
+            portfolio={portfolio}
+            investment={investment}
+            prices={prices}
+            currency={getSelectedCurrency(form)}/>
         </Row>
       </Col>
     );
