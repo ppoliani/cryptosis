@@ -4,8 +4,8 @@ import {getPercentageChange} from '../../../../common/core/utils';
 const DEFAULT_CURRENCY = 'GBP';
 
 const signedCurrency = (value, currency) =>  value >= 0
-  ? `${getCurrencySymbol(currency)}${value.toFixed(2)}`
-  : `-${getCurrencySymbol(currency)}${Math.abs(value.toFixed(2))}`;
+  ? `${getCurrencySymbol(currency)}${value}`
+  : `-${getCurrencySymbol(currency)}${Math.abs(value)}`;
 
 export const renderInvestmentChange = (current, initial, currency) =>
     `${signedCurrency(current - initial, currency)} (${getPercentageChange(initial, current).toFixed(2)}%)`;
@@ -27,7 +27,7 @@ export const getSelectedCurrency = form => {
 }
 
 export const renderPrice = (price=0, currency) => price != undefined
-    ? <span>{`${getCurrencySymbol(currency)}${price.toFixed(2)}`}</span>
+    ? <span>{signedCurrency(price.toFixed && price.toFixed(2), currency)}</span>
     : <span>Unavailable</span>
 
 export const getCurrencySymbol = currency => {
