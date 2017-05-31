@@ -53,18 +53,6 @@ const fields = [{
     text: 'Short Term Trading Position'
   }]
 }, {
-  type: 'text',
-  name: 'lowerLimit',
-  label: 'Lower Limit',
-  validate: [number],
-  stretch: true
-}, {
-  type: 'text',
-  name: 'upperLimit',
-  label: 'Upper Limit',
-  validate: [number],
-  stretch: true
-}, {
   type: 'textarea',
   name: 'notes',
   multiline: true,
