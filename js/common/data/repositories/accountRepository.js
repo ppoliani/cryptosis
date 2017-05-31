@@ -17,7 +17,7 @@ const getOrSaveSocialMediaAccount = async (source, authResponse) => {
     `
       MERGE (u:User)-[${getSocialMediaRelationship(source)}]->(s:SocialMediaAccount {userId:{userId}, name:{name}, firsName:{firstName}, lastName:{lastName}, email:{email}})
       WITH u, s
-      SET s.picture="${picture}"
+      SET s.picture="${authResponse.picture}"
       OPTIONAL MATCH (u)-[HAS_ROLE]->(r:Role)
       RETURN s{ .*, id: ID(u), roles: r.name}
     `,
