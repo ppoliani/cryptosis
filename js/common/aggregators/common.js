@@ -91,8 +91,9 @@ const calculateNetCost = investments =>
 const calculateCurrentLiquidValueForType = (investments, currentPrice, investmentType) => {
   const currentTotalValue = calculateCurrentValueAtPrice(investments, currentPrice).get(investmentType) || 0;
   const totalCash = calculateTotalCash(investments).get(investmentType) || 0;
+  const totalInvested = calculateTotalAmountInvestedPerType(investments).get(investmentType) || 0;
 
-  return currentTotalValue + totalCash;
+  return (currentTotalValue + totalCash) - totalInvested;
 }
 
 const filterBuys = investments => investments.filter(v => v.get('positionType') === 'buy')
