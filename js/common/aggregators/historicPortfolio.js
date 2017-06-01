@@ -10,7 +10,7 @@ const getPortfolioValueForSymbol = (priceList, investments, symbol) =>
     const {day, price} = p.toJS();
 
     return fromJS({
-       day,
+      day,
       value: getTotalValueAfterDate(investments, symbol, day, price)
     })
   })
