@@ -1,6 +1,7 @@
 export const currencySymbols = {
   'GBP': '£',
-  'EUR': '€'
+  'EUR': '€',
+  'USD': '$'
 };
 
 export const currencyOptions = [{
@@ -9,4 +10,7 @@ export const currencyOptions = [{
 }, {
   value: 'EUR',
   text: 'EUR'
+}, {
+  value: 'USD',
+  text: 'USD'
 }];

@@ -18,7 +18,7 @@ export default class InvestmentSummary extends Component {
       .matchWith({
         Just: ({value: total}) => total.get('totalExposure')
           .map((v, k) => {
-            const exposure = Math.floor(v);
+            const exposure = v.toFixed(2);
             const currentValue = total.get('currentValue').get(k);
             const totalInvested = total.get('totalInvested').get(k);
             const totalCash = getTotalCashForType(portfolio, k, assetLife);
