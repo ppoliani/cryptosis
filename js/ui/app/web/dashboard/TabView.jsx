@@ -14,7 +14,20 @@ export default class TabView extends Component {
       <Tab label={label}>
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing'>
+            <Col className='row-spacing'>
+              <PortfolioChart
+                className='row-spacing'
+                title='Portfolio'
+                subtitle='Change (last 30 days)'
+                historicProperty='change'
+                investment={investment}
+                portfolio={portfolio}
+                assetLife={assetLife} />
+            </Col>
             <PortfolioChart
+              title='Portfolio'
+              subtitle='Cash (last 30 days)'
+              historicProperty='cash'
               investment={investment}
               portfolio={portfolio}
               assetLife={assetLife} />

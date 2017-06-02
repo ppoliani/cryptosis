@@ -6,7 +6,7 @@ import './list-item.scss';
 
 export default ({first, second}) => (
   <ListItem>
-    <Row xs='space-between' className='list-item'>
+    <Row className='list-item'>
       <Col xs={6} className='list-item__first'>{first}</Col>
       <Col xs={6} className='list-item__second'>{second}</Col>
     </Row>

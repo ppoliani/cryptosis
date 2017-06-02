@@ -16,7 +16,7 @@ export default class PortfolioChart extends Component {
   getPortfolioChartData() {
     const createChartRecordsForSymbol = (priceList, symbol) => priceList.map(p =>
       Map({
-        [symbol]: p.get('value'),
+        [symbol]: p.getIn(['value', this.props.historicProperty]),
         day: dateformat(p.get('day'), 'MM/DD/YYYY'),
       })
     )
@@ -59,10 +59,10 @@ export default class PortfolioChart extends Component {
   }
 
   render() {
-    const {investment} = this.props;
+    const {investment, title, subtitle} = this.props;
 
     return (
-      <Container title='Portfolio' subtitle='Change (last 30 days)'>
+      <Container title={title} subtitle={subtitle}>
         <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
           <ResponsiveContainer width='100%' height={300}>
             <LineChart data={this.getPortfolioChartData()}>

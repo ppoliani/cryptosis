@@ -1,7 +1,7 @@
 const {Map} = require('immutable');
 const isBefore = require('date-fns/is_before');
 const isSameDay = require('date-fns/is_same_day');
-const {partial} = require('../core/fn');
+const {partial, predicate} = require('../core/fn');
 
 // { [id]: Investment  } -> { [InvestmentType] -> Value }
 const groupTotalValueInvestedPerTypeReducer = (acc, v) =>
@@ -60,13 +60,31 @@ const getPercentageChange = (diff, initial) => (diff / initial) * 100
 
 const getInvestmentValueChange = (qty, buyPrice, sellPrice) => qty * sellPrice - qty * buyPrice
 
+const isBeforeDate = (date, investment) => isSameDay(investment.get('date'), date) || isBefore(investment.get('date'), date)
+const isOfType = (investmentType, investment) => investment.get('investmentType') === investmentType;
+
 // we need to find the total portfolio value on the given date.
 // Investments that didn't exist on that date should not contribute to the figure
-const getTotalValueAfterDate = (investments, investmentType, date, priceOfDay) => {
+const getChangeAfterDate = (investments, investmentType, date, priceOfDay) => {
   const filteredIvestments = investments
-    .filter(i => i.get('investmentType') === investmentType && isSameDay(i.get('date'), date) || isBefore(i.get('date'), date));
+    .filter(
+      predicate(
+        partial(isOfType, investmentType),
+        partial(isBeforeDate, date))
+      )
 
-  return calculateCurrentLiquidValueForType(filteredIvestments, priceOfDay, investmentType)
+  return calculateChangeForType(filteredIvestments, priceOfDay, investmentType)
+}
+
+const getCashAfterDate = (investments, investmentType, date) => {
+  const filteredIvestments = investments
+    .filter(
+      predicate(
+        partial(isOfType, investmentType),
+        partial(isBeforeDate, date))
+      )
+
+  return calculateTotalCash(filteredIvestments).get(investmentType) || 0;
 }
 
 const getPriceObjFromStreamData = data => ({
@@ -89,7 +107,7 @@ const calculateNetCost = investments =>
   )
 
 // finds the current liquid value for the given investment type (described byt)
-const calculateCurrentLiquidValueForType = (investments, currentPrice, investmentType) => {
+const calculateChangeForType = (investments, currentPrice, investmentType) => {
   const currentTotalValue = calculateCurrentValueAtPrice(investments, currentPrice).get(investmentType) || 0;
   const totalCash = calculateTotalCash(investments).get(investmentType) || 0;
   const totalInvested = calculateTotalAmountInvestedPerType(filterBuys(investments)).get(investmentType) || 0;
@@ -112,6 +130,7 @@ module.exports = {
   calculateTotalAmountInvestedPerType,
   calculateCurrentValuePerType,
   getPercentageChange,
-  getTotalValueAfterDate,
+  getChangeAfterDate,
+  getCashAfterDate,
   getPriceObjFromStreamData
 }
