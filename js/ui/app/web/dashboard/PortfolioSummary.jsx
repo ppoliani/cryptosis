@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {List, ListItem} from 'material-ui/List';
+import {List} from 'material-ui/List';
 import Container from '../common/Container';
 import AsyncPanel from '../common/AsyncPanel';
+import ListItem from '../common/ListItem';
 import {renderPrice} from '../common/InvestmentValueHelpers';
 import {renderInvestmentChange} from '../common/InvestmentValueHelpers';
 import {getPercentageChange} from '../../../../common/core/utils';
@@ -26,12 +27,12 @@ export default class PortfolioSummary extends Component {
       <Container title='Portfolio' subtitle='Aggregates'>
         <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
           <List>
-            <ListItem>Exposure: {renderPrice(totalExposure, currency)}</ListItem>
-            <ListItem>Total Cash: {renderPrice(totalCash, currency)}</ListItem>
-            <ListItem>Total Amount Invested: {renderPrice(totalInvested, currency)}</ListItem>
-            <ListItem>Portfolio Value: {renderPrice(totalPortfolioValue, currency)}</ListItem>
-            <ListItem>Current Liquid Value(CLV): {renderPrice(currentLiquidValue, currency)}</ListItem>
-            <ListItem>Change: {percentageChange}</ListItem>
+            <ListItem first='Exposure' second={renderPrice(totalExposure, currency)} />
+            <ListItem first='Total Cash' second={renderPrice(totalCash, currency)} />
+            <ListItem first='Total Amount Invested' second={renderPrice(totalInvested, currency)} />
+            <ListItem first='Portfolio Value' second={renderPrice(totalPortfolioValue, currency)} />
+            <ListItem first='Current Liquid Value(CLV)' second={renderPrice(currentLiquidValue, currency)} />
+            <ListItem first='Change' second={percentageChange} />
           </List>
         </AsyncPanel>
       </Container>

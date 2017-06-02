@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import Container from '../common/Container';
 import AsyncPanel from '../common/AsyncPanel';
-import {List, ListItem} from 'material-ui/List';
+import {List} from 'material-ui/List';
+import ListItem from '../common/ListItem';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import {getPercentageChange} from '../../../../common/core/utils';
@@ -29,13 +30,13 @@ export default class InvestmentSummary extends Component {
               <div key={k}>
                 <List>
                   <Subheader>{k}</Subheader>
-                  <ListItem>Holdings: {getQtyForType(portfolio, k, assetLife)}</ListItem>
-                  <ListItem>Total Cash: {renderPrice(totalCash, currency)}</ListItem>
-                  <ListItem>Total Amount Invested: {renderPrice(totalInvested, currency)}</ListItem>
-                  <ListItem>Exposure: {renderPrice(exposure, currency)}</ListItem>
-                  <ListItem>Current Value: {renderPrice(currentValue, currency)}</ListItem>
-                  <ListItem>Current Liquid Value(CLV): {renderPrice(currentLiquidValue, currency)}</ListItem>
-                  <ListItem>Change: {percentageChange}</ListItem>
+                  <ListItem first='Holdings' second={getQtyForType(portfolio, k, assetLife)} />
+                  <ListItem first='Exposure' second={renderPrice(exposure, currency)} />
+                  <ListItem first='Total Cash' second={renderPrice(totalCash, currency)} />
+                  <ListItem first='Total Amount Invested' second={renderPrice(totalInvested, currency)} />
+                  <ListItem first='Current Value' second={renderPrice(currentValue, currency)} />
+                  <ListItem first='Current Liquid Value(CLV)' second={renderPrice(currentLiquidValue, currency)} />
+                  <ListItem first='Change' second={percentageChange} />
                 </List>
                 <Divider />
               </div>

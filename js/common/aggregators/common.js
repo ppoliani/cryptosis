@@ -63,7 +63,7 @@ const getInvestmentValueChange = (qty, buyPrice, sellPrice) => qty * sellPrice -
 // Investments that didn't exist on that date should not contribute to the figure
 const getTotalValueAfterDate = (investments, investmentType, date, priceOfDay) => {
   const filteredIvestments = investments
-    .filter(i => i.get('investmentType') === investmentType && isPast(i.get('date'), date));
+    .filter(i => i.get('investmentType') === investmentType && isBefore(i.get('date'), date));
 
   return calculateCurrentLiquidValueForType(filteredIvestments, priceOfDay, investmentType)
 }

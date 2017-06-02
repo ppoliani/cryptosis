@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import Container from '../common/Container';
 import AsyncPanel from '../common/AsyncPanel';
-import {List, ListItem} from 'material-ui/List';
+import {List} from 'material-ui/List';
+import ListItem from '../common/ListItem';
 import {renderPrice} from '../common/InvestmentValueHelpers';
 
 export default class PriceSummary extends Component {
@@ -15,7 +16,7 @@ export default class PriceSummary extends Component {
             {
               prices.get('live').matchWith({
                 Just: ({value: prices}) => prices.map((v, k, i) => {
-                  return <ListItem key={k}>{k}: {renderPrice(v.get('price'), currency)}</ListItem>
+                  return <ListItem key={k} first={k} second={renderPrice(v.get('price'), currency)}/>
                 })
                 .toList()
                 .toJS(),

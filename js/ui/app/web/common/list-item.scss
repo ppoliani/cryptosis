@@ -1,0 +1,10 @@
+.list-item {
+  &__first {
+    color: rgb(0, 151, 167);
+    font-weight: bold;
+  }
+
+  &__second {
+    color: rgb(255, 128, 171);
+  }
+}
