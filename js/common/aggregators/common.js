@@ -63,7 +63,7 @@ const getInvestmentValueChange = (qty, buyPrice, sellPrice) => qty * sellPrice -
 const isBeforeDate = (date, investment) => isSameDay(investment.get('date'), date) || isBefore(investment.get('date'), date)
 const isOfType = (investmentType, investment) => investment.get('investmentType') === investmentType;
 
-// we need to find the total portfolio value on the given date.
+// we need to find the total change  on the given date.
 // Investments that didn't exist on that date should not contribute to the figure
 const getChangeAfterDate = (investments, investmentType, date, priceOfDay) => {
   const filteredIvestments = investments
@@ -85,6 +85,17 @@ const getCashAfterDate = (investments, investmentType, date) => {
       )
 
   return calculateTotalCash(filteredIvestments).get(investmentType) || 0;
+}
+
+const getTotalValueAfterDate = (investments, investmentType, date, currentPrice) => {
+  const filteredIvestments = investments
+    .filter(
+      predicate(
+        partial(isOfType, investmentType),
+        partial(isBeforeDate, date))
+      )
+
+  return calculateCurrentValueAtPrice(investments, currentPrice).get(investmentType) || 0
 }
 
 const getPriceObjFromStreamData = data => ({
@@ -132,5 +143,6 @@ module.exports = {
   getPercentageChange,
   getChangeAfterDate,
   getCashAfterDate,
+  getTotalValueAfterDate,
   getPriceObjFromStreamData
 }

@@ -1,6 +1,10 @@
 const {fromJS, Map} = require('immutable');
 const {create} = require('@most/create');
-const {getChangeAfterDate, calculateTotalCash, getCashAfterDate} = require('./common');
+const {
+  getChangeAfterDate,
+  getCashAfterDate,
+  getTotalValueAfterDate
+} = require('./common');
 
 // Gets all prices for the last 30 days for the given symbol i.e. ETH
 // and returns the portfolio values for each day
@@ -13,7 +17,8 @@ const getPortfolioValueForSymbol = (priceList, investments, symbol) =>
       day,
       value: {
         change: getChangeAfterDate(investments, symbol, day, price),
-        cash: getCashAfterDate(investments, symbol, day)
+        cash: getCashAfterDate(investments, symbol, day),
+        totalValue: getTotalValueAfterDate(investments, symbol, day, price)
       }
     })
   })
