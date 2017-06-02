@@ -1,5 +1,6 @@
 const {Map} = require('immutable');
 const isBefore = require('date-fns/is_before');
+const isSameDay = require('date-fns/is_same_day');
 const {partial} = require('../core/fn');
 
 // { [id]: Investment  } -> { [InvestmentType] -> Value }
@@ -63,7 +64,7 @@ const getInvestmentValueChange = (qty, buyPrice, sellPrice) => qty * sellPrice -
 // Investments that didn't exist on that date should not contribute to the figure
 const getTotalValueAfterDate = (investments, investmentType, date, priceOfDay) => {
   const filteredIvestments = investments
-    .filter(i => i.get('investmentType') === investmentType && isBefore(i.get('date'), date));
+    .filter(i => i.get('investmentType') === investmentType && isSameDay(i.get('date'), date) || isBefore(i.get('date'), date));
 
   return calculateCurrentLiquidValueForType(filteredIvestments, priceOfDay, investmentType)
 }
