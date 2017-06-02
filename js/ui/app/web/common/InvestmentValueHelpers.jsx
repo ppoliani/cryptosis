@@ -35,6 +35,8 @@ export const getCurrencySymbol = currency => {
     case 'GBP':
       return '£';
     case 'EUR':
-      return '€'
+      return '€';
+    case 'USD':
+      return '$';
   }
 }

@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import {Map} from 'immutable';
 import {Row, Col} from 'react-flexbox-grid';
 import dateformat from 'date-fns/format';
-import {List, ListItem} from 'material-ui/List';
+import {List} from 'material-ui/List';
+import ListItem from '../common/ListItem';
 import Subheader from 'material-ui/Subheader';
 import {compose, identity} from 'folktale/core/lambda';
 import Maybe from 'folktale/data/maybe';
@@ -84,30 +85,17 @@ class InvestmentOverviewPage extends Component {
 
           return (
             <List>
-            <Subheader>Type</Subheader>
-            <ListItem>{invst.investmentType}</ListItem>
-            <Subheader>Date</Subheader>
-            <ListItem>{dateformat(invst.date, 'MM/DD/YYYY')}</ListItem>
-            <Subheader>Quantity</Subheader>
-            <ListItem>{invst.quantity}</ListItem>
-            <Subheader>Price</Subheader>
-            <ListItem>{renderPrice(invst.price, currency)}</ListItem>
-            <Subheader>Expenses</Subheader>
-            <ListItem>{renderPrice(invst.expenses, currency)}</ListItem>
-            <Subheader>Status</Subheader>
-            <ListItem>{renderInvestmentValue(investmentId, investmentData, currency)}</ListItem>
-            <Subheader>Broker</Subheader>
-            <ListItem>{invst.broker}</ListItem>
-            <Subheader>Asset Life</Subheader>
-            <ListItem>{invst.assetLife}</ListItem>
-            <Subheader>Lower Limit</Subheader>
-            <ListItem>{invst.lowerLimit}%</ListItem>
-            <Subheader>Upper Limit</Subheader>
-            <ListItem>{invst.upperLimit}%</ListItem>
-            <Subheader>Currency</Subheader>
-            <ListItem>{invst.currency}</ListItem>
-            <Subheader>Notes</Subheader>
-            <ListItem>{invst.notes}</ListItem>
+            <ListItem first='Type' second={invst.investmentType} />
+            <ListItem first='Position Type' second={invst.positionType} />
+            <ListItem first='Date' second={dateformat(invst.date, 'MM/DD/YYYY')} />
+            <ListItem first='Quantity' second={invst.quantity} />
+            <ListItem first='Price' second={renderPrice(invst.price, currency)} />
+            <ListItem first='Expenses' second={renderPrice(invst.expenses, currency)} />
+            <ListItem first='Value' second={renderInvestmentValue(investmentId, investmentData, currency)} />
+            <ListItem first='Broker' second={invst.broker} />
+            <ListItem first='Asset Life' second={invst.assetLife} />
+            <ListItem first='Currency' second={invst.currency} />
+            <ListItem first='Notes' second={invst.notes} />
           </List>
           )
         },
