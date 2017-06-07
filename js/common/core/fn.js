@@ -5,6 +5,12 @@ const flatten = list => list.reduce(
     (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
 );
 
+// composition hack
+Function.prototype['∘'] = function(f){
+  return x => this(f(x))
+}
+
+
 const predicate = (...conditions) => item => conditions.every(c => c(item))
 
 module.exports = {partial, pipe, flatten, predicate}
