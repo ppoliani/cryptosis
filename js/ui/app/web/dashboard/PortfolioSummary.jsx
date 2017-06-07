@@ -20,8 +20,7 @@ export default class PortfolioSummary extends Component {
     const totalPortfolioValue = getTotalPortfolioValue(portfolio, assetLife);
     const totalCash = getTotalCash(portfolio, assetLife);
     const totalInvested = getTotalInvested(portfolio, assetLife);
-    const currentLiquidValue = totalCash + totalPortfolioValue;
-    const percentageChange = renderInvestmentChange(currentLiquidValue, totalInvested, currency);
+    const percentageChange = renderInvestmentChange(totalPortfolioValue, totalExposure, currency);
 
     return (
       <Container title='Portfolio' subtitle='Aggregates'>
@@ -31,7 +30,6 @@ export default class PortfolioSummary extends Component {
             <ListItem first='Total Cash' second={renderPrice(totalCash, currency)} />
             <ListItem first='Total Amount Invested' second={renderPrice(totalInvested, currency)} />
             <ListItem first='Portfolio Value' second={renderPrice(totalPortfolioValue, currency)} />
-            <ListItem first='Current Liquid Value(CLV)' second={renderPrice(currentLiquidValue, currency)} />
             <ListItem first='Change' second={percentageChange} />
           </List>
         </AsyncPanel>

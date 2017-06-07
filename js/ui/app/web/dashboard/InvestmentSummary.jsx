@@ -24,8 +24,7 @@ export default class InvestmentSummary extends Component {
             const currentValue = total.get('currentValue').get(k);
             const totalInvested = total.get('totalInvested').get(k);
             const totalCash = getTotalCashForType(portfolio, k, assetLife);
-            const currentLiquidValue = totalCash + currentValue;
-            const percentageChange = renderInvestmentChange(currentLiquidValue, totalInvested, currency);
+            const percentageChange = renderInvestmentChange(currentValue, exposure, currency);
 
             return (
               <div key={k}>
@@ -37,7 +36,6 @@ export default class InvestmentSummary extends Component {
                   <ListItem first='Total Amount Invested' second={renderPrice(totalInvested, currency)} />
                   <ListItem first='Current Value' second={renderPrice(currentValue, currency)} />
                   <ListItem first='Safe Sell Price' second={renderPrice(exposure / holdings, currency)} />
-                  <ListItem first='Current Liquid Value(CLV)' second={renderPrice(currentLiquidValue, currency)} />
                   <ListItem first='Change' second={percentageChange} />
                 </List>
                 <Divider />
