@@ -36,7 +36,7 @@ export default class InvestmentSummary extends Component {
                   <ListItem first='Total Amount Invested' second={renderPrice(totalInvested, currency)} />
                   <ListItem first='Current Value' second={renderPrice(currentValue, currency)} />
                   <ListItem first='Safe Sell Price' second={renderPrice(exposure / holdings, currency)} />
-                  <ListItem first='Change' second={percentageChange} />
+                  <ListItem first='Capital Growth' second={percentageChange} />
                 </List>
                 <Divider />
               </div>

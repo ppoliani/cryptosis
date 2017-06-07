@@ -30,7 +30,7 @@ export default class PortfolioSummary extends Component {
             <ListItem first='Total Cash' second={renderPrice(totalCash, currency)} />
             <ListItem first='Total Amount Invested' second={renderPrice(totalInvested, currency)} />
             <ListItem first='Portfolio Value' second={renderPrice(totalPortfolioValue, currency)} />
-            <ListItem first='Change' second={percentageChange} />
+            <ListItem first='Capital Growth' second={percentageChange} />
           </List>
         </AsyncPanel>
       </Container>
