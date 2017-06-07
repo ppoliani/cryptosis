@@ -2,7 +2,7 @@ const {fromJS} = require('immutable');
 const {create} = require('@most/create');
 const {
    calculateCurrentValuePerType,
-   calculateNetCost,
+   calculateExposure,
    calculateTotalCash,
    calculatePortfolioTotalQtyPerType,
    calculateTotalAmountInvested
@@ -15,14 +15,14 @@ const calculateTotalPortfolioValue = ({investments, prices}) =>
 
     add(fromJS({
      longTerm: {
-      totalExposure: calculateNetCost(longTermInvestments),
+      totalExposure: calculateExposure(longTermInvestments),
       totalInvested: calculateTotalAmountInvested(longTermInvestments),
       currentValue: calculateCurrentValuePerType(longTermInvestments, prices),
       totalCash: calculateTotalCash(longTermInvestments),
       qty: calculatePortfolioTotalQtyPerType(longTermInvestments)
      },
      shortTerm: {
-      totalExposure: calculateNetCost(shortTermInvestments),
+      totalExposure: calculateExposure(shortTermInvestments),
       totalInvested: calculateTotalAmountInvested(shortTermInvestments),
       currentValue: calculateCurrentValuePerType(shortTermInvestments, prices),
       totalCash: calculateTotalCash(shortTermInvestments),

@@ -104,13 +104,16 @@ const getPriceObjFromStreamData = data => ({
   symbol: data.FROMSYMBOL
 })
 
-// total cash from the positions sold
-const calculateTotalCash = investments => calculateTotalAmountInvestedPerType(filterSells(investments))
+const filterBuys = investments => investments.filter(v => v.get('positionType') === 'buy')
+const filterSells = investments => investments.filter(v => v.get('positionType') === 'sell')
 
-const calculateTotalAmountInvested = investments => calculateTotalAmountInvestedPerType(filterBuys(investments))
+// total cash from the positions sold
+const calculateTotalCash = (calculateTotalAmountInvestedPerType) ['∘'] (filterSells)
+
+const calculateTotalAmountInvested = (calculateTotalAmountInvestedPerType) ['∘'] (filterBuys)
 
 // total invested per investment type - total cash per investment type
-const calculateNetCost = investments =>
+const calculateExposure = investments =>
   // net cost includes expenses for both buy and sells
   calculateTotalAmountInvested(investments).mergeWith(
     merger,
@@ -126,13 +129,10 @@ const calculateChangeForType = (investments, currentPrice, investmentType) => {
   return (currentTotalValue + totalCash) - totalInvested;
 }
 
-const filterBuys = investments => investments.filter(v => v.get('positionType') === 'buy')
-const filterSells = investments => investments.filter(v => v.get('positionType') === 'sell')
-
 module.exports = {
   filterBuys,
   filterSells,
-  calculateNetCost,
+  calculateExposure,
   calculateTotalCash,
   calculateTotalAmountInvested,
   calculatePortfolioTotalQtyPerType,
