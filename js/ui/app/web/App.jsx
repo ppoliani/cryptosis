@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {compose} from 'folktale/core/lambda';
 import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
 import {setUserProfile} from '../data/profile/profileActions';
@@ -36,8 +35,8 @@ class App extends Component {
 
 const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => ({
-  startSearch: compose(dispatch, getSearchResults),
-  setUserProfile: compose(dispatch, setUserProfile)
+  startSearch: (dispatch) ['∘'] (getSearchResults),
+  setUserProfile: (dispatch) ['∘'] (setUserProfile)
 });
 
 export default connect(

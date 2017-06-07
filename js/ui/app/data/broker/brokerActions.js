@@ -1,5 +1,4 @@
 import {createAction} from 'redux-actions';
-import compose from 'folktale/core/lambda/compose';
 import {Map} from 'immutable';
 import fetch, {constructUrl} from '../../helpers/api';
 import {partial} from '../../../../common/core/fn';
@@ -16,7 +15,7 @@ const getUrl = broker => `${BROKER_ENDPOINT}/${broker.get('id')}`;
 
 const getBrokersRoot = fetch => {
   const getUrl = ({skip, limit}) => constructUrl(BROKER_ENDPOINT, Map({skip, limit}));
-  const fetchData = compose(partial(fetch, 'GET'), getUrl);
+  const fetchData = (partial(fetch, 'GET')) ['∘'] (getUrl);
 
   return createAction(
     GET_BROKERS,

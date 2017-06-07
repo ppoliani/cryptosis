@@ -1,7 +1,6 @@
 import {createAction} from 'redux-actions';
 import {combine} from 'most';
 import {fromJS} from 'immutable';
-import compose from 'folktale/core/lambda/compose';
 import {calculateHistoricPortfolioValues} from '../../../../common/aggregators';
 import {setLast30Days} from '../portfolio/portfolioActions';
 import {getPartialInvestment$, getBTC$, getETH$, getXRP$} from './common';
@@ -11,7 +10,7 @@ const setLast30DaysSubscription = createAction(SET_LAST_30_DAYS_SUBSCRIPTION);
 
 export const startLast30DaysStream = currency => dispatch => {
   const observer = {
-    next: compose(dispatch, setLast30Days),
+    next: (dispatch) ['∘'] (setLast30Days),
     error: errorValue => console.log(`Error in the observer of the portfolio stream: ${errorValue}`)
   }
 

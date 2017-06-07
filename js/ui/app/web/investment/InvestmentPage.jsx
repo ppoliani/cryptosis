@@ -4,7 +4,7 @@ import dateformat from 'date-fns/format';
 import {partial, pipe} from '../../../../common/core/fn';
 import {filterObject} from '../../helpers/utils';
 import {connect} from 'react-redux';
-import {compose, identity} from 'folktale/core/lambda';
+import {identity} from 'folktale/core/lambda';
 import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import pureComponent from '../mixins/pureComponent';
@@ -225,13 +225,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getInvestments: compose(dispatch, getInvestments),
-  saveInvestment: compose(dispatch, saveInvestment),
-  updateInvestment: compose(dispatch, updateInvestment),
-  deleteInvestment: compose(dispatch, deleteInvestment),
-  getBrokers: compose(dispatch, getBrokers),
-  getInvestmentTypes: compose(dispatch, getInvestmentTypes),
-  startInvestmentCurrentValueStream: compose(dispatch, startInvestmentCurrentValueStream)
+  getInvestments: (dispatch) ['∘'] (getInvestments),
+  saveInvestment: (dispatch) ['∘'] (saveInvestment),
+  updateInvestment: (dispatch) ['∘'] (updateInvestment),
+  deleteInvestment: (dispatch) ['∘'] (deleteInvestment),
+  getBrokers: (dispatch) ['∘'] (getBrokers),
+  getInvestmentTypes: (dispatch) ['∘'] (getInvestmentTypes),
+  startInvestmentCurrentValueStream: (dispatch) ['∘'] (startInvestmentCurrentValueStream)
 });
 
 export default connect(

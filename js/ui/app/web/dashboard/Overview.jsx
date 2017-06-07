@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Grid, Row, Col} from 'react-flexbox-grid';
-import {compose, identity} from 'folktale/core/lambda';
+import {identity} from 'folktale/core/lambda';
 import {startPortfolioStream} from '../../data/stream/portfolioValueStream';
 import {startLast30DaysStream} from '../../data/stream/last30DaysStream';
 import CurrencySelector from '../common/CurrencySelector';
@@ -82,8 +82,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  startPortfolioStream: compose(dispatch, startPortfolioStream),
-  startLast30DaysStream: compose(dispatch, startLast30DaysStream)
+  startPortfolioStream: (dispatch) ['∘'] (startPortfolioStream),
+  startLast30DaysStream: (dispatch) ['∘'] (startLast30DaysStream)
 });
 
 export default connect(

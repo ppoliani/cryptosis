@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {compose, identity} from 'folktale/core/lambda';
 import {autobind} from 'core-decorators';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
@@ -80,7 +79,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setUserProfile: compose(dispatch, setUserProfile)
+  setUserProfile: (dispatch) ['∘'] (setUserProfile)
 })
 
 export default connect(

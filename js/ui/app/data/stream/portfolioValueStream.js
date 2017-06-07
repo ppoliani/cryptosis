@@ -1,7 +1,6 @@
 import {createAction} from 'redux-actions';
 import {combine} from 'most';
 import {fromJS} from 'immutable';
-import compose from 'folktale/core/lambda/compose';
 import io from 'socket.io-client';
 import {connect} from '../../../../common/sockets/cryptoCompare';
 import {calculateTotalPortfolioValue} from '../../../../common/aggregators';
@@ -18,7 +17,7 @@ export const startPortfolioStream = currency => dispatch => {
   const xrp$ = connect(io, 'XRP', 'Bitstamp', currency);
 
   const observer = {
-    next: compose(dispatch, setPortfolioValue),
+    next: (dispatch) ['∘'] (setPortfolioValue),
     error: errorValue => console.log(`Error in the observer of the portfolio stream: ${errorValue}`)
   }
 
@@ -36,7 +35,7 @@ export const startPortfolioStream = currency => dispatch => {
   const keepPrices = obj => obj.prices;
 
   const subscription = combine(getPrices, getPartialInvestment$(), btc$, eth$, xrp$)
-    .tap(compose.all(dispatch, setPrices, keepPrices))
+    .tap((dispatch) ['∘'] (setPrices) ['∘'] (keepPrices))
     .chain(calculateTotalPortfolioValue)
     .subscribe(observer);
 

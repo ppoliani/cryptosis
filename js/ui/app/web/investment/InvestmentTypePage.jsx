@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {List} from 'immutable';
 import {connect} from 'react-redux';
-import {compose} from 'folktale/core/lambda';
 import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import PageWithPanel from '../common/PageWithPanel';
@@ -143,10 +142,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getInvestmentTypes: compose(dispatch, getInvestmentTypes),
-  saveInvestmentType: compose(dispatch, saveInvestmentType),
-  updateInvestmentType: compose(dispatch, updateInvestmentType),
-  deleteInvestmentType: compose(dispatch, deleteInvestmentType)
+  getInvestmentTypes: (dispatch) ['∘'] (getInvestmentTypes),
+  saveInvestmentType: (dispatch) ['∘'] (saveInvestmentType),
+  updateInvestmentType: (dispatch) ['∘'] (updateInvestmentType),
+  deleteInvestmentType: (dispatch) ['∘'] (deleteInvestmentType)
 });
 
 export default connect(

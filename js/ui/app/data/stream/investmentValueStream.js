@@ -1,7 +1,6 @@
 import {createAction} from 'redux-actions';
 import {combine} from 'most';
 import {fromJS} from 'immutable';
-import compose from 'folktale/core/lambda/compose';
 import io from 'socket.io-client';
 import {connect} from '../../../../common/sockets/cryptoCompare';
 import {calculateInvestmentValues} from '../../../../common/aggregators';
@@ -19,7 +18,7 @@ export const startInvestmentCurrentValueStream = currency => dispatch => {
   const xrp$ = connect(io, 'XRP', 'Bitstamp', currency);
 
   const observer = {
-    next: compose(dispatch, setInvestmentCurrentValue),
+    next: (dispatch) ['∘'] (setInvestmentCurrentValue),
     error: errorValue => console.log(`Error in the observer of the investment values stream: ${errorValue}`)
   }
 

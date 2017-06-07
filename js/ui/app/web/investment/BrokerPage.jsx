@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {List} from 'immutable';
 import {connect} from 'react-redux';
-import {compose} from 'folktale/core/lambda';
 import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
 import pureComponent from '../mixins/pureComponent';
@@ -137,10 +136,10 @@ class BrokerPage extends Component {
 
 const mapStateToProps = state => state.broker.toObject();
 const mapDispatchToProps = dispatch => ({
-  getBrokers: compose(dispatch, getBrokers),
-  saveBroker: compose(dispatch, saveBroker),
-  updateBroker: compose(dispatch, updateBroker),
-  deleteBroker: compose(dispatch, deleteBroker)
+  getBrokers: (dispatch) ['∘'] (getBrokers),
+  saveBroker: (dispatch) ['∘'] (saveBroker),
+  updateBroker: (dispatch) ['∘'] (updateBroker),
+  deleteBroker: (dispatch) ['∘'] (deleteBroker)
 });
 
 export default connect(

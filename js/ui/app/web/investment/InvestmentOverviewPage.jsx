@@ -6,7 +6,7 @@ import dateformat from 'date-fns/format';
 import {List} from 'material-ui/List';
 import ListItem from '../common/ListItem';
 import Subheader from 'material-ui/Subheader';
-import {compose, identity} from 'folktale/core/lambda';
+import {identity} from 'folktale/core/lambda';
 import Maybe from 'folktale/data/maybe';
 import AsyncPanel from '../common/AsyncPanel';
 import Container from '../common/Container';
@@ -122,8 +122,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getInvestment: compose(dispatch, getInvestment),
-  startInvestmentCurrentValueStream: compose(dispatch, startInvestmentCurrentValueStream)
+  getInvestment: (dispatch) ['∘'] (getInvestment),
+  startInvestmentCurrentValueStream: (dispatch) ['∘'] (startInvestmentCurrentValueStream)
 });
 
 export default connect(

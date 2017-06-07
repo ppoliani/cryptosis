@@ -1,5 +1,4 @@
 import {createAction} from 'redux-actions';
-import compose from 'folktale/core/lambda/compose';
 import map from 'folktale/core/fantasy-land/map';
 import {Map} from 'immutable';
 import fetch, {constructUrl} from '../../helpers/api';
@@ -45,7 +44,7 @@ const getInvestmentRoot = fetch => {
 
 const getInvestmentsRoot = fetch => {
   const getUrl = ({skip=0, limit=10}) => constructUrl(INVESTMENT_ENDPOINT, Map({skip, limit}));
-  const fetchData = compose(partial(fetch, 'GET'), getUrl);
+  const fetchData = (partial(fetch, 'GET')) ['∘'] (getUrl);
 
   return createAction(
     GET_INVESTMENTS,
@@ -63,10 +62,7 @@ const updateInvestmentRoot = fetch => {
 
   return createAction(
     UPDATE_INVESTMENT,
-    compose(
-      fetchData,
-      transform
-    )
+    (fetchData) ['∘'] (transform)
   );
 }
 
@@ -80,10 +76,7 @@ const saveInvestmentRoot = fetch => {
 
   return createAction(
     SAVE_NEW_INVESTMENT,
-    compose(
-      saveInvestmentResult,
-      transform
-    )
+    (saveInvestmentResult) ['∘'] (transform)
   );
 }
 
@@ -98,7 +91,7 @@ const deleteInvestmentRoot = fetch => {
 
 const getInvestmentTypesRoot = fetch => {
   const getUrl = ({skip, limit}) => constructUrl(INVESTMENT_TYPE_ENDPOINT, Map({skip, limit}));
-  const fetchData = compose(partial(fetch, 'GET'), getUrl);
+  const fetchData = (partial(fetch, 'GET')) ['∘'] (getUrl);
 
   return createAction(
     GET_INVESTMENT_TYPES,

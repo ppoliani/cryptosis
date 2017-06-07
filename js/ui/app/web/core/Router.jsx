@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux';
-import {compose} from 'folktale/core/lambda';
 import {
   BrowserRouter as Router,
   Route,
@@ -79,7 +78,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setUserProfile: compose(dispatch, setUserProfile)
+  setUserProfile: (dispatch) ['∘'] (setUserProfile)
 })
 
 export default connect(
