@@ -10,8 +10,9 @@ export default props => (
       data={props.data}
       showCheckboxes={false}
       onCellClick={props.handleCellClick}
+      onRowSizeChange={props.onRowSizeChange}
       page={props.page}
-      count={props.limit}
+      rowSize={props.limit}
     />
 )
 

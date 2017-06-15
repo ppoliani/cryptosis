@@ -2,11 +2,11 @@ const {fromJS, Map} = require('immutable');
 const {create} = require('@most/create');
 const curry = require('folktale/core/lambda/curry');
 const {partial} = require('../core/fn');
-const {getTotalForInvestment, getCurrentTotalForInvestment, getPercentageChange} = require('./common');
+const {getTotalAmountInvested, getCurrentTotalForInvestment, getPercentageChange} = require('./common');
 
 
 const getInvestmentValue = curry(2, (currentPrice, investment) => {
-  const investmentValue = getTotalForInvestment(investment);
+  const investmentValue = getTotalAmountInvested(investment);
   const diff = getCurrentTotalForInvestment(investment, currentPrice) - investmentValue;
 
   return Map({

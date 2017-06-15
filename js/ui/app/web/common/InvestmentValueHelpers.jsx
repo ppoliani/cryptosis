@@ -15,7 +15,7 @@ export const renderInvestmentValue = (id, investmentValues, currency) => {
 
   if(investmentValue) {
     const value = investmentValue.get('value').toFixed(2);
-    return `${signedCurrency(value, getCurrencySymbol(currency))} (${investmentValue.get('percentage').toFixed(2)}%)`;
+    return `${signedCurrency(value, currency)} (${investmentValue.get('percentage').toFixed(2)}%)`;
   }
 
   return '';

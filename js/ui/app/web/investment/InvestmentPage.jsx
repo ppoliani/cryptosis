@@ -43,7 +43,8 @@ const DEFAULT_CURRENCY = 'GBP';
 class InvestmentPage extends Component {
   state = {
     isPanelOpen: false,
-    limit: 10,
+    limit: 30,
+    page: 1,
     skip: 0
   }
 
@@ -52,7 +53,7 @@ class InvestmentPage extends Component {
     const {form, getInvestments, getBrokers, getInvestmentTypes} = this.props;
     const currency = getSelectedCurrency(form);
 
-    getInvestments({skip, limit});
+    this.loadInvestments()
     getBrokers({skip, limit});
     getInvestmentTypes({skip, limit});
     this.subscribe(currency);
@@ -82,6 +83,11 @@ class InvestmentPage extends Component {
 
   subscribe(currency) {
     this.props.startInvestmentCurrentValueStream(currency);
+  }
+
+  loadInvestments() {
+    const {skip, limit} = this.state;
+    this.props.getInvestments({skip, limit});
   }
 
   togglePanel = (_, selectedInvestment={}) => {
@@ -117,6 +123,10 @@ class InvestmentPage extends Component {
     this.togglePanel(e, investment);
   }
 
+  handleRowSizeChange = (e, rows) => {
+    this.setState(Object.assign({}, this.state, { limit: rows }), this.loadInvestments);
+  }
+
   // will include the value for each investment
   getExtendedTableData = (investments, investmentValues) =>
     investments.reduce(
@@ -149,7 +159,10 @@ class InvestmentPage extends Component {
       <AsyncPanel asyncResult={this.props.investments.get('fetchInvestmentsResult')}>
         <Table
           columns={columns}
+          limit={this.state.limit}
+          page={this.state.page}
           data={data}
+          onRowSizeChange={this.handleRowSizeChange}
           handleCellClick={this.handleCellClick}
         />
       </AsyncPanel>

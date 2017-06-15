@@ -144,5 +144,6 @@ module.exports = {
   getChangeAfterDate,
   getCashAfterDate,
   getTotalValueAfterDate,
-  getPriceObjFromStreamData
+  getPriceObjFromStreamData,
+  getTotalAmountInvested
 }
