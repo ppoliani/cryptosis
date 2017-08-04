@@ -6,6 +6,13 @@ import ListItem from '../common/ListItem';
 import {renderPrice} from '../common/InvestmentValueHelpers';
 
 export default class PriceSummary extends Component {
+  renderFullPriceInfo(value, currency) {
+    return <span>
+      <span>{renderPrice(value.get('price'), currency)}</span>
+      <span> ({value.get('market')})</span>
+    </span>
+  }
+
   render() {
     const {investment, currency, prices} = this.props;
 
@@ -15,9 +22,9 @@ export default class PriceSummary extends Component {
           <List>
             {
               prices.get('live').matchWith({
-                Just: ({value: prices}) => prices.map((v, k, i) => {
-                  return <ListItem key={k} first={k} second={renderPrice(v.get('price'), currency)}/>
-                })
+                Just: ({value: prices}) => prices.map((v, k, i) => (
+                  <ListItem key={k} first={k} second={this.renderFullPriceInfo(v, currency)}/>
+                ))
                 .toList()
                 .toJS(),
                 Nothing: () => {}

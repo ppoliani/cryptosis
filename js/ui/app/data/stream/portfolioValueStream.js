@@ -1,5 +1,5 @@
 import {createAction} from 'redux-actions';
-import {combine} from 'most';
+import {combine, concat} from 'most';
 import {fromJS} from 'immutable';
 import io from 'socket.io-client';
 import {connect} from '../../../../common/sockets/cryptoCompare';
@@ -12,7 +12,11 @@ export const SET_PORTFOLIO_SUBSCRIPTION = 'STREAM::SET_PORTFOLIO_SUBSCRIPTION';
 const setPortfolioSubscription = createAction(SET_PORTFOLIO_SUBSCRIPTION);
 
 export const startPortfolioStream = currency => dispatch => {
-  const btc$ = connect(io, 'BTC', 'Coinfloor', currency);
+  const btc$ = concat(
+    connect(io, 'BTC', 'Coinfloor', currency),
+    connect(io, 'BTC', 'Kraken', currency),
+    connect(io, 'BTC', 'Coinbase', currency)
+  );
   const eth$ = connect(io, 'ETH', 'Kraken', currency);
   const xrp$ = connect(io, 'XRP', 'Bitstamp', currency);
   const xtz$ = connect(io, 'XTZ', 'HitBTC', currency);

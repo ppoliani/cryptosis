@@ -1,11 +1,11 @@
-function createChainedFunction(one, two) {
+const createChainedFunction = (one, two) => {
   return function chainedFunction() {
     one.apply(this, arguments);
     two.apply(this, arguments);
   };
 }
 // ref: http://raganwald.com/2015/06/17/functional-mixins.html
-export default function mixin(behaviour, sharedBehaviour = {}) {
+const mixin =  (behaviour, sharedBehaviour = {}) => {
   const instanceKeys = Reflect.ownKeys(behaviour);
   const sharedKeys = Reflect.ownKeys(sharedBehaviour);
   const typeTag = Symbol('isa');
@@ -37,3 +37,5 @@ export default function mixin(behaviour, sharedBehaviour = {}) {
   });
   return _mixin;
 };
+
+export default mixin;

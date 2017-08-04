@@ -6,7 +6,7 @@ if(process.env.NODE_ENV === 'development') {
 const Koa = require('koa');
 const uhttp = require('http');
 // const uhttp = require('uws').http; headers are empty in the request object when using this server
-const Router= require('koa-router');
+const Router = require('koa-router');
 const passport = require('koa-passport');
 const convert = require('koa-convert');
 const session = require('koa-generic-session');

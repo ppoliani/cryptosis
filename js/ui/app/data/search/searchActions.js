@@ -1,7 +1,6 @@
 import map from 'folktale/core/fantasy-land/map';
 import {createAction} from 'redux-actions';
 import fetch from '../../helpers/api';
-import {partial} from '../../helpers/fn';
 
 export const GET_SEARCH_RESULTS= 'SEARCH::GET_SEARCH_RESULTS';
 
