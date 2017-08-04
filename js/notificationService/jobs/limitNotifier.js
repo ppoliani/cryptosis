@@ -1,8 +1,7 @@
-const {combine, concat, fromPromise} = require('most');
-const io = require('socket.io-client');
+const {combine, merge, fromPromise} = require('most');
 const {fromJS, Map, List, is} = require('immutable');
 const logger = require('../../common/core/logger');
-const {connect} = require('../../common/sockets/cryptoCompare');
+const {btc$, eth$, xrp$, xtz$} = require('../../common/sockets/streams');
 const Maybe = require('folktale/data/maybe');
 const {getAllPartialInvestments} = require('../../common/data/repositories/investmentRepository');
 const calculateTotalPortfolioValue = require('../../common/aggregators');
@@ -75,14 +74,6 @@ const filterCurrency = (investments, currency, unwrapCypherListNodeResult, send)
 
 const start = async (currency, unwrapCypherResult, unwrapCypherListNodeResult, getAllPartialInvestments, send) => {
   try{
-    const btc$ = concat(
-      connect(io, 'BTC', 'Coinfloor', currency),
-      connect(io, 'BTC', 'Kraken', currency),
-      connect(io, 'BTC', 'Coinbase', currency)
-    );
-    const eth$ = connect(io, 'ETH', 'Kraken', currency);
-    const xrp$ = connect(io, 'XRP', 'Bitstamp', currency);
-
     const observer = {
       next: send,
       error: errorValue => console.log(`Error in the observer of the investment values stream: ${errorValue}`)
@@ -97,7 +88,7 @@ const start = async (currency, unwrapCypherResult, unwrapCypherListNodeResult, g
         })
       })
 
-    return combine(getPrices, fromPromise(getInvestments(unwrapCypherResult)), btc$, eth$, xrp$)
+    return combine(getPrices, fromPromise(getInvestments(unwrapCypherResult)), btc$(currency), eth$(currency), xrp$(currency))
       .map(checkLimits)
       .skipRepeatsWith(is)
       .subscribe(observer);

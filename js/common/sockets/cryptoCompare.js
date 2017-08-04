@@ -1,5 +1,4 @@
 const {create} = require('@most/create');
-
 const CURRENTAGG = '2';
 const URL = 'https://streamer.cryptocompare.com/';
 
