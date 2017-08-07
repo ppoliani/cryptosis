@@ -56,6 +56,8 @@ const unpack = value => {
   return unpackedCurrent;
 };
 
+const isPriceAvailable = data => data.PRICE != undefined;
+
 const connect = (io, symbol, exchangeName, toSymbol) => {
   const subscription = [`2~${exchangeName}~${symbol}~${toSymbol}`];
   const socket = io.connect(URL);
@@ -66,7 +68,8 @@ const connect = (io, symbol, exchangeName, toSymbol) => {
       const messageType = message.substring(0, message.indexOf("~"));
 
       if (messageType === CURRENTAGG) {
-        add(unpack(message));
+        const unpackedMessage = unpack(message);
+        isPriceAvailable(unpackedMessage) && add(unpackedMessage);
       }
     });
 

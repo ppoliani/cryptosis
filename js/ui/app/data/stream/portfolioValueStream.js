@@ -1,7 +1,7 @@
 import {createAction} from 'redux-actions';
 import {fromJS} from 'immutable';
 import {combine} from 'most';
-import {btc$, eth$, xrp$, xtz$} from '../../../../common/sockets/streams';
+import {btc$, bch$, eth$, xrp$, xtz$} from '../../../../common/sockets/streams';
 import {calculateTotalPortfolioValue} from '../../../../common/aggregators';
 import {setPortfolioValue} from '../portfolio/portfolioActions';
 import {setPrices} from '../prices/priceActions';
@@ -16,11 +16,12 @@ export const startPortfolioStream = currency => dispatch => {
     error: errorValue => console.log(`Error in the observer of the portfolio stream: ${errorValue}`)
   }
 
-  const getPrices = (investments, btc, eth, xrp, xtz)  => {
+  const getPrices = (investments, btc, bch, eth, xrp, xtz)  => {
     return {
       investments: fromJS(investments.result).filter(v => v.get('currency') === currency),
       prices: fromJS({
         BTX: getPriceObjFromStreamData(btc),
+        BCH: getPriceObjFromStreamData(bch),
         ETH: getPriceObjFromStreamData(eth),
         XRP: getPriceObjFromStreamData(xrp),
         XTZ: getPriceObjFromStreamData(xtz)
@@ -30,7 +31,8 @@ export const startPortfolioStream = currency => dispatch => {
 
   const keepPrices = obj => obj.prices;
 
-  const subscription = combine(getPrices, getPartialInvestment$(), btc$(currency), eth$(currency), xrp$(currency), xtz$(currency))
+  const streams$ = [btc$(currency), bch$(currency), eth$(currency), xrp$(currency), xtz$(currency)];
+  const subscription = combine(getPrices, getPartialInvestment$(), ...streams$)
     .tap((dispatch) ['∘'] (setPrices) ['∘'] (keepPrices))
     .chain(calculateTotalPortfolioValue)
     .subscribe(observer);
