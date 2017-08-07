@@ -7,8 +7,7 @@ const {partial, predicate} = require('../core/fn');
 const groupTotalValueInvestedPerTypeReducer = (acc, v) =>
   acc.update(
     v.get('investmentType'),
-    0,
-    sum => sum + getTotalAmountInvested(v)
+    (sum=0) => sum + getTotalAmountInvested(v)
   )
 
 const groupTotalQtyPerTypeReducer = (acc, v) =>
