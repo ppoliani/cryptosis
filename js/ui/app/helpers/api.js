@@ -1,6 +1,6 @@
 import 'whatwg-fetch'
 import {List} from 'immutable';
-import {task} from 'folktale/data/task';
+import {task} from 'folktale/concurrency/task';
 import {getItem} from '../storage';
 
 export const constructUrl = (url, params) =>

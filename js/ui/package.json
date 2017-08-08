@@ -18,7 +18,7 @@
     "classnames": "^2.2.5",
     "core-decorators": "^0.15.0",
     "date-fns": "^1.28.4",
-    "folktale": "^2.0.0-beta1",
+    "folktale": "^2.0.0",
     "immutable": "^3.8.1",
     "include-media": "^1.4.9",
     "material-ui": "^0.18.0",

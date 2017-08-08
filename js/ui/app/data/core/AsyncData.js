@@ -1,4 +1,4 @@
-import data from 'folktale/core/adt/data';
+import union from 'folktale/adt/union/union';
 
 const allSuccess = asyncDataList => asyncDataList.every(
   a => a.matchWith({
@@ -32,7 +32,7 @@ export const AsyncDataAll = asyncDataList =>
     ? AsyncData.Success()
     : AsyncData.Loading()
 
-const AsyncData = data('AsyncData', {
+const AsyncData = union('AsyncData', {
   Empty: () => true,
   Loading: () => true,
   Success: data => ({data}),

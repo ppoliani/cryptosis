@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import Maybe from 'folktale/data/maybe'
+import Maybe from 'folktale/maybe'
 import {fromJS} from 'immutable';
 import {
   SET_PORTFOLIO_TOTAL_VALUE,

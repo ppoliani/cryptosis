@@ -7,7 +7,7 @@ import {List} from 'material-ui/List';
 import ListItem from '../common/ListItem';
 import Subheader from 'material-ui/Subheader';
 import {identity} from 'folktale/core/lambda';
-import Maybe from 'folktale/data/maybe';
+import Maybe from 'folktale/maybe';
 import AsyncPanel from '../common/AsyncPanel';
 import Container from '../common/Container';
 import pureComponent from '../mixins/pureComponent';

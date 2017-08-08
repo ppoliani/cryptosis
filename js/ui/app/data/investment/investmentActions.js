@@ -1,9 +1,9 @@
 import {createAction} from 'redux-actions';
-import map from 'folktale/core/fantasy-land/map';
+import {map} from 'folktale/core/lambda';
 import {Map} from 'immutable';
 import fetch, {constructUrl} from '../../helpers/api';
 import {partial} from '../../../../common/core/fn';
-import {task} from 'folktale/data/task';
+import {task} from 'folktale/concurrency/task';
 
 const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;
 const INVESTMENT_TYPE_ENDPOINT = `${process.env.API_URL}/investment/types`;

@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import Maybe from 'folktale/data/maybe';
+import Maybe from 'folktale/maybe';
 import {Map} from 'immutable';
 import {SET_PORTFOLIO_SUBSCRIPTION} from './portfolioValueStream';
 import {SET_LAST_30_DAYS_SUBSCRIPTION} from './last30DaysStream';

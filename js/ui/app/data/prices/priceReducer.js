@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import Maybe from 'folktale/data/maybe'
+import Maybe from 'folktale/maybe'
 import {Map} from 'immutable';
 import {SET_PRICES} from './priceActions';
 

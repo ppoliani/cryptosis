@@ -47,7 +47,7 @@ const getCategoryAxis = () => ({
 
 const getLegend = () => ({
   useGraphSettings: true,
-  color: 'rgba(255, 255, 255, 0.54)'
+  color: 'rgba(255, 255, 255, 0.54)',
 });
 
 export const getChartConfig = data => ({
