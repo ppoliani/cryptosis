@@ -16,7 +16,7 @@ export default class AggregatePortfolioChart extends Component {
   };
 
   getChartData() {
-    const {portfolio, assetLife, historicProperty} = this.props;
+    const {lastNDaysData, historicProperty} = this.props;
 
     const aggregate = ({value: aggregates}) => {
       const [first, ...rest] = aggregates.values()
@@ -38,8 +38,7 @@ export default class AggregatePortfolioChart extends Component {
       .toJS();
     }
 
-    return portfolio
-      .getIn(['last30Days', assetLife])
+    return lastNDaysData
       .matchWith({
         Just: aggregate,
         Nothing: () => {}
@@ -61,7 +60,7 @@ export default class AggregatePortfolioChart extends Component {
   }
 
   render() {
-    const {title, subtitle, portfolio, assetLife} = this.props;
+    const {title, subtitle} = this.props;
 
     return (
       <Container title={title} subtitle={subtitle}>

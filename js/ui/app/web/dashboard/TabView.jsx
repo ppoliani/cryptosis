@@ -10,6 +10,7 @@ import InvestmentSummary from './InvestmentSummary';
 export default class TabView extends Component {
   renderTab(label, assetLife) {
     const {currency, portfolio, investment, prices} = this.props;
+    const lastNDaysData = portfolio.getIn(['last30Days', assetLife]);
 
     return (
       <Tab label={label}>
@@ -21,8 +22,7 @@ export default class TabView extends Component {
                 title='Portfolio'
                 subtitle='Aggregate Value (last 30 days)'
                 historicProperty='totalValue'
-                portfolio={portfolio}
-                assetLife={assetLife} />
+                lastNDaysData={lastNDaysData} />
             </Col>
             <Col className='row-spacing'>
               <PortfolioChart
@@ -30,23 +30,20 @@ export default class TabView extends Component {
                 title='Portfolio'
                 subtitle='Change (last 30 days)'
                 historicProperty='change'
-                portfolio={portfolio}
-                assetLife={assetLife} />
+                lastNDaysData={lastNDaysData} />
             </Col>
             <Col className='row-spacing'>
                  <PortfolioChart
                 title='Portfolio'
                 subtitle='Cash (last 30 days)'
                 historicProperty='cash'
-                portfolio={portfolio}
-                assetLife={assetLife} />
+                lastNDaysData={lastNDaysData} />
             </Col>
                <PortfolioChart
                 title='Portfolio'
                 subtitle='Total Value (last 30 days)'
                 historicProperty='totalValue'
-                portfolio={portfolio}
-                assetLife={assetLife} />
+                lastNDaysData={lastNDaysData} />
           </Col>
           <Col lg={4} xs={12}>
             <Col className='row-spacing'>

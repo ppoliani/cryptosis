@@ -41,10 +41,9 @@ export default class PortfolioChart extends Component {
         ? l1.merge(l2)
         : l2;
 
-    const {portfolio, assetLife} = this.props;
+    const {lastNDaysData} = this.props;
 
-    return portfolio
-      .getIn(['last30Days', assetLife])
+    return lastNDaysData
       .matchWith({
         Just: aggregate,
         Nothing: () => {}
@@ -52,7 +51,7 @@ export default class PortfolioChart extends Component {
   }
 
   getEntirePortfolioChartData() {
-    const {portfolio, assetLife, historicProperty} = this.props;
+    const {lastNDaysData, historicProperty} = this.props;
 
     const mergeLists = (l1, l2) => {
       return l1
@@ -74,8 +73,7 @@ export default class PortfolioChart extends Component {
       )
     }
 
-    return portfolio
-      .getIn(['last30Days', assetLife])
+    return lastNDaysData
       .matchWith({
         Just: aggregate,
         Nothing: () => {}
@@ -97,8 +95,7 @@ export default class PortfolioChart extends Component {
   }
 
   render() {
-    const {title, subtitle, portfolio, assetLife} = this.props;
-    const last30Days = portfolio.getIn(['last30Days', assetLife]);
+    const {title, subtitle, lastNDaysData} = this.props;
 
     this.getEntirePortfolioChartData();
 
@@ -112,7 +109,7 @@ export default class PortfolioChart extends Component {
               theme='light'
               listeners={this.getChartsListeners()}
               dataProvider={this.getPortfolioChartData()}
-              {...getChartConfig(last30Days)}/>
+              {...getChartConfig(lastNDaysData)}/>
             </div>
         </AsyncPanel>
       </Container>

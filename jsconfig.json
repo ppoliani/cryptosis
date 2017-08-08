@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    ".history",
+    ".vscode",
+    "js/api/node_modules",
+    "js/common/node_modules",
+    "js/notificationService/node_modules",
+    "js/ui/android",
+    "js/ui/ios"
+  ]
+}
