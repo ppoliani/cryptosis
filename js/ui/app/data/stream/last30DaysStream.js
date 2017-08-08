@@ -35,6 +35,7 @@ export const startLast30DaysStream = currency => dispatch => {
   const streams$ = [getPartialInvestment$(), getBTC$(currency), getBCH$(currency), getETH$(currency), getXRP$(currency), getXTZ$(currency)];
   const subscription = combine(getPrices, ...streams$)
     .chain(calculateHistoricPortfolioValues)
+    .debounce(500)
     .subscribe(observer);
 
   dispatch(setLast30DaysSubscription(subscription));

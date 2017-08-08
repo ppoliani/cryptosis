@@ -31,6 +31,7 @@ export const startInvestmentCurrentValueStream = currency => dispatch => {
   const streams$ = [btc$(currency), bch$(currency), eth$(currency), xrp$(currency), xtz$(currency)];
   const subscription = combine(getPrices, getPartialInvestment$(), ...streams$)
     .chain(calculateInvestmentValues)
+    .debounce(500)
     .subscribe(observer);
 
   dispatch(setInvestmentCurrentValueSuscription(subscription));

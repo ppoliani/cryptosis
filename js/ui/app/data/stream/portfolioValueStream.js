@@ -35,6 +35,7 @@ export const startPortfolioStream = currency => dispatch => {
   const subscription = combine(getPrices, getPartialInvestment$(), ...streams$)
     .tap((dispatch) ['∘'] (setPrices) ['∘'] (keepPrices))
     .chain(calculateTotalPortfolioValue)
+    .debounce(500)
     .subscribe(observer);
 
   dispatch(setPortfolioSubscription(subscription));

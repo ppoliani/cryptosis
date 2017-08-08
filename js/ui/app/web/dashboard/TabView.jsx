@@ -20,24 +20,21 @@ export default class TabView extends Component {
                 title='Portfolio'
                 subtitle='Change (last 30 days)'
                 historicProperty='change'
-                investment={investment}
                 portfolio={portfolio}
                 assetLife={assetLife} />
             </Col>
             <Col className='row-spacing'>
-               <PortfolioChart
+                <PortfolioChart
                 title='Portfolio'
                 subtitle='Cash (last 30 days)'
                 historicProperty='cash'
-                investment={investment}
                 portfolio={portfolio}
                 assetLife={assetLife} />
             </Col>
-             <PortfolioChart
+              <PortfolioChart
                 title='Portfolio'
                 subtitle='Total Value (last 30 days)'
                 historicProperty='totalValue'
-                investment={investment}
                 portfolio={portfolio}
                 assetLife={assetLife} />
           </Col>
