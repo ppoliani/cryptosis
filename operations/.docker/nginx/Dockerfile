@@ -43,7 +43,8 @@ RUN mkdir www && \
     cp -r app/web/dist/app.bundle.js www && \
     cp -r app/web/dist/app.bundle.js.map www && \
     cp -r app/web/dist/vendor.bundle.js www && \
-    cp -r app/web/dist/vendor.bundle.js.map www
+    cp -r app/web/dist/vendor.bundle.js.map www \
+    cp -r node_modules/amcharts3/amcharts/images/. images
 
 ENTRYPOINT ["nginx"]
 CMD ["-g", "daemon off;"]

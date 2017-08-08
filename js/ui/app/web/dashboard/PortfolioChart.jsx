@@ -51,7 +51,7 @@ export default class PortfolioChart extends Component {
         <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
           <div className='chart-container'>
             <AmCharts.React
-              pathToImages='/assets/images/'
+              pathToImages='/images/'
               type='serial'
               theme='light'
               dataProvider={this.getPortfolioChartData()}
