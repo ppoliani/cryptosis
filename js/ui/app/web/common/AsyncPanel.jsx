@@ -29,7 +29,7 @@ export default class AsyncPanel extends Component {
 
     return (
       <Row>
-        <Col xs className={classnames(classList)}>
+        <Col xs className={classnames(classList)} style={{height: '300px'}}>
           {children}
         </Col>
         {this.renderActionStatus(asyncResult)}

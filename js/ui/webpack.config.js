@@ -67,7 +67,11 @@ module.exports = () => {
         'immutable',
         'babel-polyfill',
         'whatwg-fetch',
-        'core-decorators'
+        'core-decorators',
+        'amcharts3/amcharts/amcharts',
+        'amcharts3/amcharts/serial',
+        'amcharts3/amcharts/themes/light',
+        '@amcharts/amcharts3-react'
       ]
     },
 

@@ -11,7 +11,9 @@
     "native:android": "PLATFORM_ENV=mobile env-cmd ./.env react-native run-android"
   },
   "dependencies": {
+    "@amcharts/amcharts3-react": "^2.0.7",
     "@most/create": "^2.0.1",
+    "amcharts3": "^3.21.2",
     "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",
     "core-decorators": "^0.15.0",
