@@ -1,0 +1,82 @@
+import React, {Component} from 'react';
+import {List as ListIm, Map} from 'immutable';
+import identity from 'folktale/core/lambda/identity';
+import AmCharts from '@amcharts/amcharts3-react';
+import pureComponent from '../mixins/pureComponent';
+import AsyncPanel from '../common/AsyncPanel';
+import Container from '../common/Container';
+import AsyncData, {AsyncDataAll} from '../../data/core/AsyncData';
+import {getAggregatePortfolioChartConfig} from '../../helpers/chart';
+import './chart.scss';
+
+@pureComponent
+export default class AggregatePortfolioChart extends Component {
+  state = {
+    chartStatus: AsyncData.Loading()
+  };
+
+  getChartData() {
+    const {portfolio, assetLife, historicProperty} = this.props;
+
+    const aggregate = ({value: aggregates}) => {
+      const [first, ...rest] = aggregates.values()
+      const getValue = obj =>  {
+        const val = obj.getIn(['value', historicProperty]);
+
+        return val !== undefined
+            ? val
+            : obj.get('total');
+      };
+
+      return first.mergeWith(
+        (oldVal, newVal) => Map({
+          day: oldVal.get('day'),
+          total: getValue(oldVal) + getValue(newVal)
+        }),
+        ...rest
+      )
+      .toJS();
+    }
+
+    return portfolio
+      .getIn(['last30Days', assetLife])
+      .matchWith({
+        Just: aggregate,
+        Nothing: () => {}
+      });
+  }
+
+  getChartsListeners() {
+    return [{
+      event: 'rendered',
+      method: () => this.state.chartStatus.matchWith({
+        Empty: () => {},
+        Loading: () => {
+          this.setState({chartStatus: AsyncData.Success()})
+        },
+        Success: () => {},
+        Failure: () => {}
+      })
+    }]
+  }
+
+  render() {
+    const {title, subtitle, portfolio, assetLife} = this.props;
+
+    return (
+      <Container title={title} subtitle={subtitle}>
+        <AsyncPanel asyncResult={this.state.chartStatus}>
+          <div className='chart-container'>
+            <AmCharts.React
+              pathToImages='/images/'
+              type='serial'
+              theme='light'
+              listeners={this.getChartsListeners()}
+              dataProvider={this.getChartData()}
+              {...getAggregatePortfolioChartConfig()}/>
+            </div>
+        </AsyncPanel>
+      </Container>
+    )
+  }
+}

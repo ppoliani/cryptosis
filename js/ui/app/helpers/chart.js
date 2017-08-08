@@ -42,7 +42,7 @@ const getChartCursor = () => ({
 
 const getCategoryAxis = () => ({
   parseDates: true,
-  minorGridEnabled: true
+  minorGridEnabled: false
 });
 
 const getLegend = () => ({
@@ -59,5 +59,24 @@ export const getChartConfig = data => ({
   categoryAxis: getCategoryAxis(),
   synchronizeGrid: false,
   legend: getLegend(),
+  chartScrollbar: getChartScrollBar()
+});
+
+export const getAggregatePortfolioChartConfig = () => ({
+  color: 'rgba(255, 255, 255, 0.54)',
+  graphs: [{
+    graph: 'g1',
+    fillAlphas: 0.4,
+    valueAxis: 0,
+    title: 'Portfolio',
+    valueField: 'total'
+  }],
+  valueAxes: [{
+    position: 'left',
+    title: 'Aggregate Value'
+  }],
+  chartCursor: getChartCursor(),
+  categoryField: 'day',
+  categoryAxis: getCategoryAxis(),
   chartScrollbar: getChartScrollBar()
 });

@@ -7,7 +7,9 @@
   "exclude": [
     "../.history",
     "../.vscode",
-    "**/node_modules",
+    "api/node_modules",
+    "common/node_modules",
+    "notificationService/node_modules",
     "ui/android",
     "ui/ios"
   ]
