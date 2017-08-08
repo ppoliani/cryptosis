@@ -12,11 +12,11 @@ const getValueAxes = data => getSymbols(data)
 
 const getGraphMetadata = data => getSymbols(data)
   .map(symbol => ({
-    'graph': 'g1',
-    'valueAxis': 0,
-    'title': symbol,
-    'valueField': symbol,
-    'fillAlphas': 0,
+    graph: 'g1',
+    valueAxis: 0,
+    title: symbol,
+    valueField: symbol,
+    fillAlphas: 0,
   }))
   .toJS();
 
@@ -46,10 +46,12 @@ const getCategoryAxis = () => ({
 });
 
 const getLegend = () => ({
-  useGraphSettings: true
+  useGraphSettings: true,
+  color: 'rgba(255, 255, 255, 0.54)'
 });
 
 export const getChartConfig = data => ({
+  color: 'rgba(255, 255, 255, 0.54)',
   graphs: getGraphMetadata(data),
   valueAxes: getValueAxes(data),
   chartCursor: getChartCursor(),
