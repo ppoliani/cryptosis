@@ -25,11 +25,13 @@ export default class AsyncPanel extends Component {
 
   render() {
     const {children, asyncResult} = this.props;
-    const classList = {'fade-out': this.shouldFadeOut(asyncResult)};
+    const classList = {
+      'fade-out': this.shouldFadeOut(asyncResult)
+    };
 
     return (
       <Row>
-        <Col xs className={classnames(classList)} style={{height: '300px'}}>
+        <Col xs className={classnames(classList)}>
           {children}
         </Col>
         {this.renderActionStatus(asyncResult)}

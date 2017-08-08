@@ -84,6 +84,16 @@ module.exports = () => {
     module: {
       rules: [
         {
+          test: /\.(jpg|jpe?g|gif|png|woff|woff2|eot|ttf|svg)$/,
+          use: {
+            loader: 'file-loader',
+            query: {
+              limit: 100000,
+              name: '[name].[ext]'
+            },
+          }
+        },
+        {
           test: /\.html$/,
           exclude: /node_modules/,
           use: {
@@ -91,7 +101,7 @@ module.exports = () => {
             query: {
               name: '[name].[ext]'
             },
-          },
+          }
         },
         {
           test: /\.scss$/,
