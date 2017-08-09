@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Grid, Row, Col} from 'react-flexbox-grid'
+import {Row, Col} from 'react-flexbox-grid'
 import {autobind} from 'core-decorators'
 import PriceBox from './PriceBox'
 import {getSelectedCurrency, renderPrice} from '../common/InvestmentValueHelpers'

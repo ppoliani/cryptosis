@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
-import {Grid, Row, Col} from 'react-flexbox-grid'
-import PortfolioChart from './PortfolioChart'
-import AggregatePortfolioChart from './AggregatePortfolioChart'
+import {Row, Col} from 'react-flexbox-grid'
 import PortfolioSummary from './PortfolioSummary'
 import InvestmentSummary from './InvestmentSummary'
+import ChartContainer from '../chart/ChartConainer'
 
 export default class TabView extends Component {
   renderTab(label, assetLife) {
@@ -15,34 +14,7 @@ export default class TabView extends Component {
       <Tab label={label}>
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing'>
-            <Col className='row-spacing'>
-              {/* <AggregatePortfolioChart
-                className='row-spacing'
-                title='Portfolio'
-                subtitle='Aggregate Value (last 30 days)'
-                historicProperty='totalValue'
-                lastNDaysData={lastNDaysData} /> */}
-            </Col>
-            <Col className='row-spacing'>
-              {/* <PortfolioChart
-                className='row-spacing'
-                title='Portfolio'
-                subtitle='Change (last 30 days)'
-                historicProperty='change'
-                lastNDaysData={lastNDaysData} /> */}
-            </Col>
-            <Col className='row-spacing'>
-              {/* <PortfolioChart
-                title='Portfolio'
-                subtitle='Cash (last 30 days)'
-                historicProperty='cash'
-                lastNDaysData={lastNDaysData} /> */}
-            </Col>
-              {/* <PortfolioChart
-                title='Portfolio'
-                subtitle='Total Value (last 30 days)'
-                historicProperty='totalValue'
-                lastNDaysData={lastNDaysData} /> */}
+            <ChartContainer lastNDaysData={lastNDaysData} />
           </Col>
           <Col lg={4} xs={12}>
             <Col className='row-spacing'>
