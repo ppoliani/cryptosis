@@ -19,7 +19,7 @@ export default class AggregatePortfolioChart extends Component {
     const {lastNDaysData, historicProperty} = this.props;
 
     const aggregate = ({value: aggregates}) => {
-      const [first, ...rest] = aggregates.values()
+      const [first, ...rest] = aggregates.values();
       const getValue = obj =>  {
         const val = obj.getIn(['value', historicProperty]);
 

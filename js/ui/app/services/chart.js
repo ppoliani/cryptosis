@@ -71,10 +71,6 @@ export const getAggregatePortfolioChartConfig = () => ({
     title: 'Portfolio',
     valueField: 'total'
   }],
-  valueAxes: [{
-    position: 'left',
-    title: 'Aggregate Value'
-  }],
   chartCursor: getChartCursor(),
   categoryField: 'day',
   categoryAxis: getCategoryAxis(),
