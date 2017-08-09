@@ -6,7 +6,7 @@ import pureComponent from '../mixins/pureComponent';
 import AsyncPanel from '../common/AsyncPanel';
 import Container from '../common/Container';
 import AsyncData, {AsyncDataAll} from '../../data/core/AsyncData';
-import {getAggregatePortfolioChartConfig} from '../../helpers/chart';
+import {getAggregatePortfolioChartConfig} from '../../services/chart';
 import './chart.scss';
 
 @pureComponent

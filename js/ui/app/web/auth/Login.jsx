@@ -3,13 +3,11 @@ import {connect} from 'react-redux';
 import {autobind} from 'core-decorators';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
-import {login} from '../../helpers/auth';
+import {login} from '../../services/auth';
 import {setItem} from '../../storage';
 import {setUserProfile} from '../../data/profile/profileActions';
-
 import './login.scss';
 
-import fetch from '../../helpers/api';
 
 class Login extends Component {
   redirect() {

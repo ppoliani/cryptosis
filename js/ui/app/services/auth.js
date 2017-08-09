@@ -1,4 +1,4 @@
-import fetch from '../helpers/api';
+import fetch from './api';
 
 export const login = (source, token) => fetch(
   'POST',

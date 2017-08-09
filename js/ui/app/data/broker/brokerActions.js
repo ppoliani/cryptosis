@@ -1,6 +1,6 @@
 import {createAction} from 'redux-actions';
 import {Map} from 'immutable';
-import fetch, {constructUrl} from '../../helpers/api';
+import fetch, {constructUrl} from '../../services/api';
 import {partial} from '../../../../common/core/fn';
 import {task} from 'folktale/concurrency/task';
 

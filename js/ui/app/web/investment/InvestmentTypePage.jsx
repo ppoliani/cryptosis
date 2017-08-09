@@ -7,7 +7,7 @@ import PageWithPanel from '../common/PageWithPanel';
 import pureComponent from '../mixins/pureComponent';
 import AsyncPanel from '../common/AsyncPanel';
 import {partial, pipe} from '../../../../common/core/fn';
-import {filterObject} from '../../helpers/utils';
+import {filterObject} from '../../services/utils';
 import createInvestmentTypeForm from './form/InvestmentTypeForm';
 import DialogBoxMixin from '../mixins/DialogBoxMixin';
 import Table from '../common/Table';

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {List, fromJS, Map} from 'immutable';
 import dateformat from 'date-fns/format';
 import {partial, pipe} from '../../../../common/core/fn';
-import {filterObject} from '../../helpers/utils';
+import {filterObject} from '../../services/utils';
 import {connect} from 'react-redux';
 import {identity} from 'folktale/core/lambda';
 import {Row, Col} from 'react-flexbox-grid';

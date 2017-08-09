@@ -6,7 +6,7 @@ import Button from 'material-ui/FlatButton';
 import pureComponent from '../mixins/pureComponent';
 import AsyncPanel from '../common/AsyncPanel';
 import {partial, pipe} from '../../../../common/core/fn';
-import {filterObject} from '../../helpers/utils';
+import {filterObject} from '../../services/utils';
 import PageWithPanel from '../common/PageWithPanel';
 import createBrokerForm from './form/BrokerForm';
 import Table from '../common/Table';

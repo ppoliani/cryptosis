@@ -1,4 +1,4 @@
-import fetch from '../../helpers/api';
+import fetch from '../../services/api';
 import {fromPromise} from 'most';
 
 const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;

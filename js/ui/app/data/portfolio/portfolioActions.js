@@ -1,5 +1,5 @@
 import {createAction} from 'redux-actions';
-import fetch from '../../helpers/api';
+import fetch from '../../services/api';
 
 export const SET_PORTFOLIO_TOTAL_VALUE = 'PORTFOLIO::SET_PORTFOLIO_TOTAL_VALUE';
 export const SET_LAST_30_DAYS = 'PORTFOLIO::SET_LAST_30_DAYS';
