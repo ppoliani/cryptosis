@@ -10,7 +10,7 @@ import Router from './core/Router'
 import configureStore from '../data'
 
 import './index.html'
-import './styles/themes/main.scss'
+import './styles/themes/main/main.scss'
 
 injectTapEventPlugin();
 

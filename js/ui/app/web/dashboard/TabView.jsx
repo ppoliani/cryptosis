@@ -4,7 +4,6 @@ import {Grid, Row, Col} from 'react-flexbox-grid'
 import PortfolioChart from './PortfolioChart'
 import AggregatePortfolioChart from './AggregatePortfolioChart'
 import PortfolioSummary from './PortfolioSummary'
-import PriceSummary from './PriceSummary'
 import InvestmentSummary from './InvestmentSummary'
 
 export default class TabView extends Component {
@@ -17,41 +16,35 @@ export default class TabView extends Component {
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing'>
             <Col className='row-spacing'>
-              <AggregatePortfolioChart
+              {/* <AggregatePortfolioChart
                 className='row-spacing'
                 title='Portfolio'
                 subtitle='Aggregate Value (last 30 days)'
                 historicProperty='totalValue'
-                lastNDaysData={lastNDaysData} />
+                lastNDaysData={lastNDaysData} /> */}
             </Col>
             <Col className='row-spacing'>
-              <PortfolioChart
+              {/* <PortfolioChart
                 className='row-spacing'
                 title='Portfolio'
                 subtitle='Change (last 30 days)'
                 historicProperty='change'
-                lastNDaysData={lastNDaysData} />
+                lastNDaysData={lastNDaysData} /> */}
             </Col>
             <Col className='row-spacing'>
-                 <PortfolioChart
+              {/* <PortfolioChart
                 title='Portfolio'
                 subtitle='Cash (last 30 days)'
                 historicProperty='cash'
-                lastNDaysData={lastNDaysData} />
+                lastNDaysData={lastNDaysData} /> */}
             </Col>
-               <PortfolioChart
+              {/* <PortfolioChart
                 title='Portfolio'
                 subtitle='Total Value (last 30 days)'
                 historicProperty='totalValue'
-                lastNDaysData={lastNDaysData} />
+                lastNDaysData={lastNDaysData} /> */}
           </Col>
           <Col lg={4} xs={12}>
-            <Col className='row-spacing'>
-              <PriceSummary
-                currency={currency}
-                investment={investment}
-                prices={prices}/>
-            </Col>
             <Col className='row-spacing'>
               <PortfolioSummary
                 currency={currency}

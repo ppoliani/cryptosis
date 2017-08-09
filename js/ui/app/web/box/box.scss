@@ -1,7 +1,17 @@
+@import '../styles/themes/main/variables';
+
 .titled-box {
   height: 100%;
+  border: 0.1px solid $main-bg-color;
+  border-radius: 5px;
 }
 
-  .titled-box--header {
-    background-color: 
+  .titled-box__header {
+    background-color: $secondary-bg-color;
+    padding: 5px;
+  }
+
+  .titled-box__body {
+    // background-color: $secondary-bg-color;
+    padding: 5px;
   }

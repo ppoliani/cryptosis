@@ -7,6 +7,7 @@ import {startLast30DaysStream} from '../../data/stream/last30DaysStream'
 import CurrencySelector from '../common/CurrencySelector'
 import {getSelectedCurrency} from '../common/InvestmentValueHelpers'
 import TabView from './TabView'
+import PriceContainer from '../price/PriceContainer'
 
 const DEFAULT_CURRENCY = 'GBP';
 
@@ -60,6 +61,9 @@ class Overview extends Component {
       <Col>
         <Row between='xs' className='row-spacing'>
           <CurrencySelector />
+        </Row>
+        <Row between='xs' className='row-spacing'>
+          <PriceContainer />
         </Row>
         <Row between='xs'>
           <TabView

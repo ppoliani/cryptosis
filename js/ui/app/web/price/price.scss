@@ -1,0 +1,22 @@
+@import '../styles/themes/main/_variables';
+
+.price-container {
+  width: 100%;
+}
+
+  .price-box {
+    min-width: 80px;
+  }
+
+  .price-box__row {
+    margin: 5px 0;
+  }
+
+  .price-box__value {
+    font-size: 100%;
+  }
+
+  .price-box__source {
+    color: $secondary-txt-color;
+    font-size: 70%;
+  }
