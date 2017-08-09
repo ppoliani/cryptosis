@@ -1,0 +1,10 @@
+@import '../tools/_mixins.scss';
+
+@include keyframes(color-change--up) {
+  0% { color: #fff; }
+  100% { color: green; }
+}
+@include keyframes(color-change--down) {
+  0% { color: #fff; }
+  100% { color: red; }
+}

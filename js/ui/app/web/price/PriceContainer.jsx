@@ -13,11 +13,14 @@ class PriceContainer extends Component {
   }
 
   renderPriceBox(value, asset) {
+    const price = value.get('price');
+
     return (
       <Col xs>
         <PriceBox
           asset={asset}
-          price={this.getFormattedPrice(value.get('price'))}
+          price={price}
+          formatedPrice={this.getFormattedPrice(price)}
           source={value.get('market')} />
       </Col>
     );
