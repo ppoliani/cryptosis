@@ -4,7 +4,7 @@ import {autobind} from 'core-decorators';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import {login} from '../../services/auth';
-import {setItem} from '../../storage';
+import {setItem} from '../../services/storage';
 import {setUserProfile} from '../../data/profile/profileActions';
 import './login.scss';
 

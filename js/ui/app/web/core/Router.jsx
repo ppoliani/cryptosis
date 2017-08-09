@@ -7,7 +7,7 @@ import {
   Redirect,
   withRouter
 } from 'react-router-dom'
-import {getItem} from '../../storage';
+import {getItem} from '../../services/storage';
 import Login from '../auth/Login';
 import OverView from '../dashboard/Overview';
 import Layout from '../core/Layout';
