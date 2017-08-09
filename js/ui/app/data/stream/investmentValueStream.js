@@ -1,12 +1,12 @@
-import {createAction} from 'redux-actions';
-import {combine} from 'most';
-import {fromJS} from 'immutable';
-import {btc$, bch$, eth$, xrp$, xtz$} from '../../../../common/sockets/streams';
-import {calculateInvestmentValues} from '../../../../common/aggregators';
-import {setInvestmentCurrentValue} from '../portfolio/portfolioActions';
-import {getPartialInvestment$, getPriceObjFromStreamData} from './common';
+import {createAction} from 'redux-actions'
+import {combine} from 'most'
+import {fromJS} from 'immutable'
+import {btc$, bch$, eth$, xrp$, xtz$} from '../../../../common/sockets/streams'
+import {calculateInvestmentValues} from '../../../../common/aggregators'
+import {setInvestmentCurrentValue} from '../portfolio/portfolioActions'
+import {getPartialInvestment$, getPriceObjFromStreamData} from './common'
 
-export const SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION= 'STREAM::SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION';
+export const SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION= 'STREAM::SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION'
 const setInvestmentCurrentValueSuscription = createAction(SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION);
 
 

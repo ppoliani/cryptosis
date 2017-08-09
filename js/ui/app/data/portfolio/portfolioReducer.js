@@ -1,11 +1,11 @@
-import {handleActions} from 'redux-actions';
+import {handleActions} from 'redux-actions'
 import Maybe from 'folktale/maybe'
-import {fromJS} from 'immutable';
+import {fromJS} from 'immutable'
 import {
   SET_PORTFOLIO_TOTAL_VALUE,
   SET_LAST_30_DAYS,
   SET_INVESTMENT_CURRENT_VALUE
-} from './portfolioActions';
+} from './portfolioActions'
 
 const handleSetPortfolioTotalValue = (state, {payload: totalValue}) =>
   state
@@ -35,4 +35,4 @@ export default handleActions({
   [SET_PORTFOLIO_TOTAL_VALUE]: handleSetPortfolioTotalValue,
   [SET_LAST_30_DAYS]: handleSetLast30Days,
   [SET_INVESTMENT_CURRENT_VALUE]: handleSetInvestmentCurrentValue
-}, portfolioData);
+}, portfolioData)

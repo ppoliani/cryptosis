@@ -1,7 +1,7 @@
-import React from 'react';
-import {Field, reduxForm} from 'redux-form';
-import {currencyOptions} from '../../data/constants/currencies';
-import {renderDropdown} from '../form/helpers';
+import React from 'react'
+import {Field, reduxForm} from 'redux-form'
+import {currencyOptions} from '../../data/constants/currencies'
+import {renderDropdown} from '../form/helpers'
 
 const CurrencySelectorForm = () => {
   return (

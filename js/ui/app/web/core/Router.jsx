@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux';
+import {connect} from 'react-redux'
 import {
   BrowserRouter as Router,
   Route,
@@ -7,15 +7,15 @@ import {
   Redirect,
   withRouter
 } from 'react-router-dom'
-import {getItem} from '../../services/storage';
-import Login from '../auth/Login';
-import OverView from '../dashboard/Overview';
-import Layout from '../core/Layout';
-import InvestmentPage from '../investment/InvestmentPage';
-import InvestmentOverviewPage from '../investment/InvestmentOverviewPage';
-import BrokerPage from '../investment/BrokerPage';
-import InvestmentTypePage from '../investment/InvestmentTypePage';
-import {setUserProfile} from '../../data/profile/profileActions';
+import {getItem} from '../../services/storage'
+import Login from '../auth/Login'
+import OverView from '../dashboard/Overview'
+import Layout from '../core/Layout'
+import InvestmentPage from '../investment/InvestmentPage'
+import InvestmentOverviewPage from '../investment/InvestmentOverviewPage'
+import BrokerPage from '../investment/BrokerPage'
+import InvestmentTypePage from '../investment/InvestmentTypePage'
+import {setUserProfile} from '../../data/profile/profileActions'
 
 class AuthGuard extends Component {
   constructor(props, state) {
@@ -84,4 +84,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RouterComponent);
+)(RouterComponent)

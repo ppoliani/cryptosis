@@ -1,5 +1,5 @@
-import React from 'react';
-import {getPercentageChange} from '../../../../common/core/utils';
+import React from 'react'
+import {getPercentageChange} from '../../../../common/core/utils'
 
 const DEFAULT_CURRENCY = 'GBP';
 
@@ -8,7 +8,7 @@ const signedCurrency = (value, currency) =>  value >= 0
   : `-${getCurrencySymbol(currency)}${Math.abs(value)}`;
 
 export const renderInvestmentChange = (current, initial, currency) =>
-    `${signedCurrency((current - initial).toFixed(2), currency)} (${getPercentageChange(initial, current).toFixed(2)}%)`;
+    `${signedCurrency((current - initial).toFixed(2), currency)} (${getPercentageChange(initial, current).toFixed(2)}%)`
 
 export const renderInvestmentValue = (id, investmentValues, currency) => {
   const investmentValue = investmentValues.get(id);

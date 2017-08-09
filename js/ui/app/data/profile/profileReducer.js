@@ -1,7 +1,7 @@
-import {handleActions} from 'redux-actions';
+import {handleActions} from 'redux-actions'
 import Maybe from 'folktale/maybe'
-import {Map, fromJS} from 'immutable';
-import {SET_USER_PROFILE} from './profileActions';
+import {Map, fromJS} from 'immutable'
+import {SET_USER_PROFILE} from './profileActions'
 
 const handleSetUserProfile = (state, action) => state.set('info', Maybe.fromNullable(fromJS(action.payload)));
 
@@ -11,4 +11,4 @@ const ProfileData = Map({
 
 export default handleActions({
   [SET_USER_PROFILE]: handleSetUserProfile
-}, ProfileData);
+}, ProfileData)

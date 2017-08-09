@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {NativeRouter, Route, Redirect, Link} from 'react-router-native';
-import {getItem} from '../storage';
-import Home from './Home';
-import Login from './auth/Login';
+import React, {Component} from 'react'
+import {StyleSheet, View} from 'react-native'
+import {NativeRouter, Route, Redirect, Link} from 'react-router-native'
+import {getItem} from '../storage'
+import Home from './Home'
+import Login from './auth/Login'
 
 const styles = StyleSheet.create({
   container: {

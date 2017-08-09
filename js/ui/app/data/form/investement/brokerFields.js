@@ -1,4 +1,4 @@
-import {required} from '../validator';
+import {required} from '../validator'
 
 export default [{
   type: 'text',
@@ -23,4 +23,4 @@ export default [{
   multiline: true,
   label: 'Notes',
   stretch: true
-}];
+}]

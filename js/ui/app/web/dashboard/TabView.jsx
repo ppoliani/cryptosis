@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import {Grid, Row, Col} from 'react-flexbox-grid';
-import PortfolioChart from './PortfolioChart';
-import AggregatePortfolioChart from './AggregatePortfolioChart';
-import PortfolioSummary from './PortfolioSummary';
-import PriceSummary from './PriceSummary';
-import InvestmentSummary from './InvestmentSummary';
+import React, {Component} from 'react'
+import {Tabs, Tab} from 'material-ui/Tabs'
+import {Grid, Row, Col} from 'react-flexbox-grid'
+import PortfolioChart from './PortfolioChart'
+import AggregatePortfolioChart from './AggregatePortfolioChart'
+import PortfolioSummary from './PortfolioSummary'
+import PriceSummary from './PriceSummary'
+import InvestmentSummary from './InvestmentSummary'
 
 export default class TabView extends Component {
   renderTab(label, assetLife) {

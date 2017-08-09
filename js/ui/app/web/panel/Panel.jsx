@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import AppBar from 'material-ui/AppBar';
-import Button from 'material-ui/FlatButton';
-import Drawer from 'material-ui/Drawer';
-import {Grid, Row} from 'react-flexbox-grid';
-import './panel.scss';
+import React, {Component} from 'react'
+import AppBar from 'material-ui/AppBar'
+import Button from 'material-ui/FlatButton'
+import Drawer from 'material-ui/Drawer'
+import {Grid, Row} from 'react-flexbox-grid'
+import './panel.scss'
 
 export default class Panel extends Component {
   render() {

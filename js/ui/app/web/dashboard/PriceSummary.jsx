@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import Container from '../common/Container';
-import AsyncPanel from '../panel/AsyncPanel';
-import {List} from 'material-ui/List';
-import ListItem from '../list/ListItem';
-import {renderPrice} from '../common/InvestmentValueHelpers';
+import React, {Component} from 'react'
+import Container from '../common/Container'
+import AsyncPanel from '../panel/AsyncPanel'
+import {List} from 'material-ui/List'
+import ListItem from '../list/ListItem'
+import {renderPrice} from '../common/InvestmentValueHelpers'
 
 export default class PriceSummary extends Component {
   renderFullPriceInfo(value, currency) {

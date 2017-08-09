@@ -1,20 +1,20 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import Drawer from 'material-ui/Drawer';
-import AccountBalanceIcon from 'material-ui-icons/AccountBalance';
-import AndroidIcon from 'material-ui-icons/Android';
-import HomeIcon from 'material-ui-icons/Home';
-import PolymerIcon from 'material-ui-icons/Polymer';
-import Divider from 'material-ui/Divider';
-import {Link} from 'react-router-dom';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import Drawer from 'material-ui/Drawer'
+import AccountBalanceIcon from 'material-ui-icons/AccountBalance'
+import AndroidIcon from 'material-ui-icons/Android'
+import HomeIcon from 'material-ui-icons/Home'
+import PolymerIcon from 'material-ui-icons/Polymer'
+import Divider from 'material-ui/Divider'
+import {Link} from 'react-router-dom'
 import {
   List,
   ListItem,
   ListItemText,
   ListItemIcon
-} from 'material-ui/List';
-import './sidebar.scss';
-import {partial} from '../../../../common/core/fn';
+} from 'material-ui/List'
+import './sidebar.scss'
+import {partial} from '../../../../common/core/fn'
 
 const getInvestementItems = (onSidebarExit, userProfile) =>
   userProfile.get('info')
@@ -69,4 +69,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   () => ({})
-)(SideBar);
+)(SideBar)

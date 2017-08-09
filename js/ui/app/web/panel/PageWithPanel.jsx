@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import Drawer from 'material-ui/Drawer';
-import {Grid, Row, Col} from 'react-flexbox-grid';
-import Panel from './Panel';
+import React, {Component} from 'react'
+import Drawer from 'material-ui/Drawer'
+import {Grid, Row, Col} from 'react-flexbox-grid'
+import Panel from './Panel'
 
 export default class PageWithPanel extends Component {
   render() {

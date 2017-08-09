@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {autobind} from 'core-decorators';
-import {View, StyleSheet, AsyncStorage} from 'react-native';
-import {Redirect} from 'react-router-native';
-import {login} from '../../helpers/auth';
-import {setItem} from '../../storage';
+import React, {Component} from 'react'
+import {autobind} from 'core-decorators'
+import {View, StyleSheet, AsyncStorage} from 'react-native'
+import {Redirect} from 'react-router-native'
+import {login} from '../../helpers/auth'
+import {setItem} from '../../storage'
 
 
 const {FBLogin, FBLoginManager} = require('react-native-facebook-login');
@@ -53,4 +53,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Login

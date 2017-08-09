@@ -1,7 +1,7 @@
-import React from 'react';
-import Snackbar from 'material-ui/Snackbar';
-import Spinner from '../common/Spinner';
-import mixin from './index';
+import React from 'react'
+import Snackbar from 'material-ui/Snackbar'
+import Spinner from '../common/Spinner'
+import mixin from './index'
 
 export default mixin({
   renderNotification(asyncResult, successMessage, errorMessage) {

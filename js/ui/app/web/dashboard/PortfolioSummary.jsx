@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
-import {List} from 'material-ui/List';
-import Container from '../common/Container';
-import AsyncPanel from '../panel/AsyncPanel';
-import ListItem from '../list/ListItem';
-import {renderPrice} from '../common/InvestmentValueHelpers';
-import {renderInvestmentChange} from '../common/InvestmentValueHelpers';
-import {getPercentageChange} from '../../../../common/core/utils';
+import React, {Component} from 'react'
+import {List} from 'material-ui/List'
+import Container from '../common/Container'
+import AsyncPanel from '../panel/AsyncPanel'
+import ListItem from '../list/ListItem'
+import {renderPrice} from '../common/InvestmentValueHelpers'
+import {renderInvestmentChange} from '../common/InvestmentValueHelpers'
+import {getPercentageChange} from '../../../../common/core/utils'
 import {
   getTotalExposure,
   getTotalPortfolioValue,
   getTotalCash,
   getTotalInvested
-} from '../../../../common/metrics/portfolio';
+} from '../../../../common/metrics/portfolio'
 
 export default class PortfolioSummary extends Component {
   render() {

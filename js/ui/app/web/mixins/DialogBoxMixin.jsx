@@ -1,6 +1,6 @@
-import React from 'react';
-import mixin from './index';
-import ConfirmationDialog from '../dialogs/ConfirmationDialog';
+import React from 'react'
+import mixin from './index'
+import ConfirmationDialog from '../dialogs/ConfirmationDialog'
 
 export default mixin({
   state: {
@@ -29,4 +29,4 @@ export default mixin({
       message={message}
       onSubmit={() => this.onSubmit()} />
   }
-});
+})

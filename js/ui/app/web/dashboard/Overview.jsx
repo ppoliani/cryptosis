@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Grid, Row, Col} from 'react-flexbox-grid';
-import {identity} from 'folktale/core/lambda';
-import {startPortfolioStream} from '../../data/stream/portfolioValueStream';
-import {startLast30DaysStream} from '../../data/stream/last30DaysStream';
-import CurrencySelector from '../common/CurrencySelector';
-import {getSelectedCurrency} from '../common/InvestmentValueHelpers';
-import TabView from './TabView';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {Grid, Row, Col} from 'react-flexbox-grid'
+import {identity} from 'folktale/core/lambda'
+import {startPortfolioStream} from '../../data/stream/portfolioValueStream'
+import {startLast30DaysStream} from '../../data/stream/last30DaysStream'
+import CurrencySelector from '../common/CurrencySelector'
+import {getSelectedCurrency} from '../common/InvestmentValueHelpers'
+import TabView from './TabView'
 
 const DEFAULT_CURRENCY = 'GBP';
 
@@ -89,4 +89,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Overview);
+)(Overview)

@@ -1,23 +1,23 @@
-import React, {Component} from 'react';
-import {List} from 'immutable';
-import {connect} from 'react-redux';
-import {Row, Col} from 'react-flexbox-grid';
-import Button from 'material-ui/FlatButton';
-import PageWithPanel from '../panel/PageWithPanel';
-import pureComponent from '../mixins/pureComponent';
-import AsyncPanel from '../panel/AsyncPanel';
-import {partial, pipe} from '../../../../common/core/fn';
-import {filterObject} from '../../services/utils';
-import createInvestmentTypeForm from './form/InvestmentTypeForm';
-import DialogBoxMixin from '../mixins/DialogBoxMixin';
-import Table from '../table/Table';
-import Container from '../common/Container';
+import React, {Component} from 'react'
+import {List} from 'immutable'
+import {connect} from 'react-redux'
+import {Row, Col} from 'react-flexbox-grid'
+import Button from 'material-ui/FlatButton'
+import PageWithPanel from '../panel/PageWithPanel'
+import pureComponent from '../mixins/pureComponent'
+import AsyncPanel from '../panel/AsyncPanel'
+import {partial, pipe} from '../../../../common/core/fn'
+import {filterObject} from '../../services/utils'
+import createInvestmentTypeForm from './form/InvestmentTypeForm'
+import DialogBoxMixin from '../mixins/DialogBoxMixin'
+import Table from '../table/Table'
+import Container from '../common/Container'
 import {
   getInvestmentTypes,
   saveInvestmentType,
   updateInvestmentType,
   deleteInvestmentType
-} from '../../data/investment/investmentActions';
+} from '../../data/investment/investmentActions'
 
 const columns = [
   {key: 'name', label: 'Name'},
@@ -151,4 +151,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(InvestmentTypePage);
+)(InvestmentTypePage)

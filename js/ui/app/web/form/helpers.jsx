@@ -1,8 +1,8 @@
-import React from 'react';
-import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import React from 'react'
+import TextField from 'material-ui/TextField'
+import DatePicker from 'material-ui/DatePicker'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
 
 const getError = field => field.meta.touched && field.meta.error
   ? field.meta.error
@@ -47,7 +47,7 @@ export const renderDatePicker = field =>  {
       {...props}
       onChange={onChange} />
   );
-};
+}
 
 export const renderDropdown = field => {
   const props = {
@@ -71,4 +71,4 @@ export const renderDropdown = field => {
         }
     </SelectField>
  );
-};
+}

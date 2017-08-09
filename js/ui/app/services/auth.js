@@ -1,4 +1,4 @@
-import fetch from './api';
+import fetch from './api'
 
 export const login = (source, token) => fetch(
   'POST',
@@ -6,4 +6,4 @@ export const login = (source, token) => fetch(
   {},
   false,
   {'X-Auth-Source': source, 'X-Auth-Token': token}
-);
+)

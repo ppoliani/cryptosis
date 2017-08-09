@@ -1,6 +1,6 @@
-import {handleActions} from 'redux-actions';
-import {Map, fromJS} from 'immutable';
-import identity from 'folktale/core/lambda/identity';
+import {handleActions} from 'redux-actions'
+import {Map, fromJS} from 'immutable'
+import identity from 'folktale/core/lambda/identity'
 import {
   GET_PARTIAL_INVESTMENTS,
   GET_INVESTMENTS,
@@ -12,8 +12,8 @@ import {
   SAVE_NEW_INVESTMENT_TYPE,
   UPDATE_INVESTMENT_TYPE,
   DELETE_INVESTMENT_TYPE
-} from './investmentActions';
-import AsyncData from '../core/AsyncData';
+} from './investmentActions'
+import AsyncData from '../core/AsyncData'
 
 const stringToDate = records => records.map(
   v => {
@@ -118,5 +118,5 @@ export default handleActions({
   [SAVE_NEW_INVESTMENT_TYPE]: handleSaveInvestmentType,
   [UPDATE_INVESTMENT_TYPE]: handleSaveInvestmentType,
   [DELETE_INVESTMENT_TYPE]: handleDeleteInvestmentType
-}, InvestmentData);
+}, InvestmentData)
 

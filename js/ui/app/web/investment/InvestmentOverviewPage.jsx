@@ -1,20 +1,20 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Map} from 'immutable';
-import {Row, Col} from 'react-flexbox-grid';
-import dateformat from 'date-fns/format';
-import {List} from 'material-ui/List';
-import ListItem from '../list/ListItem';
-import Subheader from 'material-ui/Subheader';
-import {identity} from 'folktale/core/lambda';
-import Maybe from 'folktale/maybe';
-import AsyncPanel from '../panel/AsyncPanel';
-import Container from '../common/Container';
-import pureComponent from '../mixins/pureComponent';
-import {getInvestment} from '../../data/investment/investmentActions';
-import {getPercentageChange} from '../../../../common/core/utils';
-import {renderInvestmentValue, renderPrice} from '../common/InvestmentValueHelpers';
-import {startInvestmentCurrentValueStream} from '../../data/stream/investmentValueStream';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {Map} from 'immutable'
+import {Row, Col} from 'react-flexbox-grid'
+import dateformat from 'date-fns/format'
+import {List} from 'material-ui/List'
+import ListItem from '../list/ListItem'
+import Subheader from 'material-ui/Subheader'
+import {identity} from 'folktale/core/lambda'
+import Maybe from 'folktale/maybe'
+import AsyncPanel from '../panel/AsyncPanel'
+import Container from '../common/Container'
+import pureComponent from '../mixins/pureComponent'
+import {getInvestment} from '../../data/investment/investmentActions'
+import {getPercentageChange} from '../../../../common/core/utils'
+import {renderInvestmentValue, renderPrice} from '../common/InvestmentValueHelpers'
+import {startInvestmentCurrentValueStream} from '../../data/stream/investmentValueStream'
 
 const DEFAULT_CURRENCY = 'GBP';
 
@@ -129,4 +129,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(InvestmentOverviewPage);
+)(InvestmentOverviewPage)

@@ -1,8 +1,8 @@
-import React from 'react';
-import parse from 'date-fns/parse';
-import createForm from '../../form/formBuilder';
-import getFields from '../../../data/form/investement/investementFields';
-import './form.scss';
+import React from 'react'
+import parse from 'date-fns/parse'
+import createForm from '../../form/formBuilder'
+import getFields from '../../../data/form/investement/investementFields'
+import './form.scss'
 
 const setDateObj = values => {
   if(!values) return values;

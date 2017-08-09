@@ -1,7 +1,7 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import taskMiddleware from '../middlewares/taskMiddleware';
-import reducer from './reducer';
+import {createStore, applyMiddleware} from 'redux'
+import thunk from 'redux-thunk'
+import taskMiddleware from '../middlewares/taskMiddleware'
+import reducer from './reducer'
 
 // create a store that has redux-thunk middleware enabled
 const createStoreWithMiddleware = applyMiddleware(

@@ -1,8 +1,8 @@
-import map from 'folktale/core/fantasy-land/map';
-import {createAction} from 'redux-actions';
-import fetch from '../../helpers/api';
+import map from 'folktale/core/fantasy-land/map'
+import {createAction} from 'redux-actions'
+import fetch from '../../helpers/api'
 
-export const GET_SEARCH_RESULTS= 'SEARCH::GET_SEARCH_RESULTS';
+export const GET_SEARCH_RESULTS= 'SEARCH::GET_SEARCH_RESULTS'
 
 const DUMMY_URL = 'https://jsonplaceholder.typicode.com/posts/1';
 
@@ -20,6 +20,6 @@ export const getSearchResultsRoot = fetch => {
     GET_SEARCH_RESULTS,
     (map.curried(transformData)) ['∘'] (fetchData)
   );
-};
+}
 
-export const getSearchResults = getSearchResultsRoot(fetch);
+export const getSearchResults = getSearchResultsRoot(fetch)

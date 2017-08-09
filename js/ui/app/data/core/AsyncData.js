@@ -1,4 +1,4 @@
-import union from 'folktale/adt/union/union';
+import union from 'folktale/adt/union/union'
 
 const allSuccess = asyncDataList => asyncDataList.every(
   a => a.matchWith({
@@ -39,4 +39,4 @@ const AsyncData = union('AsyncData', {
   Failure: error => ({error})
 })
 
-export default AsyncData;
+export default AsyncData

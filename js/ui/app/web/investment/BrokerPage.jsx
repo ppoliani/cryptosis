@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
-import {List} from 'immutable';
-import {connect} from 'react-redux';
-import {Row, Col} from 'react-flexbox-grid';
-import Button from 'material-ui/FlatButton';
-import pureComponent from '../mixins/pureComponent';
-import AsyncPanel from '../panel/AsyncPanel';
-import {partial, pipe} from '../../../../common/core/fn';
-import {filterObject} from '../../services/utils';
-import PageWithPanel from '../panel/PageWithPanel';
-import createBrokerForm from './form/BrokerForm';
-import Table from '../table/Table';
-import Container from '../common/Container';
-import DialogBoxMixin from '../mixins/DialogBoxMixin';
-import {getBrokers, saveBroker, updateBroker, deleteBroker} from '../../data/broker/brokerActions';
+import React, {Component} from 'react'
+import {List} from 'immutable'
+import {connect} from 'react-redux'
+import {Row, Col} from 'react-flexbox-grid'
+import Button from 'material-ui/FlatButton'
+import pureComponent from '../mixins/pureComponent'
+import AsyncPanel from '../panel/AsyncPanel'
+import {partial, pipe} from '../../../../common/core/fn'
+import {filterObject} from '../../services/utils'
+import PageWithPanel from '../panel/PageWithPanel'
+import createBrokerForm from './form/BrokerForm'
+import Table from '../table/Table'
+import Container from '../common/Container'
+import DialogBoxMixin from '../mixins/DialogBoxMixin'
+import {getBrokers, saveBroker, updateBroker, deleteBroker} from '../../data/broker/brokerActions'
 
 const columns = [
   {key: 'name', label: 'Name'},
@@ -145,4 +145,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BrokerPage);
+)(BrokerPage)

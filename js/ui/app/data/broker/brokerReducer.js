@@ -1,8 +1,8 @@
-import {handleActions} from 'redux-actions';
-import {Map, fromJS} from 'immutable';
-import identity from 'folktale/core/lambda/identity';
-import {GET_BROKERS, SAVE_NEW_BROKER, UPDATE_BROKER, DELETE_BROKER} from './brokerActions';
-import AsyncData from '../core/AsyncData';
+import {handleActions} from 'redux-actions'
+import {Map, fromJS} from 'immutable'
+import identity from 'folktale/core/lambda/identity'
+import {GET_BROKERS, SAVE_NEW_BROKER, UPDATE_BROKER, DELETE_BROKER} from './brokerActions'
+import AsyncData from '../core/AsyncData'
 
 const handleSetBrokers = (state, {payload: brokerResult}) =>
   brokerResult.matchWith({
@@ -48,5 +48,5 @@ export default handleActions({
   [SAVE_NEW_BROKER]: handleSaveBroker,
   [UPDATE_BROKER]: handleSaveBroker,
   [DELETE_BROKER]: handleDeleteBroker
-}, BrokerData);
+}, BrokerData)
 

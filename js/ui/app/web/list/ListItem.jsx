@@ -1,8 +1,8 @@
-import React from 'react';
-import {List, ListItem} from 'material-ui/List';
-import {Grid, Row, Col} from 'react-flexbox-grid';
+import React from 'react'
+import {List, ListItem} from 'material-ui/List'
+import {Grid, Row, Col} from 'react-flexbox-grid'
 
-import './list-item.scss';
+import './list-item.scss'
 
 export default ({first, second}) => (
   <ListItem>

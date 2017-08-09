@@ -1,4 +1,4 @@
-import AsyncData from '../core/AsyncData';
+import AsyncData from '../core/AsyncData'
 
 const isTask = val => val && typeof val.run === 'function';
 
@@ -10,4 +10,4 @@ export default ({dispatch}) => next => action =>
         result => dispatch({...action, payload: AsyncData.Success(result)})
       )
       .run()
-    : next(action);
+    : next(action)

@@ -1,13 +1,13 @@
-import {createAction} from 'redux-actions';
-import {fromJS} from 'immutable';
-import {combine} from 'most';
-import {btc$, bch$, eth$, xrp$, xtz$} from '../../../../common/sockets/streams';
-import {calculateTotalPortfolioValue} from '../../../../common/aggregators';
-import {setPortfolioValue} from '../portfolio/portfolioActions';
-import {setPrices} from '../prices/priceActions';
-import {getPartialInvestment$, getPriceObjFromStreamData} from './common';
+import {createAction} from 'redux-actions'
+import {fromJS} from 'immutable'
+import {combine} from 'most'
+import {btc$, bch$, eth$, xrp$, xtz$} from '../../../../common/sockets/streams'
+import {calculateTotalPortfolioValue} from '../../../../common/aggregators'
+import {setPortfolioValue} from '../portfolio/portfolioActions'
+import {setPrices} from '../prices/priceActions'
+import {getPartialInvestment$, getPriceObjFromStreamData} from './common'
 
-export const SET_PORTFOLIO_SUBSCRIPTION = 'STREAM::SET_PORTFOLIO_SUBSCRIPTION';
+export const SET_PORTFOLIO_SUBSCRIPTION = 'STREAM::SET_PORTFOLIO_SUBSCRIPTION'
 const setPortfolioSubscription = createAction(SET_PORTFOLIO_SUBSCRIPTION);
 
 export const startPortfolioStream = currency => dispatch => {
@@ -39,4 +39,4 @@ export const startPortfolioStream = currency => dispatch => {
     .subscribe(observer);
 
   dispatch(setPortfolioSubscription(subscription));
-};
+}

@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react';
-import AutoComplete from 'material-ui/AutoComplete';
-import CircularProgress from 'material-ui/CircularProgress';
-import {autobind} from 'core-decorators';
+import React, {Component, PropTypes} from 'react'
+import AutoComplete from 'material-ui/AutoComplete'
+import CircularProgress from 'material-ui/CircularProgress'
+import {autobind} from 'core-decorators'
 
 class Search extends Component {
   @autobind
@@ -41,4 +41,4 @@ class Search extends Component {
   }
 }
 
-export default Search;
+export default Search

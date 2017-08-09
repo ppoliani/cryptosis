@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
-import {List} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
-import Container from '../common/Container';
-import AsyncPanel from '../panel/AsyncPanel';
-import ListItem from '../list/ListItem';
-import {getPercentageChange} from '../../../../common/core/utils';
-import {renderInvestmentChange} from '../common/InvestmentValueHelpers';
-import {renderPrice} from '../common/InvestmentValueHelpers';
-import {getTotalCashForType, getQtyForType} from '../../../../common/metrics/portfolio';
+import React, {Component} from 'react'
+import {List} from 'material-ui/List'
+import Subheader from 'material-ui/Subheader'
+import Divider from 'material-ui/Divider'
+import Container from '../common/Container'
+import AsyncPanel from '../panel/AsyncPanel'
+import ListItem from '../list/ListItem'
+import {getPercentageChange} from '../../../../common/core/utils'
+import {renderInvestmentChange} from '../common/InvestmentValueHelpers'
+import {renderPrice} from '../common/InvestmentValueHelpers'
+import {getTotalCashForType, getQtyForType} from '../../../../common/metrics/portfolio'
 
 export default class InvestmentSummary extends Component {
   getInvestmentRows() {

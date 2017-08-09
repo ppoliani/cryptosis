@@ -1,10 +1,10 @@
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
-import AppBar from 'material-ui/AppBar';
-import Paper from 'material-ui/Paper';
-import {setUserProfile} from '../data/profile/profileActions';
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import AppBar from 'material-ui/AppBar'
+import Paper from 'material-ui/Paper'
+import {setUserProfile} from '../data/profile/profileActions'
 
-import {getItem} from '../../storage';
+import {getItem} from '../../storage'
 
 const style = {
   height: '100vh',
@@ -42,4 +42,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(App)

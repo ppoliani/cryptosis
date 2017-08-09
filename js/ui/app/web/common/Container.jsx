@@ -1,5 +1,5 @@
-import React from 'react';
-import {Card, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
+import React from 'react'
+import {Card, CardHeader, CardMedia, CardTitle} from 'material-ui/Card'
 
 export default ({title, subtitle='', children}) => (
   <Card>

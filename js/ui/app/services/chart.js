@@ -1,4 +1,4 @@
-import {List} from 'immutable';
+import {List} from 'immutable'
 
 const getSymbols = data => data
   .matchWith({
@@ -60,7 +60,7 @@ export const getChartConfig = data => ({
   synchronizeGrid: false,
   legend: getLegend(),
   chartScrollbar: getChartScrollBar()
-});
+})
 
 export const getAggregatePortfolioChartConfig = () => ({
   color: 'rgba(255, 255, 255, 0.54)',
@@ -79,4 +79,4 @@ export const getAggregatePortfolioChartConfig = () => ({
   categoryField: 'day',
   categoryAxis: getCategoryAxis(),
   chartScrollbar: getChartScrollBar()
-});
+})

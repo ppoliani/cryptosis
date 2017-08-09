@@ -1,30 +1,30 @@
-import React, {Component} from 'react';
-import {List, fromJS, Map} from 'immutable';
-import dateformat from 'date-fns/format';
-import {partial, pipe} from '../../../../common/core/fn';
-import {filterObject} from '../../services/utils';
-import {connect} from 'react-redux';
-import {identity} from 'folktale/core/lambda';
-import {Row, Col} from 'react-flexbox-grid';
-import Button from 'material-ui/FlatButton';
-import pureComponent from '../mixins/pureComponent';
-import PageWithPanel from '../panel/PageWithPanel';
-import AsyncPanel from '../panel/AsyncPanel';
-import Table from '../table/Table';
-import Container from '../common/Container';
-import DialogBoxMixin from '../mixins/DialogBoxMixin';
-import PanelContent from './PanelContent';
-import {getBrokers} from '../../data/broker/brokerActions';
-import {startInvestmentCurrentValueStream} from '../../data/stream/investmentValueStream';
-import {renderInvestmentValue, getSelectedCurrency, renderPrice} from '../common/InvestmentValueHelpers';
-import CurrencySelector from '../common/CurrencySelector';
+import React, {Component} from 'react'
+import {List, fromJS, Map} from 'immutable'
+import dateformat from 'date-fns/format'
+import {partial, pipe} from '../../../../common/core/fn'
+import {filterObject} from '../../services/utils'
+import {connect} from 'react-redux'
+import {identity} from 'folktale/core/lambda'
+import {Row, Col} from 'react-flexbox-grid'
+import Button from 'material-ui/FlatButton'
+import pureComponent from '../mixins/pureComponent'
+import PageWithPanel from '../panel/PageWithPanel'
+import AsyncPanel from '../panel/AsyncPanel'
+import Table from '../table/Table'
+import Container from '../common/Container'
+import DialogBoxMixin from '../mixins/DialogBoxMixin'
+import PanelContent from './PanelContent'
+import {getBrokers} from '../../data/broker/brokerActions'
+import {startInvestmentCurrentValueStream} from '../../data/stream/investmentValueStream'
+import {renderInvestmentValue, getSelectedCurrency, renderPrice} from '../common/InvestmentValueHelpers'
+import CurrencySelector from '../common/CurrencySelector'
 import {
   getInvestments,
   saveInvestment,
   updateInvestment,
   deleteInvestment,
   getInvestmentTypes
-} from '../../data/investment/investmentActions';
+} from '../../data/investment/investmentActions'
 
 const columns = [
   {key: 'investmentType', label: 'Investment Type'},
@@ -250,5 +250,5 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(InvestmentPage);
+)(InvestmentPage)
 

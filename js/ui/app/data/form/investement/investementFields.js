@@ -1,5 +1,5 @@
-import {required, date, number} from '../validator';
-import {currencyOptions} from '../../../data/constants/currencies';
+import {required, date, number} from '../validator'
+import {currencyOptions} from '../../../data/constants/currencies'
 
 const fields = [{
   type: 'dropdown',
@@ -75,4 +75,4 @@ export default (brokerOptions, investmentTypesOptions) => [
     options: investmentTypesOptions
   },
   ...fields
-];
+]

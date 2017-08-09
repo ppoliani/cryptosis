@@ -1,16 +1,16 @@
-import {Provider} from 'react-redux';
-import ReactDOM from 'react-dom';
-import React from 'react';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {cyan500} from 'material-ui/styles/colors';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import Router from './core/Router';
-import configureStore from '../data';
+import {Provider} from 'react-redux'
+import ReactDOM from 'react-dom'
+import React from 'react'
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import {cyan500} from 'material-ui/styles/colors'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import Router from './core/Router'
+import configureStore from '../data'
 
-import './index.html';
-import './app.scss';
+import './index.html'
+import './app.scss'
 
 injectTapEventPlugin();
 

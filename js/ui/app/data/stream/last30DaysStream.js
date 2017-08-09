@@ -1,11 +1,11 @@
-import {createAction} from 'redux-actions';
-import {combine} from 'most';
-import {fromJS} from 'immutable';
-import {calculateHistoricPortfolioValues} from '../../../../common/aggregators';
-import {setLast30Days} from '../portfolio/portfolioActions';
-import {getPartialInvestment$, getBTC$, getBCH$, getETH$, getXRP$, getXTZ$} from './common';
+import {createAction} from 'redux-actions'
+import {combine} from 'most'
+import {fromJS} from 'immutable'
+import {calculateHistoricPortfolioValues} from '../../../../common/aggregators'
+import {setLast30Days} from '../portfolio/portfolioActions'
+import {getPartialInvestment$, getBTC$, getBCH$, getETH$, getXRP$, getXTZ$} from './common'
 
-export const SET_LAST_30_DAYS_SUBSCRIPTION = 'STREAM::SET_LAST_30_DAYS_SUBSCRIPTION';
+export const SET_LAST_30_DAYS_SUBSCRIPTION = 'STREAM::SET_LAST_30_DAYS_SUBSCRIPTION'
 const setLast30DaysSubscription = createAction(SET_LAST_30_DAYS_SUBSCRIPTION);
 
 export const startLast30DaysStream = currency => dispatch => {

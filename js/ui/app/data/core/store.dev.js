@@ -1,7 +1,7 @@
-import {createStore, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
-import taskMiddleware from '../middlewares/taskMiddleware';
-import reducer from './reducer';
+import {createStore, applyMiddleware} from 'redux'
+import thunk from 'redux-thunk'
+import taskMiddleware from '../middlewares/taskMiddleware'
+import reducer from './reducer'
 
 const createDevStoreWithMiddleware = applyMiddleware(
   taskMiddleware,
@@ -23,4 +23,4 @@ const configureStore = () => {
 }
 
 
-export default configureStore;
+export default configureStore

@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Header, Body, Title} from 'native-base';
+import React, {Component} from 'react'
+import {Header, Body, Title} from 'native-base'
 
 export default class AppHeader extends Component {
   render() {

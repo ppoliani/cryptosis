@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {Row, Col} from 'react-flexbox-grid';
-import {List} from 'immutable';
-import pureComponent from '../mixins/pureComponent';
-import {AsyncDataAll, AsyncDataSome} from '../../data/core/AsyncData';
-import AsyncPanel from '../panel/AsyncPanel';
-import createInvestmentForm from './form/InvestmentForm';
+import React, {Component} from 'react'
+import {Row, Col} from 'react-flexbox-grid'
+import {List} from 'immutable'
+import pureComponent from '../mixins/pureComponent'
+import {AsyncDataAll, AsyncDataSome} from '../../data/core/AsyncData'
+import AsyncPanel from '../panel/AsyncPanel'
+import createInvestmentForm from './form/InvestmentForm'
 
 @pureComponent
 export default class PanelContent extends Component {

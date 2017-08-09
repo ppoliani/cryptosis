@@ -1,5 +1,5 @@
-import fetch from '../../services/api';
-import {fromPromise} from 'most';
+import fetch from '../../services/api'
+import {fromPromise} from 'most'
 
 const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;
 
@@ -14,12 +14,12 @@ const fetchXRP= currency => fetch('GET', historicalDataUrl('XRP', currency, +(ne
 const fetchXTZ= currency => fetch('GET', historicalDataUrl('XTZ', currency, +(new Date), 30), {}, false);
 
 
-export const getBTC$ = currency => fromPromise(fetchBTC(currency).run().promise());
-export const getBCH$ = currency => fromPromise(fetchBCH(currency).run().promise());
-export const getETH$ = currency => fromPromise(fetchETH(currency).run().promise());
-export const getXRP$ = currency => fromPromise(fetchXRP(currency).run().promise());
-export const getXTZ$ = currency => fromPromise(fetchXTZ(currency).run().promise());
-export const getPartialInvestment$ = () => fromPromise(fetchPartialInvestments.run().promise());
+export const getBTC$ = currency => fromPromise(fetchBTC(currency).run().promise())
+export const getBCH$ = currency => fromPromise(fetchBCH(currency).run().promise())
+export const getETH$ = currency => fromPromise(fetchETH(currency).run().promise())
+export const getXRP$ = currency => fromPromise(fetchXRP(currency).run().promise())
+export const getXTZ$ = currency => fromPromise(fetchXTZ(currency).run().promise())
+export const getPartialInvestment$ = () => fromPromise(fetchPartialInvestments.run().promise())
 
 export const getPriceObjFromStreamData = data => ({
   price: data.PRICE,
