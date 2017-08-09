@@ -10,7 +10,7 @@ export default class Header extends Component {
     const {toggleSidebar} = this.props;
     return (
       <AppBar
-        title="Investrackr"
+        title="Cryptosis"
         onLeftIconButtonTouchTap={toggleSidebar}
         iconElementRight={<Button>Logout</Button>} />
     );
