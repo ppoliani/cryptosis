@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import Container from '../common/Container';
-import AsyncPanel from '../common/AsyncPanel';
 import {List} from 'material-ui/List';
-import ListItem from '../common/ListItem';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
+import Container from '../common/Container';
+import AsyncPanel from '../panel/AsyncPanel';
+import ListItem from '../list/ListItem';
 import {getPercentageChange} from '../../../../common/core/utils';
 import {renderInvestmentChange} from '../common/InvestmentValueHelpers';
 import {renderPrice} from '../common/InvestmentValueHelpers';

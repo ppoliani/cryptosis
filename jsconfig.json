@@ -8,6 +8,7 @@
     ".history",
     ".vscode",
     "js/api/node_modules",
+    "js/ui/node_modules",
     "js/common/node_modules",
     "js/notificationService/node_modules",
     "js/ui/android",

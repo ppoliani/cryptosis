@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {List} from 'material-ui/List';
 import Container from '../common/Container';
-import AsyncPanel from '../common/AsyncPanel';
-import ListItem from '../common/ListItem';
+import AsyncPanel from '../panel/AsyncPanel';
+import ListItem from '../list/ListItem';
 import {renderPrice} from '../common/InvestmentValueHelpers';
 import {renderInvestmentChange} from '../common/InvestmentValueHelpers';
 import {getPercentageChange} from '../../../../common/core/utils';

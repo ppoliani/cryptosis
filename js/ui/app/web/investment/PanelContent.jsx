@@ -3,7 +3,7 @@ import {Row, Col} from 'react-flexbox-grid';
 import {List} from 'immutable';
 import pureComponent from '../mixins/pureComponent';
 import {AsyncDataAll, AsyncDataSome} from '../../data/core/AsyncData';
-import AsyncPanel from '../common/AsyncPanel';
+import AsyncPanel from '../panel/AsyncPanel';
 import createInvestmentForm from './form/InvestmentForm';
 
 @pureComponent

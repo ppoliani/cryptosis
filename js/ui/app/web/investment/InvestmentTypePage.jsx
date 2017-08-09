@@ -3,14 +3,14 @@ import {List} from 'immutable';
 import {connect} from 'react-redux';
 import {Row, Col} from 'react-flexbox-grid';
 import Button from 'material-ui/FlatButton';
-import PageWithPanel from '../common/PageWithPanel';
+import PageWithPanel from '../panel/PageWithPanel';
 import pureComponent from '../mixins/pureComponent';
-import AsyncPanel from '../common/AsyncPanel';
+import AsyncPanel from '../panel/AsyncPanel';
 import {partial, pipe} from '../../../../common/core/fn';
 import {filterObject} from '../../services/utils';
 import createInvestmentTypeForm from './form/InvestmentTypeForm';
 import DialogBoxMixin from '../mixins/DialogBoxMixin';
-import Table from '../common/Table';
+import Table from '../table/Table';
 import Container from '../common/Container';
 import {
   getInvestmentTypes,

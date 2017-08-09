@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Snackbar from 'material-ui/Snackbar';
 import {Row, Col} from 'react-flexbox-grid';
 import classnames from 'classnames';
-import Spinner from '../common/Spinner';
+import Spinner from '../spinner/Spinner';
 
 export default class AsyncPanel extends Component {
   renderActionStatus(asyncResult) {
