@@ -1,0 +1,16 @@
+.main-content {
+  &__page {
+    padding: 1rem;
+  }
+}
+
+.page-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#root {
+  height: 100%;
+}

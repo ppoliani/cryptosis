@@ -1,0 +1,15 @@
+.center {
+  text-align: center;
+}
+
+.right {
+  float: right;
+
+  &::after {
+    clear: both;
+  }
+}
+
+.fade-out {
+  opacity: 0.3;
+}
