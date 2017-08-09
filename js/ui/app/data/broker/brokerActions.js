@@ -4,7 +4,6 @@ import fetch, {constructUrl} from '../../services/api'
 import {partial} from '../../../../common/core/fn'
 import {task} from 'folktale/concurrency/task'
 
-
 export const GET_BROKERS = 'BROKER::GET_BROKERS'
 export const SAVE_NEW_BROKER = 'BROKER::SAVE_NEW_BROKER'
 export const UPDATE_BROKER = 'BROKER::UPDATE_BROKER'
