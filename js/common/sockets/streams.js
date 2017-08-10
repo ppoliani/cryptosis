@@ -6,13 +6,13 @@ const btc$ = currency => merge(
   connect(io, 'BTC', 'Coinfloor', currency),
   connect(io, 'BTC', 'Kraken', currency),
   connect(io, 'BTC', 'Coinbase', currency)
-).startWith({});;
+).startWith({});
 
 const bch$ = currency => merge(
   connect(io, 'BCH', 'Coinfloor', currency),
   connect(io, 'BCH', 'Kraken', currency),
   connect(io, 'BCH', 'Coinbase', currency)
-).startWith({});;
+).startWith({});
 
 const eth$ = currency => connect(io, 'ETH', 'Kraken', currency).startWith({MARKET: 'Kraken'});
 const xrp$ = currency => connect(io, 'XRP', 'Bitstamp', currency).startWith({MARKET: 'Bitstamp'});

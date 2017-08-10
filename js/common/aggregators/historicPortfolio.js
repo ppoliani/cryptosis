@@ -1,5 +1,6 @@
 const {fromJS, Map} = require('immutable');
 const {create} = require('@most/create');
+const {noop} = require('../core/fn');
 const {
   getChangeAfterDate,
   getCashAfterDate,
@@ -50,7 +51,7 @@ const calculateHistoricPortfolioValues = ({investments, prices}) =>
     add(fromJS({longTerm, shortTerm}));
     end();
 
-    return () => console.log('Unsubscribe calculateHistoricPortfolioValues');
+    return noop;
   });
 
 module.exports = {calculateHistoricPortfolioValues};

@@ -67,6 +67,8 @@ module.exports = () => {
         'immutable',
         'babel-polyfill',
         'whatwg-fetch',
+        'most',
+        '@most/create',
         'core-decorators',
         'amcharts3/amcharts/amcharts',
         'amcharts3/amcharts/serial',

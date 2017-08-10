@@ -1,6 +1,6 @@
 const partial = (fn, ...args) => (...restArgs) => fn.apply(this, args.concat(restArgs));
 const pipe = (...fns) => fns.reverse().reduce((res, fn) => fn(res));
-
+const noop = () => {};
 const flatten = list => list.reduce(
     (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
 );
@@ -13,4 +13,4 @@ Function.prototype['∘'] = function(f){
 
 const predicate = (...conditions) => item => conditions.every(c => c(item))
 
-module.exports = {partial, pipe, flatten, predicate}
+module.exports = {partial, pipe, flatten, predicate, noop}

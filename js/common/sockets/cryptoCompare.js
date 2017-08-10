@@ -73,7 +73,10 @@ const connect = (io, symbol, exchangeName, toSymbol) => {
       }
     });
 
-    return () => socket.emit('SubRemove', {subs:subscription});
+    return () => {
+      console.log(`unsubscribing ${symbol}`);
+      socket.emit('SubRemove', {subs:subscription});
+    }
   });
 }
 

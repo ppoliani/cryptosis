@@ -1,5 +1,6 @@
 const {fromJS} = require('immutable');
 const {create} = require('@most/create');
+const {noop} = require('../core/fn');
 const {
    calculateCurrentValuePerType,
    calculateExposure,
@@ -29,9 +30,10 @@ const calculateTotalPortfolioValue = ({investments, prices}) =>
       qty: calculatePortfolioTotalQtyPerType(shortTermInvestments)
      }
     }));
+
     end();
 
-    return () => console.log('Unsubscribe calculateTotalPortfolioValue');
+    return noop;
   });
 
 module.exports = {calculateTotalPortfolioValue};
