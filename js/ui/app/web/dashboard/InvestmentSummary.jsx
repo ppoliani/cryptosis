@@ -21,8 +21,8 @@ export default class InvestmentSummary extends Component {
           .map((v, k) => {
             const exposure = v;
             const holdings = getQtyForType(portfolio, k, assetLife);
-            const currentValue = total.get('currentValue').get(k);
-            const totalInvested = total.get('totalInvested').get(k);
+            const currentValue = total.getIn(['currentValue', k]);
+            const totalInvested = total.getIn(['totalInvested', k]);
             const totalCash = getTotalCashForType(portfolio, k, assetLife);
             const percentageChange = renderInvestmentChange(currentValue, exposure, currency);
 

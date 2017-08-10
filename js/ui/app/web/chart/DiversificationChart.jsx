@@ -1,47 +1,32 @@
 import React, {Component} from 'react'
-import {List as ListIm, Map} from 'immutable'
 import AmCharts from '@amcharts/amcharts3-react'
 import pureComponent from '../mixins/pureComponent'
 import AsyncPanel from '../panel/AsyncPanel'
 import Container from '../common/Container'
+import {getDiversificationChartConfig} from '../../services/chart'
 import AsyncData  from '../../data/core/AsyncData'
-import {getAggregatePortfolioChartConfig} from '../../services/chart'
-import './chart.scss'
+import {round} from '../../services/utils'
 
 @pureComponent
-export default class AggregatePortfolioChart extends Component {
+class DiversificaChart extends Component {
   state = {
     chartStatus: AsyncData.Loading()
   };
 
   getChartData() {
-    const {lastNDaysData, historicProperty} = this.props;
-
-    const aggregate = ({value: aggregates}) => {
-      const [first, ...rest] = aggregates.values();
-      const getValue = obj =>  {
-        const val = obj.getIn(['value', historicProperty]);
-
-        return val !== undefined
-            ? val
-            : obj.get('total');
-      };
-
-      return first.mergeWith(
-        (oldVal, newVal) => Map({
-          day: oldVal.get('day'),
-          total: getValue(oldVal) + getValue(newVal)
-        }),
-        ...rest
-      )
+    const {totalValue} = this.props;
+    const mapChartData = ({value: total}) => total.get('totalExposure')
+      .map((v, k) => ({
+        crypto: k,
+        value: round(total.getIn(['currentValue', k]))
+      }))
+      .toList()
       .toJS();
-    }
 
-    return lastNDaysData
-      .matchWith({
-        Just: aggregate,
-        Nothing: () => {}
-      });
+    return totalValue.matchWith({
+      Just: mapChartData,
+      Nothing: () => []
+    });
   }
 
   getChartsListeners() {
@@ -59,22 +44,22 @@ export default class AggregatePortfolioChart extends Component {
   }
 
   render() {
-    const {title, subtitle} = this.props;
-
     return (
-      <Container title={title} subtitle={subtitle}>
+      <Container title='Portfolio' subtitle='Diversification'>
         <AsyncPanel asyncResult={this.state.chartStatus}>
           <div className='chart-container'>
             <AmCharts.React
               pathToImages='/images/'
-              type='serial'
+              type='pie'
               theme='light'
               listeners={this.getChartsListeners()}
               dataProvider={this.getChartData()}
-              {...getAggregatePortfolioChartConfig()}/>
+              {...getDiversificationChartConfig()}/>
             </div>
         </AsyncPanel>
       </Container>
-    )
+    );
   }
 }
+
+export default DiversificaChart

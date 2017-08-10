@@ -4,11 +4,13 @@ import {Row, Col} from 'react-flexbox-grid'
 import PortfolioSummary from './PortfolioSummary'
 import InvestmentSummary from './InvestmentSummary'
 import ChartContainer from '../chart/ChartConainer'
+import DiversificationChart from '../chart/DiversificationChart'
 
 export default class TabView extends Component {
   renderTab(label, assetLife) {
     const {currency, portfolio, investment, prices} = this.props;
     const lastNDaysData = portfolio.getIn(['last30Days', assetLife]);
+    const totalValue = portfolio.getIn(['total', assetLife])
 
     return (
       <Tab label={label}>
@@ -17,6 +19,9 @@ export default class TabView extends Component {
             <ChartContainer lastNDaysData={lastNDaysData} />
           </Col>
           <Col lg={4} xs={12}>
+            <Col className='row-spacing'>
+              <DiversificationChart totalValue={totalValue} />
+            </Col>
             <Col className='row-spacing'>
               <PortfolioSummary
                 currency={currency}

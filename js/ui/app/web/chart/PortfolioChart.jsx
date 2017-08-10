@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
 import {List as ListIm, Map} from 'immutable'
-import identity from 'folktale/core/lambda/identity'
 import AmCharts from '@amcharts/amcharts3-react'
 import pureComponent from '../mixins/pureComponent'
 import AsyncPanel from '../panel/AsyncPanel'
 import Container from '../common/Container'
-import AsyncData, {AsyncDataAll} from '../../data/core/AsyncData'
+import AsyncData from '../../data/core/AsyncData'
 import {getChartConfig} from '../../services/chart'
 import './chart.scss'
 

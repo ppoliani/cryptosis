@@ -47,7 +47,7 @@ const getCategoryAxis = () => ({
 
 const getLegend = () => ({
   useGraphSettings: true,
-  color: 'rgba(255, 255, 255, 0.54)',
+  color: 'rgba(255, 255, 255, 0.54)'
 });
 
 export const getChartConfig = data => ({
@@ -75,4 +75,20 @@ export const getAggregatePortfolioChartConfig = () => ({
   categoryField: 'day',
   categoryAxis: getCategoryAxis(),
   chartScrollbar: getChartScrollBar()
+})
+
+export const getDiversificationChartConfig = () => ({
+  valueField: 'value',
+  titleField: 'crypto',
+  depth3D: 15,
+  balloonText: `[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>`,
+  angle: 35,
+  labelsEnabled: true,
+  marginTop: 0,
+  marginBottom: 0,
+  marginLeft: 0,
+  marginRight: 0,
+  pullOutRadius: 0,
+  autoMargins: false,
+  color: 'rgba(255, 255, 255, 0.54)'
 })
