@@ -1,10 +1,23 @@
 @import '../styles/tools/_mixins.scss';
 @import '../styles/objects/_o-animations.scss';
+@import '../styles/settings/_variables';
+
+.animated-text .arrow {
+  margin-left: 5px;
+}
 
 .animated-text--up {
   @include animation('color-change--up 1s 10');
+
+  .arrow {
+    @include arrow-up($green-color);
+  }
 }
 
 .animated-text--down {
   @include animation('color-change--down 1s 10');
+
+  .arrow {
+    @include arrow-down($red-color);
+  }
 }

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import classnames from 'classnames'
+import {Row, Col} from 'react-flexbox-grid'
 import './animatedText.scss'
 
 class AnimatedText extends Component {
@@ -17,13 +18,17 @@ class AnimatedText extends Component {
     const change = this.state.change;
 
     const classList = classnames({
+      'center': true,
       'animated-text': true,
       'animated-text--up': change > 0,
       'animated-text--down': change < 0
     });
 
     return (
-      <span className={classList}>{this.props.text}</span>
+      <Row middle='xs' center='xs' className={classList}>
+        <Col>{this.props.text}</Col>
+        <Col className='arrow'></Col>
+      </Row>
     )
   }
 }

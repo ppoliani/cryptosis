@@ -29,3 +29,20 @@
         @content;
     }
 }
+
+@mixin arrow-up($color) {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent $color transparent;
+}
+
+@mixin arrow-down($color) {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: $color transparent transparent transparent;
+}
+
