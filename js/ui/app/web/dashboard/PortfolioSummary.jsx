@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
 import {List} from 'material-ui/List'
+import {Grid, Row, Col} from 'react-flexbox-grid'
 import Container from '../common/Container'
 import AsyncPanel from '../panel/AsyncPanel'
 import ListItem from '../list/ListItem'
 import {renderPrice} from '../common/InvestmentValueHelpers'
 import {renderInvestmentChange} from '../common/InvestmentValueHelpers'
 import {getPercentageChange} from '../../../../common/core/utils'
+import TitledBox from '../box/TitledBox'
 import {
   getTotalExposure,
   getTotalPortfolioValue,
@@ -16,22 +18,33 @@ import {
 export default class PortfolioSummary extends Component {
   render() {
     const {investment, currency, portfolio, assetLife} = this.props;
-    const totalExposure = getTotalExposure(portfolio, assetLife);
-    const totalPortfolioValue = getTotalPortfolioValue(portfolio, assetLife);
-    const totalCash = getTotalCash(portfolio, assetLife);
-    const totalInvested = getTotalInvested(portfolio, assetLife);
-    const percentageChange = renderInvestmentChange(totalPortfolioValue, totalExposure, currency);
+    const portfolioValue = getTotalPortfolioValue(portfolio, assetLife);
+    const exposure = getTotalExposure(portfolio, assetLife);
 
     return (
-      <Container title='Portfolio' subtitle='Aggregates'>
+      <Container title='Current' subtitle='Status'>
         <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
-          <List>
-            <ListItem first='Exposure' second={renderPrice(totalExposure, currency)} />
-            <ListItem first='Total Cash' second={renderPrice(totalCash, currency)} />
-            <ListItem first='Total Amount Invested' second={renderPrice(totalInvested, currency)} />
-            <ListItem first='Portfolio Value' second={renderPrice(totalPortfolioValue, currency)} />
-            <ListItem first='Capital Growth' second={percentageChange} />
-          </List>
+          <Row around='xs'>
+            <Col xs={5} className='row-spacing'>
+              <TitledBox header='Exposure'>{renderPrice(exposure, currency)}</TitledBox>
+            </Col>
+            <Col xs={5} className='row-spacing'>
+              <TitledBox header='Cash'>{renderPrice(getTotalCash(portfolio, assetLife), currency)}</TitledBox>
+            </Col>
+          </Row>
+          <Row around='xs'>
+            <Col xs={5} className='row-spacing'>
+              <TitledBox header='Total Value'>{renderPrice(portfolioValue, currency)}</TitledBox>
+            </Col>
+            <Col xs={5} className='row-spacing'>
+              <TitledBox header='Total Invested'>{renderPrice(getTotalInvested(portfolio, assetLife), currency)}</TitledBox>
+            </Col>
+          </Row>
+          <Row around='xs'>
+            <Col xs={11} className='row-spacing'>
+              <TitledBox header='Profit/Loss'>{renderInvestmentChange(portfolioValue, exposure, currency)}</TitledBox>
+            </Col>
+          </Row>
         </AsyncPanel>
       </Container>
     )

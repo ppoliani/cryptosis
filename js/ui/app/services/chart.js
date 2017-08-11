@@ -77,7 +77,7 @@ export const getAggregatePortfolioChartConfig = () => ({
   chartScrollbar: getChartScrollBar()
 })
 
-export const getDiversificationChartConfig = () => ({
+export const getAssetAllocationChartConfig = () => ({
   valueField: 'value',
   titleField: 'crypto',
   depth3D: 15,

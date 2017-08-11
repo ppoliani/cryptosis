@@ -3,12 +3,12 @@ import AmCharts from '@amcharts/amcharts3-react'
 import pureComponent from '../mixins/pureComponent'
 import AsyncPanel from '../panel/AsyncPanel'
 import Container from '../common/Container'
-import {getDiversificationChartConfig} from '../../services/chart'
+import {getAssetAllocationChartConfig} from '../../services/chart'
 import AsyncData  from '../../data/core/AsyncData'
 import {round} from '../../services/utils'
 
 @pureComponent
-class DiversificaChart extends Component {
+class AssetAllocationChart extends Component {
   state = {
     chartStatus: AsyncData.Loading()
   };
@@ -45,7 +45,7 @@ class DiversificaChart extends Component {
 
   render() {
     return (
-      <Container title='Portfolio' subtitle='Diversification'>
+      <Container title='Asset' subtitle='Allocation'>
         <AsyncPanel asyncResult={this.state.chartStatus}>
           <div className='chart-container'>
             <AmCharts.React
@@ -54,7 +54,7 @@ class DiversificaChart extends Component {
               theme='light'
               listeners={this.getChartsListeners()}
               dataProvider={this.getChartData()}
-              {...getDiversificationChartConfig()}/>
+              {...getAssetAllocationChartConfig()}/>
             </div>
         </AsyncPanel>
       </Container>
@@ -62,4 +62,4 @@ class DiversificaChart extends Component {
   }
 }
 
-export default DiversificaChart
+export default AssetAllocationChart

@@ -4,7 +4,7 @@ import {Row, Col} from 'react-flexbox-grid'
 import PortfolioSummary from './PortfolioSummary'
 import InvestmentSummary from './InvestmentSummary'
 import ChartContainer from '../chart/ChartConainer'
-import DiversificationChart from '../chart/DiversificationChart'
+import AssetAllocationChart from '../chart/AssetAllocationChart'
 
 export default class TabView extends Component {
   renderTab(label, assetLife) {
@@ -20,7 +20,7 @@ export default class TabView extends Component {
           </Col>
           <Col lg={4} xs={12}>
             <Col className='row-spacing'>
-              <DiversificationChart totalValue={totalValue} />
+              <AssetAllocationChart totalValue={totalValue} />
             </Col>
             <Col className='row-spacing'>
               <PortfolioSummary
