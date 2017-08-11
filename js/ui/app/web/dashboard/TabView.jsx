@@ -30,11 +30,7 @@ export default class TabView extends Component {
                 assetLife={assetLife} />
             </Col>
             <Col>
-              <InvestmentSummary
-                currency={currency}
-                investment={investment}
-                portfolio={portfolio}
-                assetLife={assetLife}/>
+              <InvestmentSummary assetLife={assetLife}/>
             </Col>
           </Col>
         </Row>

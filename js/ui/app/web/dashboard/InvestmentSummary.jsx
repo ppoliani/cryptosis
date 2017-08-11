@@ -1,62 +1,123 @@
 import React, {Component} from 'react'
-import {List} from 'material-ui/List'
-import Subheader from 'material-ui/Subheader'
-import Divider from 'material-ui/Divider'
+import {connect} from 'react-redux'
+import {autobind} from 'core-decorators'
+import {Row, Col} from 'react-flexbox-grid'
 import Container from '../common/Container'
 import AsyncPanel from '../panel/AsyncPanel'
-import ListItem from '../list/ListItem'
+import AsyncData from '../../data/core/AsyncData'
+import pureComponent from '../mixins/pureComponent'
 import {getPercentageChange} from '../../../../common/core/utils'
 import {renderInvestmentChange} from '../common/InvestmentValueHelpers'
-import {renderPrice} from '../common/InvestmentValueHelpers'
+import {renderPrice, getSelectedCurrency, getSelectedAsset} from '../common/InvestmentValueHelpers'
 import {getTotalCashForType, getQtyForType} from '../../../../common/metrics/portfolio'
+import SelectorForm from '../common/Selector'
+import TitledBox from '../box/TitledBox'
 
-export default class InvestmentSummary extends Component {
-  getInvestmentRows() {
-    const {currency, portfolio, assetLife} = this.props;
+@pureComponent
+class InvestmentSummary extends Component {
+  getAssetOptions(totalExposure) {
+    return [...totalExposure.keys()]
+      .map(k => ({
+        value: k,
+        text: k
+      }));
+  }
+
+  renderSelector() {
+    const {portfolio, form, assetLife} = this.props;
 
     return portfolio
       .getIn(['total', assetLife])
       .matchWith({
-        Just: ({value: total}) => total.get('totalExposure')
-          .map((v, k) => {
-            const exposure = v;
-            const holdings = getQtyForType(portfolio, k, assetLife);
-            const currentValue = total.getIn(['currentValue', k]);
-            const totalInvested = total.getIn(['totalInvested', k]);
-            const totalCash = getTotalCashForType(portfolio, k, assetLife);
-            const percentageChange = renderInvestmentChange(currentValue, exposure, currency);
+        Just: ({value: total}) => {
+          const options = this.getAssetOptions(total.get('totalExposure'));
+          const selected = getSelectedAsset(form) || (options[0] && options[0].value);
 
-            return (
-              <div key={k}>
-                <List>
-                  <Subheader>{k}</Subheader>
-                  <ListItem first='Holdings' second={holdings} />
-                  <ListItem first='Exposure' second={renderPrice(exposure, currency)} />
-                  <ListItem first='Total Cash' second={renderPrice(totalCash, currency)} />
-                  <ListItem first='Total Amount Invested' second={renderPrice(totalInvested, currency)} />
-                  <ListItem first='Current Value' second={renderPrice(currentValue, currency)} />
-                  <ListItem first='Safe Sell Price' second={renderPrice(exposure / holdings, currency)} />
-                  <ListItem first='Capital Growth' second={percentageChange} />
-                </List>
-                <Divider />
-              </div>
-            )
-          })
-          .toList()
-          .toJS(),
-        Nothing: () => 0
+          if(!selected) return null
+          const Selector = SelectorForm('assetSelector', [], 'asset', options, selected);
+
+          return (
+            <Selector />
+          )
+        },
+        Nothing: () => []
+      });
+  }
+
+  renderContent() {
+    const {form, portfolio, assetLife} = this.props;
+    const currency = getSelectedCurrency(this.props.form);
+    const asset = getSelectedAsset(this.props.form);
+
+    return portfolio
+      .getIn(['total', assetLife])
+      .matchWith({
+        Just: ({value: total}) => {
+          const exposure = total.getIn(['totalExposure', asset]);
+          const holdings = getQtyForType(portfolio, asset, assetLife);
+          const currentValue = total.getIn(['currentValue', asset]);
+          const totalInvested = total.getIn(['totalInvested', asset]);
+          const totalCash = getTotalCashForType(portfolio, asset, assetLife);
+          const percentageChange = renderInvestmentChange(currentValue, exposure, currency);
+
+          return (
+            <div>
+              <Row around='xs'>
+                <Col xs={5} className='row-spacing'>
+                  <TitledBox color='secondary' header='Holdings'>{holdings}</TitledBox>
+                </Col>
+                <Col xs={5} className='row-spacing'>
+                  <TitledBox color='secondary' header='Exposure'>{renderPrice(exposure, currency)}</TitledBox>
+                </Col>
+              </Row>
+              <Row around='xs'>
+                <Col xs={5} className='row-spacing'>
+                  <TitledBox color='secondary' header='Cash'>{renderPrice(totalCash, currency)}</TitledBox>
+                </Col>
+                <Col xs={5} className='row-spacing'>
+                  <TitledBox color='secondary' header='Amount Invested'>{renderPrice(totalInvested, currency)}</TitledBox>
+                </Col>
+              </Row>
+              <Row around='xs'>
+                <Col xs={5} className='row-spacing'>
+                  <TitledBox color='secondary' header='Current Value'>{renderPrice(currentValue, currency)}</TitledBox>
+                </Col>
+                <Col xs={5} className='row-spacing'>
+                  <TitledBox color='secondary' header='Safe Sell Price'>{renderPrice(exposure / holdings, currency)}</TitledBox>
+                </Col>
+              </Row>
+              <Row around='xs'>
+                <Col xs={11} className='row-spacing'>
+                  <TitledBox color='secondary' header='Profit/Loss'>{percentageChange}</TitledBox>
+                </Col>
+              </Row>
+            </div>
+          );
+        },
+        Nothing: () => []
       });
   }
 
   render() {
-    const {portfolio, investment} = this.props;
-
     return (
       <Container title='Investment' subtitle='Summary'>
-        <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
-          {this.getInvestmentRows()}
+        <AsyncPanel asyncResult={AsyncData.Success()}>
+          {/* {this.renderSelector()} */}
+          {this.renderContent()}
         </AsyncPanel>
       </Container>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  form: state.form,
+  portfolio: state.portfolio
+});
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InvestmentSummary)

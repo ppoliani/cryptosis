@@ -6,8 +6,8 @@ import {renderDropdown} from '../form/helpers'
 const CurrencySelectorForm = () => {
   return (
     <form>
-       <Field
-        name="currency"
+       <Field 
+        name='currency'
         component={renderDropdown}
         custom={{options: currencyOptions, selected: 'GBP'}}
         type='dropdown'

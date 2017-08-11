@@ -26,6 +26,11 @@ export const getSelectedCurrency = form => {
   return values ? values.currency : DEFAULT_CURRENCY;
 }
 
+export const getSelectedAsset = form => {
+  const values = form.assetSelector && form.assetSelector.values;
+  return values ? values.asset : '';
+}
+
 export const renderPrice = (price=0, currency) => price != undefined
     ? <span>{signedCurrency(price.toFixed && price.toFixed(2), currency)}</span>
     : <span>Unavailable</span>

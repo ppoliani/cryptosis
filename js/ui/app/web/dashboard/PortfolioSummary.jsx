@@ -1,12 +1,10 @@
 import React, {Component} from 'react'
 import {List} from 'material-ui/List'
-import {Grid, Row, Col} from 'react-flexbox-grid'
+import {Row, Col} from 'react-flexbox-grid'
 import Container from '../common/Container'
 import AsyncPanel from '../panel/AsyncPanel'
-import ListItem from '../list/ListItem'
 import {renderPrice} from '../common/InvestmentValueHelpers'
 import {renderInvestmentChange} from '../common/InvestmentValueHelpers'
-import {getPercentageChange} from '../../../../common/core/utils'
 import TitledBox from '../box/TitledBox'
 import {
   getTotalExposure,
@@ -15,7 +13,7 @@ import {
   getTotalInvested
 } from '../../../../common/metrics/portfolio'
 
-export default class PortfolioSummary extends Component {
+class PortfolioSummary extends Component {
   render() {
     const {investment, currency, portfolio, assetLife} = this.props;
     const portfolioValue = getTotalPortfolioValue(portfolio, assetLife);
@@ -50,3 +48,5 @@ export default class PortfolioSummary extends Component {
     )
   }
 }
+
+export default PortfolioSummary
