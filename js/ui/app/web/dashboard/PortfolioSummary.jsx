@@ -26,23 +26,23 @@ export default class PortfolioSummary extends Component {
         <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
           <Row around='xs'>
             <Col xs={5} className='row-spacing'>
-              <TitledBox header='Exposure'>{renderPrice(exposure, currency)}</TitledBox>
+              <TitledBox color='primary' header='Exposure'>{renderPrice(exposure, currency)}</TitledBox>
             </Col>
             <Col xs={5} className='row-spacing'>
-              <TitledBox header='Cash'>{renderPrice(getTotalCash(portfolio, assetLife), currency)}</TitledBox>
+              <TitledBox color='primary' header='Cash'>{renderPrice(getTotalCash(portfolio, assetLife), currency)}</TitledBox>
             </Col>
           </Row>
           <Row around='xs'>
             <Col xs={5} className='row-spacing'>
-              <TitledBox header='Total Value'>{renderPrice(portfolioValue, currency)}</TitledBox>
+              <TitledBox color='primary' header='Total Value'>{renderPrice(portfolioValue, currency)}</TitledBox>
             </Col>
             <Col xs={5} className='row-spacing'>
-              <TitledBox header='Total Invested'>{renderPrice(getTotalInvested(portfolio, assetLife), currency)}</TitledBox>
+              <TitledBox color='primary' header='Total Invested'>{renderPrice(getTotalInvested(portfolio, assetLife), currency)}</TitledBox>
             </Col>
           </Row>
           <Row around='xs'>
             <Col xs={11} className='row-spacing'>
-              <TitledBox header='Profit/Loss'>{renderInvestmentChange(portfolioValue, exposure, currency)}</TitledBox>
+              <TitledBox color='primary' header='Profit/Loss'>{renderInvestmentChange(portfolioValue, exposure, currency)}</TitledBox>
             </Col>
           </Row>
         </AsyncPanel>

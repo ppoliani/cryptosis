@@ -1,17 +1,30 @@
 @import '../styles/themes/main/variables';
 
 .titled-box {
-  height: 100%;
-  border: 0.1px solid $main-bg-color;
+  border: 3px solid #fff;
   border-radius: 5px;
 }
 
   .titled-box__header {
-    background-color: $alt-bg-color;
     padding: 5px;
+    color: #333;
+    font-weight: bold;
+    text-shadow: 0px 1px 0px rgba(255,255,255,.5);
   }
 
+  .titled-box__header--default {
+    background-color: $third-bg-color;
+  }
+
+  .titled-box__header--primary {
+    background-color: $secondary-bg-color;
+  }
+
+  .titled-box__header--secondary {
+    background-color: $alt-bg-color;
+  }
+
+
   .titled-box__body {
-    // background-color: $secondary-bg-color;
     padding: 5px;
   }
