@@ -16,7 +16,7 @@ class PriceContainer extends Component {
     const price = value.get('price');
 
     return (
-      <Col xs>
+      <Col xs className='row-spacing'>
         <PriceBox
           asset={asset}
           price={price}

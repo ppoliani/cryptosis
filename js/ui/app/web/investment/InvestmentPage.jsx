@@ -17,7 +17,7 @@ import PanelContent from './PanelContent'
 import {getBrokers} from '../../data/broker/brokerActions'
 import {startInvestmentCurrentValueStream} from '../../data/stream/investmentValueStream'
 import {renderInvestmentValue, getSelectedCurrency, renderPrice} from '../common/InvestmentValueHelpers'
-import CurrencySelector from '../common/CurrencySelector'
+import CurrencySelector from '../form/selectors/CurrencySelector'
 import {
   getInvestments,
   saveInvestment,

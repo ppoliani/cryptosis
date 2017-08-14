@@ -52,7 +52,8 @@ export const renderDatePicker = field =>  {
 export const renderDropdown = field => {
   const props = {
     id: field.name,
-    hintText: field.label
+    hintText: field.label,
+    value: field.custom.value
   }
 
   const onChange = (_, __, value) => {
@@ -64,11 +65,11 @@ export const renderDropdown = field => {
     {...field.input}
     {...props}
     onChange={onChange}>
-        {
-          field.custom.options.map(
-            o => <MenuItem value={o.value} key={o.value} primaryText={o.text} />
-          )
-        }
+      {
+        field.custom.options.map(
+          o => <MenuItem value={o.value} key={o.value} primaryText={o.text} />
+        )
+      }
     </SelectField>
  );
 }

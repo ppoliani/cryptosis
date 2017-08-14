@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Snackbar from 'material-ui/Snackbar'
-import {Row, Col} from 'react-flexbox-grid'
+import {Row, Col, Grid} from 'react-flexbox-grid'
 import classnames from 'classnames'
 import Spinner from '../spinner/Spinner'
 
@@ -30,12 +30,12 @@ export default class AsyncPanel extends Component {
     };
 
     return (
-      <Row>
+      <Grid>
         <Col xs className={classnames(classList)}>
           {children}
         </Col>
         {this.renderActionStatus(asyncResult)}
-      </Row>
+      </Grid>
     );
   }
 }

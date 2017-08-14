@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import {Row, Col} from 'react-flexbox-grid'
 import PortfolioSummary from './PortfolioSummary'
-import InvestmentSummary from './InvestmentSummary'
+import InvestmentSummaryContainer from './investment/InvestmentSummaryContainer'
 import ChartContainer from '../chart/ChartConainer'
 import AssetAllocationChart from '../chart/AssetAllocationChart'
 
@@ -30,7 +30,7 @@ export default class TabView extends Component {
                 assetLife={assetLife} />
             </Col>
             <Col>
-              <InvestmentSummary assetLife={assetLife}/>
+              <InvestmentSummaryContainer assetLife={assetLife} />
             </Col>
           </Col>
         </Row>
@@ -43,7 +43,7 @@ export default class TabView extends Component {
       <Col xs={12}>
         <Tabs>
           {this.renderTab('Long Term', 'longTerm')}
-          {this.renderTab('Short Term', 'shortTerm')}
+          {/* {this.renderTab('Short Term', 'shortTerm')} */}
         </Tabs>
       </Col>
     )

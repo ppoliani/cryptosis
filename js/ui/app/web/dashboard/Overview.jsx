@@ -4,7 +4,7 @@ import {Grid, Row, Col} from 'react-flexbox-grid'
 import {identity} from 'folktale/core/lambda'
 import {startPortfolioStream} from '../../data/stream/portfolioValueStream'
 import {startLast30DaysStream} from '../../data/stream/last30DaysStream'
-import CurrencySelector from '../common/CurrencySelector'
+import CurrencySelector from '../form/selectors/CurrencySelector'
 import {getSelectedCurrency} from '../common/InvestmentValueHelpers'
 import TabView from './TabView'
 import PriceContainer from '../price/PriceContainer'
@@ -70,7 +70,7 @@ class Overview extends Component {
             portfolio={portfolio}
             investment={investment}
             prices={prices}
-            currency={getSelectedCurrency(form)}/>
+            currency={getSelectedCurrency(form)} />
         </Row>
       </Col>
     );
