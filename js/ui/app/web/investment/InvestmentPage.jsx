@@ -208,7 +208,7 @@ class InvestmentPage extends Component {
         isPanelOpen={this.state.isPanelOpen}>
           <Row className='row-spacing'>
             <Col xs>
-              <CurrencySelector />
+              <CurrencySelector value={getSelectedCurrency(this.props.form)}/>
               <Button type="submit" className="right" onClick={this.togglePanel}>New</Button>
             </Col>
           </Row>

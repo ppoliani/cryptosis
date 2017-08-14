@@ -60,7 +60,7 @@ class Overview extends Component {
     return (
       <Col>
         <Row between='xs' className='row-spacing'>
-          <CurrencySelector />
+          <CurrencySelector value={getSelectedCurrency(form)}/>
         </Row>
         <Row between='xs' className='row-spacing'>
           <PriceContainer />
