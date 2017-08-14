@@ -43,7 +43,7 @@ export default class TabView extends Component {
       <Col xs={12}>
         <Tabs>
           {this.renderTab('Long Term', 'longTerm')}
-          {/* {this.renderTab('Short Term', 'shortTerm')} */}
+           {this.renderTab('Short Term', 'shortTerm')}
         </Tabs>
       </Col>
     )
