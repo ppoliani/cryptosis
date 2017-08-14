@@ -3,8 +3,8 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import {Row, Col} from 'react-flexbox-grid'
 import PortfolioSummary from './PortfolioSummary'
 import InvestmentSummaryContainer from './investment/InvestmentSummaryContainer'
-import ChartContainer from '../chart/ChartConainer'
-import AssetAllocationChart from '../chart/AssetAllocationChart'
+import ChartContainer from '../chart/ChartContainer'
+import AssetAllocationContainer from '../chart/AssetAllocationContainer'
 
 export default class TabView extends Component {
   renderTab(label, assetLife) {
@@ -20,7 +20,7 @@ export default class TabView extends Component {
           </Col>
           <Col lg={4} xs={12}>
             <Col className='row-spacing'>
-              <AssetAllocationChart totalValue={totalValue} />
+              <AssetAllocationContainer totalValue={totalValue} />
             </Col>
             <Col className='row-spacing'>
               <PortfolioSummary

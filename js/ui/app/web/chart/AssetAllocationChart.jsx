@@ -13,22 +13,6 @@ class AssetAllocationChart extends Component {
     chartStatus: AsyncData.Loading()
   };
 
-  getChartData() {
-    const {totalValue} = this.props;
-    const mapChartData = ({value: total}) => total.get('totalExposure')
-      .map((v, k) => ({
-        crypto: k,
-        value: round(total.getIn(['currentValue', k]))
-      }))
-      .toList()
-      .toJS();
-
-    return totalValue.matchWith({
-      Just: mapChartData,
-      Nothing: () => []
-    });
-  }
-
   getChartsListeners() {
     return [{
       event: 'rendered',
@@ -44,8 +28,10 @@ class AssetAllocationChart extends Component {
   }
 
   render() {
+    const {title, subtitle, chartData} = this.props;
+
     return (
-      <Container title='Asset' subtitle='Allocation'>
+      <Container title={title} subtitle={subtitle}>
         <AsyncPanel asyncResult={this.state.chartStatus}>
           <div className='chart-container'>
             <AmCharts.React
@@ -53,7 +39,7 @@ class AssetAllocationChart extends Component {
               type='pie'
               theme='light'
               listeners={this.getChartsListeners()}
-              dataProvider={this.getChartData()}
+              dataProvider={chartData}
               {...getAssetAllocationChartConfig()}/>
             </div>
         </AsyncPanel>
