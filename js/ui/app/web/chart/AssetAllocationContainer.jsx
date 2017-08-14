@@ -93,7 +93,7 @@ class AssetAllocationContainer extends Component {
   render() {
     return (
       <Col className='row-spacing'>
-        <Row className='row-spacing' end="xs">
+        <Row className='row-spacing' end='xs'>
           {this.renderButtonGroup()}
         </Row>
         <Row between='xs'>

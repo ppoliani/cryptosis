@@ -30,7 +30,7 @@ export default class AsyncPanel extends Component {
     };
 
     return (
-      <Row>
+      <Row center='xs'>
         <Col xs className={classnames(classList)}>
           {children}
         </Col>
