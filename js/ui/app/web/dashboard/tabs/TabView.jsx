@@ -31,7 +31,7 @@ export default class TabView extends Component {
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing news-feed-container'>
             <Col className='row-spacing'>
-              <ExtraInfoTabView />
+              <ExtraInfoTabView currency={currency} />
             </Col>
           </Col>
           <Col lg={4} xs={12} className='row-spacing'>
