@@ -6,7 +6,7 @@ import {startPortfolioStream} from '../../data/stream/portfolioValueStream'
 import {startLast30DaysStream} from '../../data/stream/last30DaysStream'
 import CurrencySelector from '../form/selectors/CurrencySelector'
 import {getSelectedCurrency} from '../common/InvestmentValueHelpers'
-import TabView from './TabView'
+import TabView from './tabs/TabView'
 import PriceContainer from '../price/PriceContainer'
 
 const DEFAULT_CURRENCY = 'GBP';

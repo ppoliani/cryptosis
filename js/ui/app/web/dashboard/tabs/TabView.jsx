@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import {Row, Col} from 'react-flexbox-grid'
-import PortfolioSummary from './PortfolioSummary'
-import InvestmentSummaryContainer from './investment/InvestmentSummaryContainer'
-import ChartContainer from '../chart/ChartContainer'
-import AssetAllocationContainer from '../chart/AssetAllocationContainer'
-import NewsFeed from '../news/NewsFeed'
+import PortfolioSummary from '../PortfolioSummary'
+import InvestmentSummaryContainer from '../investment/InvestmentSummaryContainer'
+import ChartContainer from '../../chart/ChartContainer'
+import AssetAllocationContainer from '../../chart/AssetAllocationContainer'
+import ExtraInfoTabView from './ExtraInfoTabView'
 import './tab.scss'
 
 export default class TabView extends Component {
@@ -31,7 +31,7 @@ export default class TabView extends Component {
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing news-feed-container'>
             <Col className='row-spacing'>
-              <NewsFeed />
+              <ExtraInfoTabView />
             </Col>
           </Col>
           <Col lg={4} xs={12} className='row-spacing'>
@@ -56,7 +56,7 @@ export default class TabView extends Component {
       <Col xs={12}>
         <Tabs>
           {this.renderTab('Long Term', 'longTerm')}
-           {this.renderTab('Short Term', 'shortTerm')}
+          {this.renderTab('Short Term', 'shortTerm')}
         </Tabs>
       </Col>
     )

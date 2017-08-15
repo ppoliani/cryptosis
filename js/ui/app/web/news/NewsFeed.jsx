@@ -1,36 +1,23 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {autobind} from 'core-decorators'
-import {loadNews} from '../../data/news/newsActions'
-import Spinner from '../spinner/Spinner'
 
 class NewsFeed extends Component {
   componentDidMount() {
-    this.props.loadNews();
-  }
-
-  @autobind
-  renderNews({data: feeds}) {
-    console.log(feeds)
+    window.cccTheme =
+      {"General":{"background":"#333","borderColor":"#121212"},"PoweredBy":{"textColor":"#EEE","linkColor":"#ffcc66"},"Data":{"priceColor":"#FFF","infoValueColor":"#FFF","borderColor":"#333"},"NewsItem":{"color":"#FFF","borderColor":"#444"},"Conversion":{"background":"#000","color":"#CCC"}};
+    const s = document.createElement('script');
+    s.src = 'https://widgets.cryptocompare.com/serve/v1/coin/feed?fsym=BTC&tsym=GBP&feedType=CoinTelegraph';
+    s.async = true;
+    this.container.appendChild(s);
   }
 
   render() {
     return (
-      <div class='btcwdgt-forum' bw-entries='10'></div>
+      <div
+        className='widget-tab-container'
+        ref={container => { this.container = container; }}>
+      </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  news: state.news
-});
-
-const mapDispatchToProps = dispatch => ({
-  loadNews: (dispatch) ['∘'] (loadNews)
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewsFeed)
-
+export default NewsFeed
