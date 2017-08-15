@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import pureComponent from '../mixins/pureComponent'
+import widgetTheme from './widgetTheme'
 
 // That's how crypto compare code knows about the theme :(
-window.cccTheme =
-    {"General":{"background":"#333","borderColor":"#121212"},"PoweredBy":{"textColor":"#EEE","linkColor":"#ffcc66"},"Data":{"priceColor":"#FFF","infoValueColor":"#FFF","borderColor":"#333"},"NewsItem":{"color":"#FFF","borderColor":"#444"},"Conversion":{"background":"#000","color":"#CCC"}};
+window.cccTheme = widgetTheme;
 
 @pureComponent
 class Widget extends Component {

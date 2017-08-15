@@ -14,7 +14,7 @@ class ExtraInfoTabView extends Component {
 
   getPriceWidget() {
     return (
-      <Widget src={`https://widgets.cryptocompare.com/serve/v3/coin/chart?fsym=BTC&tsyms=USD,EUR,GBP`}/>
+      <Widget src={`https://widgets.cryptocompare.com/serve/v3/coin/chart?fsym=BTC&tsyms=GBP,EUR,USD`}/>
     )
   }
 
