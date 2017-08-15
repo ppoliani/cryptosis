@@ -6,7 +6,7 @@ const flatten = list => list.reduce(
 );
 
 // composition hack
-Function.prototype['∘'] = function(f){
+Function.prototype['∘'] = function(f) {
   return x => this(f(x))
 }
 

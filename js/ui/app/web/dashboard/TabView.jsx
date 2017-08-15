@@ -5,6 +5,7 @@ import PortfolioSummary from './PortfolioSummary'
 import InvestmentSummaryContainer from './investment/InvestmentSummaryContainer'
 import ChartContainer from '../chart/ChartContainer'
 import AssetAllocationContainer from '../chart/AssetAllocationContainer'
+import NewsFeed from '../news/NewsFeed'
 import './tab.scss'
 
 export default class TabView extends Component {
@@ -30,7 +31,7 @@ export default class TabView extends Component {
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing news-feed-container'>
             <Col className='row-spacing'>
-              News Feed
+              <NewsFeed />
             </Col>
           </Col>
           <Col lg={4} xs={12} className='row-spacing'>
