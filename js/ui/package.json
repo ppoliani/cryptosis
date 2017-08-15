@@ -43,6 +43,7 @@
     "redux-actions": "^1.2.1",
     "redux-form": "^6.6.3",
     "redux-thunk": "^2.2.0",
+    "rss-parser": "^2.10.1",
     "socket.io-client": "^2.0.1",
     "whatwg-fetch": "^2.0.3"
   },

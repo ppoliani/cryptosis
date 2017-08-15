@@ -2402,7 +2402,7 @@ entities@1.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.0.0.tgz#b2987aa3821347fcde642b24fdfc9e4fb712bf26"
 
-entities@~1.1.1:
+entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
@@ -4700,15 +4700,7 @@ most-subject@^5.3.0:
     "@most/prelude" "^1.4.1"
     most "^1.1.0"
 
-most@^1.1.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/most/-/most-1.3.0.tgz#148f96c311ce26cace63a179d10dd61dacee58f4"
-  dependencies:
-    "@most/multicast" "^1.2.5"
-    "@most/prelude" "^1.4.0"
-    symbol-observable "^1.0.2"
-
-most@^1.5.1:
+most@^1.1.0, most@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/most/-/most-1.5.1.tgz#f572de80ea5f31808ffb7c9d04f69c81b5bb9414"
   dependencies:
@@ -6330,6 +6322,13 @@ rndm@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/rndm/-/rndm-1.2.0.tgz#f33fe9cfb52bbfd520aa18323bc65db110a1b76c"
 
+rss-parser@^2.10.1:
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/rss-parser/-/rss-parser-2.10.1.tgz#d793b69106c2731dfc0027939e9ca4186b695f57"
+  dependencies:
+    entities "^1.1.1"
+    xml2js "^0.4.17"
+
 run-async@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/run-async/-/run-async-0.1.0.tgz#c8ad4a5e110661e402a7d21b530e009f25f8e389"
@@ -6389,7 +6388,7 @@ sass-loader@^6.0.3:
     lodash.tail "^4.1.1"
     pify "^2.3.0"
 
-sax@^1.2.1, sax@~1.2.1:
+sax@>=0.6.0, sax@^1.2.1, sax@~1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.2.tgz#fd8631a23bc7826bef5d871bdb87378c95647828"
 
@@ -7630,11 +7629,22 @@ xml-name-validator@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-2.0.1.tgz#4d8b8f1eccd3419aa362061becef515e1e559635"
 
+xml2js@^0.4.17:
+  version "0.4.18"
+  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.18.tgz#a117ec8153aeeb22f9541bfbe8805e35dae7b969"
+  dependencies:
+    sax ">=0.6.0"
+    xmlbuilder "~9.0.1"
+
 xmlbuilder@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-4.0.0.tgz#98b8f651ca30aa624036f127d11cc66dc7b907a3"
   dependencies:
     lodash "^3.5.0"
+
+xmlbuilder@~9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.1.tgz#91cd70897755363eba57c12ddeeab4a341a61f65"
 
 xmldoc@^0.4.0:
   version "0.4.0"

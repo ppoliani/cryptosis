@@ -5,6 +5,7 @@ import PortfolioSummary from './PortfolioSummary'
 import InvestmentSummaryContainer from './investment/InvestmentSummaryContainer'
 import ChartContainer from '../chart/ChartContainer'
 import AssetAllocationContainer from '../chart/AssetAllocationContainer'
+import './tab.scss'
 
 export default class TabView extends Component {
   renderTab(label, assetLife) {
@@ -16,12 +17,23 @@ export default class TabView extends Component {
       <Tab label={label}>
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing'>
-            <ChartContainer lastNDaysData={lastNDaysData} />
+            <Col className='row-spacing'>
+              <ChartContainer lastNDaysData={lastNDaysData} />
+            </Col>
           </Col>
           <Col lg={4} xs={12} className='row-spacing'>
             <Col className='row-spacing'>
               <AssetAllocationContainer totalValue={totalValue} />
             </Col>
+          </Col>
+        </Row>
+        <Row between='xs'>
+          <Col lg={8} xs={12} className='row-spacing news-feed-container'>
+            <Col className='row-spacing'>
+              News Feed
+            </Col>
+          </Col>
+          <Col lg={4} xs={12} className='row-spacing'>
             <Col className='row-spacing'>
               <PortfolioSummary
                 currency={currency}
