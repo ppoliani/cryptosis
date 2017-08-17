@@ -55,6 +55,10 @@ export const renderDropdown = field => {
     hintText: field.label
   }
 
+  if(field.custom.value) {
+    props.value = field.custom.value;
+  }
+
   const onChange = (_, __, value) => {
     field.input.onChange(value);
   }
