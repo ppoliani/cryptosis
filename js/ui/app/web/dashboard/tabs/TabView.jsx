@@ -10,7 +10,7 @@ import './tab.scss'
 
 export default class TabView extends Component {
   renderTab(label, assetLife) {
-    const {currency, portfolio, investment, prices} = this.props;
+    const {currency, asset, portfolio, investment, prices} = this.props;
     const lastNDaysData = portfolio.getIn(['last30Days', assetLife]);
     const totalValue = portfolio.getIn(['total', assetLife])
 
@@ -31,7 +31,9 @@ export default class TabView extends Component {
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing news-feed-container'>
             <Col className='row-spacing'>
-              <ExtraInfoTabView currency={currency} />
+              <ExtraInfoTabView
+                currency={currency}
+                asset={asset}/>
             </Col>
           </Col>
           <Col lg={4} xs={12} className='row-spacing'>

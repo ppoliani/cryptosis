@@ -5,7 +5,7 @@ import {identity} from 'folktale/core/lambda'
 import {startPortfolioStream} from '../../data/stream/portfolioValueStream'
 import {startLast30DaysStream} from '../../data/stream/last30DaysStream'
 import CurrencySelector from '../form/selectors/CurrencySelector'
-import {getSelectedCurrency} from '../common/InvestmentValueHelpers'
+import {getSelectedCurrency, getSelectedAsset} from '../common/InvestmentValueHelpers'
 import TabView from './tabs/TabView'
 import PriceContainer from '../price/PriceContainer'
 
@@ -70,7 +70,8 @@ class Overview extends Component {
             portfolio={portfolio}
             investment={investment}
             prices={prices}
-            currency={getSelectedCurrency(form)} />
+            currency={getSelectedCurrency(form)}
+            asset={getSelectedAsset(form)} />
         </Row>
       </Col>
     );
