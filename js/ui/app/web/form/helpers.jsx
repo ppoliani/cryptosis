@@ -52,8 +52,7 @@ export const renderDatePicker = field =>  {
 export const renderDropdown = field => {
   const props = {
     id: field.name,
-    hintText: field.label,
-    value: field.custom.value
+    hintText: field.label
   }
 
   const onChange = (_, __, value) => {
