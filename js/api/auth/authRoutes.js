@@ -4,7 +4,6 @@ const {checkAccessToken} = require('./authService');
 const {partial} = require('../../common/core/fn');
 const {login} = require('./authApi');
 
-
 const routes = {
   '/login': {
     method: 'post',
