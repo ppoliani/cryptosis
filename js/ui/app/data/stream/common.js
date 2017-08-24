@@ -26,11 +26,11 @@ export const getBCH$ = currency => fromPromise(fetchBCH(currency).run().promise(
 export const getETH$ = currency => fromPromise(fetchETH(currency).run().promise())
 export const getXRP$ = currency => fromPromise(fetchXRP(currency).run().promise())
 export const getXTZ$ = currency => fromPromise(fetchXTZ(currency).run().promise())
-export const getFX$ = currency => fromPromise(fetchFX(currency).run().promise())
+export const getFX$ = currency => fromPromise(fetchFX(currency).run().promise().then(data => fromJS(data.rates)))
 export const getPartialInvestment$ = () => fromPromise(fetchPartialInvestments.run().promise())
 
 export const getPriceObjFromStreamData = data => ({
-  price: data.PRICE,
+  price: data.PRICE || 0,
   market: data.MARKET,
   symbol: data.FROMSYMBOL
 })

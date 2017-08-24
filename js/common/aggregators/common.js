@@ -49,7 +49,9 @@ const calculatePortfolioTotalQtyPerType = investments => {
 // Finds the total value per type of investment based on the current buy price
 const calculateCurrentValuePerType = (investments, prices) =>
   calculatePortfolioTotalQtyPerType(investments)
-    .map((qty, type) => getValueForPrice(prices.getIn([type, 'price']), qty))
+    .map((qty, type) => {
+      return getValueForPrice(prices.getIn([type, 'price']), qty)
+    })
 
 const calculateCurrentValueAtPrice = (investments, price) =>
   calculatePortfolioTotalQtyPerType(investments)

@@ -50,3 +50,4 @@ class PortfolioSummary extends Component {
 }
 
 export default PortfolioSummary
+
