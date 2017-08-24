@@ -27,7 +27,7 @@ export const startLast30DaysStream = currency => dispatch => {
     // map though investments and convert price of purchase into the currenlty selected currency
     investments: fromJS(investments.result).map(partial(changePriceToSelectedCurrency, currency, fx.get(currency))),
     prices: fromJS({
-      BTX: getPriceObj('BTX', btc),
+      BTC: getPriceObj('BTC', btc),
       BCH: getPriceObj('BCH', bch),
       ETH: getPriceObj('ETH', eth),
       XRP: getPriceObj('XRP', xrp),

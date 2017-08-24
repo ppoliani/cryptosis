@@ -82,7 +82,7 @@ const start = async (currency, unwrapCypherResult, unwrapCypherListNodeResult, g
     const getPrices = (investments, btc, eth, xrp) => ({
         investments: filterCurrency(investments, currency, unwrapCypherListNodeResult),
         prices: fromJS({
-          BTX: getPriceObjFromStreamData(btc),
+          BTC: getPriceObjFromStreamData(btc),
           ETH: getPriceObjFromStreamData(eth),
           XRP: getPriceObjFromStreamData(xrp)
         })
