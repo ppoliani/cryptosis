@@ -47,36 +47,6 @@ export default class PortfolioChart extends PureComponent {
       });
   }
 
-  getEntirePortfolioChartData() {
-    const {lastNDaysData, historicProperty} = this.props;
-
-    const mergeLists = (l1, l2) => {
-      return l1
-        ? l1
-        : l2
-    }
-
-    const aggregate = ({value: aggregates}) => {
-      const [first, ...rest] = aggregates.values()
-
-      first.mergeWith(
-        (oldVal, newVal) => {
-          return Map({
-            day: oldVal.get('day'),
-            value: oldVal.getIn(['value', historicProperty]) + newVal.getIn(['value', historicProperty])
-          })
-        },
-        ...rest
-      )
-    }
-
-    return lastNDaysData
-      .matchWith({
-        Just: aggregate,
-        Nothing: () => {}
-      });
-  }
-
   getChartsListeners() {
     return [{
       event: 'rendered',
@@ -103,7 +73,7 @@ export default class PortfolioChart extends PureComponent {
               type='serial'
               theme='light'
               listeners={this.getChartsListeners()}
-              dataProvider={this.getEntirePortfolioChartData()}
+              dataProvider={this.getPortfolioChartData()}
               {...getChartConfig(lastNDaysData)}/>
             </div>
         </AsyncPanel>
