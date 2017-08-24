@@ -18,7 +18,7 @@ export default class PortfolioChart extends PureComponent {
     const createChartRecordsForSymbol = (priceList, symbol) => priceList.map(p =>
       Map({
         [symbol]: p.getIn(['value', this.props.historicProperty]).toFixed(2),
-        day: new Date(p.get('day')),
+        day: new Date(p.get('day'))
       })
     );
 
