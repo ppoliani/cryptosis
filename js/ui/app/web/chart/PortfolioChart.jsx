@@ -94,8 +94,6 @@ export default class PortfolioChart extends PureComponent {
   render() {
     const {title, subtitle, lastNDaysData} = this.props;
 
-    this.getEntirePortfolioChartData();
-
     return (
       <Container title={title} subtitle={subtitle}>
         <AsyncPanel asyncResult={this.state.chartStatus}>
@@ -105,7 +103,7 @@ export default class PortfolioChart extends PureComponent {
               type='serial'
               theme='light'
               listeners={this.getChartsListeners()}
-              dataProvider={this.getPortfolioChartData()}
+              dataProvider={this.getEntirePortfolioChartData()}
               {...getChartConfig(lastNDaysData)}/>
             </div>
         </AsyncPanel>

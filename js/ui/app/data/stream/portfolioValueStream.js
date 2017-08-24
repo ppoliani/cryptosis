@@ -7,7 +7,7 @@ import {calculateTotalPortfolioValue} from '../../../../common/aggregators'
 import {changePriceToSelectedCurrency} from '../../../../common/fx'
 import {setPortfolioValue} from '../portfolio/portfolioActions'
 import {setPrices} from '../prices/priceActions'
-import {getPartialInvestment$, getPriceObjFromStreamData, getFX$} from './common'
+import {getPartialInvestment$, getPriceObjFromStreamData, fx$} from './common'
 
 export const SET_PORTFOLIO_SUBSCRIPTION = 'STREAM::SET_PORTFOLIO_SUBSCRIPTION'
 const setPortfolioSubscription = createAction(SET_PORTFOLIO_SUBSCRIPTION);
@@ -20,10 +20,10 @@ export const startPortfolioStream = currency => dispatch => {
 
   const getPrices = (investments, btc, bch, eth, xrp, xtz, fx)  => {
     return {
-      investments: fromJS(investments.result).map(partial(changePriceToSelectedCurrency, currency, fx)),
+      investments: fromJS(investments.result).map(partial(changePriceToSelectedCurrency, currency, fx.get(currency))),
       prices: fromJS({
         BTX: getPriceObjFromStreamData(btc),
-        BCH: getPriceObjFromStreamData(bch), 
+        BCH: getPriceObjFromStreamData(bch),
         ETH: getPriceObjFromStreamData(eth),
         XRP: getPriceObjFromStreamData(xrp),
         XTZ: getPriceObjFromStreamData(xtz)
@@ -33,7 +33,7 @@ export const startPortfolioStream = currency => dispatch => {
 
   const keepPrices = obj => obj.prices;
 
-  const streams$ = [btc$(currency), bch$(currency), eth$(currency), xrp$(currency), xtz$(currency), getFX$(currency)];
+  const streams$ = [btc$(currency), bch$(currency), eth$(currency), xrp$(currency), xtz$(currency), fx$];
   const subscription = combine(getPrices, getPartialInvestment$(), ...streams$)
     .debounce(2000)
     .tap((dispatch) ['∘'] (setPrices) ['∘'] (keepPrices))

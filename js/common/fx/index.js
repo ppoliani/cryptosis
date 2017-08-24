@@ -3,7 +3,7 @@ const changePriceToSelectedCurrency = (currency, fx, investment) => {
   const price = investment.get('price');
 
   if(currency === investmentCurrency) return investment;
-  return investment.set('price', price * fx.get(investmentCurrency));
+  return investment.set('price', price / fx.get(investmentCurrency));
 }
 
 module.exports = {
