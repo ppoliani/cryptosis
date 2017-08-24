@@ -1,9 +1,11 @@
 import {createAction} from 'redux-actions'
 import {combine} from 'most'
 import {fromJS} from 'immutable'
+import {partial} from '../../../../common/core/fn'
 import {calculateHistoricPortfolioValues} from '../../../../common/aggregators'
+import {changePriceToSelectedCurrency} from '../../../../common/fx'
 import {setLast30Days} from '../portfolio/portfolioActions'
-import {getPartialInvestment$, getBTC$, getBCH$, getETH$, getXRP$, getXTZ$} from './common'
+import {getPartialInvestment$, getBTC$, getBCH$, getETH$, getXRP$, getXTZ$, getFX$} from './common'
 
 export const SET_LAST_30_DAYS_SUBSCRIPTION = 'STREAM::SET_LAST_30_DAYS_SUBSCRIPTION'
 const setLast30DaysSubscription = createAction(SET_LAST_30_DAYS_SUBSCRIPTION);
@@ -21,8 +23,9 @@ export const startLast30DaysStream = currency => dispatch => {
     day: i.time * 1000 // unix time to js
   }))
 
-  const getPrices = (investments, btc, bch, eth, xrp, xtz)  => ({
-    investments: fromJS(investments.result).filter(v => v.get('currency') === currency),
+  const getPrices = (investments, btc, bch, eth, xrp, xtz, fx)  => ({
+    // map though investments and convert price of purchase into the currenlty selected currency
+    investments: fromJS(investments.result).map(partial(changePriceToSelectedCurrency, currency, fx)),
     prices: fromJS({
       BTX: getPriceObj('BTX', btc),
       BCH: getPriceObj('BCH', bch),
@@ -32,7 +35,7 @@ export const startLast30DaysStream = currency => dispatch => {
     })
   })
 
-  const streams$ = [getPartialInvestment$(), getBTC$(currency), getBCH$(currency), getETH$(currency), getXRP$(currency), getXTZ$(currency)];
+  const streams$ = [getPartialInvestment$(), getBTC$(currency), getBCH$(currency), getETH$(currency), getXRP$(currency), getXTZ$(currency), getFX$(currency)];
   const subscription = combine(getPrices, ...streams$)
     .debounce(2000)
     .chain(calculateHistoricPortfolioValues)
