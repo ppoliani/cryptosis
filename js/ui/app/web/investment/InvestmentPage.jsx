@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import {List, fromJS, Map} from 'immutable'
 import dateformat from 'date-fns/format'
 import {partial, pipe} from '../../../../common/core/fn'
@@ -7,7 +7,6 @@ import {connect} from 'react-redux'
 import {identity} from 'folktale/core/lambda'
 import {Row, Col} from 'react-flexbox-grid'
 import Button from 'material-ui/FlatButton'
-import pureComponent from '../mixins/pureComponent'
 import PageWithPanel from '../panel/PageWithPanel'
 import AsyncPanel from '../panel/AsyncPanel'
 import Table from '../table/Table'
@@ -39,8 +38,7 @@ const columns = [
 const DEFAULT_CURRENCY = 'GBP';
 
 @DialogBoxMixin
-@pureComponent
-class InvestmentPage extends Component {
+class InvestmentPage extends PureComponent {
   state = {
     isPanelOpen: false,
     limit: 30,

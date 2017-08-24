@@ -1,15 +1,13 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import {List as ListIm, Map} from 'immutable'
 import AmCharts from '@amcharts/amcharts3-react'
-import pureComponent from '../mixins/pureComponent'
 import AsyncPanel from '../panel/AsyncPanel'
 import Container from '../common/Container'
 import AsyncData from '../../data/core/AsyncData'
 import {getChartConfig} from '../../services/chart'
 import './chart.scss'
 
-@pureComponent
-export default class PortfolioChart extends Component {
+export default class PortfolioChart extends PureComponent {
   state = {
     chartStatus: AsyncData.Loading()
   };

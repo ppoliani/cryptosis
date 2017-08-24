@@ -1,12 +1,10 @@
-import React, {Component} from 'react'
-import pureComponent from '../mixins/pureComponent'
+import React, {PureComponent} from 'react'
 import widgetTheme from './widgetTheme'
 
 // That's how crypto compare code knows about the theme :(
 window.cccTheme = widgetTheme;
 
-@pureComponent
-class Widget extends Component {
+class Widget extends PureComponent {
   componentDidMount() {
     this.addScript();
   }

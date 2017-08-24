@@ -1,10 +1,9 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import {List} from 'immutable'
 import {connect} from 'react-redux'
 import {Row, Col} from 'react-flexbox-grid'
 import Button from 'material-ui/FlatButton'
 import PageWithPanel from '../panel/PageWithPanel'
-import pureComponent from '../mixins/pureComponent'
 import AsyncPanel from '../panel/AsyncPanel'
 import {partial, pipe} from '../../../../common/core/fn'
 import {filterObject} from '../../services/utils'
@@ -27,8 +26,7 @@ const columns = [
 ];
 
 @DialogBoxMixin
-@pureComponent
-class InvestmentTypePage extends Component {
+class InvestmentTypePage extends PureComponent {
   state = {
     isPanelOpen: false,
     limit: 10,

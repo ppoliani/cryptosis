@@ -1,14 +1,12 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import AmCharts from '@amcharts/amcharts3-react'
-import pureComponent from '../mixins/pureComponent'
 import AsyncPanel from '../panel/AsyncPanel'
 import Container from '../common/Container'
 import {getAssetAllocationChartConfig} from '../../services/chart'
 import AsyncData  from '../../data/core/AsyncData'
 import {round} from '../../services/utils'
 
-@pureComponent
-class AssetAllocationChart extends Component {
+class AssetAllocationChart extends PureComponent {
   state = {
     chartStatus: AsyncData.Loading()
   };

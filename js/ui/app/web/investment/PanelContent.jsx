@@ -1,13 +1,11 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import {Row, Col} from 'react-flexbox-grid'
 import {List} from 'immutable'
-import pureComponent from '../mixins/pureComponent'
 import {AsyncDataAll, AsyncDataSome} from '../../data/core/AsyncData'
 import AsyncPanel from '../panel/AsyncPanel'
 import createInvestmentForm from './form/InvestmentForm'
 
-@pureComponent
-export default class PanelContent extends Component {
+export default class PanelContent extends PureComponent {
   getCombinedAsyncResult() {
     return AsyncDataAll([
       this.props.fetchInvestmentTypeResult,

@@ -1,13 +1,11 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import {Row, Col} from 'react-flexbox-grid'
-import pureComponent from '../../mixins/pureComponent'
 import Widget from '../Widget'
 
 const DEFAULT_ASSET = 'BTC';
 
-@pureComponent
-class ExtraInfoTabView extends Component {
+class ExtraInfoTabView extends PureComponent {
   normalizeAsset() {
     const {currency, asset=DEFAULT_ASSET} = this.props;
     // TODO: we need to change btx to btc

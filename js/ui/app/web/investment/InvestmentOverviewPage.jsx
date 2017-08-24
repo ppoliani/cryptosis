@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import {Map} from 'immutable'
 import {Row, Col} from 'react-flexbox-grid'
@@ -10,7 +10,6 @@ import {identity} from 'folktale/core/lambda'
 import Maybe from 'folktale/maybe'
 import AsyncPanel from '../panel/AsyncPanel'
 import Container from '../common/Container'
-import pureComponent from '../mixins/pureComponent'
 import {getInvestment} from '../../data/investment/investmentActions'
 import {getPercentageChange} from '../../../../common/core/utils'
 import {renderInvestmentValue, renderPrice} from '../common/InvestmentValueHelpers'
@@ -18,8 +17,7 @@ import {startInvestmentCurrentValueStream} from '../../data/stream/investmentVal
 
 const DEFAULT_CURRENCY = 'GBP';
 
-@pureComponent
-class InvestmentOverviewPage extends Component {
+class InvestmentOverviewPage extends PureComponent {
   constructor(props, state) {
     super(props, state);
     const {getInvestment, match: {params}} = this.props;

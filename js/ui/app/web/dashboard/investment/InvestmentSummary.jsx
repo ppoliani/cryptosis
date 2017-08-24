@@ -1,14 +1,12 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import {autobind} from 'core-decorators'
 import {Row, Col} from 'react-flexbox-grid'
-import pureComponent from '../../mixins/pureComponent'
 import {renderInvestmentChange} from '../../common/InvestmentValueHelpers'
 import {renderPrice} from '../../common/InvestmentValueHelpers'
 import {getTotalCashForType, getQtyForType} from '../../../../../common/metrics/portfolio'
 import TitledBox from '../../box/TitledBox'
 
-@pureComponent
-class InvestmentSummary extends Component {
+class InvestmentSummary extends PureComponent {
   render() {
     const {asset, currency, portfolio, assetLife, total} = this.props;
     const exposure = total.getIn(['totalExposure', asset]);
