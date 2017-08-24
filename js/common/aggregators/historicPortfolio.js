@@ -1,5 +1,4 @@
 const {fromJS, Map} = require('immutable');
-const {create} = require('@most/create');
 const {noop} = require('../core/fn');
 const {
   getChangeAfterDate,
@@ -27,31 +26,27 @@ const getPortfolioValueForSymbol = (priceList, investments, symbol) =>
 // returns a Map with keys for each symbol and the entries
 // for each day as well as the portfolio value on that date
 // e.g. {[id]: Investment} {ETH: Price[]} -> { ETH: [{day: 123, value: 2000}], BTC:  [{day: 123, value: 2000}]}
-const calculateHistoricPortfolioValues = ({investments, prices}) =>
-  create((add, end, error) => {
-    const longTermInvestments = investments.filter(i => i.get('assetLife') === 'Long Term');
-    const shortTermInvestments = investments.filter(i => i.get('assetLife') === 'Short Term');
+const calculateHistoricPortfolioValues = ({investments, prices}) => {
+  const longTermInvestments = investments.filter(i => i.get('assetLife') === 'Long Term');
+  const shortTermInvestments = investments.filter(i => i.get('assetLife') === 'Short Term');
 
-    const longTerm = prices.reduce(
-      (acc, priceList, symbol) => acc.set(
-        symbol,
-        getPortfolioValueForSymbol(priceList, longTermInvestments, symbol),
-      ),
-      Map()
-    )
+  const longTerm = prices.reduce(
+    (acc, priceList, symbol) => acc.set(
+      symbol,
+      getPortfolioValueForSymbol(priceList, longTermInvestments, symbol),
+    ),
+    Map()
+  )
 
-    const shortTerm = prices.reduce(
-      (acc, priceList, symbol) => acc.set(
-        symbol,
-        getPortfolioValueForSymbol(priceList, shortTermInvestments, symbol),
-      ),
-      Map()
-    )
+  const shortTerm = prices.reduce(
+    (acc, priceList, symbol) => acc.set(
+      symbol,
+      getPortfolioValueForSymbol(priceList, shortTermInvestments, symbol),
+    ),
+    Map()
+  )
 
-    add(fromJS({longTerm, shortTerm}));
-    end();
-
-    return noop;
-  });
+  return fromJS({longTerm, shortTerm});
+};
 
 module.exports = {calculateHistoricPortfolioValues};

@@ -1,5 +1,4 @@
 const {fromJS, Map} = require('immutable');
-const {create} = require('@most/create');
 const curry = require('folktale/core/lambda/curry');
 const {partial} = require('../core/fn');
 const {getTotalAmountInvested, getCurrentTotalForInvestment, getPercentageChange} = require('./common');
@@ -21,12 +20,6 @@ const getInvestmentValues = (investments, prices) => investments.map(
   investment => ((getInvestmentValue) ['∘'] (partial(getCurrentPrice, prices)))(investment)(investment)
 )
 
-const calculateInvestmentValues = ({investments, prices}) =>
-  create((add, end, error) => {
-    add(getInvestmentValues(investments, prices));
-    end();
-
-    return () => console.log('Unsubscribe calculateInvestmentValues');
-  });
+const calculateInvestmentValues = ({investments, prices}) => getInvestmentValues(investments, prices);
 
 module.exports = {calculateInvestmentValues, getInvestmentValues};
