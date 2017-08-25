@@ -15,7 +15,13 @@ const bch$ = currency => merge(
 ).startWith({});
 
 const eth$ = currency => connect(io, 'ETH', 'Kraken', currency).startWith({MARKET: 'Kraken'});
-const xrp$ = currency => connect(io, 'XRP', 'Bitstamp', currency).startWith({MARKET: 'Bitstamp'});
-const xtz$ = currency => connect(io, 'XTZ', 'HitBTC', currency).startWith({MARKET: 'HitBTC'});;
+
+
+const xrp$ = () => merge(
+  connect(io, 'XRP', 'Bitstamp', 'EUR'),
+  connect(io, 'XRP', 'Kraken', 'USD')
+).startWith({MARKET: 'Bitstamp'});
+
+const xtz$ = () => connect(io, 'XTZ', 'HitBTC', 'USD').startWith({MARKET: 'HitBTC'});;
 
 module.exports = {btc$, bch$, eth$, xrp$, xtz$};

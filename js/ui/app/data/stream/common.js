@@ -1,6 +1,7 @@
 import fetch from '../../services/api'
 import {fromPromise, combine} from 'most'
 import {fromJS} from 'immutable'
+import {convertToBaseCurrency} from '../../../../common/fx'
 
 const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;
 
@@ -40,8 +41,8 @@ export const fx$ = combine(
   fromPromise(fetchFX('USD').run().promise())
 )
 
-export const getPriceObjFromStreamData = data => ({
-  price: data.PRICE || 0,
+export const getPriceObjFromStreamData = (currency, fx, data) => ({
+  price: convertToBaseCurrency(currency, data.TOSYMBOL, data.PRICE, fx.get(currency)),
   market: data.MARKET,
   symbol: data.FROMSYMBOL
 })

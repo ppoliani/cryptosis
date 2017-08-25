@@ -19,14 +19,16 @@ export const startPortfolioStream = currency => dispatch => {
   }
 
   const getPrices = (investments, btc, bch, eth, xrp, xtz, fx)  => {
+    const getPriceFromStream = partial(getPriceObjFromStreamData, currency, fx);
+
     return {
       investments: fromJS(investments.result).map(partial(changePriceToSelectedCurrency, currency, fx.get(currency))),
       prices: fromJS({
-        BTC: getPriceObjFromStreamData(btc),
-        BCH: getPriceObjFromStreamData(bch),
-        ETH: getPriceObjFromStreamData(eth),
-        XRP: getPriceObjFromStreamData(xrp),
-        XTZ: getPriceObjFromStreamData(xtz)
+        BTC: getPriceFromStream(btc),
+        BCH: getPriceFromStream(bch),
+        ETH: getPriceFromStream(eth),
+        XRP: getPriceFromStream(xrp),
+        XTZ: getPriceFromStream(xtz)
       })
     }
   }
