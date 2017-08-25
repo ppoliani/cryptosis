@@ -19,16 +19,20 @@ export const startInvestmentCurrentValueStream = currency => dispatch => {
     error: errorValue => console.log(`Error in the observer of the investment values stream: ${errorValue}`)
   }
 
-  const getPrices = (investments, btc, bch, eth, xrp, xtz, fx)  => ({
-    investments: fromJS(investments.result).map(partial(changePriceToSelectedCurrency, currency, fx.get(currency))),
-    prices: fromJS({
-      BTC: getPriceObjFromStreamData(btc),
-      BCH: getPriceObjFromStreamData(bch),
-      ETH: getPriceObjFromStreamData(eth),
-      XRP: getPriceObjFromStreamData(xrp),
-      XTZ: getPriceObjFromStreamData(xtz)
-    })
-  })
+  const getPrices = (investments, btc, bch, eth, xrp, xtz, fx)  => {
+    const getPriceFromStream = partial(getPriceObjFromStreamData, currency, fx);
+
+    return {
+      investments: fromJS(investments.result).map(partial(changePriceToSelectedCurrency, currency, fx.get(currency))),
+      prices: fromJS({
+        BTC: getPriceFromStream(btc),
+        BCH: getPriceFromStream(bch),
+        ETH: getPriceFromStream(eth),
+        XRP: getPriceFromStream(xrp),
+        XTZ: getPriceFromStream(xtz)
+      })
+    }
+  }
 
   const streams$ = [btc$(currency), bch$(currency), eth$(currency), xrp$(currency), xtz$(currency), fx$];
   const subscription = combine(getPrices, getPartialInvestment$(), ...streams$)

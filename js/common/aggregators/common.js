@@ -99,12 +99,6 @@ const getTotalValueAfterDate = (investments, investmentType, date, currentPrice)
   return calculateCurrentValueAtPrice(investments, currentPrice).get(investmentType) || 0
 }
 
-const getPriceObjFromStreamData = data => ({
-  price: data.PRICE,
-  market: data.MARKET,
-  symbol: data.FROMSYMBOL
-})
-
 const filterBuys = investments => investments.filter(v => v.get('positionType') === 'buy')
 const filterSells = investments => investments.filter(v => v.get('positionType') === 'sell')
 
@@ -145,6 +139,5 @@ module.exports = {
   getChangeAfterDate,
   getCashAfterDate,
   getTotalValueAfterDate,
-  getPriceObjFromStreamData,
   getTotalAmountInvested
 }

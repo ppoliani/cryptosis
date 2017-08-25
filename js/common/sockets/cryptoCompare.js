@@ -60,22 +60,29 @@ const isPriceAvailable = data => data.PRICE != undefined;
 
 const connect = (io, symbol, exchangeName, toSymbol) => {
   const subscription = [`2~${exchangeName}~${symbol}~${toSymbol}`];
-  const socket = io.connect(URL);
+  const socket = io.connect(URL, {
+    reconnection: true,
+    transports: ['websocket']
+  });
+
   socket.emit('SubAdd', {subs:subscription});
 
   return create((add, end, error) => {
-    socket.on('m', message => {
+    const handleMessage = message => {
       const messageType = message.substring(0, message.indexOf("~"));
 
       if (messageType === CURRENTAGG) {
         const unpackedMessage = unpack(message);
         isPriceAvailable(unpackedMessage) && add(unpackedMessage);
       }
-    });
+    };
+
+    socket.on('m', handleMessage);
 
     return () => {
-      console.log(`unsubscribing ${symbol}`);
+      socket.off('m', handleMessage);
       socket.emit('SubRemove', {subs:subscription});
+      socket.close();
     }
   });
 }

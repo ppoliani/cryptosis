@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Grid, Row, Col} from 'react-flexbox-grid'
 import {identity} from 'folktale/core/lambda'
+import {autobind} from 'core-decorators'
+import {partial} from '../../../../common/core/fn'
 import {startPortfolioStream} from '../../data/stream/portfolioValueStream'
 import {startLast30DaysStream} from '../../data/stream/last30DaysStream'
 import CurrencySelector from '../form/selectors/CurrencySelector'
@@ -23,12 +25,12 @@ class Overview extends Component {
   componentDidUpdate(prevProps) {
     const currency = getSelectedCurrency(this.props.form);
 
-    if(getSelectedCurrency(prevProps.form) !== currency) {
-      this.unsubscribe();
-      this.subscribe(currency);
+    if(currency && getSelectedCurrency(prevProps.form) !== currency) {
+      this.unsubscribe().then(partial(this.subscribe, currency));
     }
   }
 
+  @autobind
   subscribe(currency) {
     const {startPortfolioStream, startLast30DaysStream} = this.props;
 
@@ -39,19 +41,21 @@ class Overview extends Component {
   unsubscribe() {
     const {stream} = this.props;
 
-    stream
+    const s1 = stream
       .get('portfolioSubscription')
       .matchWith({
         Just: ({value}) => value.unsubscribe(),
         Nothing: identity
       });
 
-    stream
+    const s2 = stream
       .get('last30DaysSubscription')
       .matchWith({
         Just: ({value}) => value.unsubscribe(),
         Nothing: identity
       });
+
+    return Promise.all([s1, s2]);
   }
 
   render() {
