@@ -44,7 +44,7 @@ class Login extends Component {
         error => {
           console.log('Could not login via google', error)
         },
-        ({token}) => {
+        ({token, account}) => {
           setItem('@investreck:access_token', token);
           setItem('@investreck:user', JSON.stringify(account));
           this.props.setUserProfile(account);
