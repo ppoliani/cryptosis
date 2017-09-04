@@ -1,3 +1,8 @@
 .history
 app.log
 .vscode
+operations/env/api/.env
+js/ui/.env
+js/ui/.env.production
+js/api/.env
+
