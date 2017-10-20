@@ -1,17 +1,15 @@
 import React, {Component} from 'react'
-import {StyleSheet, View} from 'react-native'
+import {StyleSheet} from 'react-native'
 import {NativeRouter, Route, Redirect, Link} from 'react-router-native'
+import {Container, View} from 'native-base'
 import {getItem} from '../services/storage'
 import Home from './Home'
+import Layout from './layout/Layout'
 // import Login from './auth/Login'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'stretch',
-    justifyContent: 'center',
-    overflow: 'hidden',
-    padding: 10,
     backgroundColor: '#2A2F3A'
   }
 });
@@ -20,16 +18,17 @@ class AuthGuard extends Component {
   constructor(props, state) {
     super(props, state);
 
-    this.state = {isAuthenticated: null};
+    this.state = {isAuthenticated: true};
   }
 
   componentDidMount() {
-    getItem(process.env.ACCESS_TOKEN_KEY)
-      .bimap(
-        error => this.setState({isAuthenticated: false}),
-        () => setTimeout(() => this.setState({isAuthenticated: true}))
-      )
-      .run()
+    //TODO: process.env is not available in react-native; we need a different mechanism
+    // getItem(process.env.ACCESS_TOKEN_KEY)
+    //   .bimap(
+    //     error => this.setState({isAuthenticated: false}),
+    //     () => setTimeout(() => this.setState({isAuthenticated: true}))
+    //   )
+    //   .run()
   }
 
   render() {
@@ -55,10 +54,21 @@ class AuthGuard extends Component {
 const PrivateRoute = ({component: Component, ...rest}) =>
   <Route {...rest} render={props => <AuthGuard {...props} component={Component} /> }/>
 
-export default () =>
-  <NativeRouter>
-    <View style={styles.container}>
-      <Route exact path="/" component={Home}/>
-      {/* <Route path="/login" component={Login}/> */}
-    </View>
-  </NativeRouter>;
+
+const RouteList = () =>  (
+  <View style={styles.container}>
+    <PrivateRoute name="Dashboard" exact path="/" component={Home}/>
+    {/* <Route path="/login" component={Login}/> */}
+  </View>
+)
+
+export default () => {
+  const LayoutHOC = Layout(RouteList);
+
+  return (
+    <NativeRouter style={styles.container}>
+      <LayoutHOC />
+    </NativeRouter>
+  )
+
+}

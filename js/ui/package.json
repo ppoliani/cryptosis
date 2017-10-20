@@ -8,7 +8,8 @@
     "web:start": "PLATFORM_ENV=web env-cmd ./.env webpack-dev-server",
     "web:build": "PLATFORM_ENV=web env-cmd ./.env.production webpack",
     "web:prod": "PLATFORM_ENV=web  env-cmd ./.env.production webpack-dev-server",
-    "native:android": "PLATFORM_ENV=mobile env-cmd ./.env react-native run-android"
+    "native:android": "PLATFORM_ENV=mobile env-cmd ./.env react-native run-android",
+    "native:tools": "react-devtools"
   },
   "dependencies": {
     "@amcharts/amcharts3-react": "^2.0.7",
@@ -18,7 +19,7 @@
     "classnames": "^2.2.5",
     "core-decorators": "^0.15.0",
     "date-fns": "^1.28.4",
-    "folktale": "^2.0.0",
+    "folktale": "^2.0.1",
     "immutable": "^3.8.1",
     "include-media": "^1.4.9",
     "material-ui": "^0.18.0",
@@ -28,6 +29,7 @@
     "most-subject": "^5.3.0",
     "native-base": "^2.3.3",
     "react": "16.0.0",
+    "react-devtools": "^2.5.2",
     "react-dom": "16.0.0",
     "react-facebook-login": "^3.5.0",
     "react-flexbox-grid": "^1.1.3",

@@ -1,1 +1,1 @@
-module.exports = require('./core/store.prod');
+module.exports = require('./core/store.dev');

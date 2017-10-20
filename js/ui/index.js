@@ -3,20 +3,21 @@ import React, {Component} from 'react'
 import {Provider} from 'react-redux'
 import {
   AppRegistry,
-  StyleSheet,
-  Text,
-  View
+  StyleSheet
 } from 'react-native'
+import {Container} from 'native-base'
 import Router from './app/native/Router'
 import configureStore from './app/data/'
+import Layout from './app/native/layout/Layout'
+
+const store = configureStore();
 
 export default class Cryprosis extends Component {
   render() {
+    const LayoutHOC = Layout(Router);
     return (
-      <Provider store={configureStore()}>
-        <View style={styles.container}>
-          <Router />
-        </View>
+      <Provider store={store}>
+        <Router />
       </Provider>
     );
   }
