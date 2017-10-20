@@ -14,9 +14,9 @@ export const setItem = (key, value) =>
 
 export const getItem = key =>
   task(async resolver => {
-    try{
-      await AsyncStorage.getItem(key);
-      resolver.resolve(key);
+    try {
+      const item = await AsyncStorage.getItem(key);
+      resolver.resolve(item);
     }
     catch(error) {
       resolver.reject(error);

@@ -5885,6 +5885,10 @@ react-google-login@^2.8.5:
   dependencies:
     "@types/react" "*"
 
+react-native-config@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.9.0.tgz#5a82874a2f75a44c3c421e03d8910228f17cea35"
+
 react-native-debugger-open@^0.3.4:
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/react-native-debugger-open/-/react-native-debugger-open-0.3.4.tgz#17abc27093cba40ac108c4082bb219210e663c1e"

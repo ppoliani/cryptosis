@@ -2,10 +2,8 @@ import React, {Component} from 'react'
 import {autobind} from 'core-decorators'
 import {View, StyleSheet, AsyncStorage} from 'react-native'
 import {Redirect} from 'react-router-native'
-import {login} from '../../helpers/auth'
-import {setItem} from '../../storage'
-
-
+import {login} from '../../services/auth'
+import {setItem} from '../../services/storage'
 const {FBLogin, FBLoginManager} = require('react-native-facebook-login');
 
 class Login extends Component {
