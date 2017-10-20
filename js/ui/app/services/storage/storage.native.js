@@ -1,9 +1,9 @@
 import {AsyncStorage} from 'react-native'
-import {task} from 'folktale/data/task'
+import {task} from 'folktale/concurrency/task'
 
 export const setItem = (key, value) =>
   task(async resolver => {
-    try{
+    try {
       await AsyncStorage.setItem(key, value);
       resolver.resolve();
     }

@@ -7,9 +7,10 @@ import {
   Text,
   View
 } from 'react-native'
+import Router from './app/native/Router'
 import configureStore from './app/data/'
 
-export default class Investreck extends Component {
+export default class Cryprosis extends Component {
   render() {
     return (
       <Provider store={configureStore()}>
@@ -30,4 +31,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('cryptosis', () => Investreck)
+AppRegistry.registerComponent('cryptosis', () => Cryprosis)

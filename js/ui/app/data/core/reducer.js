@@ -6,7 +6,6 @@ import streamReducer from '../stream/streamReducer'
 import portfolioReducer from '../portfolio/portfolioReducer'
 import priceReducer from '../prices/priceReducer'
 import profileReducer from '../profile/profileReducer'
-import newsReducer from '../news/newsReducer'
 
 export default combineReducers({
   form: reduxFormReducer,
@@ -15,6 +14,5 @@ export default combineReducers({
   stream: streamReducer,
   portfolio: portfolioReducer,
   prices: priceReducer,
-  userProfile: profileReducer,
-  news: newsReducer
+  userProfile: profileReducer
 })

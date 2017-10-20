@@ -1,5 +1,3 @@
 <resources>
-    <string name="app_name">investreck</string>
-    <string name="fb_app_id">268075730303260</string>
-    <string name="fb_login_protocol_scheme">fb268075730303260</string>
+    <string name="app_name">cryptosis</string>
 </resources>
