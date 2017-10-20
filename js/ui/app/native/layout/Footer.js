@@ -3,14 +3,28 @@ import {
   Footer,
   FooterTab,
   Button,
-  Text
+  Text,
+  Icon
 } from 'native-base';
 
 export default () => (
   <Footer>
     <FooterTab>
-      <Button full>
+      <Button vertical>
         <Text>Footer</Text>
+        <Icon name="pie" />
+      </Button>
+    </FooterTab>
+    <FooterTab>
+      <Button vertical>
+        <Text>Investments</Text>
+        <Icon name="pulse" />
+      </Button>
+    </FooterTab>
+    <FooterTab>
+      <Button vertical>
+        <Text>Me</Text>
+        <Icon name="person" />
       </Button>
     </FooterTab>
   </Footer>

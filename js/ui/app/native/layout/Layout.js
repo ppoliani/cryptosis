@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {withRouter} from 'react-router'
 import {StyleSheet} from 'react-native'
-import {compose} from 'folktale/core/lambda'
 import {Container, Content} from 'native-base'
 import Header from './Header'
 import Footer from './Footer'
@@ -13,13 +12,14 @@ const styles = StyleSheet.create({
   }
 });
 
-const LayoutHOC = NestedComponent => class LayoutComponent extends Component {
+const LayoutHOC = (paths, NestedComponent) => class LayoutComponent extends Component {
   render() {
     const {location} = this.props;
+    const title = paths[location.pathname]['name'];
 
     return (
       <Container>
-        <Header title={location.pathname}/>
+        <Header title={title}/>
         <Content>
           <NestedComponent />
         </Content>
@@ -30,4 +30,4 @@ const LayoutHOC = NestedComponent => class LayoutComponent extends Component {
 }
 
 
-export default compose(withRouter, LayoutHOC)
+export default (paths, NestedComponent) => withRouter(LayoutHOC(paths, NestedComponent))

@@ -57,18 +57,24 @@ const PrivateRoute = ({component: Component, ...rest}) =>
 
 const RouteList = () =>  (
   <View style={styles.container}>
-    <PrivateRoute name="Dashboard" exact path="/" component={Home}/>
+    <PrivateRoute exact path="/" component={Home}/>
     {/* <Route path="/login" component={Login}/> */}
   </View>
 )
 
+const paths = {
+  '/': {
+    name: 'Dashboard'
+  }
+}
+
+
 export default () => {
-  const LayoutHOC = Layout(RouteList);
+  const LayoutHOC = Layout(paths, RouteList);
 
   return (
     <NativeRouter style={styles.container}>
       <LayoutHOC />
     </NativeRouter>
   )
-
 }

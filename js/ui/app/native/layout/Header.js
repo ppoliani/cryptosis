@@ -4,6 +4,7 @@ import {
   Header,
   Body,
   Title,
+  View,
   Left,
   Right,
   Icon,
