@@ -2,6 +2,7 @@
 app.log
 .vscode
 operations/env/api/.env
+operations/env/notificationService/.env
 js/ui/.env
 js/ui/.env.production
 js/api/.env

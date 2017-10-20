@@ -1,13 +1,13 @@
-import 'babel-polyfill';
-import React, {Component} from 'react';
-import {Provider} from 'react-redux';
+import 'babel-polyfill'
+import React, {Component} from 'react'
+import {Provider} from 'react-redux'
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View
-} from 'react-native';
-import configureStore from './app/data/';
+} from 'react-native'
+import configureStore from './app/data/'
 
 export default class Investreck extends Component {
   render() {
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('investreck', () => Investreck);
+AppRegistry.registerComponent('cryptosis', () => Investreck)
