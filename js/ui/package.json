@@ -8,7 +8,8 @@
     "web:start": "PLATFORM_ENV=web env-cmd ./.env webpack-dev-server",
     "web:build": "PLATFORM_ENV=web env-cmd ./.env.production webpack",
     "web:prod": "PLATFORM_ENV=web  env-cmd ./.env.production webpack-dev-server",
-    "native:android": "PLATFORM_ENV=mobile env-cmd ./.env react-native run-android",
+    "native:android": "react-native run-android",
+    "native:ios": "react-native run-ios",
     "native:tools": "react-devtools"
   },
   "dependencies": {
@@ -36,7 +37,7 @@
     "react-google-login": "^2.8.5",
     "react-native": "0.49.3",
     "react-native-config": "^0.9.0",
-    "react-native-facebook-login": "^1.6.0",
+    "react-native-fbsdk": "^0.6.3",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.1.1",
     "react-router-native": "^4.1.1",

@@ -4,7 +4,9 @@ import {View, StyleSheet, AsyncStorage} from 'react-native'
 import {Redirect} from 'react-router-native'
 import {login} from '../../services/auth'
 import {setItem} from '../../services/storage'
-const {FBLogin, FBLoginManager} = require('react-native-facebook-login');
+
+const FBSDK = require('react-native-fbsdk');
+const {LoginButton, AccessToken} = FBSDK;
 
 class Login extends Component {
   constructor(props, state) {
@@ -41,12 +43,9 @@ class Login extends Component {
     return this.state.isAuthenticated
       ? <Redirect to={this.props.location.state.from || ''}/>
       : <View>
-          <FBLogin
-            loginBehavior={FBLoginManager.LoginBehaviors.Native}
-            permissions={['email', 'public_profile']}
-            onLogin={this.responseFacebook}
-            onError={this.onError}
-            onPermissionsMissing={this.onPermissionsMissing} />
+          <LoginButton
+            publishPermissions={['email', 'public_profile']}
+            onLoginFinished={this.responseFacebook} />
         </View>;
   }
 }
