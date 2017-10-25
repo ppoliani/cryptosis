@@ -4,6 +4,8 @@ import {View, StyleSheet, AsyncStorage} from 'react-native'
 import {Redirect} from 'react-router-native'
 import {login} from '../../services/auth'
 import {setItem} from '../../services/storage'
+import {fromPromised} from 'folktale/concurrency/task'
+import Config from 'react-native-config'
 
 const FBSDK = require('react-native-fbsdk');
 const {LoginButton, AccessToken} = FBSDK;
@@ -16,27 +18,24 @@ class Login extends Component {
   }
 
   @autobind
-  responseFacebook(response) {
-    login('fb', response.credentials.token)
-      .chain(({token}) => setItem(process.env.ACCESS_TOKEN_KEY, token))
-      .bimap(
-        error => {
-          console.log('Could not login via fb', error);
-          this.state = {isAuthenticated: false};
-        },
-        () => this.setState({isAuthenticated: true})
-      )
-      .run();
-  }
-
-  onError(data) {
-    console.log("Error");
-    console.log(data);
-  }
-
-  onPermissionsMissing(data) {
-    console.log("Check permissions!");
-    console.log(data);
+  responseFacebook(error, result) {
+    if (error) {
+      console.log('Could not login via fb', error);
+      this.state = {isAuthenticated: false};
+    } 
+    else { 
+      fromPromised(AccessToken.getCurrentAccessToken)()
+        .chain(({accessToken}) => setItem(Config.ACCESS_TOKEN_KEY, accessToken)) 
+        .bimap(
+          error => {
+            console.log('Could not store the token in the localstorage', error);
+          },
+          () => {
+            this.setState({isAuthenticated: true})
+          }
+        )
+        .run()
+    } 
   }
 
   render() {
@@ -44,7 +43,7 @@ class Login extends Component {
       ? <Redirect to={this.props.location.state.from || ''}/>
       : <View>
           <LoginButton
-            publishPermissions={['email', 'public_profile']}
+            readPermissions={['email', 'public_profile']}
             onLoginFinished={this.responseFacebook} />
         </View>;
   }

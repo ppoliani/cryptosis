@@ -26,8 +26,12 @@ class AuthGuard extends Component {
     //TODO: process.env is not available in react-native; we need a different mechanism
     getItem(Config.ACCESS_TOKEN_KEY)
       .bimap(
-        error => this.setState({isAuthenticated: false}),
-        (item) => setTimeout(() => this.setState({isAuthenticated: Boolean(item)}))
+        error => {
+          this.setState({isAuthenticated: false})
+        },
+        (item) => {
+          setTimeout(() => this.setState({isAuthenticated: Boolean(item)}))
+        }
       )
       .run()
   }
