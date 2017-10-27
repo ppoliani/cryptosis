@@ -1,7 +1,16 @@
 import React from 'react'
-import {Container, Text} from 'native-base'
+import {View} from 'native-base'
+import {Col, Row, Grid} from 'react-native-easy-grid';
+import PortfolioSummary from './dashboard/PortfolioSummary'
+
 
 export default () =>
-  <Container>
-    <Text>Home</Text>
-  </Container>
+  <View>
+    <Grid>
+      <Row>
+        <Col>
+          <PortfolioSummary />
+        </Col>
+      </Row>
+    </Grid>
+  </View>

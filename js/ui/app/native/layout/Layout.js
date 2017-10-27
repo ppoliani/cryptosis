@@ -8,7 +8,7 @@ import Footer from './Footer'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2A2F3A'
+    padding: 10
   }
 });
 
@@ -19,8 +19,8 @@ const LayoutHOC = (paths, NestedComponent) => class LayoutComponent extends Comp
 
     return (
       <Container>
-        <Header title={title}/>
-        <Content>
+        <Header title={title} style={{backgroundColor: '#fff'}}/>
+        <Content style={styles.container}>
           <NestedComponent />
         </Content>
         <Footer />

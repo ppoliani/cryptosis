@@ -36,7 +36,7 @@ class Login extends Component {
         )
         .run()
     } 
-  }
+  } 
 
   render() {
     return this.state.isAuthenticated
