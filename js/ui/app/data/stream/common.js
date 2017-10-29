@@ -1,7 +1,9 @@
+import {fromPromise, combine, mergeArray} from 'most'
+import {fromJS, Map} from 'immutable'
+import {identity} from 'folktale/core/lambda'
 import fetch from '../../services/api'
-import {fromPromise, combine} from 'most'
-import {fromJS} from 'immutable'
 import {convertToBaseCurrency} from '../../../../common/fx'
+import {majorPriceStream$} from '../../../../common/sockets/streams'
 
 const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;
 
@@ -28,18 +30,42 @@ export const getXRP$ = currency => fromPromise(fetchXRP(currency).run().promise(
 export const getXTZ$ = currency => fromPromise(fetchXTZ(currency).run().promise())
 export const getPartialInvestment$ = () => fromPromise(fetchPartialInvestments.run().promise())
 
-const extractData = (gbp, eur, usd) => fromJS({
+const extractData = (cryptoPrice, gbp, eur, usd) =>  ({
   GBP: gbp.rates,
   EUR: eur.rates,
-  USD: usd.rates
+  USD: usd.rates,
+  [cryptoPrice.FROMSYMBOL]: {
+    [cryptoPrice.TOSYMBOL]: cryptoPrice.PRICE
+  }
 });
 
-export const fx$ = () => combine(
-  extractData,
-  fromPromise(fetchFX('GBP').run().promise()),
-  fromPromise(fetchFX('EUR').run().promise()),
-  fromPromise(fetchFX('USD').run().promise())
-)
+const extendWithCryptoPrices = (acc, next) => {
+  // if it's one of the fx streams
+  if(next.base) {
+    return acc.updateIn(
+      [next.base],
+      (rates = Map()) => rates.merge(next.rates)
+    )
+  }
+
+  // is it's a websocket stream from cryptocompare
+  return acc
+    .setIn(
+      [next.TOSYMBOL, next.FROMSYMBOL], 
+      1 / next.PRICE
+    )
+}
+
+export const fx$ = currency => {
+  return mergeArray([
+    majorPriceStream$(currency),
+    fromPromise(fetchFX('GBP').run().promise()),
+    fromPromise(fetchFX('EUR').run().promise()),
+    fromPromise(fetchFX('USD').run().promise())
+  ])
+  .debounce(5000)
+  .scan(extendWithCryptoPrices, Map())
+}
 
 export const getPriceObjFromStreamData = (currency, fx, data) => ({
   price: convertToBaseCurrency(currency, data.TOSYMBOL, data.PRICE, fx.get(currency)),

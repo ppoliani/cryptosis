@@ -28,7 +28,7 @@ export const startInvestmentCurrentValueStream = currency => dispatch => {
     }
   }
 
-  const streams$ = [priceStream$(currency), fx$()];
+  const streams$ = [priceStream$(currency), fx$(currency)];
   const subscription = combine(getPrices, getPartialInvestment$(), ...streams$)
     .map(calculateInvestmentValues)
     .subscribe(observer);

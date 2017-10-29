@@ -58,21 +58,7 @@ const unpack = value => {
 
 const isPriceAvailable = data => data.PRICE != undefined;
 
-const connect = (io, toSymbol) => {
-  const subscriptions = [
-    `2~Coinfloor~BTC~${toSymbol}`,
-    `2~Coinbase~BTC~${toSymbol}`,
-    `2~Kraken~BTC~${toSymbol}`,
-    `2~Coinfloor~BCH~${toSymbol}`,
-    `2~Kraken~BCH~${toSymbol}`,
-    `2~Coinbase~BCH~${toSymbol}`,
-    `2~Kraken~ETH~${toSymbol}`,
-    `2~Bitstamp~XRP~${toSymbol}`,
-    `2~Kraken~XRP~${toSymbol}`,
-    `2~HitBTC~XTZ~${toSymbol}`,
-    `2~Bittrex~VTC~${toSymbol}`
-  ];
-  
+const connect = (io, subscriptions) => {
   const socket = io.connect(URL, {
     reconnection: true,
     transports: ['websocket']
@@ -100,4 +86,5 @@ const connect = (io, toSymbol) => {
   });
 }
 
-module.exports = {connect};
+module.exports = {connect
+}
