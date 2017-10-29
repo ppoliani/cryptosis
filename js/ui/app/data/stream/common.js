@@ -34,38 +34,41 @@ const extractData = (cryptoPrice, gbp, eur, usd) =>  ({
   GBP: gbp.rates,
   EUR: eur.rates,
   USD: usd.rates,
-  [cryptoPrice.FROMSYMBOL]: {
-    [cryptoPrice.TOSYMBOL]: cryptoPrice.PRICE
-  }
+  cryptoPrice
 });
 
 const extendWithCryptoPrices = (acc, next) => {
-  // if it's one of the fx streams
-  if(next.base) {
-    return acc.updateIn(
-      [next.base],
-      (rates = Map()) => rates.merge(next.rates)
-    )
-  }
+  const {cryptoPrice} = next;
 
-  // is it's a websocket stream from cryptocompare
-  return acc
+  const updateRates = currency => rates => acc
+    .get(currency, Map())
+    .merge(next[currency]);
+
+  return ['GBP', 'EUR', 'USD']
+    .reduce((acc, currency) => acc
+      .updateIn(
+        [currency],
+        updateRates(currency)
+      ), acc)
     .setIn(
-      [next.TOSYMBOL, next.FROMSYMBOL], 
-      1 / next.PRICE
+      [cryptoPrice.TOSYMBOL, cryptoPrice.FROMSYMBOL], 
+      1 / cryptoPrice.PRICE
+    )
+    .setIn(
+      [cryptoPrice.FROMSYMBOL, cryptoPrice.TOSYMBOL],
+      cryptoPrice.PRICE
     )
 }
 
-export const fx$ = currency => {
-  return mergeArray([
+export const fx$ = currency => combine(
+    extractData,
     majorPriceStream$(currency),
     fromPromise(fetchFX('GBP').run().promise()),
     fromPromise(fetchFX('EUR').run().promise()),
     fromPromise(fetchFX('USD').run().promise())
-  ])
-  .debounce(5000)
+  )
   .scan(extendWithCryptoPrices, Map())
-}
+  .skipWhile(fx => fx.size === 0);
 
 export const getPriceObjFromStreamData = (currency, fx, data) => ({
   price: convertToBaseCurrency(currency, data.TOSYMBOL, data.PRICE, fx.get(currency)),
