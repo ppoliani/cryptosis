@@ -25,7 +25,7 @@ class AuthGuard extends Component {
   }
 
   componentDidMount() {
-    const accessToken = getItem(process.env.ACCESS_TOKEN_KEY);
+    const accessToken = getItem(ACCESS_TOKEN_KEY);
     this.setState({isAuthenticated: Boolean(accessToken)});
   }
 
@@ -54,7 +54,7 @@ const PrivateRoute = ({component: Component, ...rest}) =>
 
 class RouterComponent extends Component {
   componentWillMount() {
-    this.props.setUserProfile(JSON.parse(getItem('@investreck:user')));
+    this.props.setUserProfile(JSON.parse(getItem(USER_INFO)));
   }
 
   render() {

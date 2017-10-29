@@ -22,8 +22,8 @@ class Login extends Component {
           console.log('Could not login via fb', error);
         },
         ({token, account}) => {
-          setItem('@investreck:access_token', token);
-          setItem('@investreck:user', JSON.stringify(account));
+          setItem(ACCESS_TOKEN_KEY, token);
+          setItem(USER_INFO, JSON.stringify(account));
           this.props.setUserProfile(account)
           this.redirect();
         }

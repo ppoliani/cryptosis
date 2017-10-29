@@ -9,8 +9,17 @@ module.exports = () => {
   const isProd = process.env.NODE_ENV === 'production';
 
   const plugins = [
-    new DotenvPlugin({
-      path: './.env'
+    // TODO: doesn't work well with webpack 3;
+    // new DotenvPlugin({
+    //   path: './.env'
+    // }),
+    new webpack.DefinePlugin({
+      ACCESS_TOKEN_KEY: JSON.stringify(process.env.ACCESS_TOKEN_KEY),
+      USER_INFO: JSON.stringify(process.env.USER_INFO),
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      GOOGLE_CLIENT_ID: JSON.stringify(process.env.GOOGLE_CLIENT_ID),
+      FB_CLIENT_ID: JSON.stringify(process.env.FB_CLIENT_ID),
+      API_URL: JSON.stringify(process.env.API_URL)
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -55,7 +64,7 @@ module.exports = () => {
   }
 
   return {
-    devtool: isProd ? 'source-map' : 'cheap-module-inline-source-map',
+    devtool: isProd ? 'source-map' : 'source-map',
     context: sourcePath,
 
     entry: {
@@ -158,7 +167,7 @@ module.exports = () => {
       port: process.env.PORT,
       compress: isProd,
       inline: !isProd,
-      hot: !isProd,
+      hot: false,
       stats: {
         assets: true,
         children: false,
