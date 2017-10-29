@@ -58,14 +58,27 @@ const unpack = value => {
 
 const isPriceAvailable = data => data.PRICE != undefined;
 
-const connect = (io, symbol, exchangeName, toSymbol) => {
-  const subscription = [`2~${exchangeName}~${symbol}~${toSymbol}`];
+const connect = (io, toSymbol) => {
+  const subscriptions = [
+    `2~Coinfloor~BTC~${toSymbol}`,
+    `2~Coinbase~BTC~${toSymbol}`,
+    `2~Kraken~BTC~${toSymbol}`,
+    `2~Coinfloor~BCH~${toSymbol}`,
+    `2~Kraken~BCH~${toSymbol}`,
+    `2~Coinbase~BCH~${toSymbol}`,
+    `2~Kraken~ETH~${toSymbol}`,
+    `2~Bitstamp~XRP~${toSymbol}`,
+    `2~Kraken~XRP~${toSymbol}`,
+    `2~HitBTC~XTZ~${toSymbol}`,
+    `2~Bittrex~VTC~${toSymbol}`
+  ];
+  
   const socket = io.connect(URL, {
     reconnection: true,
     transports: ['websocket']
   });
 
-  socket.emit('SubAdd', {subs:subscription});
+  socket.emit('SubAdd', {subs:subscriptions});
 
   return create((add, end, error) => {
     const handleMessage = message => {
@@ -81,7 +94,7 @@ const connect = (io, symbol, exchangeName, toSymbol) => {
 
     return () => {
       socket.off('m', handleMessage);
-      socket.emit('SubRemove', {subs:subscription});
+      socket.emit('SubRemove', {subs:subscriptions});
       socket.close();
     }
   });

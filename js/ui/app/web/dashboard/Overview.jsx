@@ -73,7 +73,6 @@ class Overview extends Component {
           <TabView
             portfolio={portfolio}
             investment={investment}
-            prices={prices}
             currency={getSelectedCurrency(form)}
             asset={getSelectedAsset(form)} />
         </Row>

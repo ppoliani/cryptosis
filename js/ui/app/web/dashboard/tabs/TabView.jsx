@@ -10,7 +10,7 @@ import './tab.scss'
 
 export default class TabView extends Component {
   renderTab(label, assetLife) {
-    const {currency, asset, portfolio, investment, prices} = this.props;
+    const {currency, asset, portfolio, investment} = this.props;
     const lastNDaysData = portfolio.getIn(['last30Days', assetLife]);
     const totalValue = portfolio.getIn(['total', assetLife])
 

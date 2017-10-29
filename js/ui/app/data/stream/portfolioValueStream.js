@@ -2,7 +2,7 @@ import {createAction} from 'redux-actions'
 import {fromJS} from 'immutable'
 import {combine, throwError, fromPromise} from 'most'
 import {partial} from '../../../../common/core/fn'
-import {btc$, bch$, eth$, xrp$, xtz$} from '../../../../common/sockets/streams'
+import {priceStream$} from '../../../../common/sockets/streams'
 import {calculateTotalPortfolioValue} from '../../../../common/aggregators'
 import {changePriceToSelectedCurrency} from '../../../../common/fx'
 import {setPortfolioValue} from '../portfolio/portfolioActions'
@@ -20,23 +20,17 @@ export const startPortfolioStream = currency => dispatch => {
     }
   }
 
-  const getPrices = (investments, btc, bch, eth, xrp, xtz, fx)  => {
-    const getPriceFromStream = partial(getPriceObjFromStreamData, currency, fx);
+  const getPrices = (investments, prices, fx)  => {
+    const priceData = getPriceObjFromStreamData(currency, fx, prices);
 
     return {
       investments: fromJS(investments.result).map(partial(changePriceToSelectedCurrency, currency, fx.get(currency))),
-      prices: fromJS({
-        BTC: getPriceFromStream(btc),
-        BCH: getPriceFromStream(bch),
-        ETH: getPriceFromStream(eth),
-        XRP: getPriceFromStream(xrp),
-        XTZ: getPriceFromStream(xtz)
-      })
+      prices: fromJS(priceData)
     }
   }
 
   const keepPrices = obj => obj.prices;
-  const streams$ = [btc$(currency), bch$(currency), eth$(currency), xrp$(currency), xtz$(currency), fx$()];
+  const streams$ = [priceStream$(currency), fx$()];
   const subscription = combine(getPrices, getPartialInvestment$(), ...streams$)
       .tap((dispatch) ['∘'] (setPrices) ['∘'] (keepPrices))
       .map(calculateTotalPortfolioValue)

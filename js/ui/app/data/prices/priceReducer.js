@@ -3,11 +3,9 @@ import Maybe from 'folktale/maybe'
 import {Map} from 'immutable'
 import {SET_PRICES} from './priceActions'
 
-const handleSetPrices = (state, action) => state.set('live', Maybe.fromNullable(action.payload));
+const handleSetPrices = (state, {payload}) => state.set(payload.get('symbol'), payload); 
 
-const priceData = Map({
-  live: Maybe.Nothing()
-});
+const priceData = Map();
 
 export default handleActions({
   [SET_PRICES]: handleSetPrices

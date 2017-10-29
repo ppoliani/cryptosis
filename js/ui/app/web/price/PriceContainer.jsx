@@ -16,7 +16,7 @@ class PriceContainer extends Component {
     const price = value.get('price');
 
     return (
-      <Col xs className='row-spacing'>
+      <Col key={asset} xs className='row-spacing'>
         <PriceBox
           asset={asset}
           price={price}
@@ -26,22 +26,17 @@ class PriceContainer extends Component {
     );
   }
 
-  @autobind
-  renderPriceContainer({value: prices}) {
-    return (
-      <Row around='xs' className='row-spacing price-container'>
-        {prices.map((value, asset) => this.renderPriceBox(value, asset))}
-      </Row>
-    )
-  }
-
   render() {
     const {prices} = this.props;
-
-    return prices.get('live').matchWith({
-      Just: this.renderPriceContainer,
-      Nothing: () => null
-    })
+    return (
+      <Row around='xs' className='row-spacing price-container'>
+        {
+          prices.map((value, asset) => this.renderPriceBox(value, asset))
+          .toList()
+          .toJS()
+        }
+      </Row>
+    )
   }
 }
 
