@@ -27,26 +27,15 @@ const getPortfolioValueForSymbol = (priceList, investments, symbol) =>
 // for each day as well as the portfolio value on that date
 // e.g. {[id]: Investment} {ETH: Price[]} -> { ETH: [{day: 123, value: 2000}], BTC:  [{day: 123, value: 2000}]}
 const calculateHistoricPortfolioValues = ({investments, prices}) => {
-  const longTermInvestments = investments.filter(i => i.get('assetLife') === 'Long Term');
-  const shortTermInvestments = investments.filter(i => i.get('assetLife') === 'Short Term');
-
-  const longTerm = prices.reduce(
+  const historicValues = prices.reduce(
     (acc, priceList, symbol) => acc.set(
       symbol,
-      getPortfolioValueForSymbol(priceList, longTermInvestments, symbol),
+      getPortfolioValueForSymbol(priceList, investments, symbol),
     ),
     Map()
   )
 
-  const shortTerm = prices.reduce(
-    (acc, priceList, symbol) => acc.set(
-      symbol,
-      getPortfolioValueForSymbol(priceList, shortTermInvestments, symbol),
-    ),
-    Map()
-  )
-
-  return fromJS({longTerm, shortTerm});
+  return historicValues;
 };
 
 module.exports = {calculateHistoricPortfolioValues};

@@ -22,10 +22,10 @@ class InvestmentSummaryContainer extends Component {
   }
 
   renderSelector() {
-    const {portfolio, assetLife, form} = this.props;
+    const {portfolio, form} = this.props;
 
     return portfolio
-      .getIn(['total', assetLife])
+      .get('total')
       .matchWith({
         Just: ({value: total}) => {
           const totalExposure = total.get('totalExposure');
@@ -43,10 +43,10 @@ class InvestmentSummaryContainer extends Component {
   }
 
   renderContent() {
-    const {portfolio, assetLife, form} = this.props;
+    const {portfolio, form} = this.props;
 
     return portfolio
-      .getIn(['total', assetLife])
+      .get('total')
       .matchWith({
         Just: ({value: total}) => {
           const totalExposure = total.get('totalExposure');
@@ -59,8 +59,7 @@ class InvestmentSummaryContainer extends Component {
               total={total}
               portfolio={portfolio}
               asset={asset}
-              currency={currency}
-              assetLife={assetLife} />
+              currency={currency} />
           );
         },
         Nothing: () => null

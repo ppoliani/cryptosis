@@ -9,13 +9,13 @@ import ExtraInfoTabView from './ExtraInfoTabView'
 import './tab.scss'
 
 export default class TabView extends Component {
-  renderTab(label, assetLife) {
+  render() {
     const {currency, asset, portfolio, investment} = this.props;
-    const lastNDaysData = portfolio.getIn(['last30Days', assetLife]);
-    const totalValue = portfolio.getIn(['total', assetLife])
+    const lastNDaysData = portfolio.get('last30Days');
+    const totalValue = portfolio.get('total');
 
     return (
-      <Tab label={label}>
+      <Col xs={12}>
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing'>
             <Col className='row-spacing'>
@@ -31,9 +31,9 @@ export default class TabView extends Component {
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing news-feed-container'>
             <Col className='row-spacing'>
-              <ExtraInfoTabView
+              {/* <ExtraInfoTabView
                 currency={currency}
-                asset={asset}/>
+                asset={asset}/> */}
             </Col>
           </Col>
           <Col lg={4} xs={12} className='row-spacing'>
@@ -41,25 +41,13 @@ export default class TabView extends Component {
               <PortfolioSummary
                 currency={currency}
                 portfolio={portfolio}
-                investment={investment}
-                assetLife={assetLife} />
+                investment={investment} />
             </Col>
             <Col>
-              <InvestmentSummaryContainer assetLife={assetLife} />
+              <InvestmentSummaryContainer />
             </Col>
           </Col>
         </Row>
-      </Tab>
-    )
-  }
-
-  render() {
-    return (
-      <Col xs={12}>
-        <Tabs>
-          {this.renderTab('Long Term', 'longTerm')}
-          {this.renderTab('Short Term', 'shortTerm')}
-        </Tabs>
       </Col>
     )
   }

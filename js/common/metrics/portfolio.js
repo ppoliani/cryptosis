@@ -1,38 +1,38 @@
-const getTotalExposure = (portfolio, assetLife) =>
+const getTotalExposure = portfolio =>
   portfolio
-    .getIn(['total', assetLife])
+    .get('total')
     .matchWith({
       Just: ({value: total}) => total.get('totalExposure').reduce((acc, v) => acc + v, 0),
       Nothing: () => 0
     })
 
-const getTotalPortfolioValue = (portfolio, assetLife) =>
+const getTotalPortfolioValue = portfolio =>
   portfolio
-    .getIn(['total', assetLife])
+    .get('total')
     .matchWith({
       Just: ({value: total}) => total.get('currentValue').reduce((acc, v) => acc + v, 0),
       Nothing: () => 0
     })
 
-const getTotalCash = (portfolio, assetLife) =>
+const getTotalCash = portfolio =>
   portfolio
-    .getIn(['total', assetLife])
+    .get('total')
     .matchWith({
       Just: ({value: total}) => total.get('totalCash').reduce((acc, v) => acc + v, 0),
       Nothing: () => 0
     })
 
-const getTotalInvested = (portfolio, assetLife) =>
+const getTotalInvested = portfolio =>
   portfolio
-    .getIn(['total', assetLife])
+    .get('total')
     .matchWith({
       Just: ({value: total}) => total.get('totalInvested').reduce((acc, v) => acc + v, 0),
       Nothing: () => 0
     })
 
-const getTotalCashForType = (portfolio, investmentType, assetLife) =>
+const getTotalCashForType = (portfolio, investmentType) =>
   portfolio
-    .getIn(['total', assetLife])
+    .get('total')
     .matchWith({
       Just: ({value: total}) =>
         total
@@ -42,9 +42,9 @@ const getTotalCashForType = (portfolio, investmentType, assetLife) =>
       Nothing: () => 0
     })
 
-const getQtyForType = (portfolio, investmentType, assetLife) =>
+const getQtyForType = (portfolio, investmentType) =>
   portfolio
-    .getIn(['total', assetLife])
+    .get('total')
     .matchWith({
       Just: ({value: total}) => total.getIn(['qty', investmentType]),
       Nothing: () => 0

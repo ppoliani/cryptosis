@@ -41,18 +41,6 @@ const fields = [{
   validate: [required, number],
   stretch: true
 }, {
-  type: 'dropdown',
-  name: 'assetLife',
-  label: 'Asset Life',
-  validate: [required],
-  options: [{
-    value: 'Long Term',
-    text: 'Long Term Investment'
-  }, {
-    value: 'Short Term',
-    text: 'Short Term Trading Position'
-  }]
-}, {
   type: 'textarea',
   name: 'notes',
   multiline: true,
@@ -64,7 +52,7 @@ export default (brokerOptions, investmentTypesOptions) => [
   {
     type: 'dropdown',
     name: 'investmentType',
-    label: 'Investement Type',
+    label: 'Crypto Asset',
     validate: [required],
     options: brokerOptions
   }, {

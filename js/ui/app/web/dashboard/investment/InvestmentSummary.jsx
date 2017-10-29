@@ -8,12 +8,12 @@ import TitledBox from '../../box/TitledBox'
 
 class InvestmentSummary extends PureComponent {
   render() {
-    const {asset, currency, portfolio, assetLife, total} = this.props;
+    const {asset, currency, portfolio, total} = this.props;
     const exposure = total.getIn(['totalExposure', asset]);
-    const holdings = getQtyForType(portfolio, asset, assetLife);
+    const holdings = getQtyForType(portfolio, asset);
     const currentValue = total.getIn(['currentValue', asset]);
     const totalInvested = total.getIn(['totalInvested', asset]);
-    const totalCash = getTotalCashForType(portfolio, asset, assetLife);
+    const totalCash = getTotalCashForType(portfolio, asset);
     const percentageChange = renderInvestmentChange(currentValue, exposure, currency);
 
     return (

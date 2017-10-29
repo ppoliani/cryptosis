@@ -146,10 +146,9 @@ class InvestmentPage extends PureComponent {
         Nothing: () => this.getExtendedTableData(investments, Map())
       });
 
-  getInvestmentsByAssetLife(assetLife) {
+  getInvestments() {
     return this.props.investments
-      .get('investments')
-      .filter(i => i.get('assetLife') === assetLife);
+      .get('investments');
   }
 
   renderInvestementsTable = (subtitle, data) => (
@@ -167,16 +166,16 @@ class InvestmentPage extends PureComponent {
     </Container>
   )
 
-  renderTable(assetLife) {
+  renderTable() {
     return this.props.investments.get('fetchInvestmentsResult')
       .matchWith({
         Empty: () => {},
         Loading: () => {},
         Success: ({value}) =>
            pipe(
-              partial(this.renderInvestementsTable, assetLife),
+              this.renderInvestementsTable,
               this.getInvestmentsData,
-              this.getInvestmentsByAssetLife(assetLife)
+              this.getInvestments()
             ),
         Failure: () => {}
       })
@@ -212,12 +211,7 @@ class InvestmentPage extends PureComponent {
           </Row>
           <Row className='row-spacing'>
             <Col>
-              {this.renderTable('Long Term')}
-            </Col>
-          </Row>
-          <Row>
-            <Col xs>
-              {this.renderTable('Short Term')}
+              {this.renderTable()}
             </Col>
           </Row>
           {this.renderDialogBox('Are you sure you want to delete this investment?')}

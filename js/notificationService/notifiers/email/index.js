@@ -22,7 +22,6 @@ const renderRows = investments =>  investments.map(
         <td>${Math.floor(investment.get('current'))}%</td>
         <td>${investment.get('lowerLimit')}%</td>
         <td>${investment.get('upperLimit')}%</td>
-        <td>${investment.get('assetLife')}</td>
         <td>${investment.get('currency')}</td>
       </tr>`
   )

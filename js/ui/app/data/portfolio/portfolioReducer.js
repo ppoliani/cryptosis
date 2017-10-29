@@ -9,25 +9,17 @@ import {
 
 const handleSetPortfolioTotalValue = (state, {payload: totalValue}) =>
   state
-    .setIn(['total', 'longTerm'], Maybe.fromNullable(totalValue.get('longTerm')))
-    .setIn(['total', 'shortTerm'], Maybe.fromNullable(totalValue.get('shortTerm')))
+    .set('total', Maybe.fromNullable(totalValue));
 
 const handleSetLast30Days = (state, {payload: last30Days}) =>
   state
-    .setIn(['last30Days', 'longTerm'], Maybe.fromNullable(last30Days.get('longTerm')))
-    .setIn(['last30Days', 'shortTerm'], Maybe.fromNullable(last30Days.get('shortTerm')))
+    .set('last30Days', Maybe.fromNullable(last30Days))
 
 const handleSetInvestmentCurrentValue = (state, {payload: investmentValues}) => state.set('investmentValues', Maybe.fromNullable(investmentValues))
 
 const portfolioData = fromJS({
-  total: {
-    longTerm: Maybe.Nothing(),
-    shortTerm: Maybe.Nothing()
-  },
-  last30Days: {
-    longTerm: Maybe.Nothing(),
-    shortTerm: Maybe.Nothing()
-  },
+  total: Maybe.Nothing(),
+  last30Days: Maybe.Nothing(),
   investmentValues: Maybe.Nothing()
 });
 

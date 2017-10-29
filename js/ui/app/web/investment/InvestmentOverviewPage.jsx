@@ -91,7 +91,6 @@ class InvestmentOverviewPage extends PureComponent {
             <ListItem first='Expenses' second={renderPrice(invst.expenses, currency)} />
             <ListItem first='Value' second={renderInvestmentValue(investmentId, investmentData, currency)} />
             <ListItem first='Broker' second={invst.broker} />
-            <ListItem first='Asset Life' second={invst.assetLife} />
             <ListItem first='Currency' second={invst.currency} />
             <ListItem first='Notes' second={invst.notes} />
           </List>

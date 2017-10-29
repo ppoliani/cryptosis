@@ -15,9 +15,9 @@ import {
 
 class PortfolioSummary extends Component {
   render() {
-    const {investment, currency, portfolio, assetLife} = this.props;
-    const portfolioValue = getTotalPortfolioValue(portfolio, assetLife);
-    const exposure = getTotalExposure(portfolio, assetLife);
+    const {investment, currency, portfolio} = this.props;
+    const portfolioValue = getTotalPortfolioValue(portfolio);
+    const exposure = getTotalExposure(portfolio);
 
     return (
       <Container title='Current' subtitle='Status'>
@@ -27,7 +27,7 @@ class PortfolioSummary extends Component {
               <TitledBox color='primary' header='Exposure'>{renderPrice(exposure, currency)}</TitledBox>
             </Col>
             <Col xs={5} className='row-spacing'>
-              <TitledBox color='primary' header='Cash'>{renderPrice(getTotalCash(portfolio, assetLife), currency)}</TitledBox>
+              <TitledBox color='primary' header='Cash'>{renderPrice(getTotalCash(portfolio), currency)}</TitledBox>
             </Col>
           </Row>
           <Row around='xs'>
@@ -35,7 +35,7 @@ class PortfolioSummary extends Component {
               <TitledBox color='primary' header='Total Value'>{renderPrice(portfolioValue, currency)}</TitledBox>
             </Col>
             <Col xs={5} className='row-spacing'>
-              <TitledBox color='primary' header='Total Invested'>{renderPrice(getTotalInvested(portfolio, assetLife), currency)}</TitledBox>
+              <TitledBox color='primary' header='Total Invested'>{renderPrice(getTotalInvested(portfolio), currency)}</TitledBox>
             </Col>
           </Row>
           <Row around='xs'>
