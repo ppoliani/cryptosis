@@ -99,7 +99,7 @@ class InvestmentTypePage extends PureComponent {
 
   renderInvestmentTypeTable() {
     return (
-      <Container title='Investment Types' subtitle='Full list of investment types'>
+      <Container title='Crypto Assets' subtitle='Full list of crypto assets'>
         <AsyncPanel asyncResult={this.props.fetchInvestmentTypeResult}>
           <Table
             columns={columns}
@@ -127,7 +127,7 @@ class InvestmentTypePage extends PureComponent {
               {this.renderInvestmentTypeTable()}
             </Col>
           </Row>
-          {this.renderDialogBox('Are you sure you want to delete this investment type?')}
+          {this.renderDialogBox('Are you sure you want to delete this crypto asset?')}
       </PageWithPanel>
     );
   }

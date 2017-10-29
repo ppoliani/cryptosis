@@ -5,7 +5,7 @@ export default ({title, subtitle='', children}) => (
   <Card>
     <CardHeader
       title={title}
-      subtitle={subtitle} />
+      subtitle={() => subtitle} />
       <CardMedia>
         {children}
       </CardMedia>
