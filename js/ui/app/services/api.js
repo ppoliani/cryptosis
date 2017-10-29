@@ -17,7 +17,7 @@ export const constructUrl = (url, params) =>
 const getAuthHeader = auth => auth
   ? {
       'content-type': 'application/json',
-      'Authorization': `Bearer ${getItem('@investreck:access_token')}`
+      'Authorization': `Bearer ${getItem(ACCESS_TOKEN_KEY)}`
     }
   : {}
 

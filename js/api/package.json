@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start:dev": "NODE_ENV=development ./node_modules/.bin/nodemon ./bin/index.js",
+    "dev": "NODE_ENV=development ./node_modules/.bin/nodemon ./bin/index.js",
     "start": "NODE_ENV=production node ./bin/index.js",
     "test": "node_modules/.bin/ava ./**/*.test.js"
   },

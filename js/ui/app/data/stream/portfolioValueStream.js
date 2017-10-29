@@ -36,7 +36,7 @@ export const startPortfolioStream = currency => dispatch => {
   }
 
   const keepPrices = obj => obj.prices;
-  const streams$ = [btc$(currency), bch$(currency), eth$(currency), xrp$(currency), xtz$(currency), fx$];
+  const streams$ = [btc$(currency), bch$(currency), eth$(currency), xrp$(currency), xtz$(currency), fx$()];
   const subscription = combine(getPrices, getPartialInvestment$(), ...streams$)
       .tap((dispatch) ['∘'] (setPrices) ['∘'] (keepPrices))
       .map(calculateTotalPortfolioValue)

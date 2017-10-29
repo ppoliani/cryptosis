@@ -13,4 +13,10 @@ export const currencyOptions = [{
 }, {
   value: 'USD',
   text: 'USD'
+}, {
+  value: 'BTC',
+  text: 'BTC'
+}, {
+  value: 'ETH',
+  text: 'ETH'
 }];

@@ -5,7 +5,7 @@
   "scripts": {
     "native:start": "REACT_DEBUGGER='rndebugger-open --open --port 8081' node node_modules/five/local-cli/cli.js start",
     "test": "jest",
-    "web:start": "PLATFORM_ENV=web env-cmd ./.env webpack-dev-server",
+    "start:web": "PLATFORM_ENV=web env-cmd ./.env webpack-dev-server",
     "web:build": "PLATFORM_ENV=web env-cmd ./.env.production webpack",
     "web:prod": "PLATFORM_ENV=web  env-cmd ./.env.production webpack-dev-server",
     "native:android": "react-native run-android",

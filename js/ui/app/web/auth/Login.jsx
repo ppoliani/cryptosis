@@ -62,12 +62,12 @@ class Login extends Component {
         fields="name,email,picture"
         onClick={this.componentClicked}
         callback={this.responseFacebook} />
-      <GoogleLogin
+      {/* <GoogleLogin
         clientId={process.env.GOOGLE_CLIENT_ID}
         scope='openid email profile'
         buttonText="Login with Google"
         onSuccess={this.responseGoogle}
-        onFailure={this.responseGoogle}/>
+        onFailure={this.responseGoogle}/> */}
     </section>
   }
 }

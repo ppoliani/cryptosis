@@ -34,7 +34,7 @@ const extractData = (gbp, eur, usd) => fromJS({
   USD: usd.rates
 });
 
-export const fx$ = combine(
+export const fx$ = () => combine(
   extractData,
   fromPromise(fetchFX('GBP').run().promise()),
   fromPromise(fetchFX('EUR').run().promise()),
