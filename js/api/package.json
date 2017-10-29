@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "ava": "^0.18.2",
+    "nodemon": "^1.12.1",
     "sinon": "^2.1.0"
   }
 }

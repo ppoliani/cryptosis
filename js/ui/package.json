@@ -10,7 +10,7 @@
     "web:prod": "PLATFORM_ENV=web  env-cmd ./.env.production webpack-dev-server",
     "native:android": "react-native run-android",
     "native:ios": "react-native run-ios",
-    "native:tools": "react-devtools"
+    "devtools": "react-devtools"
   },
   "dependencies": {
     "@amcharts/amcharts3-react": "^2.0.7",
