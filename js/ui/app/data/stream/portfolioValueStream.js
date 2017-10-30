@@ -23,10 +23,9 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
   const getPrices = (investments, price, fx)  => {
     const {prices} = getState(); 
     const priceData = getPriceObjFromStreamData(currency, fx, price);
+    // map though investments and convert price of purchase into the currenlty selected currency
     const updatedInvestments = fromJS(investments.result)
-      .map(
-        partial(changePriceToSelectedCurrency, currency, fx.get(currency))
-      );
+      .map(partial(changePriceToSelectedCurrency, currency, fx.get(currency)));
 
     return {
       investments: updatedInvestments,
