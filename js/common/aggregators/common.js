@@ -4,7 +4,7 @@ const isSameDay = require('date-fns/is_same_day');
 const {partial, predicate} = require('../core/fn');
 
 // { [id]: Investment  } -> { [InvestmentType] -> Value }
-const groupTotalValueInvestedPerTypeReducer = (acc, v) =>
+const groupTotalValuePerAssetTypeReducer = (acc, v) =>
   acc.update(
     v.get('investmentType'),
     (sum=0) => sum + getTotalAmountInvested(v)
@@ -28,10 +28,7 @@ const includeExpenses = (i, value) => i.get('positionType') === 'buy'
 // Investment PriceOfPurchase -> Value
 const getTotalAmountInvested = i => includeExpenses(i, i.get('price') * i.get('quantity'));
 
-// Finds the total money invested per type of investment
-const calculateTotalAmountInvestedPerType = investments => investments.reduce(groupTotalValueInvestedPerTypeReducer, Map())
-
-// finds the total quanityt inlcuding only buys or sells
+// finds the total quantity inlcuding only buys or sells
 const calculateTotalQtyPerType = investments => investments.reduce(groupTotalQtyPerTypeReducer, Map())
 
 const getValueForPrice = (price, qty) => qty * price;
@@ -47,11 +44,9 @@ const calculatePortfolioTotalQtyPerType = investments => {
 }
 
 // Finds the total value per type of investment based on the current buy price
-const calculateCurrentValuePerType = (investments, prices) =>
+const calculateCurrentValuePerType = (investments, fx) =>
   calculatePortfolioTotalQtyPerType(investments)
-    .map((qty, type) => {
-      return getValueForPrice(prices.getIn([type, 'price']), qty)
-    })
+    .map((qty, type) => getValueForPrice(fx.getIn([type, 'price']), qty));
 
 const calculateCurrentValueAtPrice = (investments, price) =>
   calculatePortfolioTotalQtyPerType(investments)
@@ -102,18 +97,22 @@ const getTotalValueAfterDate = (investments, investmentType, date, currentPrice)
 const filterBuys = investments => investments.filter(v => v.get('positionType') === 'buy')
 const filterSells = investments => investments.filter(v => v.get('positionType') === 'sell')
 
+// Finds the total money invested per type of investment
+const calculateTotalAmountInvestedPerType = investments => investments.reduce(groupTotalValuePerAssetTypeReducer, Map())
+
 // total cash from the positions sold
 const calculateTotalCash = (calculateTotalAmountInvestedPerType) ['∘'] (filterSells)
 
 const calculateTotalAmountInvested = (calculateTotalAmountInvestedPerType) ['∘'] (filterBuys)
 
-// total invested per investment type - total cash per investment type
+// total cash per investment type - total invested per investment type
 const calculateExposure = investments =>
   // net cost includes expenses for both buy and sells
-  calculateTotalAmountInvested(investments).mergeWith(
-    merger,
-    calculateTotalCash(investments)
-  )
+  calculateTotalCash(investments)
+    .mergeWith(
+      merger,
+      calculateTotalAmountInvested(investments)
+    )
 
 // finds the current liquid value for the given investment type (described byt)
 const calculateChangeForType = (investments, currentPrice, investmentType) => {

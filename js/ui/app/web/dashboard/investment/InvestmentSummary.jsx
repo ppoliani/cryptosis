@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react'
 import {autobind} from 'core-decorators'
 import {Row, Col} from 'react-flexbox-grid'
-import {renderInvestmentChange} from '../../common/InvestmentValueHelpers'
+import {renderCapitalGain} from '../../common/InvestmentValueHelpers'
 import {renderPrice} from '../../common/InvestmentValueHelpers'
-import {getTotalCashForType, getQtyForType} from '../../../../../common/metrics/portfolio'
+import {getTotalCashForType, getQtyForType, getCapitalGain} from '../../../../../common/metrics/portfolio'
 import TitledBox from '../../box/TitledBox'
 
 class InvestmentSummary extends PureComponent {
@@ -14,7 +14,7 @@ class InvestmentSummary extends PureComponent {
     const currentValue = total.getIn(['currentValue', asset]);
     const totalInvested = total.getIn(['totalInvested', asset]);
     const totalCash = getTotalCashForType(portfolio, asset);
-    const percentageChange = renderInvestmentChange(currentValue, exposure, currency);
+    const percentageChange = renderCapitalGain(getCapitalGain(portfolio), currency);
 
     return (
       <div>

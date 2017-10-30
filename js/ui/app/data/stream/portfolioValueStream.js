@@ -12,7 +12,7 @@ import {getPartialInvestment$, getPriceObjFromStreamData, fx$} from './common'
 export const SET_PORTFOLIO_SUBSCRIPTION = 'STREAM::SET_PORTFOLIO_SUBSCRIPTION'
 const setPortfolioSubscription = createAction(SET_PORTFOLIO_SUBSCRIPTION);
 
-export const startPortfolioStream = currency => dispatch => {
+export const startPortfolioStream = currency => (dispatch, getState) => {
   const observer = {
     next: (dispatch) ['∘'] (setPortfolioValue),
     error: errorValue => {
@@ -20,16 +20,22 @@ export const startPortfolioStream = currency => dispatch => {
     }
   }
 
-  const getPrices = (investments, prices, fx)  => {
-    const priceData = getPriceObjFromStreamData(currency, fx, prices);
+  const getPrices = (investments, price, fx)  => {
+    const {prices} = getState(); 
+    const priceData = getPriceObjFromStreamData(currency, fx, price);
+    const updatedInvestments = fromJS(investments.result)
+      .map(
+        partial(changePriceToSelectedCurrency, currency, fx.get(currency))
+      );
 
     return {
-      investments: fromJS(investments.result).map(partial(changePriceToSelectedCurrency, currency, fx.get(currency))),
-      prices: fromJS(priceData)
+      investments: updatedInvestments,
+      price: fromJS(priceData),
+      fx: prices
     }
   }
 
-  const keepPrices = obj => obj.prices;
+  const keepPrices = obj => obj.price;
   const streams$ = [priceStream$(currency), fx$(currency)];
   const subscription = combine(getPrices, getPartialInvestment$(), ...streams$)
       .tap((dispatch) ['∘'] (setPrices) ['∘'] (keepPrices))

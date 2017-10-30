@@ -151,8 +151,8 @@ class InvestmentPage extends PureComponent {
       .get('investments');
   }
 
-  renderInvestementsTable = (subtitle, data) => (
-    <Container title='Investments' subtitle={subtitle}>
+  renderInvestementsTable = data => (
+    <Container title='Completed Orders' subtitle=''>
       <AsyncPanel asyncResult={this.props.investments.get('fetchInvestmentsResult')}>
         <Table
           columns={columns}

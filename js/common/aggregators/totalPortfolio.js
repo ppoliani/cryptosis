@@ -7,11 +7,11 @@ const {
    calculateTotalAmountInvested
 } = require('./common');
 
-const calculateTotalPortfolioValue = ({investments, prices}) => {
+const calculateTotalPortfolioValue = ({investments, fx}) => {
   return fromJS({
     totalExposure: calculateExposure(investments),
     totalInvested: calculateTotalAmountInvested(investments),
-    currentValue: calculateCurrentValuePerType(investments, prices),
+    currentValue: calculateCurrentValuePerType(investments, fx),
     totalCash: calculateTotalCash(investments),
     qty: calculatePortfolioTotalQtyPerType(investments)
   });

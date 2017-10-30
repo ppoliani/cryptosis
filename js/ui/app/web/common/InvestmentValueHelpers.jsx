@@ -7,8 +7,8 @@ const signedCurrency = (value, currency) =>  value >= 0
   ? `${getCurrencySymbol(currency)}${value}`
   : `-${getCurrencySymbol(currency)}${Math.abs(value)}`;
 
-export const renderInvestmentChange = (current, initial, currency) =>
-    `${signedCurrency((current - initial).toFixed(2), currency)} (${getPercentageChange(initial, current).toFixed(2)}%)`
+export const renderCapitalGain = ([capitalGain, capitalGainPercentage], currency) => 
+    `${signedCurrency(capitalGain.toFixed(2), currency)} (${capitalGainPercentage.toFixed(2)}%)`
 
 export const renderInvestmentValue = (id, investmentValues, currency) => {
   const investmentValue = investmentValues.get(id);

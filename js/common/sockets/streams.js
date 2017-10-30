@@ -13,7 +13,7 @@ const getFullSubscriptions = currency => [
   `2~Bitstamp~XRP~${currency}`,
   `2~Kraken~XRP~${currency}`,
   `2~HitBTC~XTZ~${currency}`,
-  `2~Bittrex~VTC~${currency}`
+  `2~BitTrex~VTC~BTC`
 ];
 
 const getMajorSubscriptions = currency => [
