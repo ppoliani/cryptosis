@@ -91,7 +91,7 @@ const getTotalValueAfterDate = (investments, investmentType, date, currentPrice)
         partial(isBeforeDate, date))
       )
 
-  return calculateCurrentValueAtPrice(investments, currentPrice).get(investmentType) || 0
+  return calculateCurrentValueAtPrice(filteredIvestments, currentPrice).get(investmentType) || 0
 }
 
 const filterBuys = investments => investments.filter(v => v.get('positionType') === 'buy')
