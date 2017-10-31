@@ -13,7 +13,7 @@ const getInvestmentValue = curry(2, (currentPrice, investment) => {
     percentage: getPercentageChange(diff, investmentValue)
   });
 });
-
+ 
 const getCurrentPrice = (prices, investment) => {
   return prices.getIn([investment.get('investmentType'), 'price']);
 }
