@@ -45,8 +45,8 @@ class Login extends Component {
           console.log('Could not login via google', error)
         },
         ({token, account}) => {
-          setItem('@investreck:access_token', token);
-          setItem('@investreck:user', JSON.stringify(account));
+          setItem(ACCESS_TOKEN_KEY, token);
+          setItem(USER_INFO, JSON.stringify(account));
           this.props.setUserProfile(account);
           this.redirect();
         }
@@ -58,8 +58,7 @@ class Login extends Component {
     return  <section className='login-section page-center'>
       <FacebookLogin
         appId={FB_CLIENT_ID}
-        autoLoad={true}
-        reauthenticate={true} 
+        autoLoad={false}
         fields="name,email,picture"
         onClick={this.componentClicked}
         callback={this.responseFacebook} />

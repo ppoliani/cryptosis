@@ -1,4 +1,4 @@
-FROM node:7.10.0
+FROM node:8.6.0
 
 # Install essential tools
 RUN apt-get -qq update && \
