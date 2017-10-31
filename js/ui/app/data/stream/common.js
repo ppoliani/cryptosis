@@ -16,21 +16,17 @@ const historicalDataUrl = (fromSymbol, toSymbol, timestamp, days) =>
 const getSymbolsExceptFor = currency => ['GBP', 'EUR', 'USD'].filter(c => c !== currency);
 
 const fetchPartialInvestments = fetch('GET', `${INVESTMENT_ENDPOINT}/partial`);
-const fetchBTC = currency => fetch('GET', historicalDataUrl('BTC', currency, +(new Date), 30), {}, false);
-const fetchBCH = currency => fetch('GET', historicalDataUrl('BCH', currency, +(new Date), 30), {}, false);
-const fetchETH = currency => fetch('GET', historicalDataUrl('ETH', currency, +(new Date), 30), {}, false);
-const fetchXRP = currency => fetch('GET', historicalDataUrl('XRP', currency, +(new Date), 30), {}, false);
-const fetchXTZ = currency => fetch('GET', historicalDataUrl('XTZ', currency, +(new Date), 30), {}, false);
-const fetchVTC = currency => fetch('GET', historicalDataUrl('VTC', currency, +(new Date), 30), {}, false);
 const fetchFX = currency => fetch('GET', fxUrl(currency), {}, false);
+const fetchHistoricData = (currency, symbol) => fetch('GET', historicalDataUrl(symbol, currency, +(new Date), 30), {}, false);
 
-export const getBTC$ = currency => fromPromise(fetchBTC(currency).run().promise())
-export const getBCH$ = currency => fromPromise(fetchBCH(currency).run().promise())
-export const getETH$ = currency => fromPromise(fetchETH(currency).run().promise())
-export const getXRP$ = currency => fromPromise(fetchXRP(currency).run().promise())
-export const getXTZ$ = currency => fromPromise(fetchXTZ(currency).run().promise())
-export const getVTC$ = currency => fromPromise(fetchVTC(currency).run().promise())
 export const getPartialInvestment$ = () => fromPromise(fetchPartialInvestments.run().promise())
+
+export const createHistoricStreams = (currency, symbols) => symbols
+  .map(s => 
+    fromPromise(
+      fetchHistoricData(currency, s).run().promise()
+    )
+  )
 
 const extractData = (cryptoPrice, gbp, eur, usd) =>  ({
   GBP: gbp.rates,

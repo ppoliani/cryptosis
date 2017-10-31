@@ -49,7 +49,7 @@ const getCapitalGain = portfolio => {
   const totalCash = getTotalCash(portfolio);
   const totalInvested = getTotalInvested(portfolio);  
   const capitalGain = totalaValue + totalCash - totalInvested;
-  const capitalGainPercentage = capitalGain / totalInvested;
+  const capitalGainPercentage = (capitalGain / totalInvested) * 100;
 
   return [capitalGain, capitalGainPercentage];
 }

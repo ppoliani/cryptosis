@@ -44,7 +44,7 @@ class InvestmentSummary extends PureComponent {
         </Row>
         <Row around='xs'>
           <Col xs={11} className='row-spacing'>
-            <TitledBox color='secondary' header='Profit/Loss'>{percentageChange}</TitledBox>
+            <TitledBox color='secondary' header='Capital Gain'>{percentageChange}</TitledBox>
           </Col>
         </Row>
       </div>

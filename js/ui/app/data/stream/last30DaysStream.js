@@ -1,11 +1,11 @@
 import {createAction} from 'redux-actions'
-import {combine} from 'most'
-import {fromJS} from 'immutable'
+import {combine, fromPromise} from 'most'
+import {fromJS, Set, Map} from 'immutable'
 import {partial} from '../../../../common/core/fn'
 import {calculateHistoricPortfolioValues} from '../../../../common/aggregators'
 import {changePriceToSelectedCurrency, convertToBaseCurrency} from '../../../../common/fx'
 import {setLast30Days} from '../portfolio/portfolioActions'
-import {getPartialInvestment$, getBTC$, getBCH$, getETH$, getXRP$, getXTZ$, getVTC$, fx$} from './common'
+import {getPartialInvestment$, createHistoricStreams, fx$} from './common'
 
 export const SET_LAST_30_DAYS_SUBSCRIPTION = 'STREAM::SET_LAST_30_DAYS_SUBSCRIPTION'
 const setLast30DaysSubscription = createAction(SET_LAST_30_DAYS_SUBSCRIPTION);
@@ -16,30 +16,51 @@ export const startLast30DaysStream = currency => dispatch => {
     error: errorValue => console.log(`Error in the observer of the portfolio stream: ${errorValue}`)
   }
 
-  const getPriceObj = (symbol, response) => response.Data.map(i => ({
-    price: i.close, 
-    market: '',
-    symbol,
-    day: i.time * 1000 // unix time to js
-  }))
+  const getPriceObj = (symbol, response) => fromJS(
+    response.Data.map(i => ({
+      price: i.close, 
+      market: '',
+      symbol,
+      day: i.time * 1000 // unix time to js
+    }))
+  )
 
-  const getPrices = (investments, btc, bch, eth, xrp, xtz, vtc, fx)  => ({
-    // map though investments and convert price of purchase into the currenlty selected currency
-    investments: fromJS(investments.result).map(partial(changePriceToSelectedCurrency, currency, fx.get(currency))),
-    prices: fromJS({
-      BTC: getPriceObj('BTC', btc),
-      BCH: getPriceObj('BCH', bch),
-      ETH: getPriceObj('ETH', eth),
-      XRP: getPriceObj('XRP', xrp),
-      XTZ: getPriceObj('XTZ', xtz),
-      VTC: getPriceObj('VTC', vtc),
-    })
-  })
+  const updateInvestments = (investments, fx)  => fromJS(investments.result).map(partial(changePriceToSelectedCurrency, currency, fx.get(currency)))
+  
+  const getPrices = ({investments, uniqueInvestmentTypes}, ...priceList) => {
+    const priceObjReducer =  (acc, pl, index) => {
+      const symbol = uniqueInvestmentTypes[index];
+      return acc.set(symbol, getPriceObj(symbol, pl))
+    };
 
-  const streams$ = [getPartialInvestment$(), getBTC$(currency), getBCH$(currency), getETH$(currency), getXRP$(currency), getXTZ$(currency), getVTC$(currency), fx$(currency)];
-  const subscription = combine(getPrices, ...streams$)
+    return {
+      investments,
+      prices: priceList.reduce(priceObjReducer, Map())
+    };
+  } 
+
+  const historicStreams = investments => {
+    const uniqueInvestmentTypes = investments
+      .reduce((acc, investment) => acc.add(investment.get('investmentType')), 
+      Set()
+    )
+    .toJS();
+
+    return {
+      investments,
+      uniqueInvestmentTypes,
+      histoStreams$: createHistoricStreams(currency, uniqueInvestmentTypes)
+    }
+  }
+
+  const subscription = combine(updateInvestments, getPartialInvestment$(), fx$(currency))
+    .map(historicStreams)
+    .chain(result => combine(
+        partial(getPrices, result), 
+        ...result.histoStreams$)
+    )
     .map(calculateHistoricPortfolioValues)
-    .subscribe(observer);
+    .subscribe(observer)
 
   dispatch(setLast30DaysSubscription(subscription));
 }
