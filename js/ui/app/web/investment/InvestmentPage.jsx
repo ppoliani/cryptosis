@@ -197,11 +197,13 @@ class InvestmentPage extends PureComponent {
   }
 
   render() {
+    const {isPanelOpen} = this.state;
+
     return (
       <PageWithPanel
-        PanelContent={this.getPanelContent()}
+        PanelContent={isPanelOpen && this.getPanelContent()}
         togglePanel={this.togglePanel}
-        isPanelOpen={this.state.isPanelOpen}>
+        isPanelOpen={isPanelOpen}>
           <Row className='row-spacing'>
             <Col xs>
               <CurrencySelector value={getSelectedCurrency(this.props.form)}/>

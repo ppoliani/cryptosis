@@ -112,11 +112,13 @@ class InvestmentTypePage extends PureComponent {
   }
 
   render() {
+    const {isPanelOpen} = this.state;
+
     return (
       <PageWithPanel
-        PanelContent={this.getPanelContent()}
+        PanelContent={isPanelOpen && this.getPanelContent()}
         togglePanel={this.togglePanel}
-        isPanelOpen={this.state.isPanelOpen}>
+        isPanelOpen={isPanelOpen}>
           <Row>
             <Col xs>
               <Button type="submit" className="right" onClick={this.togglePanel}>New</Button>
