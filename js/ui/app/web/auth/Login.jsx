@@ -58,7 +58,8 @@ class Login extends Component {
     return  <section className='login-section page-center'>
       <FacebookLogin
         appId={FB_CLIENT_ID}
-        autoLoad={false}
+        autoLoad={true}
+        reauthenticate={true} 
         fields="name,email,picture"
         onClick={this.componentClicked}
         callback={this.responseFacebook} />
