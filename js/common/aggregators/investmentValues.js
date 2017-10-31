@@ -14,12 +14,14 @@ const getInvestmentValue = curry(2, (currentPrice, investment) => {
   });
 });
 
-const getCurrentPrice = (prices, investment) => prices.getIn([investment.get('investmentType'), 'price']);
+const getCurrentPrice = (prices, investment) => {
+  return prices.getIn([investment.get('investmentType'), 'price']);
+}
 
-const getInvestmentValues = (investments, prices) => investments.map(
-  investment => ((getInvestmentValue) ['∘'] (partial(getCurrentPrice, prices)))(investment)(investment)
+const getInvestmentValues = (investments, fx) => investments.map(
+  investment => ((getInvestmentValue) ['∘'] (partial(getCurrentPrice, fx)))(investment)(investment)
 )
 
-const calculateInvestmentValues = ({investments, prices}) => getInvestmentValues(investments, prices);
+const calculateInvestmentValues = ({investments, fx}) => getInvestmentValues(investments, fx);
 
 module.exports = {calculateInvestmentValues, getInvestmentValues};

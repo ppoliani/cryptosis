@@ -36,6 +36,7 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
 
   const keepPrices = obj => obj.price;
   const streams$ = [priceStream$(currency), fx$(currency)];
+  
   const subscription = combine(getPrices, getPartialInvestment$(), ...streams$)
       .tap((dispatch) ['∘'] (setPrices) ['∘'] (keepPrices))
       .throttle(2000)

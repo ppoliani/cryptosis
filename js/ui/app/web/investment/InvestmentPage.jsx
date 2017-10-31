@@ -131,13 +131,12 @@ class InvestmentPage extends PureComponent {
       (acc, v, id) => acc.push(
         v.set('id', id)
           .set('date', dateformat(v.get('date'), 'MM/DD/YYYY'))
-          .set('status', v.get('positionType') === 'buy' ? renderInvestmentValue(id, investmentValues, v.get('currency')): '')
+          .set('status', v.get('positionType') === 'buy' ? renderInvestmentValue(id, investmentValues, getSelectedCurrency(this.props.form)) : '')
           .set('action', <Button label="Delete" primary={true} onClick={partial(this.onInvestmentDeleteClick, v)} />)
       ),
       List()
     )
     .toJS();
-
 
   getInvestmentsData = investments => this.props.portfolio
       .get('investmentValues')
