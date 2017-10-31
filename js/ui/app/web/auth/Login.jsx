@@ -57,7 +57,7 @@ class Login extends Component {
   render() {
     return  <section className='login-section page-center'>
       <FacebookLogin
-        appId={process.env.FB_CLIENT_ID}
+        appId={FB_CLIENT_ID}
         autoLoad={false}
         fields="name,email,picture"
         onClick={this.componentClicked}
