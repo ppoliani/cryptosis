@@ -17,6 +17,7 @@ export default class AggregatePortfolioChart extends PureComponent {
 
     const aggregate = ({value: aggregates}) => {
       const [first, ...rest] = aggregates.values();
+
       const getValue = obj =>  {
         const val = obj.getIn(['value', historicProperty]);
 
@@ -25,14 +26,19 @@ export default class AggregatePortfolioChart extends PureComponent {
             : obj.get('total');
       };
 
-      return first.mergeWith(
-        (oldVal, newVal) => Map({
-          day: oldVal.get('day'),
-          total: getValue(oldVal) + getValue(newVal)
-        }),
-        ...rest
-      )
-      .toJS();
+      return first
+        .map(data => ({
+          day: data.get('day'),
+          total: getValue(data)
+        }))
+        .mergeWith(
+          (oldVal, newVal) => Map({
+            day: oldVal.get('day'),
+            total: getValue(oldVal) + getValue(newVal)
+          }),
+          ...rest
+        )
+        .toJS();
     }
 
     return lastNDaysData
