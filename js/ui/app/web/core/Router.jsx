@@ -53,6 +53,11 @@ const PrivateRoute = ({component: Component, ...rest}) =>
   <Route {...rest} render={props => <AuthGuard {...props} component={Layout(Component, props)} /> }/>
 
 class RouterComponent extends Component {
+  // There is no need to update this component once it's been mounted
+  shouldComponentUpdate() {
+    return false;
+  }
+
   componentWillMount() {
     this.props.setUserProfile(JSON.parse(getItem(USER_INFO)));
   }

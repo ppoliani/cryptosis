@@ -3,7 +3,7 @@ version: "2"
 services:
   nginx:
     container_name: nginx
-    image: investrackr/nginx
+    image: cryptosis/nginx
     build:
       context: .
       dockerfile: operations/.docker/nginx/Dockerfile
@@ -12,10 +12,10 @@ services:
     ports:
       - "80:80"
     networks:
-      - investrackr_network
+      - cryptosis_network
   node:
     container_name: api
-    image: investrackr/api
+    image: cryptosis/api
     build:
       context: .
       dockerfile: operations/.docker/api/Dockerfile
@@ -24,20 +24,8 @@ services:
     env_file:
       - operations/env/api/.env
     networks:
-      - investrackr_network
-  notificationService:
-    container_name: notification-service
-    image: investrackr/notificationservice
-    build:
-      context: .
-      dockerfile: operations/.docker/notificationService/Dockerfile
-    ports:
-      - "8085:5500"
-    env_file:
-      - operations/env/notificationService/.env
-    networks:
-      - investrackr_network
+      - cryptosis_network
 
 networks:
-  investrackr_network:
+  cryptosis_network:
     driver: bridge
