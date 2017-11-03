@@ -57,7 +57,8 @@ export const startLast30DaysStream = currency => dispatch => {
     .map(historicStreams)
     .chain(result => combine(
         partial(getPrices, result), 
-        ...result.histoStreams$)
+        ...result.histoStreams$
+      )
     )
     .map(calculateHistoricPortfolioValues)
     .subscribe(observer)

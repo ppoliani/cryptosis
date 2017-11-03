@@ -26,16 +26,12 @@ const getPortfolioValueForSymbol = (priceList, investments, symbol) =>
 // returns a Map with keys for each symbol and the entries
 // for each day as well as the portfolio value on that date
 // e.g. {[id]: Investment} {ETH: Price[]} -> { ETH: [{day: 123, value: 2000}], BTC:  [{day: 123, value: 2000}]}
-const calculateHistoricPortfolioValues = ({investments, prices}) => {
-  const historicValues = prices.reduce(
-    (acc, priceList, symbol) => acc.set(
-      symbol,
-      getPortfolioValueForSymbol(priceList, investments, symbol),
-    ),
-    Map()
-  )
-
-  return historicValues;
-};
+const calculateHistoricPortfolioValues = ({investments, prices}) => prices.reduce(
+  (acc, priceList, symbol) => acc.set(
+    symbol,
+    getPortfolioValueForSymbol(priceList, investments, symbol),
+  ),
+  Map()
+)
 
 module.exports = {calculateHistoricPortfolioValues};

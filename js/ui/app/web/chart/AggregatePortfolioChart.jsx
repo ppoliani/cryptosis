@@ -27,7 +27,7 @@ export default class AggregatePortfolioChart extends PureComponent {
       };
 
       return first
-        .map(data => ({
+        .map(data => Map({
           day: data.get('day'),
           total: getValue(data)
         }))
