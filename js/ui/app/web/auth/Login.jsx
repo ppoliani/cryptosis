@@ -58,7 +58,7 @@ class Login extends Component {
     return  <section className='login-section page-center'>
       <FacebookLogin
         className='login-section page-center'
-        socialId='1385225301558796'
+        socialId={FB_CLIENT_ID}
         language='en_US'
         version='v2.5'
         xfbml={true}
