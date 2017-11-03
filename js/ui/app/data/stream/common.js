@@ -1,5 +1,5 @@
 import {fromPromise, combine, mergeArray} from 'most'
-import {fromJS, Map} from 'immutable'
+import {fromJS, Map, Set} from 'immutable'
 import {identity} from 'folktale/core/lambda'
 import fetch from '../../services/api'
 import {convertToBaseCurrency} from '../../../../common/fx'
@@ -7,17 +7,20 @@ import {majorPriceStream$} from '../../../../common/sockets/streams'
 
 const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;
 
-const historicalDataUrl = (fromSymbol, toSymbol, timestamp, days) =>
-  `https://min-api.cryptocompare.com/data/histoday?fsym=${fromSymbol}&tsym=${toSymbol}&limit=${days}&aggregate=1&toTs=${timestamp}&tryConversion=true`
+const historicalDataUrl = (fromSymbol, toSymbol, timestamp, days) => `https://min-api.cryptocompare.com/data/histoday?fsym=${fromSymbol}&tsym=${toSymbol}&limit=${days}&aggregate=1&toTs=${timestamp}&tryConversion=true`
+const fxUrl = base => `http://api.fixer.io/latest?base=${base}&symbols=${getSymbolsExceptFor(base).join(',')}`;
+const priceUrl = (currency, symbol) => `https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=${currency}`
 
-  const fxUrl = base =>
-  `http://api.fixer.io/latest?base=${base}&symbols=${getSymbolsExceptFor(base).join(',')}`;
 
 const getSymbolsExceptFor = currency => ['GBP', 'EUR', 'USD'].filter(c => c !== currency);
 
 const fetchPartialInvestments = fetch('GET', `${INVESTMENT_ENDPOINT}/partial`);
 const fetchFX = currency => fetch('GET', fxUrl(currency), {}, false);
 const fetchHistoricData = (currency, symbol) => fetch('GET', historicalDataUrl(symbol, currency, +(new Date), 30), {}, false);
+const fetchPrice = (currency, symbol) => fetch('GET', priceUrl(currency, symbol), {}, false)
+
+export const createPriceStreams$ = (currency, symbols) => symbols
+  .map(s => fetchPrice(currency, s).run().promise())
 
 export const getPartialInvestment$ = () => fromPromise(fetchPartialInvestments.run().promise())
 
@@ -57,6 +60,12 @@ const extendWithCryptoPrices = (acc, next) => {
       cryptoPrice.PRICE
     )
 }
+
+export const getDistinctInvestmentTypes = investments => investments
+  .reduce(
+    (acc, investment) => acc.add(investment.get('investmentType')), 
+    Set()
+  );
 
 export const fx$ = currency => combine(
     extractData,

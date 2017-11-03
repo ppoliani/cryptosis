@@ -1,11 +1,11 @@
 import {createAction} from 'redux-actions'
 import {combine, fromPromise} from 'most'
-import {fromJS, Set, Map} from 'immutable'
+import {fromJS, Map} from 'immutable'
 import {partial} from '../../../../common/core/fn'
 import {calculateHistoricPortfolioValues} from '../../../../common/aggregators'
 import {changePriceToSelectedCurrency, convertToBaseCurrency} from '../../../../common/fx'
 import {setLast30Days} from '../portfolio/portfolioActions'
-import {getPartialInvestment$, createHistoricStreams, fx$} from './common'
+import {getPartialInvestment$, createHistoricStreams, fx$, getDistinctInvestmentTypes} from './common'
 
 export const SET_LAST_30_DAYS_SUBSCRIPTION = 'STREAM::SET_LAST_30_DAYS_SUBSCRIPTION'
 const setLast30DaysSubscription = createAction(SET_LAST_30_DAYS_SUBSCRIPTION);
@@ -25,7 +25,8 @@ export const startLast30DaysStream = currency => dispatch => {
     }))
   )
 
-  const updateInvestments = (investments, fx)  => fromJS(investments.result).map(partial(changePriceToSelectedCurrency, currency, fx.get(currency)))
+  const updateInvestments = (investments, fx)  => fromJS(investments.result)
+    .map(partial(changePriceToSelectedCurrency, currency, fx.get(currency)))
   
   const getPrices = ({investments, uniqueInvestmentTypes}, ...priceList) => {
     const priceObjReducer =  (acc, pl, index) => {
@@ -40,11 +41,7 @@ export const startLast30DaysStream = currency => dispatch => {
   } 
 
   const historicStreams = investments => {
-    const uniqueInvestmentTypes = investments
-      .reduce((acc, investment) => acc.add(investment.get('investmentType')), 
-      Set()
-    )
-    .toJS();
+    const uniqueInvestmentTypes = getDistinctInvestmentTypes(investments);
 
     return {
       investments,
