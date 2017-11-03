@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {autobind} from 'core-decorators'
-import FacebookLogin from 'react-facebook-login'
+import {FacebookLogin} from 'react-facebook-login-component'
 import GoogleLogin from 'react-google-login'
 import {login} from '../../services/auth'
 import {setItem} from '../../services/storage'
@@ -57,15 +57,19 @@ class Login extends Component {
   render() {
     return  <section className='login-section page-center'>
       <FacebookLogin
-        appId={FB_CLIENT_ID}
-        autoLoad={false}
-        fields="name,email,picture"
-        onClick={this.componentClicked}
-        callback={this.responseFacebook} />
+        className='login-section page-center'
+        socialId={FB_CLIENT_ID}
+        language='en_US'
+        version='v2.5'
+        xfbml={true}
+        fields='name,email,picture'
+        scope='public_profile,email'
+        responseHandler={this.responseFacebook}
+        buttonText='Login With Facebook' />
       {/* <GoogleLogin
         clientId={process.env.GOOGLE_CLIENT_ID}
         scope='openid email profile'
-        buttonText="Login with Google"
+        buttonText='Login with Google'
         onSuccess={this.responseGoogle}
         onFailure={this.responseGoogle}/> */}
     </section>

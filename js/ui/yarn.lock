@@ -6323,9 +6323,9 @@ react-event-listener@^0.5.1:
     prop-types "^15.6.0"
     warning "^3.0.0"
 
-react-facebook-login@^3.6.2:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/react-facebook-login/-/react-facebook-login-3.6.2.tgz#1965f6af54cc90341b788d0752185cfd25a14d30"
+react-facebook-login-component@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/react-facebook-login-component/-/react-facebook-login-component-0.9.1.tgz#4d70c7b0ae9ae34cb07da58a17cb8b60c04fc022"
 
 react-flexbox-grid@^1.1.3:
   version "1.1.3"
