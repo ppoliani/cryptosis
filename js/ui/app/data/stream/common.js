@@ -65,7 +65,8 @@ export const getDistinctInvestmentTypes = investments => investments
   .reduce(
     (acc, investment) => acc.add(investment.get('investmentType')), 
     Set()
-  );
+  )
+  .toList();
 
 export const fx$ = currency => combine(
     extractData,
@@ -74,6 +75,7 @@ export const fx$ = currency => combine(
     fromPromise(fetchFX('EUR').run().promise()),
     fromPromise(fetchFX('USD').run().promise())
   )
+  .throttle(10000)
   .scan(extendWithCryptoPrices, Map())
   .skipWhile(fx => fx.size === 0);
 

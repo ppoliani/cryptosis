@@ -5,6 +5,7 @@ import {partial, prop} from '../../../../common/core/fn'
 import {priceStream$} from '../../../../common/sockets/streams'
 import {calculateTotalPortfolioValue} from '../../../../common/aggregators'
 import {changePriceToSelectedCurrency} from '../../../../common/fx'
+import {MINUTE} from '../../../../common/constants/time'
 import {setPortfolioValue} from '../portfolio/portfolioActions'
 import {setPrices, setPrice} from '../prices/priceActions'
 import {
@@ -25,10 +26,6 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
       console.log(`Error in the observer of the portfolio stream: ${errorValue}`)
     }
   }
-
-  const partialInvestments$ = getPartialInvestment$();
-  const keepPrices = obj => obj.price;
-  const streams$ = [priceStream$(currency), fx$(currency)];
 
   const getIntialPrices = async investments => {
     investments = fromJS(investments.result);
@@ -71,6 +68,10 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
     }
   }
 
+  const partialInvestments$ = getPartialInvestment$();
+  const keepPrices = obj => obj.price;
+  const streams$ = [priceStream$(currency), fx$(currency)];
+
   const streamInitialPrice = () => {
     // load the prices for all available asset types using get requests
     // No need to unscubscribe because we getIntialPrices consist of promise streams which are disposes straightaway
@@ -83,7 +84,7 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
 
   const streamPrices = () => {
     const subscription = combine(getPrices, partialInvestments$, ...streams$)
-      .throttle(10000)
+      .throttle(MINUTE)
       .tap((dispatch) ['∘'] (setPrice) ['∘'] (keepPrices))
       .map(calculateTotalPortfolioValue)
       .subscribe(observer);
