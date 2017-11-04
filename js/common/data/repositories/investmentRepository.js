@@ -60,7 +60,7 @@ const getInvestments = async ({ctx}) => {
       MATCH (u:User)-[:HAS_INVESTMENT]->(i:Investment)
       WHERE ID(u)=${Number(ctx.state.user.id)}
       RETURN i{ .*, id: ID(i)}
-      ORDER BY i.date
+      ORDER BY i.date DESC
       SKIP ${skip}
       LIMIT ${limit}
     `

@@ -61,13 +61,14 @@ const getInvestmentsRoot = fetch => {
   );
 }
 
+const transform = investment => investment.map(
+  (v, k) => ['price', 'quantity', 'expenses', 'moneyInvested', 'date'].includes(k)
+    ? Number(v)
+    : v
+)
+
 const updateInvestmentRoot = fetch => {
   const fetchData = investment => fetch('PUT', getInvestmentUrl(investment), investment);
-  const transform = investment => investment.map(
-    (v, k) => ['price', 'quantity', 'expenses', 'moneyInvested'].includes(k)
-      ? Number(v)
-      : v
-  )
 
   return createAction(
     UPDATE_INVESTMENT,
@@ -77,12 +78,7 @@ const updateInvestmentRoot = fetch => {
 
 const saveInvestmentRoot = fetch => {
   const saveInvestmentResult = partial(fetch, 'POST', INVESTMENT_ENDPOINT);
-  const transform = investment => investment.map(
-    (v, k) => ['price', 'quantity', 'expenses', 'moneyInvested'].includes(k)
-      ? Number(v)
-      : v
-  )
-
+  
   return createAction(
     SAVE_NEW_INVESTMENT,
     (saveInvestmentResult) ['∘'] (transform)
