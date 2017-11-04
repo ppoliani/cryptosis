@@ -9,10 +9,12 @@ export default props => (
       columns={props.columns}
       data={props.data}
       showCheckboxes={false}
+      initialSort={{column: 'date', order: 'desc'}}
       onCellClick={props.handleCellClick}
       onRowSizeChange={props.onRowSizeChange}
       page={props.page}
       rowSize={props.limit}
+      count={props.count}
     />
 )
 

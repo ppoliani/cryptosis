@@ -3,6 +3,7 @@ import {Map, fromJS} from 'immutable'
 import identity from 'folktale/core/lambda/identity'
 import {
   GET_PARTIAL_INVESTMENTS,
+  GET_INVESTMENTS_COUNT,
   GET_INVESTMENTS,
   GET_INVESTMENT,
   SAVE_NEW_INVESTMENT,
@@ -45,6 +46,15 @@ const handleSaveInvestment = (state, {payload: saveInvestmentResult}) =>
     Failure: () => state.set('saveInvestmentResult', saveInvestmentResult),
   });
 
+const handleSetInvestmentsCount = (state, {payload: investmentsCountResult}) => {
+  investmentsCountResult.matchWith({
+    Empty: identity,
+    Loading: () => state.set('fetchInvestmentsCountResult', investmentsCountResult),
+    Success: ({data}) => state
+      .set('fetchInvestmentsCountResult', investmentsCountResult),
+    Failure: () => state.set('investmentsCountResult', investmentsCountResult),
+  });
+}
 const handleSetInvestments = (state, {payload: investmentsResult}) =>
   investmentsResult.matchWith({
     Empty: identity,
@@ -97,6 +107,7 @@ const handleDeleteInvestmentType  = (state, {payload: investmentTypeResult}) =>
 
 const InvestmentData = Map({
   fetchPartialInvestmentsResult: AsyncData.Empty(),
+  fetchInvestmentsCountResult: AsyncData.Empty(),
   fetchInvestmentsResult: AsyncData.Empty(),
   saveInvestmentResult: AsyncData.Empty(),
   fetchInvestmentTypeResult: AsyncData.Empty(),
@@ -109,6 +120,7 @@ const InvestmentData = Map({
 
 export default handleActions({
   [GET_PARTIAL_INVESTMENTS]: handleSetPartialInvestments,
+  [GET_INVESTMENTS_COUNT]: handleSetInvestmentsCount,
   [GET_INVESTMENTS]: handleSetInvestments,
   [GET_INVESTMENT]: handleSaveInvestment,
   [SAVE_NEW_INVESTMENT]: handleSaveInvestment,

@@ -1,6 +1,7 @@
 const {
   getPartialInvestments,
   getInvestments,
+  getInvestmentsCount,
   getInvestment,
   createInvestment,
   updateInvestment,
@@ -22,6 +23,12 @@ const routes = {
     method: 'get',
     auth: true,
     fn: getInvestments
+  },
+
+  '/investments/count': {
+    method: 'get',
+    auth: true,
+    fn: getInvestmentsCount
   },
 
   '/investments/:id': {

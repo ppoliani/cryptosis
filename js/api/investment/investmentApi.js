@@ -1,6 +1,6 @@
 const {partial} = require('../../common/core/fn');
 const {createSimpleEndpoint, HTTP_NO_CONTENT} = require('../core/api');
-const repository= require('../../common/data/repositories/investmentRepository');
+const repository = require('../../common/data/repositories/investmentRepository');
 const {unwrapCypherResult, unwrapCypherResultToMap} = require('../../common/data/utils');
 const logger = require('../../common/core/logger');
 
@@ -10,6 +10,15 @@ const getPartialInvestments = partial(
   unwrapCypherResultToMap,
   {
     errorMessage: 'Error fetching partial investments for user'
+  }
+)
+
+const getInvestmentsCount = partial(
+  createSimpleEndpoint,
+  repository.getInvestmentsCount,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error fetching investments count for user'
   }
 )
 
@@ -101,6 +110,7 @@ const deleteInvestmentType = partial(
 
 module.exports = {
   getPartialInvestments,
+  getInvestmentsCount,
   getInvestments,
   getInvestment,
   createInvestment,

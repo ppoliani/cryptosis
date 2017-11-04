@@ -50,7 +50,7 @@ const createSimpleEndpoint = async (crudAction, unwrapCypherResult, options, ctx
   }
   catch(error) {
     ctx.status = 500;
-    ctx.body = HttpError(500, `${options.errorMessage}: ${ctx.state.user.userId}`);
+    ctx.body = HttpError(500, `${options.errorMessage}: ${ctx.state.user.id}`);
   }
 }
 

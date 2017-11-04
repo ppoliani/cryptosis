@@ -5,10 +5,12 @@ import fetch, {constructUrl} from '../../services/api'
 import {partial} from '../../../../common/core/fn'
 import {task} from 'folktale/concurrency/task'
 
+const INVESTMENT_COUNT_ENDPOINT = `${process.env.API_URL}/investments/count`;
 const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;
 const INVESTMENT_TYPE_ENDPOINT = `${process.env.API_URL}/investment/types`;
 
 export const GET_PARTIAL_INVESTMENTS = 'INVESTMENT::GET_PARTIAL_INVESTMENTS'
+export const GET_INVESTMENTS_COUNT = 'INVESTMENT::GET_INVESTMENTS_COUNT';
 export const GET_INVESTMENTS = 'INVESTMENT::GET_INVESTMENTS'
 export const GET_INVESTMENT = 'INVESTMENT::GET_INVESTMENT'
 export const SAVE_NEW_INVESTMENT = 'INVESTMENT::SAVE_NEW_INVESTMENT'
@@ -39,6 +41,13 @@ const getInvestmentRoot = fetch => {
   return createAction(
     GET_INVESTMENT,
     fetchData
+  );
+}
+
+const getInvestmentsCountRoot = fetch => {
+  return createAction(
+    GET_INVESTMENTS_COUNT,
+    partial(fetch, 'GET', INVESTMENT_COUNT_ENDPOINT)
   );
 }
 
@@ -127,6 +136,7 @@ const deleteInvestmentTypeRoot = fetch => {
 }
 
 export const getPartialInvestments = getPartialInvestmentsRoot(fetch)
+export const getInvestmentsCount = getInvestmentsCountRoot(fetch)
 export const getInvestments = getInvestmentsRoot(fetch)
 export const getInvestment = getInvestmentRoot(fetch)
 export const saveInvestment = saveInvestmentRoot(fetch)

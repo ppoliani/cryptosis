@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import {List, fromJS, Map} from 'immutable'
 import dateformat from 'date-fns/format'
-import {partial, pipe} from '../../../../common/core/fn'
+import {partial, pipe, noop} from '../../../../common/core/fn'
 import {filterObject} from '../../services/utils'
 import {connect} from 'react-redux'
 import {identity} from 'folktale/core/lambda'
@@ -18,6 +18,7 @@ import {startInvestmentCurrentValueStream} from '../../data/stream/investmentVal
 import {renderInvestmentValue, getSelectedCurrency, renderPrice} from '../common/InvestmentValueHelpers'
 import CurrencySelector from '../form/selectors/CurrencySelector'
 import {
+  getInvestmentsCount,
   getInvestments,
   saveInvestment,
   updateInvestment,
@@ -41,16 +42,17 @@ const DEFAULT_CURRENCY = 'GBP';
 class InvestmentPage extends PureComponent {
   state = {
     isPanelOpen: false,
-    limit: 30,
+    limit: 5,
     page: 1,
     skip: 0
   }
 
   componentDidMount() {
     const {skip, limit} = this.state;
-    const {form, getInvestments, getBrokers, getInvestmentTypes} = this.props;
+    const {form, getInvestmentsCount, getBrokers, getInvestmentTypes} = this.props;
     const currency = getSelectedCurrency(form);
 
+    getInvestmentsCount();
     this.loadInvestments()
     getBrokers({skip, limit});
     getInvestmentTypes({skip, limit});
@@ -84,8 +86,17 @@ class InvestmentPage extends PureComponent {
   }
 
   loadInvestments() {
-    const {skip, limit} = this.state;
-    this.props.getInvestments({skip, limit});
+    const {getInvestments, investments} = this.props;
+
+    investments.get('fetchInvestmentsCountResult').matchWith({
+      Empty: noop,
+      Loading: noop,
+      Success: ({value: count}) => {
+        const {skip, limit} = this.state;
+        getInvestments({skip, limit});
+      },
+      Failure: noop
+    });
   }
 
   togglePanel = (_, selectedInvestment={}) => {
@@ -150,33 +161,54 @@ class InvestmentPage extends PureComponent {
       .get('investments');
   }
 
-  renderInvestementsTable = data => (
-    <Container title='Completed Orders' subtitle=''>
-      <AsyncPanel asyncResult={this.props.investments.get('fetchInvestmentsResult')}>
+  renderInvestmentTable(data) {
+    const {investments} = this.props;
+
+    investments.get('fetchInvestmentsCountResult').matchWith({
+      Empty: noop,
+      Loading: noop,
+      Success: ({value: count}) => (
         <Table
           columns={columns}
           limit={this.state.limit}
           page={this.state.page}
           data={data}
+          count={count}
           onRowSizeChange={this.handleRowSizeChange}
           handleCellClick={this.handleCellClick}
         />
+      ),
+      Failure: noop
+    })
+  }
+
+  renderInvestementsTableContainer(data) {
+    const {investments} = this.props;
+    
+    const asyncResult = AsyncDataAll([
+      investments.get('fetchInvestmentsResult'),
+      investments.get('fetchInvestmentsCountResult')
+    ]);
+
+    <Container title='Completed Orders' subtitle=''>
+      <AsyncPanel asyncResult={asyncResult}>
+        {this.renderInvestmentTable(data)}
       </AsyncPanel>
     </Container>
-  )
+  }
 
   renderTable() {
     return this.props.investments.get('fetchInvestmentsResult')
       .matchWith({
-        Empty: () => {},
-        Loading: () => {},
+        Empty: noop,
+        Loading: noop,
         Success: ({value}) =>
            pipe(
-              this.renderInvestementsTable,
+              this.renderInvestementsTableContainer,
               this.getInvestmentsData,
               this.getInvestments()
             ),
-        Failure: () => {}
+        Failure: noop
       })
   }
 
@@ -231,6 +263,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  getInvestmentsCount: (dispatch) ['∘'] (getInvestmentsCount),
   getInvestments: (dispatch) ['∘'] (getInvestments),
   saveInvestment: (dispatch) ['∘'] (saveInvestment),
   updateInvestment: (dispatch) ['∘'] (updateInvestment),

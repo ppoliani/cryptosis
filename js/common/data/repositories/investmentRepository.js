@@ -39,6 +39,18 @@ const getInvestment = async ({resource:investmentId}) => {
   )
 }
 
+const getInvestmentsCount = async ({ctx}) => {
+  return await runQuery(
+    DbDriver,
+    `
+      MATCH (u:User)-[:HAS_INVESTMENT]->(i:Investment)
+      WHERE ID(u)=${Number(ctx.state.user.id)}
+      WITH {count: count(i)} AS count
+      RETURN count
+    `
+  )
+}
+
 const getInvestments = async ({ctx}) => {
   const {skip, limit} = ctx.request.query;
 
@@ -152,6 +164,7 @@ module.exports = {
   init,
   getAllPartialInvestments,
   getPartialInvestments,
+  getInvestmentsCount,
   getInvestment,
   getInvestments,
   saveInvestment,
