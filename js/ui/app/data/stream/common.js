@@ -2,8 +2,10 @@ import {fromPromise, combine, mergeArray} from 'most'
 import {fromJS, Map, Set} from 'immutable'
 import {identity} from 'folktale/core/lambda'
 import fetch from '../../services/api'
+import {partial, prop} from '../../../../common/core/fn'
 import {convertToBaseCurrency} from '../../../../common/fx'
 import {majorPriceStream$} from '../../../../common/sockets/streams'
+import {setPrices} from '../prices/priceActions'
 
 const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;
 
@@ -85,3 +87,38 @@ export const getPriceObjFromStreamData = (currency, fx, data) => ({
   symbol: data.FROMSYMBOL
 })
 
+
+const getInitialPrices = async (currency, investments) => {
+  investments = fromJS(investments.result);
+  const distinctTypes = getDistinctInvestmentTypes(investments);
+  const streams = createPriceStreams$(currency, distinctTypes);
+  const cryptoPrices = await Promise.all(streams);
+
+  // associate each symbol with the corresponding result of the xhr request for it's price
+  // i.e. the first item in the prices array corresponds to the first request that was sent to the server
+  // distinctTypes[0] -> prices[0]
+  const prices = distinctTypes
+    .toList()
+    .reduce((acc, symbol, index) => acc
+      .set(symbol, fromJS({
+        symbol,
+        price: cryptoPrices[index][currency],
+        market: 'Average' // default market from cryptocompare
+      })),
+      Map()
+    );
+
+  return {
+    prices, 
+    investments,
+    fx: prices
+  }
+}
+
+// load the prices for all available asset types using get requests
+// No need to unscubscribe because we getInitialPrices consist of promise streams which are disposes straightaway
+export const streamInitialPrice = (dispatch, currency) => {
+  return getPartialInvestment$()
+    .chain((fromPromise) ['∘'] (partial(getInitialPrices, currency)))
+    .tap((dispatch) ['∘'] (setPrices) ['∘'] (prop('prices')));
+}

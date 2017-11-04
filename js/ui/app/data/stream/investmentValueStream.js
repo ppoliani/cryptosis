@@ -1,13 +1,14 @@
 import {createAction} from 'redux-actions'
 import {combine} from 'most'
 import {fromJS} from 'immutable'
-import {partial} from '../../../../common/core/fn'
+import {partial, prop} from '../../../../common/core/fn'
 import {priceStream$} from '../../../../common/sockets/streams'
+import {MINUTE} from '../../../../common/constants/time'
 import {calculateInvestmentValues} from '../../../../common/aggregators'
 import {changePriceToSelectedCurrency} from '../../../../common/fx'
 import {setInvestmentCurrentValue} from '../portfolio/portfolioActions'
 import {setPrices} from '../prices/priceActions'
-import {getPartialInvestment$, getPriceObjFromStreamData, fx$} from './common'
+import {getPartialInvestment$, getPriceObjFromStreamData, streamInitialPrice, fx$} from './common'
 
 export const SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION= 'STREAM::SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION'
 const setInvestmentCurrentValueSuscription = createAction(SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION);
@@ -35,14 +36,20 @@ export const startInvestmentCurrentValueStream = currency => (dispatch, getState
     }
   }
 
-  const keepPrices = obj => obj.price;
-  const streams$ = [priceStream$(currency), fx$(currency)];
+  const streams$ = [getPartialInvestment$(), priceStream$(currency), fx$(currency)];
 
-  const subscription = combine(getPrices, getPartialInvestment$(), ...streams$)
-    .throttle(30000)
-    .tap((dispatch) ['∘'] (setPrices) ['∘'] (keepPrices))
+  const streamPrices = () => {
+    const subscription = combine(getPrices, ...streams$)
+      .throttle(MINUTE)
+      .tap((dispatch) ['∘'] (setPrices) ['∘'] (prop('price')))
+      .map(calculateInvestmentValues)
+      .subscribe(observer);
+
+    dispatch(setInvestmentCurrentValueSuscription(subscription)); 
+  }
+
+  streamPrices();
+  streamInitialPrice(dispatch, currency)
     .map(calculateInvestmentValues)
     .subscribe(observer);
-
-  dispatch(setInvestmentCurrentValueSuscription(subscription));
 }
