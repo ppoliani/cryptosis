@@ -14,7 +14,7 @@ const BROKER_ENDPOINT = `${process.env.API_URL}/brokers`;
 const getUrl = broker => `${BROKER_ENDPOINT}/${broker.get('id')}`;
 
 const getBrokersRoot = fetch => {
-  const getUrl = ({skip, limit}) => constructUrl(BROKER_ENDPOINT, Map({skip, limit}));
+  const getUrl = ({skip, limit} = {}) => constructUrl(BROKER_ENDPOINT, Map({skip, limit}));
   const fetchData = (partial(fetch, 'GET')) ['∘'] (getUrl);
 
   return createAction(

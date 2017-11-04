@@ -7,7 +7,7 @@ export const constructUrl = (url, params) =>
   ${url}?${
     params
       .reduce(
-        (acc, v, k) => acc.push(`${k}=${v}`),
+        (acc, v, k) => v ? acc.push(`${k}=${v}`) : acc,
         List()
       )
       .join('&')

@@ -9,6 +9,7 @@ import {Row, Col} from 'react-flexbox-grid'
 import Button from 'material-ui/FlatButton'
 import PageWithPanel from '../panel/PageWithPanel'
 import AsyncPanel from '../panel/AsyncPanel'
+import {AsyncDataAll} from '../../data/core/AsyncData'
 import Table from '../table/Table'
 import Container from '../common/Container'
 import DialogBoxMixin from '../mixins/DialogBoxMixin'
@@ -42,20 +43,17 @@ const DEFAULT_CURRENCY = 'GBP';
 class InvestmentPage extends PureComponent {
   state = {
     isPanelOpen: false,
-    limit: 5,
-    page: 1,
-    skip: 0
+    limit: 10,
+    page: 1
   }
 
   componentDidMount() {
-    const {skip, limit} = this.state;
     const {form, getInvestmentsCount, getBrokers, getInvestmentTypes} = this.props;
     const currency = getSelectedCurrency(form);
 
     getInvestmentsCount();
-    this.loadInvestments()
-    getBrokers({skip, limit});
-    getInvestmentTypes({skip, limit});
+    getBrokers();
+    getInvestmentTypes();
     this.subscribe(currency);
   }
 
@@ -91,8 +89,9 @@ class InvestmentPage extends PureComponent {
     investments.get('fetchInvestmentsCountResult').matchWith({
       Empty: noop,
       Loading: noop,
-      Success: ({value: count}) => {
-        const {skip, limit} = this.state;
+      Success: () => {
+        const {limit, page} = this.state;
+        const skip = (page - 1) * limit;
         getInvestments({skip, limit});
       },
       Failure: noop
@@ -133,7 +132,15 @@ class InvestmentPage extends PureComponent {
   }
 
   handleRowSizeChange = (e, rows) => {
-    this.setState(Object.assign({}, this.state, { limit: rows }), this.loadInvestments);
+    this.setState(Object.assign({}, this.state, {page: 1, limit: rows}), this.loadInvestments);
+  }
+
+  handleNextPageClick = (e, page) => {
+    this.setState(Object.assign({}, this.state, {page: this.state.page + 1}), this.loadInvestments);
+  }
+
+  handlePreviousPageClick = (e, page) => {
+    this.setState(Object.assign({}, this.state, {page: this.state.page - 1}), this.loadInvestments);
   }
 
   // will include the value for each investment
@@ -164,17 +171,19 @@ class InvestmentPage extends PureComponent {
   renderInvestmentTable(data) {
     const {investments} = this.props;
 
-    investments.get('fetchInvestmentsCountResult').matchWith({
+    return investments.get('fetchInvestmentsCountResult').matchWith({
       Empty: noop,
       Loading: noop,
-      Success: ({value: count}) => (
+      Success: ({value}) => (
         <Table
           columns={columns}
           limit={this.state.limit}
           page={this.state.page}
           data={data}
-          count={count}
+          count={investments.get('count')}
           onRowSizeChange={this.handleRowSizeChange}
+          onNextPageClick={this.handleNextPageClick}
+          onPreviousPageClick={this.handlePreviousPageClick}
           handleCellClick={this.handleCellClick}
         />
       ),
@@ -182,7 +191,7 @@ class InvestmentPage extends PureComponent {
     })
   }
 
-  renderInvestementsTableContainer(data) {
+  renderInvestementsTableContainer = data => {
     const {investments} = this.props;
     
     const asyncResult = AsyncDataAll([
@@ -190,17 +199,19 @@ class InvestmentPage extends PureComponent {
       investments.get('fetchInvestmentsCountResult')
     ]);
 
-    <Container title='Completed Orders' subtitle=''>
-      <AsyncPanel asyncResult={asyncResult}>
-        {this.renderInvestmentTable(data)}
-      </AsyncPanel>
-    </Container>
+    return (
+      <Container title='Completed Orders' subtitle=''>
+        <AsyncPanel asyncResult={asyncResult}>
+          {this.renderInvestmentTable(data)}
+        </AsyncPanel>
+      </Container>
+    )
   }
 
   renderTable() {
     return this.props.investments.get('fetchInvestmentsResult')
       .matchWith({
-        Empty: noop,
+        Empty: () => this.loadInvestments(),
         Loading: noop,
         Success: ({value}) =>
            pipe(

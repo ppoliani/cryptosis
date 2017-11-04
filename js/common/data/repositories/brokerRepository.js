@@ -5,12 +5,12 @@ let DbDriver;
 
 const init = driver => {
   DbDriver = driver;
-}
+} 
 
 const getBrokers = async ({ctx}) => {
-  const {skip, limit} = ctx.request.query;
+  const {skip=0, limit=1000000} = ctx.request.query; 
 
-  return  await runQuery(
+  return  await runQuery( 
     DbDriver,
     `
       MATCH (b:Broker)

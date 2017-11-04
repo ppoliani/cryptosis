@@ -99,7 +99,7 @@ const deleteInvestmentRoot = fetch => {
 }
 
 const getInvestmentTypesRoot = fetch => {
-  const getUrl = ({skip, limit}) => constructUrl(INVESTMENT_TYPE_ENDPOINT, Map({skip, limit}));
+  const getUrl = ({skip, limit} = {}) => constructUrl(INVESTMENT_TYPE_ENDPOINT, Map({skip, limit}));
   const fetchData = (partial(fetch, 'GET')) ['∘'] (getUrl);
 
   return createAction(

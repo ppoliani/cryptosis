@@ -52,9 +52,9 @@ const getInvestmentsCount = async ({ctx}) => {
 }
 
 const getInvestments = async ({ctx}) => {
-  const {skip, limit} = ctx.request.query;
+  const {skip=0, limit=1000000} = ctx.request.query;
 
-  return  await runQuery(
+  return  await runQuery( 
     DbDriver,
     `
       MATCH (u:User)-[:HAS_INVESTMENT]->(i:Investment)
@@ -111,7 +111,7 @@ const deleteInvestment = async ({resource:investmentId})  => {
 }
 
 const getInvestmentTypes = async ({ctx}) => {
-  const {skip, limit} = ctx.request.query;
+  const {skip=0, limit=1000000} = ctx.request.query;
 
   return  await runQuery(
     DbDriver,

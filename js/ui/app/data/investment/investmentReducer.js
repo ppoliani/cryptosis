@@ -47,11 +47,12 @@ const handleSaveInvestment = (state, {payload: saveInvestmentResult}) =>
   });
 
 const handleSetInvestmentsCount = (state, {payload: investmentsCountResult}) => {
-  investmentsCountResult.matchWith({
+  return investmentsCountResult.matchWith({
     Empty: identity,
     Loading: () => state.set('fetchInvestmentsCountResult', investmentsCountResult),
-    Success: ({data}) => state
-      .set('fetchInvestmentsCountResult', investmentsCountResult),
+    Success: ({data: {result: [result]}}) => state
+      .set('fetchInvestmentsCountResult', investmentsCountResult)
+      .set('count', result.count),
     Failure: () => state.set('investmentsCountResult', investmentsCountResult),
   });
 }
@@ -114,6 +115,7 @@ const InvestmentData = Map({
   saveInvestmentTypeResult: AsyncData.Empty(),
   deleteInvestmentTypeResult: AsyncData.Empty(),
   partialInvestments: Map(),
+  count: 0,
   investments: Map(),
   investmentTypes: Map()
 });
