@@ -45,7 +45,7 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
         .set(symbol, fromJS({
           symbol,
           price: cryptoPrices[index][currency],
-          market: 'CCAGG' // default market from cryptocompare
+          market: 'Average' // default market from cryptocompare
         })),
         Map()
       );
@@ -83,8 +83,8 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
 
   const streamPrices = () => {
     const subscription = combine(getPrices, partialInvestments$, ...streams$)
+      .throttle(10000)
       .tap((dispatch) ['∘'] (setPrice) ['∘'] (keepPrices))
-      .throttle(1000 * 60)
       .map(calculateTotalPortfolioValue)
       .subscribe(observer);
 
