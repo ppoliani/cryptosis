@@ -26,24 +26,35 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
     }
   }
 
-  const getPriceStreams = async investments => {
-    const distinctTypes = getDistinctInvestmentTypes(fromJS(investments.result));
+  const partialInvestments$ = getPartialInvestment$();
+  const keepPrices = obj => obj.price;
+  const streams$ = [priceStream$(currency), fx$(currency)];
+
+  const getIntialPrices = async investments => {
+    investments = fromJS(investments.result);
+    const distinctTypes = getDistinctInvestmentTypes(investments);
     const streams = createPriceStreams$(currency, distinctTypes);
-    const prices = await Promise.all(streams);
+    const cryptoPrices = await Promise.all(streams);
 
     // associate each symbol with the corresponding result of the xhr request for it's price
     // i.e. the first item in the prices array corresponds to the first request that was sent to the server
     // distinctTypes[0] -> prices[0]
-    return distinctTypes
+    const prices = distinctTypes
       .toList()
       .reduce((acc, symbol, index) => acc
         .set(symbol, fromJS({
           symbol,
-          price: prices[index][currency],
+          price: cryptoPrices[index][currency],
           market: 'CCAGG' // default market from cryptocompare
         })),
         Map()
-      )
+      );
+
+    return {
+      prices, 
+      investments,
+      fx: prices
+    }
   }
 
   const getPrices = (investments, price, fx)  => {
@@ -60,21 +71,26 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
     }
   }
 
-  const partialInvestments$ = getPartialInvestment$();
-  const keepPrices = obj => obj.price;
-  const streams$ = [priceStream$(currency), fx$(currency)];
+  const streamInitialPrice = () => {
+    // load the prices for all available asset types using get requests
+    // No need to unscubscribe because we getIntialPrices consist of promise streams which are disposes straightaway
+    partialInvestments$
+      .chain((fromPromise) ['∘'] (getIntialPrices))
+      .tap((dispatch) ['∘'] (setPrices) ['∘'] (prop('prices')))
+      .map(calculateTotalPortfolioValue)
+      .subscribe(observer);
+  }
 
-  // load the prices for all available asset types using get requests
-  partialInvestments$
-    .chain((fromPromise) ['∘'] (getPriceStreams))
-    .tap((dispatch) ['∘'] (setPrices))
-    .drain();
-  
-  const subscription = combine(getPrices, partialInvestments$ , ...streams$)
+  const streamPrices = () => {
+    const subscription = combine(getPrices, partialInvestments$, ...streams$)
       .tap((dispatch) ['∘'] (setPrice) ['∘'] (keepPrices))
-      .throttle(10000)
+      .throttle(1000 * 60)
       .map(calculateTotalPortfolioValue)
       .subscribe(observer);
 
-  dispatch(setPortfolioSubscription(subscription));
+    dispatch(setPortfolioSubscription(subscription));
+  }
+
+  streamInitialPrice();
+  streamPrices();
 }
