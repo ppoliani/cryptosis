@@ -1,8 +1,19 @@
 import React, {Component} from 'react' 
-import {StyleSheet} from 'react-native'
+import {connect} from 'react-redux'
 import {View, Text} from 'native-base'
 import Carousel from 'react-native-snap-carousel' 
-import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from 'react-native-linear-gradient'
+import styles from './styles';
+import {startPortfolioStream} from '../../data/stream/portfolioValueStream'
+import {
+  getTotalExposure,
+  getTotalPortfolioValue,
+  getTotalCash,
+  getTotalInvested,
+  getCapitalGain
+} from '../../../../common/metrics/portfolio'
+
+const DEFAULT_CURRENCY = 'GBP';
 
 class PortfolioSummary extends Component {
   state = {
@@ -14,12 +25,55 @@ class PortfolioSummary extends Component {
     ]
   }
 
-  _renderItem ({item, index}) {
+  componentDidMount() {
+    this.subscribe(DEFAULT_CURRENCY);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  subscribe(currency) {
+    const {startPortfolioStream} = this.props;
+    startPortfolioStream(currency);
+  }
+
+  unsubscribe() {
+    const {stream} = this.props;
+
+    return stream
+      .get('portfolioSubscription')
+      .matchWith({
+        Just: ({value}) => value.unsubscribe(),
+        Nothing: identity
+      });
+  }
+
+  getData() {
+    const {investment, portfolio} = this.props;
+
+    const portfolioValue = getTotalPortfolioValue(portfolio);
+    const exposure = getTotalExposure(portfolio);
+    const totalCash = getTotalCash(portfolio);
+    const totalInvested = getTotalInvested(portfolio);
+    const capitalGain = getCapitalGain(portfolio);
+
+    return [
+      {title: 'Total Value', value: portfolioValue},
+      {title: 'Capital Gain', value: capitalGain},
+      {title: 'Exposure', value: exposure},
+      {title: 'Total Invested', value: totalInvested},
+      {title: 'Cash', value: totalCash}
+    ];
+  }
+
+  renderItem ({item, index}) {
     return (
       <LinearGradient 
         style={[styles.center, styles.slide]} 
         start={{x: 0.0, y: 0.25}} end={{x: 0.5, y: 1.0}}
         colors={['#2C3E50', '#FD746C']}> 
+          <Text>{item.title}</Text>
           <Text>{item.value}</Text>
       </LinearGradient>
     );
@@ -29,9 +83,9 @@ class PortfolioSummary extends Component {
     return (
       <View style={[styles.center, styles.container]}>
         <Carousel
-          ref={(c) => { this._carousel = c; }}
-          data={this.state.entries}
-          renderItem={this._renderItem}
+          ref={(c) => {this.carousel = c;}}
+          data={this.getData()}
+          renderItem={this.renderItem}
           sliderWidth={300}
           itemWidth={250} 
           itemHeight={100}
@@ -42,16 +96,18 @@ class PortfolioSummary extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-
-  slide: {
-    width: 250,
-    height: 100
-  }
+const mapStateToProps = state => ({
+  stream: state.stream,
+  portfolio: state.portfolio,
+  investment: state.investment
 });
 
-export default PortfolioSummary
+const mapDispatchToProps = dispatch => ({
+  startPortfolioStream: (dispatch) ['∘'] (startPortfolioStream)
+});
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PortfolioSummary)

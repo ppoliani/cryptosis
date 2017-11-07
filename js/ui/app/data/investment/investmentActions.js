@@ -4,10 +4,11 @@ import {Map} from 'immutable'
 import fetch, {constructUrl} from '../../services/api'
 import {partial} from '../../../../common/core/fn'
 import {task} from 'folktale/concurrency/task'
+import config from '../../services/config'
 
-const INVESTMENT_COUNT_ENDPOINT = `${process.env.API_URL}/investments/count`;
-const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;
-const INVESTMENT_TYPE_ENDPOINT = `${process.env.API_URL}/investment/types`;
+const INVESTMENT_COUNT_ENDPOINT = `${config.API_URL}/investments/count`;
+const INVESTMENT_ENDPOINT = `${config.API_URL}/investments`;
+const INVESTMENT_TYPE_ENDPOINT = `${config.API_URL}/investment/types`;
 
 export const GET_PARTIAL_INVESTMENTS = 'INVESTMENT::GET_PARTIAL_INVESTMENTS'
 export const GET_INVESTMENTS_COUNT = 'INVESTMENT::GET_INVESTMENTS_COUNT';

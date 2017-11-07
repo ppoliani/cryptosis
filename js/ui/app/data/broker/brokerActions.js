@@ -3,13 +3,14 @@ import {Map} from 'immutable'
 import fetch, {constructUrl} from '../../services/api'
 import {partial} from '../../../../common/core/fn'
 import {task} from 'folktale/concurrency/task'
+import config from '../../services/config'
 
 export const GET_BROKERS = 'BROKER::GET_BROKERS'
 export const SAVE_NEW_BROKER = 'BROKER::SAVE_NEW_BROKER'
 export const UPDATE_BROKER = 'BROKER::UPDATE_BROKER'
 export const DELETE_BROKER = 'BROKER::DELETE_BROKER'
 
-const BROKER_ENDPOINT = `${process.env.API_URL}/brokers`;
+const BROKER_ENDPOINT = `${config.API_URL}/brokers`;
 
 const getUrl = broker => `${BROKER_ENDPOINT}/${broker.get('id')}`;
 

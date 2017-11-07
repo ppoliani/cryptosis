@@ -1,6 +1,7 @@
 import {List} from 'immutable'
 import {task} from 'folktale/concurrency/task'
 import {getItem} from './storage'
+import config from './config'
 
 export const constructUrl = (url, params) =>
   `
@@ -14,21 +15,22 @@ export const constructUrl = (url, params) =>
   }
   `
 
-const getAuthHeader = auth => auth
+const getAuthHeader = (auth, bearerToken) => auth
   ? {
       'content-type': 'application/json',
-      'Authorization': `Bearer ${getItem(ACCESS_TOKEN_KEY)}`
+      'Authorization': `Bearer ${bearerToken}`
     }
   : {}
 
 export default (method, url, body={}, auth=true, headers={}) =>
   task(async resolver => {
     try {
+      const bearerToken = await getItem(config.ACCESS_TOKEN_KEY).run().promise();
       const options = {
         method,
         headers: Object.assign(
           {},
-          getAuthHeader(auth),
+          getAuthHeader(auth, bearerToken),
           headers
         )
       };

@@ -8,6 +8,8 @@ import Layout from './layout/Layout'
 import Config from 'react-native-config'
 import Login from './auth/Login'
 
+import {logout} from '../services/auth'
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -20,6 +22,7 @@ class AuthGuard extends Component {
     super(props, state);
 
     this.state = {isAuthenticated: null};
+    // logout();
   }
 
   componentDidMount() {
@@ -67,10 +70,10 @@ const PrivateRoute = ({component: Component, ...rest}) =>
 
 
 export default () => (
-    <NativeRouter style={styles.container}>
-      <View style={styles.container}>
-        <PrivateRoute exact path="/" component={Home}/>
-        <Route path="/login" component={Login}/>
-      </View>
-    </NativeRouter>
+  <NativeRouter style={styles.container}>
+    <View style={styles.container}>
+      <PrivateRoute exact path="/" component={Home}/>
+      <Route path="/login" component={Login}/>
+    </View>
+  </NativeRouter>
 )

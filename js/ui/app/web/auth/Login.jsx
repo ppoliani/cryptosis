@@ -8,7 +8,6 @@ import {setItem} from '../../services/storage'
 import {setUserProfile} from '../../data/profile/profileActions'
 import './login.scss'
 
-
 class Login extends Component {
   redirect() {
     this.props.history.push('/');

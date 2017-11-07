@@ -22,3 +22,15 @@ export const getItem = key =>
       resolver.reject(error);
     }
   })
+
+  export const removeItem = key => 
+    task(async resolver => {
+      try {
+        await AsyncStorage.removeItem(key);
+        resolver.resolve();
+      }
+      catch(error) {
+        resolver.reject(error);
+      }
+    })
+

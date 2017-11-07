@@ -6,13 +6,13 @@ import {partial, prop} from '../../../../common/core/fn'
 import {convertToBaseCurrency} from '../../../../common/fx'
 import {majorPriceStream$} from '../../../../common/sockets/streams'
 import {setPrices} from '../prices/priceActions'
+import config from '../../services/config'
 
-const INVESTMENT_ENDPOINT = `${process.env.API_URL}/investments`;
+const INVESTMENT_ENDPOINT = `${config.API_URL}/investments`;
 
 const historicalDataUrl = (fromSymbol, toSymbol, timestamp, days) => `https://min-api.cryptocompare.com/data/histoday?fsym=${fromSymbol}&tsym=${toSymbol}&limit=${days}&aggregate=1&toTs=${timestamp}&tryConversion=true`
 const fxUrl = base => `http://api.fixer.io/latest?base=${base}&symbols=${getSymbolsExceptFor(base).join(',')}`;
 const priceUrl = (currency, symbol) => `https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=${currency}`
-
 
 const getSymbolsExceptFor = currency => ['GBP', 'EUR', 'USD'].filter(c => c !== currency);
 
@@ -86,7 +86,6 @@ export const getPriceObjFromStreamData = (currency, fx, data) => ({
   market: data.MARKET,
   symbol: data.FROMSYMBOL
 })
-
 
 const getInitialPrices = async (currency, investments) => {
   investments = fromJS(investments.result);

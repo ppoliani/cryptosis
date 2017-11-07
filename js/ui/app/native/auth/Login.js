@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
 import {autobind} from 'core-decorators'
+import {connect} from 'react-redux'
 import {View, StyleSheet, AsyncStorage} from 'react-native'
 import {Redirect} from 'react-router-native'
+import {setUserProfile} from '../../data/profile/profileActions'
 import {login} from '../../services/auth'
 import {setItem} from '../../services/storage'
-import {fromPromised} from 'folktale/concurrency/task'
-import Config from 'react-native-config'
+import {fromPromised, waitAll} from 'folktale/concurrency/task'
+import config from '../../services/config';
 
 const FBSDK = require('react-native-fbsdk');
 const {LoginButton, AccessToken} = FBSDK;
@@ -25,13 +27,21 @@ class Login extends Component {
     } 
     else { 
       fromPromised(AccessToken.getCurrentAccessToken)()
-        .chain(({accessToken}) => setItem(Config.ACCESS_TOKEN_KEY, accessToken)) 
+        .chain(({accessToken}) => login('fb', accessToken))
+        .chain(({token, account}) => {
+          this.props.setUserProfile(account);
+
+          return waitAll([
+            setItem(config.ACCESS_TOKEN_KEY, token),
+            setItem(config.USER_INFO, JSON.stringify(account))
+          ]);
+        }) 
         .bimap(
           error => {
-            console.log('Could not store the token in the localstorage', error);
+            console.log('Could not login', error);
           },
           () => {
-            this.setState({isAuthenticated: true})
+            this.setState({isAuthenticated: true});
           }
         )
         .run()
@@ -49,4 +59,16 @@ class Login extends Component {
   }
 }
 
-export default Login
+const mapStateToProps = state => ({
+  userProfile: state.userProfile
+})
+
+const mapDispatchToProps = dispatch => ({
+  setUserProfile: (dispatch) ['∘'] (setUserProfile)
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login)
+
