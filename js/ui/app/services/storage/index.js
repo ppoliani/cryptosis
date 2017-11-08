@@ -1,6 +1,1 @@
-if(process.env.PLATFORM_ENV === 'web') {
-  module.exports = require('./storage.web');
-}
-else {
-  module.exports = require('./storage.native');
-}
+export { setItem, getItem, removeItem } from './storage'; 
