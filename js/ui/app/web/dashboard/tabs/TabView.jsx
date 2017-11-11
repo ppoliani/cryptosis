@@ -12,19 +12,19 @@ export default class TabView extends Component {
   render() {
     const {currency, asset, portfolio, transaction} = this.props;
     const lastNDaysData = portfolio.get('last30Days');
-    const totalValue = portfolio.get('total');
+    const portfolioAgg = portfolio.get('total');
 
     return (
       <Col xs={12}>
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing'>
             <Col className='row-spacing'>
-              <ChartContainer lastNDaysData={lastNDaysData} />
+              {/* <ChartContainer lastNDaysData={lastNDaysData} /> */}
             </Col>
           </Col>
           <Col lg={4} xs={12} className='row-spacing'>
             <Col className='row-spacing'>
-              <AssetAllocationContainer totalValue={totalValue} />
+              <AssetAllocationContainer portfolioAgg={portfolioAgg} />
             </Col>
           </Col>
         </Row>
@@ -38,13 +38,13 @@ export default class TabView extends Component {
           </Col>
           <Col lg={4} xs={12} className='row-spacing'>
             <Col className='row-spacing'>
-              <PortfolioSummary
+              {/* <PortfolioSummary
                 currency={currency}
                 portfolio={portfolio}
-                transaction={transaction} />
+                transaction={transaction} /> */}
             </Col>
             <Col>
-              <TransactionSummaryContainer />
+              {/* <TransactionSummaryContainer /> */}
             </Col>
           </Col>
         </Row>

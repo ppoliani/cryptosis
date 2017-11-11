@@ -79,7 +79,7 @@ export const getAggregatePortfolioChartConfig = () => ({
 
 export const getAssetAllocationChartConfig = () => ({
   valueField: 'value',
-  titleField: 'crypto',
+  titleField: 'asset',
   depth3D: 15,
   balloonText: `[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>`,
   angle: 35,

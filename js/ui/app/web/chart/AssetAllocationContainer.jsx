@@ -9,8 +9,8 @@ const buttons = [{
   label: 'Value',
   type: 'value'
 }, {
-  label: 'Exposure',
-  type: 'exposure'
+  label: 'Holdings',
+  type: 'holdings'
 }];
 
 class AssetAllocationContainer extends Component {
@@ -24,32 +24,35 @@ class AssetAllocationContainer extends Component {
   }
 
   getValueChartData() {
-    const {totalValue} = this.props;
-    const mapChartData = ({value: total}) => total.get('totalExposure')
-      .map((v, k) => ({
-        crypto: k,
-        value: round(total.getIn(['currentValue', k]))
-      }))
-      .toList()
-      .toJS();
+    const {portfolioAgg} = this.props;
+    
+    const mapChartData = ({value: total}) => 
+      total.get('assetsValues')
+        .map((value, asset) => ({
+          asset,
+          value: round(value)
+        }))
+        .toList()
+        .toJS();
 
-    return totalValue.matchWith({
+    return portfolioAgg.matchWith({
       Just: mapChartData,
       Nothing: () => []
     });
   }
 
-  getExposureChartData() {
-    const {totalValue} = this.props;
-    const mapChartData = ({value: total}) => total.get('totalExposure')
-      .map((v, k) => ({
-        crypto: k,
-        value: round(v)
-      }))
-      .toList()
-      .toJS();
+  getHoldings() {
+    const {portfolioAgg} = this.props;
+    const mapChartData = ({value: total}) => 
+      total.get('holdings')
+        .map((value, asset) => ({
+          asset,
+          value: round(value)
+        }))
+        .toList()
+        .toJS();
 
-    return totalValue.matchWith({
+    return portfolioAgg.matchWith({
       Just: mapChartData,
       Nothing: () => []
     });
@@ -64,19 +67,19 @@ class AssetAllocationContainer extends Component {
     )
   }
 
-  renderExposureChart() {
+  renderHoldingsChart() {
     return (
       <AssetAllocationChart
         title='Portfolio Overview'
-        subtitle='Current Exposure'
-        chartData={this.getExposureChartData()} />
+        subtitle='Current Balance'
+        chartData={this.getHoldings()} />
     )
   }
 
   renderChart() {
     return this.state.selectedBtn === 'value'
       ? this.renderValueChart()
-      : this.renderExposureChart();
+      : this.renderHoldingsChart();
   }
 
   renderButtonGroup() {

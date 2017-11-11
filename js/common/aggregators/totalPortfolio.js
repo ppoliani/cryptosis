@@ -25,7 +25,7 @@ const calculateTotalPortfolioValue = ({transactions, fx}) => {
 
   return fromJS({
     holdings,
-    value: calculatePortfolioValue(holdings, fx)
+    ...calculatePortfolioValue(holdings, fx)
   });
 }
 

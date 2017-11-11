@@ -3,12 +3,13 @@
     "transform-class-properties",
     "transform-async-functions",
     "transform-decorators-legacy",
-    "transform-inline-environment-variables"
+    "transform-inline-environment-variables",
+    "transform-object-rest-spread" 
   ],
 
   "presets": [
-      "react",
-      "react-native"
+    "react",
+    "react-native"
   ],
 
   "env": {
