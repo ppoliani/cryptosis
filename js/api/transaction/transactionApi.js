@@ -22,8 +22,17 @@ const updateTransaction = partial(
   }
 )
 
+const getTransactions = partial(
+  createSimpleEndpoint,
+  repository.getTransactions,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error getting transactions for user'
+  }
+)
 
 module.exports = {
   createTransaction,
-  updateTransaction
+  updateTransaction,
+  getTransactions
 }

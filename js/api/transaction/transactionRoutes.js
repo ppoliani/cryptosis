@@ -1,9 +1,16 @@
 const {
   createTransaction,
-  updateTransaction
+  updateTransaction,
+  getTransactions
 } = require('./transactionApi');
 
 const routes = {
+  '/transactions': {
+    method: 'get',
+    // auth: true,
+    fn: getTransactions
+  },
+
   '/transactions$': {
     method: 'post',
     // auth: true,

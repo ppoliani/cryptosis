@@ -44,11 +44,29 @@ const updateTransaction = async ({resource:txn}) => {
   );
 }
 
+const getTransactions = async ({ctx}) => {
+  const {skip=0, limit=1000000} = ctx.request.query;
+
+  return  await runQuery( 
+    DbDriver,
+    `
+      MATCH (txn:Transaction)-[:OWNED_BY]->(u:User)
+      WHERE ID(u)=${Number(24/*ctx.state.user.id*/)}
+      RETURN txn{ .*, id: ID(txn)}
+      ORDER BY txn.date DESC
+      SKIP ${skip}
+      LIMIT ${limit}
+    `
+  )
+}
+
 module.exports = {
   init, 
   createTransaction,
-  updateTransaction
+  updateTransaction,
+  getTransactions
 }
+
 // const getAllPartialAssets = async () => {
 //   return  await runQuery(
 //     DbDriver,
@@ -109,24 +127,6 @@ module.exports = {
 //   )
 // }
 
-
-// const updateAsset = async ({resource:investment}) => {
-//   return await runQuery(
-//     DbDriver,
-//     `
-//       MATCH ${ASSET_NODE}, (b:Broker), ${ASSET_TYPE_NODE}
-//       WHERE ID(i) = ${investment.id} AND b.name="${investment.broker}" AND t.name="${investment.investmentType}"
-//       SET i = ${contructCreateMatchString(investment)}
-//       WITH i, b, t
-//       MATCH (b2:Broker)<-[hb:HAS_BROKER]-(i)-[ht:HAS_TYPE]->(t2:InvestmentType)
-//       DELETE hb, ht
-//       WITH i, b, t
-//       CREATE (b)<-[:HAS_BROKER]-(i)-[:HAS_TYPE]->(t)
-//       RETURN i
-//     `,
-//     createMatchObj(investment)
-//   );
-// }
 
 // const deleteAsset = async ({resource:investmentId})  => {
 //   return  await runQuery(
