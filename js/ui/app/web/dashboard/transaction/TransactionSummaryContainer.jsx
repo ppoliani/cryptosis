@@ -4,10 +4,10 @@ import Container from '../../common/Container'
 import AsyncPanel from '../../panel/AsyncPanel'
 import AsyncData from '../../../data/core/AsyncData'
 import {getSelectedCurrency, getSelectedAsset} from '../../common/TransactionHelpers'
-import InvestmentSummary from './InvestmentSummary'
+import TransactionsSummary from './TransactionsSummary'
 import AssetSelector from '../../form/selectors/AssetSelector'
 
-class InvestmentSummaryContainer extends Component {
+class TransactionSummaryContainer extends Component {
   getAssetOptions(totalExposure) {
     return [...totalExposure.keys()]
       .map(k => ({
@@ -55,7 +55,7 @@ class InvestmentSummaryContainer extends Component {
           const currency = getSelectedCurrency(form);
 
           return (
-            <InvestmentSummary
+            <TransactionsSummary
               total={total}
               portfolio={portfolio}
               asset={asset}
@@ -68,7 +68,7 @@ class InvestmentSummaryContainer extends Component {
 
   render() {
     return (
-      <Container title='Investment' subtitle='Summary'>
+      <Container title='Transactions' subtitle='Summary'>
         <AsyncPanel asyncResult={AsyncData.Success()}>
           {this.renderSelector()}
           {this.renderContent()}
@@ -88,4 +88,4 @@ const mapDispatchToProps = dispatch => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(InvestmentSummaryContainer)
+)(TransactionSummaryContainer)

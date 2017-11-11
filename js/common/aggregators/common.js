@@ -105,7 +105,7 @@ const calculateTotalCash = (calculateTotalAmountInvestedPerType) ['∘'] (filter
 
 const calculateTotalAmountInvested = (calculateTotalAmountInvestedPerType) ['∘'] (filterBuys)
 
-// total cash per investment type - total invested per investment type
+// total cash per transaction type - total invested per investment type
 const calculateExposure = investments =>
   // net cost includes expenses for both buy and sells
   calculateTotalCash(investments)

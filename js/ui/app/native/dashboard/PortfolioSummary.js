@@ -50,7 +50,7 @@ class PortfolioSummary extends Component {
   }
 
   getData() {
-    const {investment, portfolio} = this.props;
+    const {portfolio} = this.props;
 
     const portfolioValue = getTotalPortfolioValue(portfolio);
     const exposure = getTotalExposure(portfolio);
@@ -99,13 +99,12 @@ class PortfolioSummary extends Component {
 const mapStateToProps = state => ({
   stream: state.stream,
   portfolio: state.portfolio,
-  investment: state.investment
+  transaction: state.transaction
 });
 
 const mapDispatchToProps = dispatch => ({
   startPortfolioStream: (dispatch) ['∘'] (startPortfolioStream)
 });
-
 
 export default connect(
   mapStateToProps,

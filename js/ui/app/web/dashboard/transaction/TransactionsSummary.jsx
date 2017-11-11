@@ -5,7 +5,7 @@ import {renderCapitalGain, renderPrice} from '../../common/TransactionHelpers'
 import {getTotalCashForType, getQtyForType, getCapitalGain} from '../../../../../common/metrics/portfolio'
 import TitledBox from '../../box/TitledBox'
 
-class InvestmentSummary extends PureComponent {
+class TransactionSummary extends PureComponent {
   render() {
     const {asset, currency, portfolio, total} = this.props;
     const exposure = total.getIn(['totalExposure', asset]);
@@ -18,7 +18,7 @@ class InvestmentSummary extends PureComponent {
     return (
       <div>
         <Row around='xs'>
-          <Col xs={5} className='row-spacing'>
+          <Col xs={5} className='row-spacing'> 
             <TitledBox color='secondary' header='Holdings'>{holdings}</TitledBox>
           </Col>
           <Col xs={5} className='row-spacing'>
@@ -51,5 +51,5 @@ class InvestmentSummary extends PureComponent {
   }
 }
 
-export default InvestmentSummary
+export default TransactionSummary
 

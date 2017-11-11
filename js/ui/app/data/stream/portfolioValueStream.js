@@ -9,7 +9,7 @@ import {MINUTE} from '../../../../common/constants/time'
 import {setPortfolioValue} from '../portfolio/portfolioActions'
 import {setPrice} from '../prices/priceActions'
 import {
-  getPartialInvestment$, 
+  getPartialTransactions$, 
   getPriceObjFromStreamData, 
   streamInitialPrice,
   fx$
@@ -26,21 +26,21 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
     }
   }
 
-  const getPrices = (investments, price, fx)  => {
+  const getPrices = (transactions, price, fx)  => {
     const {prices} = getState(); 
     const priceData = getPriceObjFromStreamData(currency, fx, price);
     // map though investments and convert price of purchase into the currenlty selected currency
-    const updatedInvestments = fromJS(investments.result)
+    const updatedTxns = fromJS(transactions.result)
       .map(partial(changePriceToSelectedCurrency, currency, fx.get(currency)));
 
     return {
-      investments: updatedInvestments,
+      transactions: transactions,
       price: fromJS(priceData),
       fx: prices
     }
   }
   
-  const streams$ = [getPartialInvestment$(), priceStream$(currency), fx$(currency)];
+  const streams$ = [getPartialTransactions$(), priceStream$(currency), fx$(currency)];
 
   const streamPrices = () => {
     const subscription = combine(getPrices, ...streams$)

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import {Row, Col} from 'react-flexbox-grid'
 import PortfolioSummary from '../PortfolioSummary'
-import InvestmentSummaryContainer from '../investment/InvestmentSummaryContainer'
+import TransactionSummaryContainer from '../transaction/TransactionSummaryContainer'
 import ChartContainer from '../../chart/ChartContainer'
 import AssetAllocationContainer from '../../chart/AssetAllocationContainer'
 import ExtraInfoTabView from './ExtraInfoTabView'
@@ -10,7 +10,7 @@ import './tab.scss'
 
 export default class TabView extends Component {
   render() {
-    const {currency, asset, portfolio, investment} = this.props;
+    const {currency, asset, portfolio, transaction} = this.props;
     const lastNDaysData = portfolio.get('last30Days');
     const totalValue = portfolio.get('total');
 
@@ -41,10 +41,10 @@ export default class TabView extends Component {
               <PortfolioSummary
                 currency={currency}
                 portfolio={portfolio}
-                investment={investment} />
+                transaction={transaction} />
             </Col>
             <Col>
-              <InvestmentSummaryContainer />
+              <TransactionSummaryContainer />
             </Col>
           </Col>
         </Row>

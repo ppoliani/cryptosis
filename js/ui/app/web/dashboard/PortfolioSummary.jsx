@@ -15,7 +15,7 @@ import {
 
 class PortfolioSummary extends Component {
   render() {
-    const {investment, currency, portfolio} = this.props;
+    const {transaction, currency, portfolio} = this.props;
     const portfolioValue = getTotalPortfolioValue(portfolio);
     const exposure = getTotalExposure(portfolio);
     const totalCash = getTotalCash(portfolio);
@@ -23,7 +23,7 @@ class PortfolioSummary extends Component {
 
     return (
       <Container title='Current' subtitle='Status'>
-        <AsyncPanel asyncResult={investment.get('fetchInvestmentsResult')}>
+        <AsyncPanel asyncResult={transaction.get('fetchTxnsResult')}>
           <Row around='xs'>
             <Col xs={5} className='row-spacing'>
               <TitledBox color='primary' header='Exposure'>{renderPrice(exposure, currency)}</TitledBox>

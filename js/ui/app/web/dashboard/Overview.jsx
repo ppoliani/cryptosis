@@ -35,7 +35,7 @@ class Overview extends Component {
     const {startPortfolioStream, startLast30DaysStream} = this.props;
 
     startPortfolioStream(currency);
-    startLast30DaysStream(currency);
+    // startLast30DaysStream(currency);
   }
 
   unsubscribe() {
@@ -59,7 +59,7 @@ class Overview extends Component {
   }
 
   render() {
-    const {investment, portfolio, prices, form} = this.props;
+    const {transaction, portfolio, prices, form} = this.props;
 
     return (
       <Col>
@@ -72,7 +72,7 @@ class Overview extends Component {
         <Row between='xs'>
           <TabView
             portfolio={portfolio}
-            investment={investment}
+            transaction={transaction}
             currency={getSelectedCurrency(form)}
             asset={getSelectedAsset(form)} />
         </Row>
@@ -85,7 +85,7 @@ const mapStateToProps = state => ({
   form: state.form,
   stream: state.stream,
   portfolio: state.portfolio,
-  investment: state.investment,
+  transaction: state.transaction,
   prices: state.prices
 });
 
