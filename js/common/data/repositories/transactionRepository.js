@@ -7,6 +7,10 @@ const init = driver => {
   DbDriver = driver;
 }
 
+const matchClause = `
+  MATCH (b:Broker)<-[:HAS_BROKER]-(txn:Transaction)-[:OWNED_BY]->(u:User), (atb:AssetType)<-[:HAS_BUY_ASSET]-(txn:Transaction)-[:HAS_SELL_ASSET]->(ats:AssetType)
+`;
+
 const omitProps = ['broker', 'buyAsset', 'sellAsset'];
 
 const createTransaction = async ({resource:txn, ctx}) => {
@@ -50,12 +54,34 @@ const getTransactions = async ({ctx}) => {
   return  await runQuery( 
     DbDriver,
     `
-      MATCH (txn:Transaction)-[:OWNED_BY]->(u:User)
+      ${matchClause}
       WHERE ID(u)=${Number(24/*ctx.state.user.id*/)}
-      RETURN txn{ .*, id: ID(txn)}
+      RETURN txn{ .*, id: ID(txn), buyAsset:atb.name, sellAsset:ats.name, broker:b.name}
       ORDER BY txn.date DESC
       SKIP ${skip}
       LIMIT ${limit}
+    `
+  )
+}
+
+const getPartialTransactions = async ({ctx}) => {
+  return  await runQuery(
+    DbDriver,
+    `
+      ${matchClause}
+      WHERE ID(u)=${Number(24/*ctx.state.user.id*/)}
+      RETURN {id: ID(txn), buyAsset:atb.name, sellAsset:ats.name, price:txn.price, quantity:txn.quantity, expenses:txn.expenses, date:txn.date}
+    `
+  )
+}
+
+const getTransaction = async ({resource:txnId}) => {
+  return  await runQuery(
+    DbDriver,
+    `
+      ${matchClause}
+      WHERE ID(txn) = ${txnId}
+      RETURN txn{ .*, id: ID(txn), buyAsset:atb.name, sellAsset:ats.name, broker:b.name}
     `
   )
 }
@@ -64,7 +90,9 @@ module.exports = {
   init, 
   createTransaction,
   updateTransaction,
-  getTransactions
+  getTransactions,
+  getTransaction,
+  getPartialTransactions
 }
 
 // const getAllPartialAssets = async () => {
@@ -109,32 +137,3 @@ module.exports = {
 //       RETURN count
 //     `
 //   )
-// }
-
-// const getAssets = async ({ctx}) => {
-//   const {skip=0, limit=1000000} = ctx.request.query;
-
-//   return  await runQuery( 
-//     DbDriver,
-//     `
-//       MATCH (u:User)-${ASSET_EDGE}->${ASSET_NODE}
-//       WHERE ID(u)=${Number(ctx.state.user.id)}
-//       RETURN i{ .*, id: ID(i)}
-//       ORDER BY i.date DESC
-//       SKIP ${skip}
-//       LIMIT ${limit}
-//     `
-//   )
-// }
-
-
-// const deleteAsset = async ({resource:investmentId})  => {
-//   return  await runQuery(
-//     DbDriver,
-//     `
-//       MATCH ${ASSET_NODE}
-//       WHERE ID(i) = ${investmentId}
-//       DETACH DELETE i
-//     `
-//   )
-// }

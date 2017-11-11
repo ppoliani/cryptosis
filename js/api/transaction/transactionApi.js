@@ -25,14 +25,35 @@ const updateTransaction = partial(
 const getTransactions = partial(
   createSimpleEndpoint,
   repository.getTransactions,
+  unwrapCypherResultToMap,
+  {
+    errorMessage: 'Error fetching transactions for user'
+  }
+)
+
+const getPartialTransactions = partial(
+  createSimpleEndpoint,
+  repository.getPartialTransactions,
+  unwrapCypherResultToMap,
+  {
+    errorMessage: 'Error fetching partial transactions for user'
+  }
+)
+
+const getTransaction = partial(
+  createSimpleEndpoint,
+  repository.getTransaction,
   unwrapCypherResult,
   {
-    errorMessage: 'Error getting transactions for user'
+    errorMessage: 'Error fetching asset for user',
+    param: 'id'
   }
 )
 
 module.exports = {
   createTransaction,
   updateTransaction,
-  getTransactions
+  getTransactions,
+  getTransaction,
+  getPartialTransactions
 }

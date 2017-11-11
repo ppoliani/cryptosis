@@ -1,7 +1,9 @@
 const {
   createTransaction,
   updateTransaction,
-  getTransactions
+  getTransactions,
+  getTransaction,
+  getPartialTransactions
 } = require('./transactionApi');
 
 const routes = {
@@ -11,10 +13,23 @@ const routes = {
     fn: getTransactions
   },
 
+  '/transactions/partial': {
+    method: 'get',
+    // auth: true,
+    fn: getPartialTransactions
+  },
+
+
   '/transactions$': {
     method: 'post',
     // auth: true,
     fn: createTransaction
+  },
+
+  '/transactions/:id': {
+    method: 'get',
+    // auth: true,
+    fn: getTransaction
   },
 
   '/transactions/:id$': {
