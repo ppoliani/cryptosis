@@ -22,7 +22,7 @@ const getBrokers = async ({ctx}) => {
   )
 }
 
-const saveBroker = async ({resource:broker}) => {
+const createBroker = async ({resource:broker}) => {
   return  await runQuery(
     DbDriver,
     `
@@ -60,7 +60,7 @@ const deleteBroker = async ({resource:brokerId}) => {
 module.exports = {
   init,
   getBrokers,
-  saveBroker,
+  createBroker,
   updateBroker,
   deleteBroker
 };

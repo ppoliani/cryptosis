@@ -14,7 +14,7 @@ const getBrokers = partial(
 
 const createBroker = partial(
   createSimpleEndpoint,
-  repository.saveBroker,
+  repository.createBroker,
   unwrapCypherResult,
   {
     errorMessage: 'Error saving broker for user'

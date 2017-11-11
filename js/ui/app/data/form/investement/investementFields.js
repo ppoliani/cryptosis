@@ -2,18 +2,6 @@ import {required, date, number} from '../validator'
 import {currencyOptions} from '../../../data/constants/currencies'
 
 const fields = [{
-  type: 'dropdown',
-  name: 'positionType',
-  label: 'Position Type',
-  validate: [required],
-  options: [{
-    value: 'buy',
-    text: 'Buy'
-  }, {
-    value: 'sell',
-    text: 'Sell'
-  }]
-}, {
   type: 'date',
   name: 'date',
   label: 'Date',
@@ -21,7 +9,7 @@ const fields = [{
 }, {
   type: 'dropdown',
   name: 'currency',
-  label: 'Currency',
+  label: 'Sell Currency',
   validate: [required],
   options: currencyOptions
 }, {
@@ -51,8 +39,8 @@ const fields = [{
 export default (brokerOptions, investmentTypesOptions) => [
   {
     type: 'dropdown',
-    name: 'investmentType',
-    label: 'Crypto Asset',
+    name: 'buyCurrency',
+    label: 'Buy Currency',
     validate: [required],
     options: brokerOptions
   }, {
