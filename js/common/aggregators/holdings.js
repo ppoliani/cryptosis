@@ -27,7 +27,11 @@ const filterTxns = (positionType, transactions) =>
 const filterBuys = partial(filterTxns, 'buy');
 const filterSells = partial(filterTxns, 'sell');
 
-const calculateHoldings = transactions => merge(filterBuys(transactions), filterSells(transactions));
+// what is the amount of each assets that the portfolio currenlty holds
+const calculateHoldings = transactions => merge(
+  filterBuys(transactions), 
+  filterSells(transactions)
+);
 
 module.exports = {
   calculateHoldings

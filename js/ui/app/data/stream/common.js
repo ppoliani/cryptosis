@@ -63,9 +63,11 @@ const extendWithCryptoPrices = (acc, next) => {
     )
 }
 
-export const getDistinctInvestmentTypes = investments => investments
+export const getDistinctTransactions = txns => txns
   .reduce(
-    (acc, investment) => acc.add(investment.get('investmentType')), 
+    (acc, txn) => acc
+      .add(txn.get('buyAsset'))
+      .add(txn.get('sellAsset')), 
     Set()
   )
   .toList();
@@ -87,9 +89,9 @@ export const getPriceObjFromStreamData = (currency, fx, data) => ({
   symbol: data.FROMSYMBOL
 })
 
-const getInitialPrices = async (currency, investments) => {
-  investments = fromJS(investments.result);
-  const distinctTypes = getDistinctInvestmentTypes(investments);
+const getInitialPrices = async (currency, transactions) => {
+  transactions = fromJS(transactions.result);
+  const distinctTypes = getDistinctTransactions(transactions);
   const streams = createPriceStreams$(currency, distinctTypes);
   const cryptoPrices = await Promise.all(streams);
 
@@ -109,7 +111,7 @@ const getInitialPrices = async (currency, investments) => {
 
   return {
     prices, 
-    investments,
+    transactions,
     fx: prices
   }
 }

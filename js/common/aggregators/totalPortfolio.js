@@ -7,14 +7,27 @@ const {
    calculateTotalAmountInvested
 } = require('./common');
 
-const calculateTotalPortfolioValue = ({investments, fx}) => {
+// const calculateTotalPortfolioValue = ({investments, fx}) => {
+//   return fromJS({
+//     totalExposure: calculateExposure(investments),
+//     totalInvested: calculateTotalAmountInvested(investments),
+//     currentValue: calculateCurrentValuePerType(investments, fx),
+//     totalCash: calculateTotalCash(investments),
+//     qty: calculatePortfolioTotalQtyPerType(investments)
+//   });
+// };
+
+const {calculateHoldings} = require('./holdings')
+const {calculatePortfolioValue} = require('./portfolioValue')
+
+const calculateTotalPortfolioValue = ({transactions, fx}) => {
+  const holdings = calculateHoldings(transactions);
+
   return fromJS({
-    totalExposure: calculateExposure(investments),
-    totalInvested: calculateTotalAmountInvested(investments),
-    currentValue: calculateCurrentValuePerType(investments, fx),
-    totalCash: calculateTotalCash(investments),
-    qty: calculatePortfolioTotalQtyPerType(investments)
+    holdings,
+    value: calculatePortfolioValue(holdings, fx)
   });
-};
+}
+
 
 module.exports = {calculateTotalPortfolioValue};
