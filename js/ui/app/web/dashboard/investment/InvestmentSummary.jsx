@@ -1,8 +1,7 @@
 import React, {PureComponent} from 'react'
 import {autobind} from 'core-decorators'
 import {Row, Col} from 'react-flexbox-grid'
-import {renderCapitalGain} from '../../common/InvestmentValueHelpers'
-import {renderPrice} from '../../common/InvestmentValueHelpers'
+import {renderCapitalGain, renderPrice} from '../../common/TransactionHelpers' 
 import {getTotalCashForType, getQtyForType, getCapitalGain} from '../../../../../common/metrics/portfolio'
 import TitledBox from '../../box/TitledBox'
 

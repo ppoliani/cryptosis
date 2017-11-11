@@ -7,7 +7,7 @@ import {partial} from '../../../../common/core/fn'
 import {startPortfolioStream} from '../../data/stream/portfolioValueStream'
 import {startLast30DaysStream} from '../../data/stream/last30DaysStream'
 import CurrencySelector from '../form/selectors/CurrencySelector'
-import {getSelectedCurrency, getSelectedAsset} from '../common/InvestmentValueHelpers'
+import {getSelectedCurrency, getSelectedAsset} from '../common/TransactionHelpers' 
 import TabView from './tabs/TabView'
 import PriceContainer from '../price/PriceContainer'
 

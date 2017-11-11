@@ -10,12 +10,12 @@ const signedCurrency = (value, currency) =>  value >= 0
 export const renderCapitalGain = ([capitalGain, capitalGainPercentage], currency) => 
     `${signedCurrency(capitalGain.toFixed(2), currency)} (${capitalGainPercentage.toFixed(2)}%)`
 
-export const renderInvestmentValue = (id, investmentValues, currency) => {
-  const investmentValue = investmentValues.get(id);
+export const renderTransactionValue = (id, transactions, currency) => {
+  const transaction = transactions.get(id);
 
-  if(investmentValue) {
-    const value = investmentValue.get('value').toFixed(2);
-    return `${signedCurrency(value, currency)} (${investmentValue.get('percentage').toFixed(2)}%)`;
+  if(transaction) {
+    const value = transaction.get('value').toFixed(2);
+    return `${signedCurrency(value, currency)} (${transaction.get('percentage').toFixed(2)}%)`;
   }
 
   return '';

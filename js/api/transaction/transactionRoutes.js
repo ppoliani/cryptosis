@@ -11,44 +11,44 @@ const {
 const routes = {
   '/transactions': {
     method: 'get',
-    // auth: true,
+    auth: true,
     fn: getTransactions
   },
 
   '/transactions/count': {
     method: 'get',
-    // auth: true,
+    auth: true,
     fn: getTransactionsCount
   },
 
   '/transactions/partial': {
     method: 'get',
-    // auth: true,
+    auth: true,
     fn: getPartialTransactions
   },
 
 
   '/transactions$': {
     method: 'post',
-    // auth: true,
+    auth: true,
     fn: createTransaction
   },
 
   '/transactions/:id': {
     method: 'get',
-    // auth: true,
+    auth: true,
     fn: getTransaction
   },
 
   '/transactions/:id$': {
     method: 'put',
-    // auth: true,
+    auth: true,
     fn: updateTransaction
   },
 
   '/transactions/:id$$': {
     method: 'delete',
-    // auth: true,
+    auth: true,
     fn: deleteTransaction
   }
 };

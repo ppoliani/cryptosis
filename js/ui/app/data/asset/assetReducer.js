@@ -12,11 +12,11 @@ import AsyncData from '../core/AsyncData'
 const handleGetAssets = (state, {payload: assetResult}) =>
   assetResult.matchWith({
     Empty: identity,
-    Loading: () => state.set('fetchAssetResult', assetResult),
+    Loading: () => state.set('fetchAssetsResult', assetResult),
     Success: ({data: {result}}) => state
-      .set('fetchAssetResult', assetResult)
+      .set('fetchAssetsResult', assetResult)
       .set('assets', fromJS(result)),
-    Failure: () => state.set('fetchAssetResult', assetResult),
+    Failure: () => state.set('fetchAssetsResult', assetResult),
   });
 
 const handleSaveAsset = (state, {payload: saveAssetResult}) =>
@@ -29,7 +29,7 @@ const handleSaveAsset = (state, {payload: saveAssetResult}) =>
     Failure: () => state.set('saveAssetResult', saveAssetResult),
   });
 
-const handleDeleteAsset  = (state, {payload: deleteAssetResult}) =>
+const handleDeleteAsset = (state, {payload: deleteAssetResult}) =>
   deleteAssetResult.matchWith({
     Empty: identity,
     Loading: () => state.set('deleteAssetResult', deleteAssetResult),
@@ -40,7 +40,7 @@ const handleDeleteAsset  = (state, {payload: deleteAssetResult}) =>
   });
 
 const AssetModel = Map({
-  fetchAssetResult: AsyncData.Empty(),
+  fetchAssetsResult: AsyncData.Empty(),
   saveAssetResult: AsyncData.Empty(),
   deleteAssetResult: AsyncData.Empty(),
   count: 0,

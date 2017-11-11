@@ -36,9 +36,8 @@ const handleSaveTransaction = (state, {payload: saveTxnResult}) =>
       .set('saveTxnResult', saveTxnResult)
       .updateIn(
         ['transactions'],
-        txns => {
-          return txns.set(result.id, fromJS(result))
-        }),
+        txns => txns.set(`${result.id}`, fromJS(result))
+      ),
     Failure: () => state.set('saveTxnResult', saveTxnResult),
   });
 

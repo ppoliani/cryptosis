@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import Container from '../../common/Container'
 import AsyncPanel from '../../panel/AsyncPanel'
 import AsyncData from '../../../data/core/AsyncData'
-import {getSelectedCurrency, getSelectedAsset} from '../../common/InvestmentValueHelpers'
+import {getSelectedCurrency, getSelectedAsset} from '../../common/TransactionHelpers'
 import InvestmentSummary from './InvestmentSummary'
 import AssetSelector from '../../form/selectors/AssetSelector'
 

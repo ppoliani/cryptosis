@@ -32,8 +32,8 @@ export default class PanelContent extends PureComponent {
         Empty: () => null,
         Loading: () => null,
         Success: () => createTransactionForm(
-          this.getOptionsFromMap(assets),
           this.getOptionsFromMap(brokers),
+          this.getOptionsFromMap(assets),
           selectedInvestment
         ),
         Failure: ({error}) => console.log('Error building the form', error)
@@ -41,20 +41,20 @@ export default class PanelContent extends PureComponent {
   }
 
   render() {
-    const {saveInvestmentResult, onInvestmentSave} = this.props;
+    const {saveTxnResult, onTxnSave} = this.props;
 
     const asyncResult = AsyncDataSome([
       this.getCombinedAsyncResult(),
-      saveInvestmentResult
+      saveTxnResult
     ]);
 
-    const InvestmentForm = this.createDynamicForm();
+    const TransactionForm = this.createDynamicForm();
 
     return (
       <AsyncPanel asyncResult={asyncResult}>
         <Col xs={12}>
           <h1>New Transaction</h1>
-          {InvestmentForm && <InvestmentForm onSubmit={onInvestmentSave} />}
+          {TransactionForm && <TransactionForm onSubmit={onTxnSave} />}
         </Col>
       </AsyncPanel>
     );

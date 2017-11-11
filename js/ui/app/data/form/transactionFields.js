@@ -7,12 +7,6 @@ const fields = [{
   label: 'Date',
   validate: [required]
 }, {
-  type: 'dropdown',
-  name: 'currency',
-  label: 'Sell Currency',
-  validate: [required],
-  options: currencyOptions
-}, {
   type: 'text',
   name: 'expenses',
   label: 'Expenses',
@@ -36,19 +30,26 @@ const fields = [{
   stretch: true
 }];
 
-export default (brokerOptions, investmentTypesOptions) => [
+export default (brokerOptions, assetOptions) => [
   {
     type: 'dropdown',
-    name: 'buyCurrency',
+    name: 'buyAsset',
     label: 'Buy Currency',
     validate: [required],
-    options: brokerOptions
+    options: assetOptions
   }, {
     type: 'dropdown',
     name: 'broker',
     label: 'Broker',
     validate: [required],
-    options: investmentTypesOptions
+    options: brokerOptions
+  },
+  {
+    type: 'dropdown',
+    name: 'sellAsset',
+    label: 'Sell Currency',
+    validate: [required],
+    options: assetOptions
   },
   ...fields
 ]

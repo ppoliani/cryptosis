@@ -5,8 +5,8 @@ import fetch, {constructUrl} from '../../services/api'
 import {partial} from '../../../../common/core/fn'
 import config from '../../services/config'
 
-const TRANSACTIONS_COUNT_ENDPOINT = `${config.API_URL}/investments/count`;
-const TRANSACTION_ENDPOINT = `${config.API_URL}/investments`;
+const TRANSACTIONS_COUNT_ENDPOINT = `${config.API_URL}/transactions/count`;
+const TRANSACTION_ENDPOINT = `${config.API_URL}/transactions`;
 
 export const GET_PARTIAL_TRANSACTIONS = 'TRANSACTION::GET_PARTIAL_TRANSACTIONS'
 export const GET_TRANSACTIONS_COUNT = 'TRANSACTION::GET_TRANSACTIONS_COUNT';

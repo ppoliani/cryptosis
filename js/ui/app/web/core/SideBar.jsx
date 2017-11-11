@@ -16,7 +16,7 @@ import {
 import './sidebar.scss'
 import {partial} from '../../../../common/core/fn'
 
-const getInvestementItems = (onSidebarExit, userProfile) =>
+const getAdminItems = (onSidebarExit, userProfile) =>
   userProfile.get('info')
     .matchWith({
       Just: ({value: user}) => {
@@ -25,8 +25,8 @@ const getInvestementItems = (onSidebarExit, userProfile) =>
               <Link to="/brokers">
                 <ListItem leftIcon={<AndroidIcon />} primaryText="Brokers"  onClick={partial(onSidebarExit, 'brokers')}/>
               </Link>
-              <Link to="/investment-types">
-                <ListItem leftIcon={<PolymerIcon />} primaryText="Investment Types" onClick={partial(onSidebarExit, 'investementTypes')} />
+              <Link to="/assets">
+                <ListItem leftIcon={<PolymerIcon />} primaryText="Assets" onClick={partial(onSidebarExit, 'assets')} />
               </Link>
             </div>
           : null
@@ -39,11 +39,11 @@ const getListItems = (onSidebarExit, userProfile) => (
     <Link to="/">
       <ListItem leftIcon={<HomeIcon />} primaryText="Dashboard" onClick={partial(onSidebarExit, 'dashboard')} />
     </Link>
-    <Link to="/investments">
-      <ListItem leftIcon={<AccountBalanceIcon />} primaryText="Investments" onClick={partial(onSidebarExit, 'investments')} />
+    <Link to="/transactions">
+      <ListItem leftIcon={<AccountBalanceIcon />} primaryText="Transactions" onClick={partial(onSidebarExit, 'transactions')} />
     </Link>
     <Divider />
-    {getInvestementItems(onSidebarExit, userProfile)}
+    {getAdminItems(onSidebarExit, userProfile)}
   </div>
 );
 

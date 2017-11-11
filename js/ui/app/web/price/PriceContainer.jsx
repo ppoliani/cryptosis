@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Row, Col} from 'react-flexbox-grid'
 import {autobind} from 'core-decorators'
 import PriceBox from './PriceBox'
-import {getSelectedCurrency, renderPrice} from '../common/InvestmentValueHelpers'
+import {getSelectedCurrency, renderPrice} from '../common/TransactionHelpers'
 import './price.scss'
 
 class PriceContainer extends Component {

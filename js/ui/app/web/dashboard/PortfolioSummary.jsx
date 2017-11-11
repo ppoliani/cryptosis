@@ -3,10 +3,9 @@ import {List} from 'material-ui/List'
 import {Row, Col} from 'react-flexbox-grid'
 import Container from '../common/Container'
 import AsyncPanel from '../panel/AsyncPanel'
-import {renderPrice} from '../common/InvestmentValueHelpers'
-import {renderCapitalGain} from '../common/InvestmentValueHelpers'
+import {renderPrice, renderCapitalGain} from '../common/TransactionHelpers'
 import TitledBox from '../box/TitledBox'
-import {
+import { 
   getTotalExposure,
   getTotalPortfolioValue,
   getTotalCash,

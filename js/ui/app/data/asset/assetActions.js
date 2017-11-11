@@ -14,7 +14,7 @@ export const DELETE_ASSET_TYPE = 'ASSET::DELETE_ASSET_TYPE'
 
 const getAssetUrl = asset => `${ASSET_ENDPOINT}/${asset.get('id')}`;
 
-const getAssetRoot = fetch => {
+const getAssetsRoot = fetch => {
   const getUrl = ({skip, limit} = {}) => constructUrl(ASSET_ENDPOINT, Map({skip, limit}));
   const fetchData = (partial(fetch, 'GET')) ['∘'] (getUrl);
 
@@ -51,7 +51,7 @@ const deleteAssetRoot = fetch => {
   );
 }
 
-export const getAsset = getAssetRoot(fetch)
+export const getAssets = getAssetsRoot(fetch)
 export const createNewAsset = createNewAssetRoot(fetch)
 export const updateAsset = updateAssetRoot(fetch)
 export const deleteAsset = deleteAssetRoot(fetch)

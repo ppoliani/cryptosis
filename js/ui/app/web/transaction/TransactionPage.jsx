@@ -16,7 +16,7 @@ import DialogBoxMixin from '../mixins/DialogBoxMixin'
 import PanelContent from './PanelContent'
 import {getBrokers} from '../../data/broker/brokerActions'
 import {startTransactionCurrentValueStream} from '../../data/stream/transactionValueStream'
-import {renderInvestmentValue, getSelectedCurrency, renderPrice} from '../common/InvestmentValueHelpers'
+import {renderTransactionValue, getSelectedCurrency, renderPrice} from '../common/TransactionHelpers'
 import CurrencySelector from '../form/selectors/CurrencySelector'
 import {getAssets} from '../../data/asset/assetActions'
 import {
@@ -118,7 +118,7 @@ class TransactionPage extends PureComponent {
     this.togglePanel();
   }
 
-  onTxnDelete = investment => {
+  onTxnDelete = txn => {
     this.props.deleteTransaction(txn);
   }
 
@@ -148,7 +148,7 @@ class TransactionPage extends PureComponent {
     txns.reduce(
       (acc, v, id) => acc.push(
         v.set('id', id)
-          .set('status', v.get('positionType') === 'buy' ? renderInvestmentValue(id, transactionValues, getSelectedCurrency(this.props.form)) : '')
+          .set('status', v.get('positionType') === 'buy' ? renderTransactionValue(id, transactionValues, getSelectedCurrency(this.props.form)) : '')
           .set('action', <Button label="Delete" primary={true} onClick={partial(this.onTxnDeleteClick, v)} />)
       ),
       List()
@@ -179,7 +179,7 @@ class TransactionPage extends PureComponent {
           limit={this.state.limit}
           page={this.state.page}
           data={data}
-          count={investments.get('count')}
+          count={transactions.get('count')}
           onRowSizeChange={this.handleRowSizeChange}
           onNextPageClick={this.handleNextPageClick}
           onPreviousPageClick={this.handlePreviousPageClick}
@@ -227,7 +227,7 @@ class TransactionPage extends PureComponent {
 
     return (
       <PanelContent
-        saveInvestmentResult={transactions.get('saveTxnResult')}
+        saveTxnResult={transactions.get('saveTxnResult')}
         assets={asset.get('assets')}
         brokers={brokers}
         selectedTransaction={this.state.selectedTransaction}

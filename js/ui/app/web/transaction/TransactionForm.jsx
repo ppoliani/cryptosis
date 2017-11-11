@@ -10,9 +10,9 @@ const setDateObj = values => {
   return values;
 }
 
-export default (brokerOptions, investmentTypeOptions, values) => createForm(
+export default (brokerOptions, assetOptions, values) => createForm(
   'investmentForm',
   1,
-  getFields(brokerOptions, investmentTypeOptions),
+  getFields(brokerOptions, assetOptions),
   setDateObj(values)
 )
