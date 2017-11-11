@@ -106,12 +106,12 @@ const calculateTotalCash = (calculateTotalAmountInvestedPerType) ['∘'] (filter
 const calculateTotalAmountInvested = (calculateTotalAmountInvestedPerType) ['∘'] (filterBuys)
 
 // total cash per transaction type - total invested per investment type
-const calculateExposure = investments =>
+const calculateExposure = transactions =>
   // net cost includes expenses for both buy and sells
-  calculateTotalCash(investments)
+  calculateTotalCash(transactions)
     .mergeWith(
       merger,
-      calculateTotalAmountInvested(investments)
+      calculateTotalAmountInvested(transactions)
     )
 
 // finds the current liquid value for the given investment type (described byt)
@@ -124,8 +124,6 @@ const calculateChangeForType = (investments, currentPrice, investmentType) => {
 }
 
 module.exports = {
-  filterBuys,
-  filterSells,
   calculateExposure,
   calculateTotalCash,
   calculateTotalAmountInvested,

@@ -12,17 +12,6 @@ const fields = [{
   label: 'Expenses',
   validate: [required, number]
 }, {
-  type: 'text',
-  name: 'quantity',
-  label: 'Quantity',
-  validate: [required, number]
-}, {
-  type: 'text',
-  name: 'price',
-  label: 'Price',
-  validate: [required, number],
-  stretch: true
-}, {
   type: 'textarea',
   name: 'notes',
   multiline: true,
@@ -38,11 +27,10 @@ export default (brokerOptions, assetOptions) => [
     validate: [required],
     options: assetOptions
   }, {
-    type: 'dropdown',
-    name: 'broker',
-    label: 'Broker',
-    validate: [required],
-    options: brokerOptions
+    type: 'text',
+    name: 'buyAmount',
+    label: 'Buy Amount',
+    validate: [required, number]
   },
   {
     type: 'dropdown',
@@ -50,6 +38,19 @@ export default (brokerOptions, assetOptions) => [
     label: 'Sell Currency',
     validate: [required],
     options: assetOptions
+  },
+  {
+    type: 'text',
+    name: 'sellAmount',
+    label: 'Sell Amount',
+    validate: [required, number]
+  },
+  {
+    type: 'dropdown',
+    name: 'broker',
+    label: 'Broker',
+    validate: [required],
+    options: brokerOptions
   },
   ...fields
 ]

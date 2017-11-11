@@ -29,11 +29,11 @@ import {
 
 const columns = [
   {key: 'buyAsset', label: 'Buy Asset'},
+  {key: 'buyAmount', label: 'Buy Amount'},
   {key: 'sellAsset', label: 'Sell Asset'},
+  {key: 'sellAmount', label: 'Sell Amount'},
   {key: 'broker', label: 'Broker'},
   {key: 'date', label: 'Date', render: date => dateformat(date, 'DD/MM/YYYY')},
-  {key: 'quantity', label: 'Quantity'},
-  {key: 'price', label: 'Price'},
   {key: 'status', label: 'Status'},
   {key: 'action', label: 'Action'}
 ];

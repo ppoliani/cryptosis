@@ -70,7 +70,7 @@ const getPartialTransactions = async ({ctx}) => {
     `
       ${matchClause}
       WHERE ID(u)=${Number(ctx.state.user.id)}
-      RETURN {id: ID(txn), buyAsset:atb.name, sellAsset:ats.name, price:txn.price, quantity:txn.quantity, expenses:txn.expenses, date:txn.date}
+      RETURN {id: ID(txn), buyAsset:atb.name, sellAsset:ats.name, buyAmount:txn.buyAmount, sellAmount:txn.sellAmount, expenses:txn.expenses, date:txn.date}
     `
   )
 }

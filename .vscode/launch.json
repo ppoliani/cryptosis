@@ -41,6 +41,16 @@
     },
     {
       "type": "node",
+      "request": "launch",
+      "name": "Common Test",
+      "program": "${workspaceRoot}/js/common/node_modules/ava/profile.js",
+      "args": [
+        "*.test.js"
+      ],
+      "cwd": "${workspaceRoot}/js/common/"
+    },
+    {
+      "type": "node",
       "request": "attach",
       "name": "Attach to Process",
       "address": "localhost",
