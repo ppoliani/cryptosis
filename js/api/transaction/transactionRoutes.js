@@ -4,7 +4,8 @@ const {
   getTransactions,
   getTransaction,
   getPartialTransactions,
-  deleteTransaction
+  deleteTransaction,
+  getTransactionsCount
 } = require('./transactionApi');
 
 const routes = {
@@ -12,6 +13,12 @@ const routes = {
     method: 'get',
     // auth: true,
     fn: getTransactions
+  },
+
+  '/transactions/count': {
+    method: 'get',
+    // auth: true,
+    fn: getTransactionsCount
   },
 
   '/transactions/partial': {
@@ -43,7 +50,7 @@ const routes = {
     method: 'delete',
     // auth: true,
     fn: deleteTransaction
-  },
+  }
 };
 
 module.exports = routes;

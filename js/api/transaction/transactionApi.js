@@ -61,6 +61,14 @@ const deleteTransaction = partial(
   }
 )
 
+const getTransactionsCount = partial(
+  createSimpleEndpoint,
+  repository.getTransactionsCount,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error fetching transactions count for user'
+  }
+)
 
 module.exports = {
   createTransaction,
@@ -68,5 +76,6 @@ module.exports = {
   getTransactions,
   getTransaction,
   getPartialTransactions,
-  deleteTransaction
+  deleteTransaction,
+  getTransactionsCount
 }

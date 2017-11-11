@@ -18,7 +18,7 @@ const createTransaction = async ({resource:txn, ctx}) => {
     DbDriver,
     `
       MATCH (b:Broker), (atb:AssetType), (ats:AssetType), (u:User)
-      WHERE b.name="${txn.broker}" AND atb.name="${txn.buyAsset}" AND ats.name="${txn.sellAsset}" AND ID(u)=${Number(24/*ctx.state.user.id*/)}
+      WHERE b.name="${txn.broker}" AND atb.name="${txn.buyAsset}" AND ats.name="${txn.sellAsset}" AND ID(u)=${Number(ctx.state.user.id)}
       CREATE (b)<-[:HAS_BROKER]-(txn:Transaction ${contructCreateMatchString(txn, omitProps)})-[:HAS_BUY_ASSET]->(atb)
       CREATE (txn)-[:HAS_SELL_ASSET]->(ats)
       CREATE (txn)-[:OWNED_BY]->(u)
@@ -55,7 +55,7 @@ const getTransactions = async ({ctx}) => {
     DbDriver,
     `
       ${matchClause}
-      WHERE ID(u)=${Number(24/*ctx.state.user.id*/)}
+      WHERE ID(u)=${Number(ctx.state.user.id)}
       RETURN txn{ .*, id: ID(txn), buyAsset:atb.name, sellAsset:ats.name, broker:b.name}
       ORDER BY txn.date DESC
       SKIP ${skip}
@@ -69,7 +69,7 @@ const getPartialTransactions = async ({ctx}) => {
     DbDriver,
     `
       ${matchClause}
-      WHERE ID(u)=${Number(24/*ctx.state.user.id*/)}
+      WHERE ID(u)=${Number(ctx.state.user.id)}
       RETURN {id: ID(txn), buyAsset:atb.name, sellAsset:ats.name, price:txn.price, quantity:txn.quantity, expenses:txn.expenses, date:txn.date}
     `
   )
@@ -97,6 +97,18 @@ const deleteTransaction = async ({resource:txnId})  => {
   )
 }
 
+const getTransactionsCount = async ({ctx}) => {
+  return await runQuery(
+    DbDriver,
+    `
+      MATCH (txn:Transaction)-[:OWNED_BY]->(u:User)
+      WHERE ID(u)=${Number(ctx.state.user.id)}
+      WITH {count: count(txn)} AS count
+      RETURN count
+    `
+  )
+}
+
 module.exports = {
   init, 
   createTransaction,
@@ -104,26 +116,6 @@ module.exports = {
   getTransactions,
   getTransaction,
   getPartialTransactions,
-  deleteTransaction
+  deleteTransaction,
+  getTransactionsCount
 }
-
-// const getAllPartialAssets = async () => {
-//   return  await runQuery(
-//     DbDriver,
-//     `
-//       MATCH (u:User)-${ASSET_EDGE}->${ASSET_NODE}
-//       RETURN {id: ID(u), assets: collect(i)}
-//     `
-//   )
-// }
-
-// const getAssetCount = async ({ctx}) => {
-//   return await runQuery(
-//     DbDriver,
-//     `
-//       MATCH (u:User)-${ASSET_EDGE}->${ASSET_NODE}
-//       WHERE ID(u)=${Number(ctx.state.user.id)}
-//       WITH {count: count(i)} AS count
-//       RETURN count
-//     `
-//   )

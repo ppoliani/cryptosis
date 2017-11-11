@@ -49,34 +49,3 @@ module.exports = {
   updateAssetType,
   deleteAssetType
 };
-
-
-// const getPartialAssets = partial(
-//   createSimpleEndpoint,
-//   repository.getPartialAssets,
-//   unwrapCypherResultToMap,
-//   {
-//     errorMessage: 'Error fetching partial assets for user'
-//   }
-// )
-
-// const getAssetCount = partial(
-//   createSimpleEndpoint,
-//   repository.getAssetCount,
-//   unwrapCypherResult,
-//   {
-//     errorMessage: 'Error fetching assets count for user'
-//   }
-// )
-
-
-// const deleteAsset = partial(
-//   createSimpleEndpoint,
-//   repository.deleteAsset,
-//   unwrapCypherResult,
-//   {
-//     errorMessage: 'Error deleting investment for user:',
-//     param: 'id',
-//     status: HTTP_NO_CONTENT
-//   }
-// )
