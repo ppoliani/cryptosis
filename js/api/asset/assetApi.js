@@ -69,40 +69,6 @@ module.exports = {
 //   }
 // )
 
-// const getAssets = partial(
-//   createSimpleEndpoint,
-//   repository.getAssets,
-//   unwrapCypherResultToMap,
-//   {
-//     errorMessage: 'Error fetching assets for user'
-//   }
-// )
-
-// const getAsset = partial(
-//   createSimpleEndpoint,
-//   repository.getasset
-//     errorMessage: 'Error fetching investment for user',
-//     param: 'id'
-//   }
-// )
-
-// const createAsset = partial(
-//   createSimpleEndpoint,
-//   repository.saveAsset,
-//   unwrapCypherResult,
-//   {
-//     errorMessage: 'Error saving investment for user'
-//   }
-// )
-
-// const updateAsset = partial(
-//   createSimpleEndpoint,
-//   repository.updateAsset,
-//   unwrapCypherResult,
-//   {
-//     errorMessage: 'Error updating investment for user'
-//   }
-// )
 
 // const deleteAsset = partial(
 //   createSimpleEndpoint,

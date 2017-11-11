@@ -86,13 +86,25 @@ const getTransaction = async ({resource:txnId}) => {
   )
 }
 
+const deleteTransaction = async ({resource:txnId})  => {
+  return  await runQuery(
+    DbDriver,
+    `
+      MATCH (txn:Transaction)
+      WHERE ID(txn) = ${txnId}
+      DETACH DELETE txn
+    `
+  )
+}
+
 module.exports = {
   init, 
   createTransaction,
   updateTransaction,
   getTransactions,
   getTransaction,
-  getPartialTransactions
+  getPartialTransactions,
+  deleteTransaction
 }
 
 // const getAllPartialAssets = async () => {
@@ -101,28 +113,6 @@ module.exports = {
 //     `
 //       MATCH (u:User)-${ASSET_EDGE}->${ASSET_NODE}
 //       RETURN {id: ID(u), assets: collect(i)}
-//     `
-//   )
-// }
-
-// const getPartialTransactions = async ({ctx}) => {
-//   return  await runQuery(
-//     DbDriver,
-//     `
-//       MATCH (u:User)-${ASSET_EDGE}->${ASSET_NODE}
-//       WHERE ID(u)=${Number(ctx.state.user.id)}
-//       RETURN {id: ID(i), buyAsset:i.buyAsset, sellAsset:i.sellAsset, price:i.price, quantity:i.quantity, expenses:i.expenses, date:i.date}
-//     `
-//   )
-// }
-
-// const getInvestment = async ({resource:assetId}) => {
-//   return  await runQuery(
-//     DbDriver,
-//     `
-//       MATCH ${ASSET_NODE}
-//       WHERE ID(i) = ${assetId}
-//       RETURN i
 //     `
 //   )
 // }

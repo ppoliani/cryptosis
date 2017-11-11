@@ -50,10 +50,23 @@ const getTransaction = partial(
   }
 )
 
+const deleteTransaction = partial(
+  createSimpleEndpoint,
+  repository.deleteTransaction,
+  unwrapCypherResult,
+  {
+    errorMessage: 'Error deleting transaction for user:',
+    param: 'id',
+    status: HTTP_NO_CONTENT
+  }
+)
+
+
 module.exports = {
   createTransaction,
   updateTransaction,
   getTransactions,
   getTransaction,
-  getPartialTransactions
+  getPartialTransactions,
+  deleteTransaction
 }

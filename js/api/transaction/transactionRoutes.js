@@ -3,7 +3,8 @@ const {
   updateTransaction,
   getTransactions,
   getTransaction,
-  getPartialTransactions
+  getPartialTransactions,
+  deleteTransaction
 } = require('./transactionApi');
 
 const routes = {
@@ -36,6 +37,12 @@ const routes = {
     method: 'put',
     // auth: true,
     fn: updateTransaction
+  },
+
+  '/transactions/:id$$': {
+    method: 'delete',
+    // auth: true,
+    fn: deleteTransaction
   },
 };
 
