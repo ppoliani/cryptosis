@@ -7,13 +7,13 @@ const init = driver => {
   DbDriver = driver;
 }
 
-const getAssetTypes = async ({ctx}) => {
+const getAsset = async ({ctx}) => {
   const {skip=0, limit=1000000} = ctx.request.query;
 
   return  await runQuery(
     DbDriver,
     `
-      MATCH (at:AssetType)
+      MATCH (at:Asset)
       RETURN at{ .*, id: ID(at)}
       ORDER BY at.name
       SKIP ${skip}
@@ -22,36 +22,36 @@ const getAssetTypes = async ({ctx}) => {
   )
 }
 
-const createAssetType = async ({resource:assetType})  => {
+const createAsset = async ({resource:asset})  => {
   return await runQuery(
     DbDriver,
     `
-      CREATE (at:AssetType ${contructCreateMatchString(assetType)})
+      CREATE (at:Asset ${contructCreateMatchString(asset)})
       RETURN at{ .*, id: ID(at) }
     `,
-    createMatchObj(assetType)
+    createMatchObj(asset)
   );
 }
 
-const updateAssetType = async ({resource:assetType})  => {
+const updateAsset = async ({resource:asset})  => {
   return  await runQuery(
     DbDriver,
     `
-      MATCH (at:AssetType)
-      WHERE ID(at) = ${assetType.id}
-      SET at = ${contructCreateMatchString(assetType)}
+      MATCH (at:Asset)
+      WHERE ID(at) = ${asset.id}
+      SET at = ${contructCreateMatchString(asset)}
       RETURN at
     `,
-    createMatchObj(assetType)
+    createMatchObj(asset)
   )
 }
 
-const deleteAssetType = async ({resource:assetTypeId})  => {
+const deleteAsset = async ({resource:assetId})  => {
   return  await runQuery(
     DbDriver,
     `
-      MATCH (at:AssetType)
-      WHERE ID(at) = ${assetTypeId}
+      MATCH (at:Asset)
+      WHERE ID(at) = ${assetId}
       DETACH DELETE at
     `
   )
@@ -59,9 +59,9 @@ const deleteAssetType = async ({resource:assetTypeId})  => {
 
 module.exports = {
   init,
-  getAssetTypes,
-  createAssetType,
-  updateAssetType,
-  deleteAssetType
+  getAsset,
+  createAsset,
+  updateAsset,
+  deleteAsset
 }
 

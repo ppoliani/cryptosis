@@ -8,7 +8,7 @@ const init = driver => {
 }
 
 const matchClause = `
-  MATCH (b:Broker)<-[:HAS_BROKER]-(txn:Transaction)-[:OWNED_BY]->(u:User), (atb:AssetType)<-[:HAS_BUY_ASSET]-(txn:Transaction)-[:HAS_SELL_ASSET]->(ats:AssetType)
+  MATCH (b:Broker)<-[:HAS_BROKER]-(txn:Transaction)-[:OWNED_BY]->(u:User), (atb:Asset)<-[:HAS_BUY_ASSET]-(txn:Transaction)-[:HAS_SELL_ASSET]->(ats:Asset)
 `;
 
 const omitProps = ['broker', 'buyAsset', 'sellAsset'];
@@ -17,7 +17,7 @@ const createTransaction = async ({resource:txn, ctx}) => {
   return await runQuery(
     DbDriver,
     `
-      MATCH (b:Broker), (atb:AssetType), (ats:AssetType), (u:User)
+      MATCH (b:Broker), (atb:Asset), (ats:Asset), (u:User)
       WHERE b.name="${txn.broker}" AND atb.name="${txn.buyAsset}" AND ats.name="${txn.sellAsset}" AND ID(u)=${Number(ctx.state.user.id)}
       CREATE (b)<-[:HAS_BROKER]-(txn:Transaction ${contructCreateMatchString(txn, omitProps)})-[:HAS_BUY_ASSET]->(atb)
       CREATE (txn)-[:HAS_SELL_ASSET]->(ats)
@@ -32,11 +32,11 @@ const updateTransaction = async ({resource:txn}) => {
   return await runQuery(
     DbDriver,
     `
-      MATCH (txn:Transaction)-[hb:HAS_BROKER]->(:Broker), (:AssetType)<-[hba:HAS_BUY_ASSET]-(txn:Transaction)-[hsa:HAS_SELL_ASSET]->(:AssetType)
+      MATCH (txn:Transaction)-[hb:HAS_BROKER]->(:Broker), (:Asset)<-[hba:HAS_BUY_ASSET]-(txn:Transaction)-[hsa:HAS_SELL_ASSET]->(:Asset)
       WHERE ID(txn) = ${txn.id}
       DELETE hb, hba, hsa
       WITH txn
-      MATCH (b:Broker), (atb:AssetType), (ats:AssetType)
+      MATCH (b:Broker), (atb:Asset), (ats:Asset)
       WHERE b.name="${txn.broker}" AND atb.name="${txn.buyAsset}" AND ats.name="${txn.sellAsset}"
       SET txn = ${contructCreateMatchString(txn, omitProps)}
       WITH txn, b, atb, ats

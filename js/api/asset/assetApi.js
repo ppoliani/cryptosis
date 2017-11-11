@@ -4,36 +4,36 @@ const repository = require('../../common/data/repositories/assetRepository');
 const {unwrapCypherResult, unwrapCypherResultToMap} = require('../../common/data/utils');
 const logger = require('../../common/core/logger');
 
-const getAssetTypes = partial(
+const getAsset = partial(
   createSimpleEndpoint,
-  repository.getAssetTypes,
+  repository.getAsset,
   unwrapCypherResultToMap,
   {
-    errorMessage: 'Error fetching asset types for user'
+    errorMessage: 'Error fetching asset  for user'
   }
 )
 
-const createAssetType = partial(
+const createAsset = partial(
   createSimpleEndpoint,
-  repository.createAssetType,
+  repository.createAsset,
   unwrapCypherResult,
   {
     errorMessage: 'Error saving asset type for user:'
   }
 )
 
-const updateAssetType = partial(
+const updateAsset = partial(
   createSimpleEndpoint,
-  repository.updateAssetType,
+  repository.updateAsset,
   unwrapCypherResult,
   {
     errorMessage: 'Error updating asset type for user:'
   }
 )
 
-const deleteAssetType = partial(
+const deleteAsset = partial(
   createSimpleEndpoint,
-  repository.deleteAssetType,
+  repository.deleteAsset,
   unwrapCypherResult,
   {
     errorMessage: 'Error deleting asset type for user',
@@ -44,8 +44,8 @@ const deleteAssetType = partial(
 
 
 module.exports = {
-  getAssetTypes,
-  createAssetType,
-  updateAssetType,
-  deleteAssetType
+  getAsset,
+  createAsset,
+  updateAsset,
+  deleteAsset
 };

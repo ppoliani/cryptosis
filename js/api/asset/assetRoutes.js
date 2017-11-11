@@ -1,33 +1,33 @@
 const {
-  getAssetTypes,
-  createAssetType,
-  updateAssetType,
-  deleteAssetType
+  getAsset,
+  createAsset,
+  updateAsset,
+  deleteAsset
 } = require('./assetApi');
 
 const routes = {
-  '/assets/types': {
+  '/assets': {
     method: 'get',
     auth: true,
-    fn: getAssetTypes
+    fn: getAsset
   },
 
-  '/assets/types$': {
+  '/assets$': {
     method: 'post',
     auth: true,
-    fn: createAssetType
+    fn: createAsset
   },
 
-  '/assets/types/:id': {
+  '/assets/:id': {
     method: 'put',
     auth: true,
-    fn: updateAssetType
+    fn: updateAsset
   },
 
-  '/assets/types/:id$': {
+  '/assets/:id$': {
     method: 'delete',
     auth: true,
-    fn: deleteAssetType
+    fn: deleteAsset
   }
 };
 
