@@ -3,7 +3,13 @@ import {Map, fromJS} from 'immutable'
 import identity from 'folktale/core/lambda/identity'
 import AsyncData from '../core/AsyncData'
 import {
-
+  GET_PARTIAL_TRANSACTIONS,
+  GET_TRANSACTIONS_COUNT,
+  GET_TRANSACTIONS,
+  GET_TRANSACTION,
+  CREATE_NEW_TRANSACTION,
+  UPDATE_TRANSACTION,
+  DELETE_TRANSACTION
 } from './transactionActions'
 
 const stringToDate = records => records.map(
@@ -12,84 +18,76 @@ const stringToDate = records => records.map(
   }
 )
 
-const handleSetPartialInvestments = (state, {payload: investmentsResult}) =>
-  investmentsResult.matchWith({
+const handleSetPartialTransactions = (state, {payload: fetchPartialTxnResult}) =>
+  fetchPartialTxnResult.matchWith({
     Empty: identity,
-    Loading: () => state.set('fetchPartialInvestmentsResult', investmentsResult),
+    Loading: () => state.set('fetchPartialTxnResult', fetchPartialTxnResult),
     Success: ({data}) => state
-      .set('fetchPartialInvestmentsResult', investmentsResult)
-      .set('partialInvestments',  fromJS(data.result)),
-    Failure: () => state.set('fetchInvestmentTypeResult', investmentsResult),
+      .set('fetchPartialTxnResult', fetchPartialTxnResult)
+      .set('partialTransactions',  fromJS(data.result)),
+    Failure: () => state.set('fetchPartialTxnResult', fetchPartialTxnResult),
   });
 
-const handleSaveInvestment = (state, {payload: saveInvestmentResult}) =>
-  saveInvestmentResult.matchWith({
+const handleSaveTransaction = (state, {payload: saveTxnResult}) =>
+  saveTxnResult.matchWith({
     Empty: identity,
-    Loading: () => state.set('saveInvestmentResult', saveInvestmentResult),
+    Loading: () => state.set('saveTxnResult', saveTxnResult),
     Success: ({data: {result: [result]}}) => state
-      .set('saveInvestmentResult', saveInvestmentResult)
+      .set('saveTxnResult', saveTxnResult)
       .updateIn(
-        ['investments'],
-        investments => {
-          return investments.set(result.id, fromJS(result))
+        ['transactions'],
+        txns => {
+          return txns.set(result.id, fromJS(result))
         }),
-    Failure: () => state.set('saveInvestmentResult', saveInvestmentResult),
+    Failure: () => state.set('saveTxnResult', saveTxnResult),
   });
 
-const handleSetInvestmentsCount = (state, {payload: investmentsCountResult}) => {
-  return investmentsCountResult.matchWith({
+const handleSetTxnCount = (state, {payload: fetchTxnCountResult}) => {
+  return fetchTxnCountResult.matchWith({
     Empty: identity,
-    Loading: () => state.set('fetchInvestmentsCountResult', investmentsCountResult),
+    Loading: () => state.set('fetchTxnCountResult', fetchTxnCountResult),
     Success: ({data: {result: [result]}}) => state
-      .set('fetchInvestmentsCountResult', investmentsCountResult)
+      .set('fetchTxnCountResult', fetchTxnCountResult)
       .set('count', result.count),
-    Failure: () => state.set('investmentsCountResult', investmentsCountResult),
+    Failure: () => state.set('fetchTxnCountResult', fetchTxnCountResult),
   });
 }
-const handleSetInvestments = (state, {payload: investmentsResult}) =>
-  investmentsResult.matchWith({
+const handleSetTransactions = (state, {payload: fetchTxnsResult}) =>
+  fetchTxnsResult.matchWith({
     Empty: identity,
-    Loading: () => state.set('fetchInvestmentsResult', investmentsResult),
+    Loading: () => state.set('fetchTxnsResult', fetchTxnsResult),
     Success: ({data}) => state
-      .set('fetchInvestmentsResult', investmentsResult)
-      .set('investments', stringToDate(fromJS(data.result))),
-    Failure: () => state.set('fetchInvestmentTypeResult', investmentsResult),
+      .set('fetchTxnsResult', fetchTxnsResult)
+      .set('transactions', stringToDate(fromJS(data.result))),
+    Failure: () => state.set('fetchTxnsResult', fetchTxnsResult),
   });
 
-const handleDeleteInvestment = (state, {payload: investmentResult}) =>
-  investmentResult.matchWith({
+const handleDeleteTransaction = (state, {payload: deleteTxnResult}) =>
+  deleteTxnResult.matchWith({
     Empty: identity,
-    Loading: () => state.set('deleteInvestmentResult', investmentResult),
+    Loading: () => state.set('deleteTxnResult', deleteTxnResult),
     Success: ({data: {result}}) => state
-      .set('deleteInvestmentResult', investmentResult)
-      .updateIn(['investments'], investments => investments.delete(`${result.id}`)),
-    Failure: () => state.set('deleteInvestmentResult', investmentResult),
+      .set('deleteTxnResult', deleteTxnResult)
+      .updateIn(['transactions'], txns => txns.delete(`${result.id}`)),
+    Failure: () => state.set('deleteTxnResult', deleteTxnResult),
   });
 
-const transactionModel = Map({
-  fetchPartialInvestmentsResult: AsyncData.Empty(),
-  fetchInvestmentsCountResult: AsyncData.Empty(),
-  fetchInvestmentsResult: AsyncData.Empty(),
-  saveInvestmentResult: AsyncData.Empty(),
-  fetchInvestmentTypeResult: AsyncData.Empty(),
-  saveInvestmentTypeResult: AsyncData.Empty(),
-  deleteInvestmentTypeResult: AsyncData.Empty(),
-  partialInvestments: Map(),
+const TransactionModel = Map({
+  fetchPartialTxnResult: AsyncData.Empty(),
+  fetchTxnCountResult: AsyncData.Empty(),
+  fetchTxnsResult: AsyncData.Empty(),
+  deleteTxnResult: AsyncData.Empty(),
+  saveTxnResult: AsyncData.Empty(),
+  partialTransactions: Map(),
   count: 0,
-  investments: Map(),
-  investmentTypes: Map()
+  transactions: Map()
 });
 
 export default handleActions({
-  [GET_PARTIAL_INVESTMENTS]: handleSetPartialInvestments,
-  [GET_INVESTMENTS_COUNT]: handleSetInvestmentsCount,
-  [GET_INVESTMENTS]: handleSetInvestments,
-  [GET_INVESTMENT]: handleSaveInvestment,
-  [SAVE_NEW_INVESTMENT]: handleSaveInvestment,
-  [UPDATE_INVESTMENT]: handleSaveInvestment,
-  [DELETE_INVESTMENT]: handleDeleteInvestment,
-  [GET_INVESTMENT_TYPES]: handleSetInvestmentTypes,
-  [SAVE_NEW_INVESTMENT_TYPE]: handleSaveInvestmentType,
-  [UPDATE_INVESTMENT_TYPE]: handleSaveInvestmentType,
-  [DELETE_INVESTMENT_TYPE]: handleDeleteInvestmentType
-}, transactionModel)
+  [GET_PARTIAL_TRANSACTIONS]: handleSetPartialTransactions,
+  [GET_TRANSACTIONS_COUNT]: handleSetTxnCount,
+  [GET_TRANSACTIONS]: handleSetTransactions,
+  [CREATE_NEW_TRANSACTION]: handleSaveTransaction,
+  [UPDATE_TRANSACTION]: handleSaveTransaction,
+  [DELETE_TRANSACTION]: handleDeleteTransaction,
+}, TransactionModel)

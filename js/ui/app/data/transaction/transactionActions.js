@@ -5,93 +5,93 @@ import fetch, {constructUrl} from '../../services/api'
 import {partial} from '../../../../common/core/fn'
 import config from '../../services/config'
 
-const INVESTMENT_COUNT_ENDPOINT = `${config.API_URL}/investments/count`;
-const INVESTMENT_ENDPOINT = `${config.API_URL}/investments`;
+const TRANSACTIONS_COUNT_ENDPOINT = `${config.API_URL}/investments/count`;
+const TRANSACTION_ENDPOINT = `${config.API_URL}/investments`;
 
-export const GET_PARTIAL_INVESTMENTS = 'INVESTMENT::GET_PARTIAL_INVESTMENTS'
-export const GET_INVESTMENTS_COUNT = 'INVESTMENT::GET_INVESTMENTS_COUNT';
-export const GET_INVESTMENTS = 'INVESTMENT::GET_INVESTMENTS'
-export const GET_INVESTMENT = 'INVESTMENT::GET_INVESTMENT'
-export const SAVE_NEW_INVESTMENT = 'INVESTMENT::SAVE_NEW_INVESTMENT'
-export const UPDATE_INVESTMENT = 'INVESTMENT::UPDATE_INVESTMENT'
-export const DELETE_INVESTMENT = 'INVESTMENT::DELETE_INVESTMENT'
+export const GET_PARTIAL_TRANSACTIONS = 'TRANSACTION::GET_PARTIAL_TRANSACTIONS'
+export const GET_TRANSACTIONS_COUNT = 'TRANSACTION::GET_TRANSACTIONS_COUNT';
+export const GET_TRANSACTIONS = 'TRANSACTION::GET_TRANSACTIONS'
+export const GET_TRANSACTION = 'TRANSACTION::GET_TRANSACTION'
+export const CREATE_NEW_TRANSACTION = 'TRANSACTION::CREATE_NEW_TRANSACTION'
+export const UPDATE_TRANSACTION = 'TRANSACTION::UPDATE_TRANSACTION'
+export const DELETE_TRANSACTION = 'TRANSACTION::DELETE_TRANSACTION'
 
-const getInvestmentIdUrl = investmentId => `${INVESTMENT_ENDPOINT}/${investmentId}`;
-const getInvestmentUrl = investment => `${INVESTMENT_ENDPOINT}/${investment.get('id')}`;
+const getTxnIdUrl = txnId => `${TRANSACTION_ENDPOINT}/${txnId}`;
+const getTxnUrl = txn => `${TRANSACTION_ENDPOINT}/${txn.get('id')}`;
 
-const getPartialInvestmentsRoot = fetch => {
-  const fetchData = partial(fetch, 'GET', `${INVESTMENT_ENDPOINT}/partial`);
+const getPartialTransactionsRoot = fetch => {
+  const fetchData = partial(fetch, 'GET', `${TRANSACTION_ENDPOINT}/partial`);
 
   return createAction(
-    GET_PARTIAL_INVESTMENTS,
+    GET_PARTIAL_TRANSACTIONS,
     fetchData
   );
 }
 
-const getInvestmentRoot = fetch => {
-  const fetchData = investmentId => fetch('GET', getInvestmentIdUrl(investmentId));
+const getTransactionRoot = fetch => {
+  const fetchData = txnId => fetch('GET', getTxnIdUrl(txnId));
 
   return createAction(
-    GET_INVESTMENT,
+    GET_TRANSACTION,
     fetchData
   );
 }
 
-const getInvestmentsCountRoot = fetch => {
+const getTransactionsCountRoot = fetch => {
   return createAction(
-    GET_INVESTMENTS_COUNT,
-    partial(fetch, 'GET', INVESTMENT_COUNT_ENDPOINT)
+    GET_TRANSACTIONS_COUNT,
+    partial(fetch, 'GET', TRANSACTIONS_COUNT_ENDPOINT)
   );
 }
 
-const getInvestmentsRoot = fetch => {
-  const getUrl = ({skip=0, limit=10}) => constructUrl(INVESTMENT_ENDPOINT, Map({skip, limit}));
+const getTransactionsRoot = fetch => {
+  const getUrl = ({skip=0, limit=10}) => constructUrl(TRANSACTION_ENDPOINT, Map({skip, limit}));
   const fetchData = (partial(fetch, 'GET')) ['∘'] (getUrl);
 
   return createAction(
-    GET_INVESTMENTS,
+    GET_TRANSACTIONS,
     fetchData
   );
 }
 
-const transform = investment => investment.map(
-  (v, k) => ['price', 'quantity', 'expenses', 'moneyInvested', 'date'].includes(k)
+const transform = txn => txn.map(
+  (v, k) => ['price', 'quantity', 'expenses', 'date'].includes(k)
     ? Number(v)
     : v
 )
 
-const updateInvestmentRoot = fetch => {
-  const fetchData = investment => fetch('PUT', getInvestmentUrl(investment), investment);
+const updateTransactionRoot = fetch => {
+  const fetchData = txn => fetch('PUT', getTxnUrl(txn), txn);
 
   return createAction(
-    UPDATE_INVESTMENT,
+    UPDATE_TRANSACTION,
     (fetchData) ['∘'] (transform)
   );
 }
 
-const saveInvestmentRoot = fetch => {
-  const saveInvestmentResult = partial(fetch, 'POST', INVESTMENT_ENDPOINT);
+const createTransactionRoot = fetch => {
+  const createTransactionResult = partial(fetch, 'POST', TRANSACTION_ENDPOINT);
   
   return createAction(
-    SAVE_NEW_INVESTMENT,
-    (saveInvestmentResult) ['∘'] (transform)
+    CREATE_NEW_TRANSACTION,
+    (createTransactionResult) ['∘'] (transform)
   );
 }
 
-const deleteInvestmentRoot = fetch => {
-  const fetchData = investment => fetch('DELETE', getInvestmentUrl(investment), investment.toJS());
+const deleteTransactionRoot = fetch => {
+  const fetchData = txn => fetch('DELETE', getTxnUrl(txn), txn.toJS());
 
   return createAction(
-    DELETE_INVESTMENT,
+    DELETE_TRANSACTION,
     fetchData
   )
 }
 
 
-export const getPartialInvestments = getPartialInvestmentsRoot(fetch)
-export const getInvestmentsCount = getInvestmentsCountRoot(fetch)
-export const getInvestments = getInvestmentsRoot(fetch)
-export const getInvestment = getInvestmentRoot(fetch)
-export const saveInvestment = saveInvestmentRoot(fetch)
-export const updateInvestment = updateInvestmentRoot(fetch)
-export const deleteInvestment = deleteInvestmentRoot(fetch)
+export const getPartialTransactions = getPartialTransactionsRoot(fetch)
+export const getTransactionsCount = getTransactionsCountRoot(fetch)
+export const getTransactions = getTransactionsRoot(fetch)
+export const getTransaction = getTransactionRoot(fetch)
+export const createTransaction = createTransactionRoot(fetch)
+export const updateTransaction = updateTransactionRoot(fetch)
+export const deleteTransaction = deleteTransactionRoot(fetch)
