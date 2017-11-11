@@ -17,7 +17,7 @@ export default () => (
     </FooterTab>
     <FooterTab>
       <Button vertical>
-        <Text>Investments</Text>
+        <Text>Transactions</Text>
         <Icon name="pulse" />
       </Button>
     </FooterTab>

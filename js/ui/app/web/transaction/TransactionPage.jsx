@@ -103,11 +103,11 @@ class TransactionPage extends PureComponent {
   }
 
   onTxnSave = txn => {
-    const {createTransaction, updatedTransaction} = this.props;
+    const {createTransaction, updateTransaction} = this.props;
 
     if(txn.id) {
      pipe(
-       updatedTransaction,
+       updateTransaction,
        filterObject(txn, ['action', 'status'])
       );
     }
@@ -143,7 +143,7 @@ class TransactionPage extends PureComponent {
     this.setState(Object.assign({}, this.state, {page: this.state.page - 1}), this.loadTransactions);
   }
 
-  // will include the value for each investment
+  // will include the value for each transaction
   getExtendedTableData = (txns, transactionValues) =>
     txns.reduce(
       (acc, v, id) => acc.push(
@@ -257,7 +257,7 @@ class TransactionPage extends PureComponent {
               {this.renderTable()}
             </Col>
           </Row>
-          {this.renderDialogBox('Are you sure you want to delete this investment?')}
+          {this.renderDialogBox('Are you sure you want to delete this transaction?')}
       </PageWithPanel>
     );
   }

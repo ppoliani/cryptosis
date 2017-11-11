@@ -25,7 +25,7 @@ export default class PanelContent extends PureComponent {
   }
 
   createDynamicForm() {
-    const {brokers, assets, selectedInvestment} = this.props;
+    const {brokers, assets, selectedTransaction} = this.props;
 
     return this.getCombinedAsyncResult()
       .matchWith({
@@ -34,7 +34,7 @@ export default class PanelContent extends PureComponent {
         Success: () => createTransactionForm(
           this.getOptionsFromMap(brokers),
           this.getOptionsFromMap(assets),
-          selectedInvestment
+          selectedTransaction
         ),
         Failure: ({error}) => console.log('Error building the form', error)
     });

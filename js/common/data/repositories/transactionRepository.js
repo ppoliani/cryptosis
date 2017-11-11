@@ -42,7 +42,7 @@ const updateTransaction = async ({resource:txn}) => {
       WITH txn, b, atb, ats
       CREATE (b)<-[:HAS_BROKER]-(txn)-[:HAS_BUY_ASSET]->(atb)
       CREATE (txn)-[:HAS_SELL_ASSET]->(ats)
-      RETURN txn
+      RETURN txn{ .*, id: ID(txn), buyAsset:"${txn.buyAsset}", sellAsset:"${txn.sellAsset}", broker:"${txn.broker}" }
     `,
     createMatchObj(txn)
   );
