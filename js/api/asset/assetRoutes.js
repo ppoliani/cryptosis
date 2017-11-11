@@ -8,25 +8,25 @@ const {
 const routes = {
   '/assets/types': {
     method: 'get',
-    // auth: true,
+    auth: true,
     fn: getAssetTypes
   },
 
   '/assets/types$': {
     method: 'post',
-    // auth: true,
+    auth: true,
     fn: createAssetType
   },
 
   '/assets/types$$': {
     method: 'put',
-    // auth: true,
+    auth: true,
     fn: updateAssetType
   },
 
   '/assets/types/:id$': {
     method: 'delete',
-    // auth: true,
+    auth: true,
     fn: deleteAssetType
   }
   // '/assets/partial': {

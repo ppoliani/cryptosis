@@ -12,15 +12,13 @@ const createTransaction = async ({resource:txn, ctx}) => {
     DbDriver,
     `
       MATCH (b:Broker), (atb:AssetType), (ats:AssetType), (u:User)
-      WHERE b.name="${txn.broker}" AND atb.name="${txn.buyAsset}" AND ats.name="${txn.sellAsset}" AND ID(u)=${Number(ctx.state.user.id)}
-      WITH (txn:Transaction ${contructCreateMatchString(txn)})
-      CREATE (txn)-[:HAS_BROKER]->(b)
-      CREATE (txn)-[:HAS_BUY_ASSET]->(atb)
+      WHERE b.name="${txn.broker}" AND atb.name="${txn.buyAsset}" AND ats.name="${txn.sellAsset}" AND ID(u)=${Number(24/*ctx.state.user.id*/)}
+      CREATE (b)-[:HAS_BROKER]->(txn:Transaction ${contructCreateMatchString(txn)})<-[:HAS_BUY_ASSET]-(atb)
       CREATE (txn)-[:HAS_SELL_ASSET]->(ats)
-      CREATE (u)-${ASSET_EDGE}->(i)
-      RETURN i{ .*, id: ID(i) }
+      CREATE (txn)-[:OWNED_BY]->(u)
+      RETURN txn{ .*, id: ID(txn) }
     `,
-    createMatchObj(investment)
+    createMatchObj(txn)
   );
 }
 

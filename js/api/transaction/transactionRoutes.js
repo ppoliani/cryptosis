@@ -5,7 +5,7 @@ const {
 const routes = {
   '/transactions$': {
     method: 'post',
-    auth: true,
+    // auth: true,
     fn: createTransaction
   },
 };
