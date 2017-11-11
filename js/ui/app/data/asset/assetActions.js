@@ -51,8 +51,6 @@ const deleteAssetRoot = fetch => {
   );
 }
 
-
-
 export const getAsset = getAssetRoot(fetch)
 export const createNewAsset = createNewAssetRoot(fetch)
 export const updateAsset = updateAssetRoot(fetch)

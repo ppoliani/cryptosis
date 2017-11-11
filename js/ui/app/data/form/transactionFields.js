@@ -1,5 +1,5 @@
-import {required, date, number} from '../validator'
-import {currencyOptions} from '../../../data/constants/currencies'
+import {required, date, number} from './validator'
+import {currencyOptions} from '../constants/currencies'
 
 const fields = [{
   type: 'date',

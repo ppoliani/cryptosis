@@ -11,13 +11,12 @@ import {getItem} from '../../services/storage'
 import Login from '../auth/Login'
 import OverView from '../dashboard/Overview'
 import Layout from '../core/Layout'
-import InvestmentPage from '../investment/InvestmentPage'
-import InvestmentOverviewPage from '../investment/InvestmentOverviewPage'
-import BrokerPage from '../investment/BrokerPage'
-import InvestmentTypePage from '../investment/InvestmentTypePage'
+import TransactionPage from '../transaction/TransactionPage'
+import BrokerPage from '../broker/BrokerPage'
+import AssetPage from '../asset/AssetPage'
 import {setUserProfile} from '../../data/profile/profileActions'
 import config from '../../services/config'
-
+ 
 class AuthGuard extends Component {
   constructor(props, state) {
     super(props, state);
@@ -85,10 +84,9 @@ class RouterComponent extends Component {
       <Router>
         <div style={{height: '100%'}}>
           <PrivateRoute exact path="/" component={OverView}/>
-          <PrivateRoute exact path="/investments" component={InvestmentPage}/>
-          <PrivateRoute exact path="/investments/:id" component={InvestmentOverviewPage}/>
+          <PrivateRoute exact path="/transactions" component={TransactionPage}/> 
           <PrivateRoute exact path="/brokers" component={BrokerPage}/>
-          <PrivateRoute exact path="/investment-types" component={InvestmentTypePage}/>
+          <PrivateRoute exact path="/assets" component={AssetPage}/>
           <Route path="/login" component={Login}/>
         </div>
       </Router>

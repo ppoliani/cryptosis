@@ -6,37 +6,37 @@ import {priceStream$} from '../../../../common/sockets/streams'
 import {MINUTE} from '../../../../common/constants/time'
 import {calculateInvestmentValues} from '../../../../common/aggregators'
 import {changePriceToSelectedCurrency} from '../../../../common/fx'
-import {setInvestmentCurrentValue} from '../portfolio/portfolioActions'
+import {setTransactionsCurrentValue} from '../portfolio/portfolioActions'
 import {setPrices} from '../prices/priceActions'
-import {getPartialInvestment$, getPriceObjFromStreamData, streamInitialPrice, fx$} from './common'
+import {getPartialTransactions$, getPriceObjFromStreamData, streamInitialPrice, fx$} from './common'
 
-export const SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION= 'STREAM::SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION'
-const setInvestmentCurrentValueSuscription = createAction(SET_INVESTMENT_CURRENT_VALUE_SUBSCRIPTION);
+export const SET_TRANSACTION_CURRENT_VALUE_SUBSCRIPTION= 'STREAM::SET_TRANSACTION_CURRENT_VALUE_SUBSCRIPTION'
+const setTransactionCurrentValueSubscription = createAction(SET_TRANSACTION_CURRENT_VALUE_SUBSCRIPTION);
 
 
-// value for each investment individually
-export const startInvestmentCurrentValueStream = currency => (dispatch, getState) => {
+// value for each transaction individually
+export const startTransactionCurrentValueStream = currency => (dispatch, getState) => {
   const observer = {
-    next: (dispatch) ['∘'] (setInvestmentCurrentValue),
-    error: errorValue => console.log(`Error in the observer of the investment values stream: ${errorValue}`)
+    next: (dispatch) ['∘'] (setTransactionsCurrentValue),
+    error: errorValue => console.log(`Error in the observer of the transaction values stream: ${errorValue}`)
   }
 
-  const getPrices = (investments, price, fx)  => {
+  const getPrices = (txns, price, fx)  => {
     const {prices} = getState();
     const priceData = getPriceObjFromStreamData(currency, fx, price);
     
-    // map though investments and convert price of purchase into the currenlty selected currency
-    const updatedInvestments = fromJS(investments.result)
+    // map though transactions and convert price of purchase into the currenlty selected currency
+    const updatedTxns = fromJS(txns.result)
       .map(partial(changePriceToSelectedCurrency, currency, fx.get(currency)))
 
     return {
-      investments: updatedInvestments,
+      transactions: updatedTxns,
       price: fromJS(priceData),
       fx: prices
     }
   }
 
-  const streams$ = [getPartialInvestment$(), priceStream$(currency), fx$(currency)];
+  const streams$ = [getPartialTransactions$(), priceStream$(currency), fx$(currency)];
 
   const streamPrices = () => {
     const subscription = combine(getPrices, ...streams$)
@@ -45,7 +45,7 @@ export const startInvestmentCurrentValueStream = currency => (dispatch, getState
       .map(calculateInvestmentValues)
       .subscribe(observer);
 
-    dispatch(setInvestmentCurrentValueSuscription(subscription)); 
+    dispatch(setTransactionCurrentValueSubscription(subscription)); 
   }
 
   streamPrices();

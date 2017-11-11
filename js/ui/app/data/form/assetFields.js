@@ -1,4 +1,4 @@
-import {required} from '../validator'
+import {required} from './validator'
 
 export default [{
   type: 'text',

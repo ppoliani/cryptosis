@@ -15,22 +15,22 @@ import Container from '../common/Container'
 import DialogBoxMixin from '../mixins/DialogBoxMixin'
 import PanelContent from './PanelContent'
 import {getBrokers} from '../../data/broker/brokerActions'
-import {startInvestmentCurrentValueStream} from '../../data/stream/investmentValueStream'
+import {startTransactionCurrentValueStream} from '../../data/stream/transactionValueStream'
 import {renderInvestmentValue, getSelectedCurrency, renderPrice} from '../common/InvestmentValueHelpers'
 import CurrencySelector from '../form/selectors/CurrencySelector'
+import {getAssets} from '../../data/asset/assetActions'
 import {
-  getInvestmentsCount,
-  getInvestments,
-  saveInvestment,
-  updateInvestment,
-  deleteInvestment,
-  getInvestmentTypes
-} from '../../data/investment/investmentActions'
+  getTransactionsCount,
+  getTransactions,
+  createTransaction,
+  updateTransaction, 
+  deleteTransaction
+} from '../../data/transaction/transactionActions'
 
 const columns = [
-  {key: 'investmentType', label: 'Investment Type'},
+  {key: 'buyAsset', label: 'Buy Asset'},
+  {key: 'sellAsset', label: 'Sell Asset'},
   {key: 'broker', label: 'Broker'},
-  {key: 'positionType', label: 'Position Type'},
   {key: 'date', label: 'Date', render: date => dateformat(date, 'DD/MM/YYYY')},
   {key: 'quantity', label: 'Quantity'},
   {key: 'price', label: 'Price'},
@@ -40,7 +40,7 @@ const columns = [
 const DEFAULT_CURRENCY = 'GBP';
 
 @DialogBoxMixin
-class InvestmentPage extends PureComponent {
+class TransactionPage extends PureComponent {
   state = {
     isPanelOpen: false,
     limit: 10,
@@ -48,12 +48,12 @@ class InvestmentPage extends PureComponent {
   }
 
   componentDidMount() {
-    const {form, getInvestmentsCount, getBrokers, getInvestmentTypes} = this.props;
+    const {form, getTransactionsCount, getBrokers, getAssets} = this.props;
     const currency = getSelectedCurrency(form);
 
-    getInvestmentsCount();
+    getTransactionsCount();
     getBrokers();
-    getInvestmentTypes();
+    getAssets();
     this.subscribe(currency);
   }
 
@@ -72,7 +72,7 @@ class InvestmentPage extends PureComponent {
 
   unsubscribe() {
     this.props.stream
-      .get('investmentCurrentValueSubscription')
+      .get('transactionCurrentValueSubscription')
       .matchWith({
         Just: ({value}) => value.unsubscribe(),
         Nothing: identity
@@ -80,97 +80,97 @@ class InvestmentPage extends PureComponent {
   }
 
   subscribe(currency) {
-    this.props.startInvestmentCurrentValueStream(currency);
+    this.props.startTransactionCurrentValueStream(currency);
   }
 
-  loadInvestments() {
-    const {getInvestments, investments} = this.props;
+  loadTransactions() {
+    const {getTransactions, transactions} = this.props;
 
-    investments.get('fetchInvestmentsCountResult').matchWith({
+    transactions.get('fetchTxnCountResult').matchWith({
       Empty: noop,
       Loading: noop,
       Success: () => {
         const {limit, page} = this.state;
         const skip = (page - 1) * limit;
-        getInvestments({skip, limit});
+        getTransactions({skip, limit});
       },
       Failure: noop
     });
   }
 
-  togglePanel = (_, selectedInvestment={}) => {
-    this.setState({isPanelOpen: !this.state.isPanelOpen, selectedInvestment});
+  togglePanel = (_, selectedTransaction={}) => {
+    this.setState({isPanelOpen: !this.state.isPanelOpen, selectedTransaction});
   }
 
-  onInvestmentSave = investment => {
-    const {saveInvestment, updateInvestment} = this.props;
+  onTxnSave = txn => {
+    const {createTransaction, updatedTransaction} = this.props;
 
-    if(investment.id) {
+    if(txn.id) {
      pipe(
-       updateInvestment,
-       filterObject(investment, ['action', 'status'])
+       updatedTransaction,
+       filterObject(txn, ['action', 'status'])
       );
     }
     else {
-      saveInvestment(fromJS(investment));
+      createTransaction(fromJS(txn));
     }
 
     this.togglePanel();
   }
 
-  onInvestmentDelete = investment => {
-    this.props.deleteInvestment(investment);
+  onTxnDelete = investment => {
+    this.props.deleteTransaction(txn);
   }
 
-  onInvestmentDeleteClick = (investment, e) => {
+  onTxnDeleteClick = (txn, e) => {
     e.stopPropagation();
-    this.openDialog(partial(this.onInvestmentDelete, investment))
+    this.openDialog(partial(this.onTxnDelete, txn))
   }
 
-  handleCellClick = (e, _, investment) => {
-    this.togglePanel(e, investment);
+  handleCellClick = (e, _, txn) => {
+    this.togglePanel(e, txn);
   }
 
   handleRowSizeChange = (e, rows) => {
-    this.setState(Object.assign({}, this.state, {page: 1, limit: rows}), this.loadInvestments);
+    this.setState(Object.assign({}, this.state, {page: 1, limit: rows}), this.loadTransactions);
   }
 
   handleNextPageClick = (e, page) => {
-    this.setState(Object.assign({}, this.state, {page: this.state.page + 1}), this.loadInvestments);
+    this.setState(Object.assign({}, this.state, {page: this.state.page + 1}), this.loadTransactions);
   }
 
   handlePreviousPageClick = (e, page) => {
-    this.setState(Object.assign({}, this.state, {page: this.state.page - 1}), this.loadInvestments);
+    this.setState(Object.assign({}, this.state, {page: this.state.page - 1}), this.loadTransactions);
   }
 
   // will include the value for each investment
-  getExtendedTableData = (investments, investmentValues) =>
-    investments.reduce(
+  getExtendedTableData = (txns, transactionValues) =>
+    txns.reduce(
       (acc, v, id) => acc.push(
         v.set('id', id)
-          .set('status', v.get('positionType') === 'buy' ? renderInvestmentValue(id, investmentValues, getSelectedCurrency(this.props.form)) : '')
-          .set('action', <Button label="Delete" primary={true} onClick={partial(this.onInvestmentDeleteClick, v)} />)
+          .set('status', v.get('positionType') === 'buy' ? renderInvestmentValue(id, transactionValues, getSelectedCurrency(this.props.form)) : '')
+          .set('action', <Button label="Delete" primary={true} onClick={partial(this.onTxnDeleteClick, v)} />)
       ),
       List()
     )
     .toJS();
 
-  getInvestmentsData = investments => this.props.portfolio
-      .get('investmentValues')
+  getTransactionsData = txns => this.props.portfolio
+      .get('transactionValues')
       .matchWith({
-        Just: ({value}) => this.getExtendedTableData(investments, value),
-        Nothing: () => this.getExtendedTableData(investments, Map())
+        Just: ({value}) => this.getExtendedTableData(txns, value),
+        Nothing: () => this.getExtendedTableData(txns, Map())
       });
 
-  getInvestments() {
-    return this.props.investments
-      .get('investments');
+  getTransactions() {
+    return this.props.transactions
+      .get('transactions');
   }
 
-  renderInvestmentTable(data) {
-    const {investments} = this.props;
+  renderTransactionTable(data) {
+    const {transactions} = this.props;
 
-    return investments.get('fetchInvestmentsCountResult').matchWith({
+    return transactions.get('fetchTxnCountResult').matchWith({
       Empty: noop,
       Loading: noop,
       Success: ({value}) => (
@@ -190,49 +190,49 @@ class InvestmentPage extends PureComponent {
     })
   }
 
-  renderInvestementsTableContainer = data => {
-    const {investments} = this.props;
+  renderTransactionsTableContainer = data => {
+    const {transactions} = this.props;
     
     const asyncResult = AsyncDataAll([
-      investments.get('fetchInvestmentsResult'),
-      investments.get('fetchInvestmentsCountResult')
+      transactions.get('fetchTxnsResult'),
+      transactions.get('fetchTxnCountResult')
     ]);
 
     return (
-      <Container title='Completed Orders' subtitle=''>
+      <Container title='Completed Transactions' subtitle=''>
         <AsyncPanel asyncResult={asyncResult}>
-          {this.renderInvestmentTable(data)}
+          {this.renderTransactionTable(data)}
         </AsyncPanel>
       </Container>
     )
   }
 
   renderTable() {
-    return this.props.investments.get('fetchInvestmentsResult')
+    return this.props.transactions.get('fetchTxnsResult')
       .matchWith({
-        Empty: () => this.loadInvestments(),
+        Empty: () => this.loadTransactions(),
         Loading: noop,
         Success: ({value}) =>
            pipe(
-              this.renderInvestementsTableContainer,
-              this.getInvestmentsData,
-              this.getInvestments()
+              this.renderTransactionsTableContainer,
+              this.getTransactionsData,
+              this.getTransactions()
             ),
         Failure: noop
       })
   }
 
   getPanelContent() {
-    const {investments, fetchInvestmentTypeResult, fetchBrokersResult, brokers} = this.props;
+    const {transactions, asset, fetchBrokersResult, brokers} = this.props;
 
     return (
       <PanelContent
-        saveInvestmentResult={investments.get('saveInvestmentResult')}
-        investmentTypes={investments.get('investmentTypes')}
+        saveInvestmentResult={transactions.get('saveTxnResult')}
+        assets={asset.get('assets')}
         brokers={brokers}
-        selectedInvestment={this.state.selectedInvestment}
-        onInvestmentSave={this.onInvestmentSave}
-        fetchInvestmentTypeResult={investments.get('fetchInvestmentTypeResult')}
+        selectedTransaction={this.state.selectedTransaction}
+        onTxnSave={this.onTxnSave}
+        fetchAssetsResult={asset.get('fetchAssetsResult')}
         fetchBrokersResult={fetchBrokersResult}
       />
     )
@@ -266,25 +266,26 @@ class InvestmentPage extends PureComponent {
 const mapStateToProps = state => ({
   form: state.form,
   stream: state.stream,
-  investments: state.investment,
+  transactions: state.transaction,
   brokers: state.broker.get('brokers'),
   portfolio: state.portfolio,
   fetchBrokersResult: state.broker.get('fetchBrokersResult'),
+  asset: state.asset
 });
 
 const mapDispatchToProps = dispatch => ({
-  getInvestmentsCount: (dispatch) ['∘'] (getInvestmentsCount),
-  getInvestments: (dispatch) ['∘'] (getInvestments),
-  saveInvestment: (dispatch) ['∘'] (saveInvestment),
-  updateInvestment: (dispatch) ['∘'] (updateInvestment),
-  deleteInvestment: (dispatch) ['∘'] (deleteInvestment),
+  getTransactionsCount: (dispatch) ['∘'] (getTransactionsCount),
+  getTransactions: (dispatch) ['∘'] (getTransactions),
+  createTransaction: (dispatch) ['∘'] (createTransaction),
+  updateTransaction: (dispatch) ['∘'] (updateTransaction), 
+  deleteTransaction: (dispatch) ['∘'] (deleteTransaction),
   getBrokers: (dispatch) ['∘'] (getBrokers),
-  getInvestmentTypes: (dispatch) ['∘'] (getInvestmentTypes),
-  startInvestmentCurrentValueStream: (dispatch) ['∘'] (startInvestmentCurrentValueStream)
+  getAssets: (dispatch) ['∘'] (getAssets),
+  startTransactionCurrentValueStream: (dispatch) ['∘'] (startTransactionCurrentValueStream)
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(InvestmentPage)
+  mapDispatchToProps 
+)(TransactionPage)
 

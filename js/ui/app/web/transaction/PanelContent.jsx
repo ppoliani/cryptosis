@@ -3,12 +3,12 @@ import {Row, Col} from 'react-flexbox-grid'
 import {List} from 'immutable'
 import {AsyncDataAll, AsyncDataSome} from '../../data/core/AsyncData'
 import AsyncPanel from '../panel/AsyncPanel'
-import createInvestmentForm from './form/InvestmentForm'
+import createTransactionForm from './TransactionForm'
 
 export default class PanelContent extends PureComponent {
   getCombinedAsyncResult() {
     return AsyncDataAll([
-      this.props.fetchInvestmentTypeResult,
+      this.props.fetchAssetsResult,
       this.props.fetchBrokersResult
     ]);
   }
@@ -25,14 +25,14 @@ export default class PanelContent extends PureComponent {
   }
 
   createDynamicForm() {
-    const {brokers, investmentTypes, selectedInvestment} = this.props;
+    const {brokers, assets, selectedInvestment} = this.props;
 
     return this.getCombinedAsyncResult()
       .matchWith({
         Empty: () => null,
         Loading: () => null,
-        Success: () => createInvestmentForm(
-          this.getOptionsFromMap(investmentTypes),
+        Success: () => createTransactionForm(
+          this.getOptionsFromMap(assets),
           this.getOptionsFromMap(brokers),
           selectedInvestment
         ),

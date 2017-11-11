@@ -8,7 +8,7 @@ import {majorPriceStream$} from '../../../../common/sockets/streams'
 import {setPrices} from '../prices/priceActions'
 import config from '../../services/config'
 
-const INVESTMENT_ENDPOINT = `${config.API_URL}/investments`;
+const TRANSACTION_ENDPOINT = `${config.API_URL}/transactions`;
 
 const historicalDataUrl = (fromSymbol, toSymbol, timestamp, days) => `https://min-api.cryptocompare.com/data/histoday?fsym=${fromSymbol}&tsym=${toSymbol}&limit=${days}&aggregate=1&toTs=${timestamp}&tryConversion=true`
 const fxUrl = base => `http://api.fixer.io/latest?base=${base}&symbols=${getSymbolsExceptFor(base).join(',')}`;
@@ -16,7 +16,7 @@ const priceUrl = (currency, symbol) => `https://min-api.cryptocompare.com/data/p
 
 const getSymbolsExceptFor = currency => ['GBP', 'EUR', 'USD'].filter(c => c !== currency);
 
-const fetchPartialInvestments = fetch('GET', `${INVESTMENT_ENDPOINT}/partial`);
+const fetchPartialTransactions = fetch('GET', `${TRANSACTION_ENDPOINT}/partial`);
 const fetchFX = currency => fetch('GET', fxUrl(currency), {}, false);
 const fetchHistoricData = (currency, symbol) => fetch('GET', historicalDataUrl(symbol, currency, +(new Date), 30), {}, false);
 const fetchPrice = (currency, symbol) => fetch('GET', priceUrl(currency, symbol), {}, false)
@@ -24,7 +24,7 @@ const fetchPrice = (currency, symbol) => fetch('GET', priceUrl(currency, symbol)
 export const createPriceStreams$ = (currency, symbols) => symbols
   .map(s => fetchPrice(currency, s).run().promise())
 
-export const getPartialInvestment$ = () => fromPromise(fetchPartialInvestments.run().promise())
+export const getPartialTransactions$ = () => fromPromise(fetchPartialTransactions.run().promise())
 
 export const createHistoricStreams = (currency, symbols) => symbols
   .map(s => 
@@ -117,7 +117,7 @@ const getInitialPrices = async (currency, investments) => {
 // load the prices for all available asset types using get requests
 // No need to unscubscribe because we getInitialPrices consist of promise streams which are disposes straightaway
 export const streamInitialPrice = (dispatch, currency) => {
-  return getPartialInvestment$()
+  return getPartialTransactions$()
     .chain((fromPromise) ['∘'] (partial(getInitialPrices, currency)))
     .tap((dispatch) ['∘'] (setPrices) ['∘'] (prop('prices')));
 }
