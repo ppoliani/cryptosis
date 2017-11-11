@@ -18,7 +18,7 @@ const routes = {
     fn: createAssetType
   },
 
-  '/assets/types$$': {
+  '/assets/types/:id': {
     method: 'put',
     auth: true,
     fn: updateAssetType

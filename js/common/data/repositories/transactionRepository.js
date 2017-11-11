@@ -7,13 +7,15 @@ const init = driver => {
   DbDriver = driver;
 }
 
+const omitProps = ['broker', 'buyAsset', 'sellAsset'];
+
 const createTransaction = async ({resource:txn, ctx}) => {
   return await runQuery(
     DbDriver,
     `
       MATCH (b:Broker), (atb:AssetType), (ats:AssetType), (u:User)
       WHERE b.name="${txn.broker}" AND atb.name="${txn.buyAsset}" AND ats.name="${txn.sellAsset}" AND ID(u)=${Number(24/*ctx.state.user.id*/)}
-      CREATE (b)-[:HAS_BROKER]->(txn:Transaction ${contructCreateMatchString(txn)})<-[:HAS_BUY_ASSET]-(atb)
+      CREATE (b)<-[:HAS_BROKER]-(txn:Transaction ${contructCreateMatchString(txn, omitProps)})-[:HAS_BUY_ASSET]->(atb)
       CREATE (txn)-[:HAS_SELL_ASSET]->(ats)
       CREATE (txn)-[:OWNED_BY]->(u)
       RETURN txn{ .*, id: ID(txn) }
@@ -22,9 +24,30 @@ const createTransaction = async ({resource:txn, ctx}) => {
   );
 }
 
+const updateTransaction = async ({resource:txn}) => {
+  return await runQuery(
+    DbDriver,
+    `
+      MATCH (txn:Transaction)-[hb:HAS_BROKER]->(:Broker), (:AssetType)<-[hba:HAS_BUY_ASSET]-(txn:Transaction)-[hsa:HAS_SELL_ASSET]->(:AssetType)
+      WHERE ID(txn) = ${txn.id}
+      DELETE hb, hba, hsa
+      WITH txn
+      MATCH (b:Broker), (atb:AssetType), (ats:AssetType)
+      WHERE b.name="${txn.broker}" AND atb.name="${txn.buyAsset}" AND ats.name="${txn.sellAsset}"
+      SET txn = ${contructCreateMatchString(txn, omitProps)}
+      WITH txn, b, atb, ats
+      CREATE (b)<-[:HAS_BROKER]-(txn)-[:HAS_BUY_ASSET]->(atb)
+      CREATE (txn)-[:HAS_SELL_ASSET]->(ats)
+      RETURN txn
+    `,
+    createMatchObj(txn)
+  );
+}
+
 module.exports = {
   init, 
-  createTransaction
+  createTransaction,
+  updateTransaction
 }
 // const getAllPartialAssets = async () => {
 //   return  await runQuery(

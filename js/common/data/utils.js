@@ -1,8 +1,9 @@
-const neo4j = require('neo4j-driver').v1;
-const {Map, List} = require('immutable');
-const Maybe = require('folktale/data/maybe');
-const {flatten} = require('../core/fn');
-const {entries} = require('../core/utils');
+const neo4j = require('neo4j-driver').v1
+const {Map, List} = require('immutable')
+const omit = require('lodash.omit')
+const Maybe = require('folktale/data/maybe')
+const {flatten} = require('../core/fn')
+const {entries} = require('../core/utils')
 
 // CypherResult a -> Maybe a
 const unwrapCypherResult = result => result && result[0]
@@ -62,10 +63,10 @@ const createMatchObj = entity =>
       {}
     );
 
-const contructCreateMatchString = entity =>
+const contructCreateMatchString = (entity, omitProps=[]) =>
   [
     '{',
-    createMatchString(entity).join(','),
+    createMatchString(omit(entity, omitProps)).join(','),
     ',created:timestamp(),updated:timestamp()',
     '}'
   ]

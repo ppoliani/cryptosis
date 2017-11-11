@@ -1,5 +1,6 @@
 const {
-  createTransaction
+  createTransaction,
+  updateTransaction
 } = require('./transactionApi');
 
 const routes = {
@@ -7,6 +8,12 @@ const routes = {
     method: 'post',
     // auth: true,
     fn: createTransaction
+  },
+
+  '/transactions/:id$': {
+    method: 'put',
+    // auth: true,
+    fn: updateTransaction
   },
 };
 
