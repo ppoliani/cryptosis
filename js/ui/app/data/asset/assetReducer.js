@@ -2,135 +2,55 @@ import {handleActions} from 'redux-actions'
 import {Map, fromJS} from 'immutable'
 import identity from 'folktale/core/lambda/identity'
 import {
-  GET_PARTIAL_INVESTMENTS,
-  GET_INVESTMENTS_COUNT,
-  GET_INVESTMENTS,
-  GET_INVESTMENT,
-  SAVE_NEW_INVESTMENT,
-  UPDATE_INVESTMENT,
-  DELETE_INVESTMENT,
-  GET_INVESTMENT_TYPES,
-  SAVE_NEW_INVESTMENT_TYPE,
-  UPDATE_INVESTMENT_TYPE,
-  DELETE_INVESTMENT_TYPE
-} from './investmentActions'
+  GET_ASSET_TYPES,
+  CREATE_NEW_ASSET_TYPE,
+  UPDATE_ASSET_TYPE,
+  DELETE_ASSET_TYPE
+} from './assetActions'
 import AsyncData from '../core/AsyncData'
 
-const stringToDate = records => records.map(
-  v => {
-    return v.set('date', new Date(v.get('date')))
-  }
-)
-
-const handleSetPartialInvestments = (state, {payload: investmentsResult}) =>
-  investmentsResult.matchWith({
+const handleGetAssets = (state, {payload: assetResult}) =>
+  assetResult.matchWith({
     Empty: identity,
-    Loading: () => state.set('fetchPartialInvestmentsResult', investmentsResult),
-    Success: ({data}) => state
-      .set('fetchPartialInvestmentsResult', investmentsResult)
-      .set('partialInvestments',  fromJS(data.result)),
-    Failure: () => state.set('fetchInvestmentTypeResult', investmentsResult),
-  });
-
-const handleSaveInvestment = (state, {payload: saveInvestmentResult}) =>
-  saveInvestmentResult.matchWith({
-    Empty: identity,
-    Loading: () => state.set('saveInvestmentResult', saveInvestmentResult),
-    Success: ({data: {result: [result]}}) => state
-      .set('saveInvestmentResult', saveInvestmentResult)
-      .updateIn(
-        ['investments'],
-        investments => {
-          return investments.set(result.id, fromJS(result))
-        }),
-    Failure: () => state.set('saveInvestmentResult', saveInvestmentResult),
-  });
-
-const handleSetInvestmentsCount = (state, {payload: investmentsCountResult}) => {
-  return investmentsCountResult.matchWith({
-    Empty: identity,
-    Loading: () => state.set('fetchInvestmentsCountResult', investmentsCountResult),
-    Success: ({data: {result: [result]}}) => state
-      .set('fetchInvestmentsCountResult', investmentsCountResult)
-      .set('count', result.count),
-    Failure: () => state.set('investmentsCountResult', investmentsCountResult),
-  });
-}
-const handleSetInvestments = (state, {payload: investmentsResult}) =>
-  investmentsResult.matchWith({
-    Empty: identity,
-    Loading: () => state.set('fetchInvestmentsResult', investmentsResult),
-    Success: ({data}) => state
-      .set('fetchInvestmentsResult', investmentsResult)
-      .set('investments', stringToDate(fromJS(data.result))),
-    Failure: () => state.set('fetchInvestmentTypeResult', investmentsResult),
-  });
-
-const handleDeleteInvestment = (state, {payload: investmentResult}) =>
-  investmentResult.matchWith({
-    Empty: identity,
-    Loading: () => state.set('deleteInvestmentResult', investmentResult),
+    Loading: () => state.set('fetchAssetResult', assetResult),
     Success: ({data: {result}}) => state
-      .set('deleteInvestmentResult', investmentResult)
-      .updateIn(['investments'], investments => investments.delete(`${result.id}`)),
-    Failure: () => state.set('deleteInvestmentResult', investmentResult),
+      .set('fetchAssetResult', assetResult)
+      .set('assets', fromJS(result)),
+    Failure: () => state.set('fetchAssetResult', assetResult),
   });
 
-const handleSetInvestmentTypes = (state, {payload: investmentTypeResult}) =>
-  investmentTypeResult.matchWith({
+const handleSaveAsset = (state, {payload: saveAssetResult}) =>
+  saveAssetResult.matchWith({
     Empty: identity,
-    Loading: () => state.set('fetchInvestmentTypeResult', investmentTypeResult),
-    Success: ({data: {result}}) => state
-      .set('fetchInvestmentTypeResult', investmentTypeResult)
-      .set('investmentTypes', fromJS(result)),
-    Failure: () => state.set('fetchInvestmentTypeResult', investmentTypeResult),
-  });
-
-const handleSaveInvestmentType = (state, {payload: saveInvestmentTypeResult}) =>
-  saveInvestmentTypeResult.matchWith({
-    Empty: identity,
-    Loading: () => state.set('saveInvestmentTypeResult', saveInvestmentTypeResult),
+    Loading: () => state.set('saveAssetResult', saveAssetResult),
     Success: ({data: {result: [result]}}) => state
-      .set('saveInvestmentTypeResult', saveInvestmentTypeResult)
-      .updateIn(['investmentTypes'], investmentTypes => investmentTypes.set(result.id, fromJS(result))),
-    Failure: () => state.set('saveInvestmentTypeResult', saveInvestmentTypeResult),
+      .set('saveAssetResult', saveAssetResult)
+      .updateIn(['assets'], assets => assets.set(result.id, fromJS(result))),
+    Failure: () => state.set('saveAssetResult', saveAssetResult),
   });
 
-const handleDeleteInvestmentType  = (state, {payload: investmentTypeResult}) =>
-  investmentTypeResult.matchWith({
+const handleDeleteAsset  = (state, {payload: deleteAssetResult}) =>
+  deleteAssetResult.matchWith({
     Empty: identity,
-    Loading: () => state.set('deleteInvestmentTypeResult', investmentTypeResult),
+    Loading: () => state.set('deleteAssetResult', deleteAssetResult),
     Success: ({data: {result}}) => state
-      .set('deleteInvestmentTypeResult', investmentTypeResult)
-      .updateIn(['investmentTypes'], investmentTypes => investmentTypes.delete(`${result.id}`)),
-    Failure: () => state.set('deleteInvestmentTypeResult', investmentTypeResult),
+      .set('deleteAssetResult', deleteAssetResult)
+      .updateIn(['assets'], assets => assets.delete(`${result.id}`)),
+    Failure: () => state.set('deleteAssetResult', deleteAssetResult),
   });
 
-const InvestmentData = Map({
-  fetchPartialInvestmentsResult: AsyncData.Empty(),
-  fetchInvestmentsCountResult: AsyncData.Empty(),
-  fetchInvestmentsResult: AsyncData.Empty(),
-  saveInvestmentResult: AsyncData.Empty(),
-  fetchInvestmentTypeResult: AsyncData.Empty(),
-  saveInvestmentTypeResult: AsyncData.Empty(),
-  deleteInvestmentTypeResult: AsyncData.Empty(),
-  partialInvestments: Map(),
+const AssetModel = Map({
+  fetchAssetResult: AsyncData.Empty(),
+  saveAssetResult: AsyncData.Empty(),
+  deleteAssetResult: AsyncData.Empty(),
   count: 0,
-  investments: Map(),
-  investmentTypes: Map()
+  assets: Map()
 });
 
 export default handleActions({
-  [GET_PARTIAL_INVESTMENTS]: handleSetPartialInvestments,
-  [GET_INVESTMENTS_COUNT]: handleSetInvestmentsCount,
-  [GET_INVESTMENTS]: handleSetInvestments,
-  [GET_INVESTMENT]: handleSaveInvestment,
-  [SAVE_NEW_INVESTMENT]: handleSaveInvestment,
-  [UPDATE_INVESTMENT]: handleSaveInvestment,
-  [DELETE_INVESTMENT]: handleDeleteInvestment,
-  [GET_INVESTMENT_TYPES]: handleSetInvestmentTypes,
-  [SAVE_NEW_INVESTMENT_TYPE]: handleSaveInvestmentType,
-  [UPDATE_INVESTMENT_TYPE]: handleSaveInvestmentType,
-  [DELETE_INVESTMENT_TYPE]: handleDeleteInvestmentType
-}, InvestmentData)
+  [GET_ASSET_TYPES]: handleGetAssets,
+  [CREATE_NEW_ASSET_TYPE]: handleSaveAsset,
+  [UPDATE_ASSET_TYPE]: handleSaveAsset,
+  [DELETE_ASSET_TYPE]: handleDeleteAsset
+}, AssetModel)
 
