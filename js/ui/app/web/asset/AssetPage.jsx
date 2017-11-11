@@ -12,7 +12,7 @@ import DialogBoxMixin from '../mixins/DialogBoxMixin'
 import Table from '../table/Table'
 import Container from '../common/Container'
 import {
-  getAsset,
+  getAssets,
   createNewAsset,
   updateAsset,
   deleteAsset
@@ -34,7 +34,7 @@ class AssetPage extends PureComponent {
 
   componentDidMount() {
     const {skip, limit} = this.state;
-    this.props.getAsset({skip, limit});
+    this.props.getAssets({skip, limit});
   }
 
   togglePanel = (_, selectedAsset={}) => {
@@ -99,7 +99,7 @@ class AssetPage extends PureComponent {
   renderAssetTable() {
     return (
       <Container title='Crypto Assets' subtitle='Full list of crypto assets'>
-        <AsyncPanel asyncResult={this.props.fetchAssetResult}>
+        <AsyncPanel asyncResult={this.props.fetchAssetsResult}>
           <Table
             columns={columns}
             data={this.getAssetData()}
@@ -137,11 +137,11 @@ class AssetPage extends PureComponent {
 const mapStateToProps = ({asset}) => ({
   assets: asset.get('assets'),
   saveAssetResult: asset.get('saveAssetResult'),
-  fetchAssetResult: asset.get('fetchAssetResult'),
+  fetchAssetsResult: asset.get('fetchAssetsResult'),
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAsset: (dispatch) ['∘'] (getAsset), 
+  getAssets: (dispatch) ['∘'] (getAssets), 
   createNewAsset: (dispatch) ['∘'] (createNewAsset),
   updateAsset: (dispatch) ['∘'] (updateAsset),
   deleteAsset: (dispatch) ['∘'] (deleteAsset)
