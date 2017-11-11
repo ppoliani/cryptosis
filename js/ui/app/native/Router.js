@@ -5,8 +5,8 @@ import {Container, View, Text} from 'native-base'
 import {getItem} from '../services/storage'
 import Home from './Home'
 import Layout from './layout/Layout'
-import Config from 'react-native-config'
 import Login from './auth/Login'
+import config from '../../services/config'
 
 import {logout} from '../services/auth'
 
@@ -26,8 +26,7 @@ class AuthGuard extends Component {
   }
 
   componentDidMount() {
-    //TODO: process.env is not available in react-native; we need a different mechanism
-    getItem(Config.ACCESS_TOKEN_KEY)
+    getItem(config.ACCESS_TOKEN_KEY)
       .bimap(
         error => {
           this.setState({isAuthenticated: false})

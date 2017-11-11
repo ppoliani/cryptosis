@@ -65,7 +65,7 @@ class InvestmentTypePage extends PureComponent {
     return (
       <AsyncPanel asyncResult={this.props.saveInvestmentTypeResult}>
         <Col xs={12}>
-          <h1>New Investment Type</h1>
+          <h1>New Transaction</h1>
           <InvestmentTypeForm onSubmit={this.onInvestmentTypeSave}/>
         </Col>
       </AsyncPanel>

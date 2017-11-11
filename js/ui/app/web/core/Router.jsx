@@ -16,6 +16,7 @@ import InvestmentOverviewPage from '../investment/InvestmentOverviewPage'
 import BrokerPage from '../investment/BrokerPage'
 import InvestmentTypePage from '../investment/InvestmentTypePage'
 import {setUserProfile} from '../../data/profile/profileActions'
+import config from '../../services/config'
 
 class AuthGuard extends Component {
   constructor(props, state) {
@@ -25,8 +26,16 @@ class AuthGuard extends Component {
   }
 
   componentDidMount() {
-    const accessToken = getItem(ACCESS_TOKEN_KEY);
-    this.setState({isAuthenticated: Boolean(accessToken)});
+    getItem(config.ACCESS_TOKEN_KEY)
+      .bimap(
+        error => {
+          this.setState({isAuthenticated: false})
+        },
+        (item) => {
+          setTimeout(() => this.setState({isAuthenticated: Boolean(item)}))
+        }
+      )
+      .run();
   }
 
   render() {
@@ -59,7 +68,16 @@ class RouterComponent extends Component {
   }
 
   componentWillMount() {
-    this.props.setUserProfile(JSON.parse(getItem(USER_INFO)));
+    getItem(config.USER_INFO)
+      .bimap(
+        error => {
+          this.setState({isAuthenticated: false})
+        },
+        (userInfo) => {
+          this.props.setUserProfile(JSON.parse(userInfo));
+        }
+      )
+      .run();
   }
 
   render() {

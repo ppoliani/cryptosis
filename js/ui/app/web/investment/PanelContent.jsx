@@ -53,7 +53,7 @@ export default class PanelContent extends PureComponent {
     return (
       <AsyncPanel asyncResult={asyncResult}>
         <Col xs={12}>
-          <h1>New Investment</h1>
+          <h1>New Transaction</h1>
           {InvestmentForm && <InvestmentForm onSubmit={onInvestmentSave} />}
         </Col>
       </AsyncPanel>
