@@ -55,7 +55,7 @@ const getTransactionsRoot = fetch => {
 }
 
 const transform = txn => txn.map(
-  (v, k) => ['price', 'quantity', 'expenses', 'date'].includes(k)
+  (v, k) => ['buyAmount', 'sellAmount', 'expenses', 'date'].includes(k)
     ? Number(v)
     : v
 )

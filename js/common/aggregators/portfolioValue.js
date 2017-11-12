@@ -14,6 +14,7 @@ const calculatePortfolioValue = (holdings, fx) => {
   return {assetValues, totalValue};
 }
 
+// calculatePortfolioValue understands a specific interface for the the fx prices
 const wrapPriceInFxInterface = (price, asset) => fromJS({
   [asset]: {price}
 })
@@ -35,8 +36,19 @@ const calculateCapitalGain = (holdings, fx) => {
   return calculatePortfolioValue(fiatHoldings, fx);
 }
 
+const calculateCapitalGainForTheGivenPrice = (txns, asset, priceOfDay) => {
+  const holdingsOfTheDay = calculateHoldings(txns);
+  const capitalGain = calculateCapitalGain(
+    holdingsOfTheDay,
+    wrapPriceInFxInterface(priceOfDay, asset)
+  );
+
+  return capitalGain.assetValues.get(asset, 0);
+} 
+
 module.exports = {
   calculatePortfolioValue,
   getTotalValueForTheGivenPrice,
-  calculateCapitalGain
+  calculateCapitalGain,
+  calculateCapitalGainForTheGivenPrice
 }

@@ -1,9 +1,7 @@
 const {fromJS, Map} = require('immutable')
 const {partial} = require('../core/fn')
-const {isOfType, isBeforeDate} = require('./utils')
-const {getTotalValueForTheGivenPrice} = require('./portfolioValue')
-
-const getTxnsOnDate = (txns, day) => txns.filter(partial(isBeforeDate, day))
+const {getTxnsOnDate} = require('./utils')
+const {getTotalValueForTheGivenPrice, calculateCapitalGainForTheGivenPrice} = require('./portfolioValue')
 
 // Gets all prices for the last 30 days for the given asset i.e. ETH
 // and returns the portfolio values for each day
@@ -11,17 +9,13 @@ const getTxnsOnDate = (txns, day) => txns.filter(partial(isBeforeDate, day))
 const getPortfolioValueForAsset = (priceList, txns, asset) =>
   priceList.map(p => {
     const {day, price} = p.toJS();
+    const txnOnDay = getTxnsOnDate(txns, day);
 
     return fromJS({
       day,
       value: {
-        // change: getChangeAfterDate(txns, asset, day, price),
-        capitalGain: getCashAfterDate(txns, asset, day),
-        totalValue: getTotalValueForTheGivenPrice(
-          getTxnsOnDate(txns, day), 
-          asset, 
-          price
-        )
+        capitalGain: calculateCapitalGainForTheGivenPrice(txnOnDay, asset, price),
+        totalValue: getTotalValueForTheGivenPrice(txnOnDay, asset, price)
       }
     })
   })
