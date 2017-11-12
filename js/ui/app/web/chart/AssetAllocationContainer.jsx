@@ -5,6 +5,7 @@ import AssetAllocationChart from './AssetAllocationChart'
 import ColumnChart from './ColumnChart'
 import ButtonGroup from '../button/ButtonGroup'
 import {round} from '../../services/utils'
+import {fiatCurrencies} from '../../data/constants/currencies'
 
 const buttons = [{
   label: 'Coins Allocation',
@@ -24,11 +25,14 @@ class AssetAllocationContainer extends Component {
     this.setState({selectedBtn});
   }
 
-  getValueChartData(prop) {
+  getValueChartData(prop, includeFiat) {
     const {portfolioAgg} = this.props;
+
+    const filterAssets = (_, asset) => includeFiat ? true : !fiatCurrencies.includes(asset);
     
     const mapChartData = ({value: total}) => 
       total.get(prop)
+        .filter(filterAssets)
         .map((value, asset) => ({
           asset,
           value: round(value)
@@ -48,7 +52,7 @@ class AssetAllocationContainer extends Component {
         title='Portfolio'
         subtitle='Coins Allocation'
         currency={this.props.currency}
-        chartData={this.getValueChartData('assetValues')} />
+        chartData={this.getValueChartData('assetValues', false)} />
     )
   }
 
@@ -59,7 +63,7 @@ class AssetAllocationContainer extends Component {
         title='Portfolio'
         subtitle='Holdings'
         currency={this.props.currency}
-        chartData={this.getValueChartData('assetValues')}  />
+        chartData={this.getValueChartData('assetValues', true)}  />
     )
   } 
 

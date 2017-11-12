@@ -5,6 +5,7 @@ import AsyncPanel from '../panel/AsyncPanel'
 import Container from '../common/Container'
 import AsyncData from '../../data/core/AsyncData'
 import {getChartConfig} from '../../services/chart'
+import {fiatCurrencies} from '../../data/constants/currencies'
 import './chart.scss'
 
 export default class PortfolioChart extends PureComponent {
@@ -15,6 +16,8 @@ export default class PortfolioChart extends PureComponent {
   // create all records for a given symbol
   // i.e. [{ETH: 1000, day: 1233}, ...]
   getPortfolioChartData() {
+    const {lastNDaysData, historicProperty} = this.props;
+
     const createChartRecordsForSymbol = (priceList, symbol) => priceList.map(p =>
       Map({
         [symbol]: p.getIn(['value', this.props.historicProperty]).toFixed(2),
@@ -22,14 +25,21 @@ export default class PortfolioChart extends PureComponent {
       })
     );
 
-    const aggregate = ({value: aggregates}) => aggregates.reduce(
-      (acc, priceList, symbol) => acc.mergeWith(
-        mergeLists,
-        createChartRecordsForSymbol(priceList, symbol)
-      ),
-      ListIm()
-    )
-    .toJS();
+    // for capital gain we need to keep the 
+    const filterAssets = (_, asset) => historicProperty === 'capitalGain'
+      ? fiatCurrencies.includes(asset)
+      : !fiatCurrencies.includes(asset);
+
+    const aggregate = ({value: aggregates}) => aggregates
+      .filter(filterAssets)
+      .reduce(
+        (acc, priceList, symbol) => acc.mergeWith(
+          mergeLists,
+          createChartRecordsForSymbol(priceList, symbol)
+        ),
+        ListIm()
+      )
+      .toJS();
 
     // merge list with data for each day for a specific symbol
     // i.e. [{ETH: 1000, day: 1233}, ...] and [{BTC: 1000, day: 1233}, ...]
@@ -37,8 +47,6 @@ export default class PortfolioChart extends PureComponent {
     const mergeLists = (l1, l2) => l1
         ? l1.merge(l2)
         : l2;
-
-    const {lastNDaysData} = this.props;
 
     return lastNDaysData
       .matchWith({
