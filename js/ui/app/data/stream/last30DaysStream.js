@@ -19,11 +19,13 @@ export const startLast30DaysStream = currency => dispatch => {
     }
   }
 
-  const getPriceObj = (symbol, response) => fromJS(
+  // for the current fiat currency i.e. GBP we want to normalize it so 
+  // it contains 1 as the price becuase 1 GBP always costs 1 GBP 
+  const getPriceObj = (asset, response) => fromJS(
     response.Data.map(i => ({
       price: i.close, 
       market: '',
-      symbol,
+      asset,
       day: i.time * 1000 // unix time to js
     }))
   )
@@ -33,8 +35,8 @@ export const startLast30DaysStream = currency => dispatch => {
   
   const getPrices = ({txns, distinctAssets}, ...priceList) => {
     const priceObjReducer =  (acc, pl, index) => {
-      const symbol = distinctAssets.get(index)
-      return acc.set(symbol, getPriceObj(symbol, pl))
+      const asset = distinctAssets.get(index);
+      return acc.set(asset, getPriceObj(asset, pl));
     };
 
     return {

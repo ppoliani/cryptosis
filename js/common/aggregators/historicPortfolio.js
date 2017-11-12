@@ -16,7 +16,7 @@ const getPortfolioValueForAsset = (priceList, txns, asset) =>
       day,
       value: {
         // change: getChangeAfterDate(txns, asset, day, price),
-        // cash: getCashAfterDate(txns, asset, day),
+        capitalGain: getCashAfterDate(txns, asset, day),
         totalValue: getTotalValueForTheGivenPrice(
           getTxnsOnDate(txns, day), 
           asset, 

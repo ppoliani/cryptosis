@@ -48,7 +48,7 @@ class AssetAllocationContainer extends Component {
         title='Portfolio'
         subtitle='Coins Allocation'
         currency={this.props.currency}
-        chartData={this.getValueChartData('assetsValues')} />
+        chartData={this.getValueChartData('assetValues')} />
     )
   }
 
@@ -59,7 +59,7 @@ class AssetAllocationContainer extends Component {
         title='Portfolio'
         subtitle='Holdings'
         currency={this.props.currency}
-        chartData={this.getValueChartData('assetsValues')}  />
+        chartData={this.getValueChartData('assetValues')}  />
     )
   } 
 
