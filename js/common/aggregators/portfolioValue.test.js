@@ -1,7 +1,12 @@
 const test = require('ava')
 const {fromJS} = require('immutable')
-const {calculateHoldings} = require('./holdings')
-const {calculatePortfolioValue, calculateCapitalGain, calculateTransactionFees} = require('./portfolioValue')
+const {calculateHoldings, calculateExposure} = require('./holdings')
+const {
+  calculateHoldingsValue, 
+  calculateCapitalGain, 
+  calculateTransactionFees,
+  calculatePorfolioExposure
+} = require('./portfolioValue')
 
 const fx = fromJS({
   BTC: {price: 5000},
@@ -10,7 +15,7 @@ const fx = fromJS({
   USD: {price: 2}
 });
 
-test('calculatePortfolioValue should find the correct total value of the portfolio if there is a single transaction', t => {
+test('calculateHoldingsValue should find the correct total value of the portfolio if there is a single transaction', t => {
   const txns = fromJS({
     1: {
       buyAsset: 'BTC',
@@ -23,14 +28,14 @@ test('calculatePortfolioValue should find the correct total value of the portfol
   });
 
   const holdings = calculateHoldings(txns);
-  const portfolio = calculatePortfolioValue(holdings, fx);
+  const portfolio = calculateHoldingsValue(holdings, fx);
 
   t.is(portfolio.assetValues.get('BTC'), 25000);
   t.is(portfolio.assetValues.get('GBP'), -5010);
   t.is(portfolio.totalValue, 19990);
 });
 
-test('calculatePortfolioValue should find the correct total value of the portfolio if there more than one transactions', t => {
+test('calculateHoldingsValue should find the correct total value of the portfolio if there more than one transactions', t => {
   const txns = fromJS({
     1: {
       buyAsset: 'BTC',
@@ -59,7 +64,7 @@ test('calculatePortfolioValue should find the correct total value of the portfol
   });
 
   const holdings = calculateHoldings(txns);
-  const portfolio = calculatePortfolioValue(holdings, fx);
+  const portfolio = calculateHoldingsValue(holdings, fx);
 
   t.is(portfolio.assetValues.get('BTC'), 4500);
   t.is(portfolio.assetValues.get('GBP'), 9980);
@@ -107,4 +112,32 @@ test('calculateCapitalGain should return the sum of holding in fiat currencies',
   t.is(capitalGain.assetValues.get('GBP'), 9980);
   t.is(capitalGain.assetValues.get('USD'), 39980);
   t.is(capitalGain.totalValue, 49960);
+});
+
+test('calculatePorfolioExposure should return the sum of fiat currencies that were used to buy cryptos', t => {
+  const txns = fromJS({
+    1: {
+      buyAsset: 'BTC',
+      buyAmount: 5,
+      sellAsset: 'GBP',
+      sellAmount: 5000,
+      feesAsset: 'GBP',
+      feesAmount: 10
+    },
+    2: {
+      buyAsset: 'BTC',
+      buyAmount: 5,
+      sellAsset: 'USD',
+      sellAmount: 10000,
+      feesAsset: 'USD',
+      feesAmount: 10
+    }
+  });
+
+  const exposureHoldings = calculateExposure(txns);
+  const portfolioExposure = calculatePorfolioExposure(exposureHoldings, fx);
+
+  t.is(portfolioExposure.assetValues.get('GBP'), 5010);
+  t.is(portfolioExposure.assetValues.get('USD'), 20020);
+  t.is(portfolioExposure.totalValue, 25030);
 });

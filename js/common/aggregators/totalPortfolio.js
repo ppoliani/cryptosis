@@ -1,15 +1,15 @@
 const {fromJS} = require('immutable');
 const {calculateHoldings, calculateExposure} = require('./holdings')
-const {calculatePortfolioValue} = require('./portfolioValue')
+const {calculateHoldingsValue, calculatePorfolioExposure} = require('./portfolioValue')
 
 const calculateTotalPortfolioValue = ({transactions, fx}) => {
   const holdings = calculateHoldings(transactions);
-  const calculateExposure = calculateExposure(transactions, fx);
+  const exposureHoldings = calculateExposure(transactions, fx);
 
   return fromJS({
     holdings,
-    exposure,
-    ...calculatePortfolioValue(holdings, fx)
+    ...calculatePorfolioExposure(exposureHoldings, fx),
+    ...calculateHoldingsValue(holdings, fx)
   });
 }
 

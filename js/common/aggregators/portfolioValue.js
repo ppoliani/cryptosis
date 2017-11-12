@@ -7,14 +7,14 @@ const aggregateAssetValues = (total, assetValue) => total + assetValue;
 // Calculate the portfolio for each asset and for all of them in total.
 // The value is measured in the current currency selected by the user e.g. GBP, USD or EUR
 // fx will contain the fx exchanges against the selected currency
-const calculatePortfolioValue = (holdings, fx) => {
+const calculateHoldingsValue = (holdings, fx) => {
   const assetValues = holdings.map(calculateAssetValue(fx));
   const totalValue = assetValues.reduce(aggregateAssetValues, 0);
 
   return {assetValues, totalValue};
 }
 
-// calculatePortfolioValue understands a specific interface for the the fx prices
+// calculateHoldingsValue understands a specific interface for the the fx prices
 const wrapPriceInFxInterface = (price, asset) => fromJS({
   [asset]: {price}
 })
@@ -22,7 +22,7 @@ const wrapPriceInFxInterface = (price, asset) => fromJS({
 // Txns will include the txns on a specific day with priceOfday being the price at that time
 const getTotalValueForTheGivenPrice = (txns, asset, priceOfDay) => {
   const holdingsOfTheDay = calculateHoldings(txns);
-  const portfolioValue = calculatePortfolioValue(
+  const portfolioValue = calculateHoldingsValue(
     holdingsOfTheDay, 
     wrapPriceInFxInterface(priceOfDay, asset)
   );
@@ -33,7 +33,7 @@ const getTotalValueForTheGivenPrice = (txns, asset, priceOfDay) => {
 // Capital gain/loss is the Sum of fiat currencies holdings
 const calculateCapitalGain = (holdings, fx) => {
   const fiatHoldings = holdings.filter((_, asset) => ['GBP', 'USD', 'EUR'].includes(asset));
-  return calculatePortfolioValue(fiatHoldings, fx);
+  return calculateHoldingsValue(fiatHoldings, fx);
 }
 
 const calculateCapitalGainForTheGivenPrice = (txns, asset, priceOfDay) => {
@@ -46,9 +46,14 @@ const calculateCapitalGainForTheGivenPrice = (txns, asset, priceOfDay) => {
   return capitalGain.assetValues.get(asset, 0);
 } 
 
+const calculatePorfolioExposure = (exposureHoldings, fx) => {
+  return calculateHoldingsValue(exposureHoldings, fx);
+}
+
 module.exports = {
-  calculatePortfolioValue,
+  calculateHoldingsValue,
   getTotalValueForTheGivenPrice,
   calculateCapitalGain,
-  calculateCapitalGainForTheGivenPrice
+  calculateCapitalGainForTheGivenPrice,
+  calculatePorfolioExposure
 }
