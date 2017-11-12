@@ -16,8 +16,8 @@ test('calculateHoldings should show the correct holdings when there is one trans
       buyAmount: 5,
       sellAsset: 'GBP',
       sellAmount: 5000,
-      feeAsset: 'GBP',
-      feeAmount: 10
+      feesAsset: 'GBP',
+      feesAmount: 10
     }
   });
 
@@ -33,24 +33,24 @@ test('calculateHoldings should show the correct holdings when there is more than
       buyAmount: 5,
       sellAsset: 'GBP',
       sellAmount: 5000,
-      feeAsset: 'GBP',
-      feeAmount: 10
+      feesAsset: 'GBP',
+      feesAmount: 10
     },
     2: {
       buyAsset: 'VTC',
       buyAmount: 400,
       sellAsset: 'BTC',
       sellAmount: 1,
-      feeAsset: 'BTC',
-      feeAmount: 0.1
+      feesAsset: 'BTC',
+      feesAmount: 0.1
     },
     3: {
       buyAsset: 'GBP',
       buyAmount: 15000,
       sellAsset: 'BTC',
       sellAmount: 3,
-      feeAsset: 'GBP',
-      feeAmount: 10
+      feesAsset: 'GBP',
+      feesAmount: 10
     }
   });
 

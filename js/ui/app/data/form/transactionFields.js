@@ -7,11 +7,6 @@ const fields = [{
   label: 'Date',
   validate: [required]
 }, {
-  type: 'text',
-  name: 'expenses',
-  label: 'Expenses',
-  validate: [required, number]
-}, {
   type: 'textarea',
   name: 'notes',
   multiline: true,
@@ -43,6 +38,19 @@ export default (brokerOptions, assetOptions) => [
     type: 'text',
     name: 'sellAmount',
     label: 'Sell Amount',
+    validate: [required, number]
+  },
+  {
+    type: 'dropdown',
+    name: 'feesAsset',
+    label: 'Fees Currency',
+    validate: [required],
+    options: assetOptions
+  },
+  {
+    type: 'text',
+    name: 'feesAmount',
+    label: 'Fees Amount',
     validate: [required, number]
   },
   {

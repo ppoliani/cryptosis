@@ -32,6 +32,8 @@ const columns = [
   {key: 'buyAmount', label: 'Buy Amount'},
   {key: 'sellAsset', label: 'Sell Asset'},
   {key: 'sellAmount', label: 'Sell Amount'},
+  {key: 'feesAsset', label: 'Fees Currency'},
+  {key: 'feesAmount', label: 'Fees Amount'},
   {key: 'broker', label: 'Broker'},
   {key: 'date', label: 'Date', render: date => dateformat(date, 'DD/MM/YYYY')},
   {key: 'status', label: 'Status'},

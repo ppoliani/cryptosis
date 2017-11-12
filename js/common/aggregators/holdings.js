@@ -37,8 +37,8 @@ const calculateHoldings = txns => merge(
 const calculateTransactionFees = txns => txns.reduce(
   (fees, txn) => 
     fees.update(
-      txn.get('feeAsset'),
-      (sum=0) => sum + txn.get('feeAmount')
+      txn.get('feesAsset'),
+      (sum=0) => sum + txn.get('feesAmount')
     ),
     Map()
 )

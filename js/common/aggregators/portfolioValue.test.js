@@ -17,8 +17,8 @@ test('calculatePortfolioValue should find the correct total value of the portfol
       buyAmount: 5,
       sellAsset: 'GBP',
       sellAmount: 5000,
-      feeAsset: 'GBP',
-      feeAmount: 10
+      feesAsset: 'GBP',
+      feesAmount: 10
     }
   });
 
@@ -37,24 +37,24 @@ test('calculatePortfolioValue should find the correct total value of the portfol
       buyAmount: 5,
       sellAsset: 'GBP',
       sellAmount: 5000,
-      feeAsset: 'GBP',
-      feeAmount: 10
+      feesAsset: 'GBP',
+      feesAmount: 10
     },
     2: {
       buyAsset: 'VTC',
       buyAmount: 500,
       sellAsset: 'BTC',
       sellAmount: 1,
-      feeAsset: 'BTC',
-      feeAmount: 0.1
+      feesAsset: 'BTC',
+      feesAmount: 0.1
     },
     3: {
       buyAsset: 'GBP',
       buyAmount: 15000,
       sellAsset: 'BTC',
       sellAmount: 3,
-      feeAsset: 'GBP',
-      feeAmount: 10
+      feesAsset: 'GBP',
+      feesAmount: 10
     }
   });
 
@@ -74,8 +74,8 @@ test('calculateCapitalGain should return the sum of holding in fiat currencies',
       buyAmount: 5,
       sellAsset: 'GBP',
       sellAmount: 5000,
-      feeAsset: 'GBP',
-      feeAmount: 10
+      feesAsset: 'GBP',
+      feesAmount: 10
     },
     2: {
       buyAsset: 'VTC',
@@ -88,16 +88,16 @@ test('calculateCapitalGain should return the sum of holding in fiat currencies',
       buyAmount: 15000,
       sellAsset: 'BTC',
       sellAmount: 2,
-      feeAsset: 'GBP',
-      feeAmount: 10
+      feesAsset: 'GBP',
+      feesAmount: 10
     },
     4: {
       buyAsset: 'USD',
       buyAmount: 20000,
       sellAsset: 'BTC',
       sellAmount: 1,
-      feeAsset: 'USD',
-      feeAmount: 10
+      feesAsset: 'USD',
+      feesAmount: 10
     }
   });
 
