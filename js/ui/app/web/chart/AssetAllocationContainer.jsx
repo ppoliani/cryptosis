@@ -31,7 +31,7 @@ class AssetAllocationContainer extends Component {
     const filterAssets = (_, asset) => includeFiat ? true : !fiatCurrencies.includes(asset);
     
     const mapChartData = ({value: total}) => 
-      total.get(prop)
+      total.getIn(['value', prop])
         .filter(filterAssets)
         .map((value, asset) => ({
           asset,

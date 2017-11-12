@@ -8,8 +8,8 @@ const calculateTotalPortfolioValue = ({transactions, fx}) => {
 
   return fromJS({
     holdings,
-    ...calculatePorfolioExposure(exposureHoldings, fx),
-    ...calculateHoldingsValue(holdings, fx)
+    exposure: {...calculatePorfolioExposure(exposureHoldings, fx)},
+    value: {...calculateHoldingsValue(holdings, fx)}
   });
 }
 

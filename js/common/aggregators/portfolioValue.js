@@ -1,7 +1,7 @@
 const {fromJS} = require('immutable')
 const {calculateHoldings} = require('./holdings')
 
-const calculateAssetValue = fx => (amount, asset) => amount * fx.getIn([asset, 'price']);
+const calculateAssetValue = fx => (amount, asset) => amount * fx.getIn([asset, 'price'], 0);
 const aggregateAssetValues = (total, assetValue) => total + assetValue;
 
 // Calculate the portfolio for each asset and for all of them in total.
@@ -46,7 +46,14 @@ const calculateCapitalGainForTheGivenPrice = (txns, asset, priceOfDay) => {
   return capitalGain.assetValues.get(asset, 0);
 } 
 
-const calculatePorfolioExposure = (exposureHoldings, fx) => calculateHoldingsValue(exposureHoldings, fx);
+const calculatePorfolioExposure = (exposureHoldings, fx) => {
+  const holdingsValue = calculateHoldingsValue(exposureHoldings, fx);
+
+  return {
+    assetExposure: holdingsValue.assetValues,
+    totalExposure: holdingsValue.totalValue
+  }
+}
 
 module.exports = {
   calculateHoldingsValue,
