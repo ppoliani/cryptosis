@@ -46,9 +46,7 @@ const calculateCapitalGainForTheGivenPrice = (txns, asset, priceOfDay) => {
   return capitalGain.assetValues.get(asset, 0);
 } 
 
-const calculatePorfolioExposure = (exposureHoldings, fx) => {
-  return calculateHoldingsValue(exposureHoldings, fx);
-}
+const calculatePorfolioExposure = (exposureHoldings, fx) => calculateHoldingsValue(exposureHoldings, fx);
 
 module.exports = {
   calculateHoldingsValue,
