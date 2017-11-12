@@ -2,10 +2,10 @@ import React, {PureComponent} from 'react'
 import AmCharts from '@amcharts/amcharts3-react'
 import AsyncPanel from '../panel/AsyncPanel'
 import Container from '../common/Container'
-import {getAssetAllocationChartConfig} from '../../services/chart'
+import {getColumnChartConfig, extendWithColors} from '../../services/chart'
 import AsyncData  from '../../data/core/AsyncData'
 
-class AssetAllocationChart extends PureComponent {
+class ColumnChart extends PureComponent {
   state = {
     chartStatus: AsyncData.Loading()
   };
@@ -33,12 +33,12 @@ class AssetAllocationChart extends PureComponent {
           <div className='chart-container'>
             <AmCharts.React
               pathToImages='/images/'
-              type='pie'
+              type='serial'
               categoryField='asset'
               theme='light'
               listeners={this.getChartsListeners()}
               dataProvider={chartData}
-              {...getAssetAllocationChartConfig(currency)}/>
+              {...getColumnChartConfig(currency)}/>
             </div>
         </AsyncPanel>
       </Container>
@@ -46,4 +46,4 @@ class AssetAllocationChart extends PureComponent {
   }
 }
 
-export default AssetAllocationChart
+export default ColumnChart

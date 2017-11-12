@@ -1,5 +1,6 @@
 import {List} from 'immutable'
 
+const colors = ['#FF0F00', '#FF6600', '#FF9E01', '#FCD202', '#F8FF01', '#B0DE09', '#04D215'];
 const getSymbols = data => data
   .matchWith({
     Just: ({value: aggregates}) => aggregates.map((_, symbol) => symbol).toList(),
@@ -77,11 +78,13 @@ export const getAggregatePortfolioChartConfig = () => ({
   chartScrollbar: getChartScrollBar()
 })
 
-export const getAssetAllocationChartConfig = () => ({
+export const extendWithColors = chartData => chartData.map((d, i) => Object.assign(d, {color: colors[i]}))
+
+export const getAssetAllocationChartConfig = currency => ({
   valueField: 'value',
   titleField: 'asset',
   depth3D: 15,
-  balloonText: `[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>`,
+  balloonText: `[[title]]<br><span style='font-size:14px'><b>${currency}[[value]]</b> ([[percents]]%)</span>`,
   angle: 35,
   labelsEnabled: true,
   marginTop: 0,
@@ -90,5 +93,18 @@ export const getAssetAllocationChartConfig = () => ({
   marginRight: 0,
   pullOutRadius: 0,
   autoMargins: false,
-  color: 'rgba(255, 255, 255, 0.54)'
+  color: 'rgba(255, 255, 255, 0.54)',
+})
+
+export const getColumnChartConfig = currency => ({
+  valueField: 'value',
+  color: 'rgba(255, 255, 255, 0.54)',
+  graphs: [{
+    balloonText: `[[category]]<br><b>${currency}[[value]]</b>`,
+    fillColorsField: 'color',
+    fillAlphas: 0.9,
+    lineAlpha: 0.2,
+    type: 'column',
+    valueField: 'value'
+  }],
 })

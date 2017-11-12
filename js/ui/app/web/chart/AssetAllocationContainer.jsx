@@ -2,10 +2,17 @@ import React, {Component} from 'react'
 import {Row, Col} from 'react-flexbox-grid'
 import {autobind} from 'core-decorators'
 import AssetAllocationChart from './AssetAllocationChart'
+import ColumnChart from './ColumnChart'
 import ButtonGroup from '../button/ButtonGroup'
 import {round} from '../../services/utils'
 
-const buttons = [];
+const buttons = [{
+  label: 'Coins Allocation',
+  type: 'value'
+}, {
+  label: 'Total Holdings',
+  type: 'holdings'
+}];
 
 class AssetAllocationContainer extends Component {
   state = {
@@ -17,11 +24,11 @@ class AssetAllocationContainer extends Component {
     this.setState({selectedBtn});
   }
 
-  getValueChartData() {
+  getValueChartData(prop) {
     const {portfolioAgg} = this.props;
     
     const mapChartData = ({value: total}) => 
-      total.get('assetsValues')
+      total.get(prop)
         .map((value, asset) => ({
           asset,
           value: round(value)
@@ -38,14 +45,28 @@ class AssetAllocationContainer extends Component {
   renderValueChart() {
     return (
       <AssetAllocationChart
-        title='Portfolio Overview'
-        subtitle='Current Value'
-        chartData={this.getValueChartData()} />
+        title='Portfolio'
+        subtitle='Coins Allocation'
+        currency={this.props.currency}
+        chartData={this.getValueChartData('assetsValues')} />
     )
   }
 
+  renderHoldingsChart() {
+
+    return (
+      <ColumnChart 
+        title='Portfolio'
+        subtitle='Holdings'
+        currency={this.props.currency}
+        chartData={this.getValueChartData('assetsValues')}  />
+    )
+  } 
+
   renderChart() {
-    return this.renderValueChart();
+    return this.state.selectedBtn === 'value'
+      ? this.renderValueChart()
+      : this.renderHoldingsChart();;
   }
 
   renderButtonGroup() {

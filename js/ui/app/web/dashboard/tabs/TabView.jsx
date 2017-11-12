@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import {Row, Col} from 'react-flexbox-grid'
 import PortfolioSummary from '../PortfolioSummary'
+import {getCurrencySymbol} from '../../common/TransactionHelpers'
 import TransactionSummaryContainer from '../transaction/TransactionSummaryContainer'
 import ChartContainer from '../../chart/ChartContainer'
 import AssetAllocationContainer from '../../chart/AssetAllocationContainer'
@@ -13,6 +14,7 @@ export default class TabView extends Component {
     const {currency, asset, portfolio, transaction} = this.props;
     const lastNDaysData = portfolio.get('last30Days');
     const portfolioAgg = portfolio.get('total');
+    const currencySymbol = getCurrencySymbol(currency);
 
     return (
       <Col xs={12}>
@@ -24,7 +26,9 @@ export default class TabView extends Component {
           </Col>
           <Col lg={4} xs={12} className='row-spacing'>
             <Col className='row-spacing'>
-              <AssetAllocationContainer portfolioAgg={portfolioAgg} />
+              <AssetAllocationContainer 
+                portfolioAgg={portfolioAgg} 
+                currency={currencySymbol} />
             </Col>
           </Col>
         </Row>
