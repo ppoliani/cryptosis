@@ -1,6 +1,7 @@
 import {createAction} from 'redux-actions'
 import {combine, fromPromise} from 'most'
 import {fromJS, Map} from 'immutable'
+import subDays from 'date-fns/sub_days'
 import {partial} from '../../../../common/core/fn'
 import {calculateHistoricPortfolioValues} from '../../../../common/aggregators'
 import {changePriceToSelectedCurrency, convertToBaseCurrency} from '../../../../common/fx'
@@ -20,7 +21,20 @@ export const startLast30DaysStream = currency => dispatch => {
   }
 
   // for the current fiat currency i.e. GBP we want to normalize it so 
-  // it contains 1 as the price becuase 1 GBP always costs 1 GBP 
+  // it contains 1 as the price becuase 1 GBP always costs 1 GBP
+  // This creates a list similar to the one we would get from the historic price source
+  // but the price for the current currency will be 1;
+  // The reason we're doing that is that our source will send an error if we ask prices for 
+  // the same trading pair i.e. GBP/GBP.  But we still need to have that entry to calculate 
+  // the portfolio metrics later.
+  const normalizePriceList = (priceList) => {
+    // get from a successufll response so we use the correct day timestamps
+    const data = priceList.filter(p => p.Response === 'Success')[0].Data;
+    return {
+      Data: data.map(d => ({close: 1, time: d.time}))
+    }
+  }
+
   const getPriceObj = (asset, response) => fromJS(
     response.Data.map(i => ({
       price: i.close, 
@@ -36,7 +50,9 @@ export const startLast30DaysStream = currency => dispatch => {
   const getPrices = ({txns, distinctAssets}, ...priceList) => {
     const priceObjReducer =  (acc, pl, index) => {
       const asset = distinctAssets.get(index);
-      return acc.set(asset, getPriceObj(asset, pl));
+      return asset === currency
+        ? acc.set(asset, getPriceObj(asset, normalizePriceList(priceList)))
+        : acc.set(asset, getPriceObj(asset, pl));
     };
 
     return {
