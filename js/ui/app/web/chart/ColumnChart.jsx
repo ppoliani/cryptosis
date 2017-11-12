@@ -37,7 +37,7 @@ class ColumnChart extends PureComponent {
               categoryField='asset'
               theme='light'
               listeners={this.getChartsListeners()}
-              dataProvider={chartData}
+              dataProvider={extendWithColors(chartData)}
               {...getColumnChartConfig(currency)}/>
             </div>
         </AsyncPanel>

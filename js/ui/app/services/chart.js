@@ -1,6 +1,6 @@
 import {List} from 'immutable'
 
-const colors = ['#FF0F00', '#FF6600', '#FF9E01', '#FCD202', '#F8FF01', '#B0DE09', '#04D215'];
+const colors = ['#67B7DC', '#FDD400', '#FF0F00', '#FF6600', '#FF9E01', '#FCD202', '#F8FF01', '#B0DE09', '#04D215'];
 const getSymbols = data => data
   .matchWith({
     Just: ({value: aggregates}) => aggregates.map((_, symbol) => symbol).toList(),
