@@ -35,7 +35,7 @@ class Overview extends Component {
     const {startPortfolioStream, startLast30DaysStream} = this.props;
 
     startPortfolioStream(currency);
-    // startLast30DaysStream(currency);
+    startLast30DaysStream(currency);
   }
 
   unsubscribe() {

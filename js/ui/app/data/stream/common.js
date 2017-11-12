@@ -63,7 +63,8 @@ const extendWithCryptoPrices = (acc, next) => {
     )
 }
 
-export const getDistinctTransactions = txns => txns
+// Returns a list of all the assets currently in the portfolio
+export const getDistinctAssets = txns => txns
   .reduce(
     (acc, txn) => acc
       .add(txn.get('buyAsset'))
@@ -91,7 +92,7 @@ export const getPriceObjFromStreamData = (currency, fx, data) => ({
 
 const getInitialPrices = async (currency, transactions) => {
   transactions = fromJS(transactions.result);
-  const distinctTypes = getDistinctTransactions(transactions);
+  const distinctTypes = getDistinctAssets(transactions);
   const streams = createPriceStreams$(currency, distinctTypes);
   const cryptoPrices = await Promise.all(streams);
 

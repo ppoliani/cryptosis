@@ -6,7 +6,7 @@ import {calculateHistoricPortfolioValues} from '../../../../common/aggregators'
 import {changePriceToSelectedCurrency, convertToBaseCurrency} from '../../../../common/fx'
 import {MINUTE} from '../../../../common/constants/time'
 import {setLast30Days} from '../portfolio/portfolioActions'
-import {getPartialInvestment$, createHistoricStreams, fx$, getDistinctInvestmentTypes} from './common'
+import {getPartialTransactions$, createHistoricStreams, fx$, getDistinctAssets} from './common'
 
 export const SET_LAST_30_DAYS_SUBSCRIPTION = 'STREAM::SET_LAST_30_DAYS_SUBSCRIPTION'
 const setLast30DaysSubscription = createAction(SET_LAST_30_DAYS_SUBSCRIPTION);
@@ -28,32 +28,32 @@ export const startLast30DaysStream = currency => dispatch => {
     }))
   )
 
-  const updateInvestments = (investments, fx)  => fromJS(investments.result)
+  const updateTransactions = (txns, fx)  => fromJS(txns.result)
     .map(partial(changePriceToSelectedCurrency, currency, fx.get(currency)))
   
-  const getPrices = ({investments, uniqueInvestmentTypes}, ...priceList) => {
+  const getPrices = ({txns, distinctAssets}, ...priceList) => {
     const priceObjReducer =  (acc, pl, index) => {
-      const symbol = uniqueInvestmentTypes.get(index)
+      const symbol = distinctAssets.get(index)
       return acc.set(symbol, getPriceObj(symbol, pl))
     };
 
     return {
-      investments,
+      txns,
       prices: priceList.reduce(priceObjReducer, Map())
     };
   } 
 
-  const historicStreams = investments => {
-    const uniqueInvestmentTypes = getDistinctInvestmentTypes(investments);
+  const historicStreams = txns => {
+    const distinctAssets = getDistinctAssets(txns);
 
     return {
-      investments,
-      uniqueInvestmentTypes,
-      histoStreams$: createHistoricStreams(currency, uniqueInvestmentTypes)
+      txns,
+      distinctAssets,
+      histoStreams$: createHistoricStreams(currency, distinctAssets)
     }
   }
 
-  const subscription = combine(updateInvestments, getPartialInvestment$(), fx$(currency))
+  const subscription = combine(updateTransactions, getPartialTransactions$(), fx$(currency))
     .throttle(MINUTE)
     .map(historicStreams)
     .chain(result => combine(
