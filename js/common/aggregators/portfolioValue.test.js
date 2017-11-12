@@ -137,7 +137,7 @@ test('calculatePorfolioExposure should return the sum of fiat currencies that we
   const exposureHoldings = calculateExposure(txns);
   const portfolioExposure = calculatePorfolioExposure(exposureHoldings, fx);
 
-  t.is(portfolioExposure.assetValues.get('GBP'), 5010);
-  t.is(portfolioExposure.assetValues.get('USD'), 20020);
-  t.is(portfolioExposure.totalValue, 25030);
+  t.is(portfolioExposure.assetExposure.get('GBP'), 5010);
+  t.is(portfolioExposure.assetExposure.get('USD'), 20020);
+  t.is(portfolioExposure.totalExposure, 25030);
 });

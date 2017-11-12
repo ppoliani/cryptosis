@@ -17,12 +17,15 @@ import {
 class PortfolioSummary extends Component {
   @autobind
   renderTotalValue({value}) {
-    const totalValue = renderPrice(value.get('totalValue'), this.props.currency);
+    const totalPortfolioValue = value.getIn(['value', 'totalValue']);
+    const exposure = value.getIn(['exposure', 'totalExposure']);
+    const capitalGain = value.getIn(['capitalGain', 'totalValue']);
+
     // const capitalGain = renderCapitalGain([], currency)  value.get('totalValue')
     
     return (
       <Col xs={11} className='row-spacing'>
-        <TitledBox color='primary' header='Value'>{totalValue}</TitledBox>
+        <TitledBox color='primary' header='Value'>{renderPrice(totalPortfolioValue, this.props.currency)}</TitledBox>
       </Col>
     )
   }
