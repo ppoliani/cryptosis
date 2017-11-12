@@ -1,18 +1,13 @@
 const {fromJS, Map} = require('immutable')
-const {partial, predicate} = require('../core/fn')
+const {partial} = require('../core/fn')
 const {isOfType, isBeforeDate} = require('./utils')
 const {getTotalValueForTheGivenPrice} = require('./portfolioValue')
 
-const getTxnsOnDate = (txns, day, asset) => txns
-  .filter(
-    predicate(
-      partial(isOfType, asset),
-      partial(isBeforeDate, day))
-    )
+const getTxnsOnDate = (txns, day) => txns.filter(partial(isBeforeDate, day))
 
-// Gets all prices for the last 30 days for the given symbol i.e. ETH
+// Gets all prices for the last 30 days for the given asset i.e. ETH
 // and returns the portfolio values for each day
-// i.e. Price[] Transaction[Id, Transaction] Symbol -> {day, value}
+// i.e. Price[] Transaction[Id, Transaction] Asset -> {day, value}
 const getPortfolioValueForAsset = (priceList, txns, asset) =>
   priceList.map(p => {
     const {day, price} = p.toJS();
@@ -23,7 +18,7 @@ const getPortfolioValueForAsset = (priceList, txns, asset) =>
         // change: getChangeAfterDate(txns, asset, day, price),
         // cash: getCashAfterDate(txns, asset, day),
         totalValue: getTotalValueForTheGivenPrice(
-          getTxnsOnDate(txns, day, asset), 
+          getTxnsOnDate(txns, day), 
           asset, 
           price
         )
