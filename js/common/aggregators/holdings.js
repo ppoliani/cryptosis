@@ -23,7 +23,6 @@ const groupTxns = (positionType, txns) =>
     Map()
   )
 
-
 const groupBuys = partial(groupTxns, 'buy');
 const groupSells = partial(groupTxns, 'sell');
 
@@ -43,6 +42,19 @@ const calculateTransactionFees = txns => txns.reduce(
     Map()
 )
 
+// Exposure is the sum of all transactions with sell asset being a fiat currency plus 
+// all transactions fees in fiat currency
+const calculateExposure = txns => {
+  const sells = groupSells(txns);
+  const fees = calculateTransactionFees(txns);
+  const filterFiat = (_, asset) => ['GBP', 'USD', 'EUR'].includes(asset);
+
+  return sells
+    .filter(filterFiat)
+    .map((exposure, asset) => exposure + fees.get(asset, 0))
+}
+
 module.exports = {
-  calculateHoldings
+  calculateHoldings,
+  calculateExposure
 }

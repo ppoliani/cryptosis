@@ -42,10 +42,10 @@ export default class TabView extends Component {
           </Col>
           <Col lg={4} xs={12} className='row-spacing'>
             <Col className='row-spacing'>
-              {/* <PortfolioSummary
+              <PortfolioSummary
                 currency={currency}
-                portfolio={portfolio}
-                transaction={transaction} /> */}
+                portfolioAgg={portfolioAgg}
+                transaction={transaction} />
             </Col>
             <Col>
               {/* <TransactionSummaryContainer /> */}
