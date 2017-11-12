@@ -7,11 +7,8 @@ const TypeOneButtons = [{
   label: 'Total',
   type: 'total'
 }, {
-  label: 'Change',
-  type: 'change'
-}, {
-  label: 'Cash',
-  type: 'cash'
+  label: 'Capital Gain',
+  type: 'capitalGain'
 }];
 
 const TypeTwoButtons = [{

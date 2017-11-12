@@ -21,7 +21,7 @@ export default class TabView extends Component {
         <Row between='xs'>
           <Col lg={8} xs={12} className='row-spacing'>
             <Col className='row-spacing'>
-              {<ChartContainer lastNDaysData={lastNDaysData} />}
+              <ChartContainer lastNDaysData={lastNDaysData} />
             </Col>
           </Col>
           <Col lg={4} xs={12} className='row-spacing'>

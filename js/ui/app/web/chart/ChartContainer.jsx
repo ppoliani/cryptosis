@@ -5,20 +5,16 @@ import ChartButtonGroup from './ChartButtonGroup'
 import PortfolioChart from './PortfolioChart'
 import AggregatePortfolioChart from './AggregatePortfolioChart'
 import './chart.scss'
-
+ 
 const ChartProps = {
   total: {
     historicProperty: 'totalValue',
     subtitle: 'Total (last 30 days)'
   },
-  cash: {
-    historicProperty: 'cash',
-    subtitle: 'Cash (last 30 days)'
-  },
-  change: {
-    historicProperty: 'change',
-    subtitle: 'Change (last 30 days)'
-  }
+  capitalGain: {
+    historicProperty: 'capitalGain',
+    subtitle: 'Capital Gain (last 30 days)'
+  } 
 }
 
 class ChartContainer extends Component {
