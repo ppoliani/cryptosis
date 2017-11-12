@@ -34,7 +34,7 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
       .map(partial(changePriceToSelectedCurrency, currency, fx.get(currency)));
 
     return {
-      transactions: transactions,
+      transactions: updatedTxns,
       price: fromJS(priceData),
       fx: prices
     }
