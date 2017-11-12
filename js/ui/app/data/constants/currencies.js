@@ -7,7 +7,7 @@ export const currencySymbols = {
 export const fiatCurrencies = ['GBP', 'USD', 'EUR'];
 
 export const currencyOptions = [{
-  value: 'c',
+  value: 'GBP',
   text: 'GBP'
 }, {
   value: 'EUR',
