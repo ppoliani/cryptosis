@@ -2,18 +2,13 @@ import React, {PureComponent} from 'react'
 import {autobind} from 'core-decorators'
 import {Row, Col} from 'react-flexbox-grid'
 import {renderCapitalGain, renderPrice} from '../../common/TransactionHelpers' 
-import {getTotalCashForType, getQtyForType, getCapitalGain} from '../../../../../common/metrics/portfolio'
+import {getAssetMetrics} from '../../../../../common/metrics'
 import TitledBox from '../../box/TitledBox'
 
 class TransactionSummary extends PureComponent {
   render() {
-    const {asset, currency, portfolio, total} = this.props;
-    const exposure = total.getIn(['totalExposure', asset]);
-    const holdings = getQtyForType(portfolio, asset);
-    const currentValue = total.getIn(['currentValue', asset]);
-    const totalInvested = total.getIn(['totalInvested', asset]);
-    const totalCash = getTotalCashForType(portfolio, asset);
-    const percentageChange = renderCapitalGain(getCapitalGain(portfolio), currency);
+    const {asset, currency, total} = this.props;
+    const {holdings, assetValue, exposure, capitalGain, percChange} = getAssetMetrics(total, asset);
 
     return (
       <div>
@@ -26,24 +21,16 @@ class TransactionSummary extends PureComponent {
           </Col>
         </Row>
         <Row around='xs'>
-          <Col xs={5} className='row-spacing'>
-            <TitledBox color='secondary' header='Cash'>{renderPrice(totalCash, currency)}</TitledBox>
-          </Col>
-          <Col xs={5} className='row-spacing'>
-            <TitledBox color='secondary' header='Amount Invested'>{renderPrice(totalInvested, currency)}</TitledBox>
-          </Col>
-        </Row>
-        <Row around='xs'>
-          <Col xs={5} className='row-spacing'>
-            <TitledBox color='secondary' header='Current Value'>{renderPrice(currentValue, currency)}</TitledBox>
-          </Col>
-          <Col xs={5} className='row-spacing'>
+          {/* <Col xs={5} className='row-spacing'>
             <TitledBox color='secondary' header='Safe Sell Price'>{renderPrice(exposure / holdings, currency)}</TitledBox>
-          </Col>
+          </Col> */}
         </Row>
         <Row around='xs'>
-          <Col xs={11} className='row-spacing'>
-            <TitledBox color='secondary' header='Capital Gain'>{percentageChange}</TitledBox>
+        <Col xs={5} className='row-spacing'>
+            <TitledBox color='secondary' header='Current Value'>{renderPrice(assetValue, currency)}</TitledBox>
+          </Col>
+          <Col xs={5} className='row-spacing'>
+            <TitledBox color='secondary' header='Capital Gain'>{renderCapitalGain([capitalGain,percChange], currency)}</TitledBox>
           </Col>
         </Row>
       </div>

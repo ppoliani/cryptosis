@@ -3,7 +3,7 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import {Row, Col} from 'react-flexbox-grid'
 import PortfolioSummary from '../PortfolioSummary'
 import {getCurrencySymbol} from '../../common/TransactionHelpers'
-// import TransactionSummaryContainer from '../transaction/TransactionSummaryContainer'
+import TransactionSummaryContainer from '../transaction/TransactionSummaryContainer'
 import ChartContainer from '../../chart/ChartContainer'
 import AssetAllocationContainer from '../../chart/AssetAllocationContainer'
 import ExtraInfoTabView from './ExtraInfoTabView'
@@ -48,7 +48,7 @@ export default class TabView extends Component {
                 transaction={transaction} />
             </Col>
             <Col>
-              {/* <TransactionSummaryContainer /> */}
+              <TransactionSummaryContainer />
             </Col>
           </Col>
         </Row>

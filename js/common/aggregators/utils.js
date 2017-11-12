@@ -10,9 +10,12 @@ const calculatePercentageChange = (initial, current) => initial === 0
   ? 0
   : (current / initial) * 100;
 
+const excludeFiat = data => data.filter((_, asset) => !['GBP', 'USD', 'EUR'].includes(asset));
+
 module.exports = {
   isOfType,
   isBeforeDate,
   getTxnsOnDate,
-  calculatePercentageChange
+  calculatePercentageChange,
+  excludeFiat
 }

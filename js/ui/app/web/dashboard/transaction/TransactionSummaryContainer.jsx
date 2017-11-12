@@ -6,18 +6,19 @@ import AsyncData from '../../../data/core/AsyncData'
 import {getSelectedCurrency, getSelectedAsset} from '../../common/TransactionHelpers'
 import TransactionsSummary from './TransactionsSummary'
 import AssetSelector from '../../form/selectors/AssetSelector'
+import {excludeFiat} from '../../../../../common/aggregators/utils'
 
 class TransactionSummaryContainer extends Component {
-  getAssetOptions(totalExposure) {
-    return [...totalExposure.keys()]
+  getAssetOptions(assetValues) {
+    return [...assetValues.keys()]
       .map(k => ({
         value: k,
         text: k
       }));
   }
 
-  getSelectedAsset(totalExposure) {
-    const options = this.getAssetOptions(totalExposure);
+  getSelectedAsset(assetValues) {
+    const options = this.getAssetOptions(assetValues);
     return getSelectedAsset(this.props.form) || (options[0] && options[0].value);
   }
 
@@ -28,9 +29,9 @@ class TransactionSummaryContainer extends Component {
       .get('total')
       .matchWith({
         Just: ({value: total}) => {
-          const totalExposure = total.get('totalExposure');
-          const options = this.getAssetOptions(totalExposure);
-          const selected = this.getSelectedAsset(totalExposure);
+          const assetValues = total.getIn(['value', 'assetValues']);
+          const options = this.getAssetOptions(assetValues);
+          const selected = this.getSelectedAsset(assetValues);
 
           return (
             <AssetSelector
@@ -49,15 +50,13 @@ class TransactionSummaryContainer extends Component {
       .get('total')
       .matchWith({
         Just: ({value: total}) => {
-          const totalExposure = total.get('totalExposure');
-          const selected = this.getSelectedAsset(totalExposure);
-          const asset = this.getSelectedAsset(totalExposure);
           const currency = getSelectedCurrency(form);
+          const assetValues = total.getIn(['value', 'assetValues']);
+          const asset = this.getSelectedAsset(assetValues);
 
           return (
             <TransactionsSummary
               total={total}
-              portfolio={portfolio}
               asset={asset}
               currency={currency} />
           );
