@@ -6,27 +6,26 @@ import Container from '../common/Container'
 import AsyncPanel from '../panel/AsyncPanel'
 import {renderPrice, renderCapitalGain} from '../common/TransactionHelpers'
 import TitledBox from '../box/TitledBox'
-import { 
-  getTotalExposure,
-  getTotalPortfolioValue,
-  getTotalCash,
-  getTotalInvested,
-  getCapitalGain
-} from '../../../../common/metrics/portfolio'
+import {calculatePercentageChange} from '../../../../common/aggregators/utils'
 
 class PortfolioSummary extends Component {
-  @autobind
+  @autobind 
   renderTotalValue({value}) {
+    const {currency} = this.props;
     const totalPortfolioValue = value.getIn(['value', 'totalValue']);
     const exposure = value.getIn(['exposure', 'totalExposure']);
     const capitalGain = value.getIn(['capitalGain', 'totalValue']);
+    const percChange = calculatePercentageChange(exposure, capitalGain);
 
-    // const capitalGain = renderCapitalGain([], currency)  value.get('totalValue')
-    
     return (
-      <Col xs={11} className='row-spacing'>
-        <TitledBox color='primary' header='Value'>{renderPrice(totalPortfolioValue, this.props.currency)}</TitledBox>
-      </Col>
+      <Row around='xs'>
+        <Col key={0} xs={11} className='row-spacing'>
+          <TitledBox color='primary' header='Value'>{renderPrice(totalPortfolioValue, currency)}</TitledBox>
+        </Col>
+        <Col key={1} xs={11} className='row-spacing'>
+          <TitledBox color='primary' header='Capital Gain'>{renderCapitalGain([capitalGain,percChange], currency)}</TitledBox>
+        </Col>
+      </Row>
     )
   }
 
@@ -39,20 +38,11 @@ class PortfolioSummary extends Component {
 
   render() {
     const {transaction, currency} = this.props;
-    // renderCapitalGain(10, currency)
-    //   renderPrice(1000, currency)
-    // const portfolioValue = getTotalPortfolioValue(portfolio);
-
 
     return (
-      <Container title='Current' subtitle='Status'>
+      <Container title='Portfolio' subtitle='Overview'>
         <AsyncPanel asyncResult={transaction.get('fetchTxnsResult')}>
-          <Row around='xs'>
-            {this.renderSummary()}
-            <Col xs={11} className='row-spacing'>
-              <TitledBox color='primary' header='Capital Gain'>{10}</TitledBox>
-            </Col>
-          </Row>
+          {this.renderSummary()}
         </AsyncPanel>
       </Container>
     )
