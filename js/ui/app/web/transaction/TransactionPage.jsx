@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import {List, fromJS, Map} from 'immutable'
 import dateformat from 'date-fns/format'
-import {partial, pipe, noop} from '../../../../common/core/fn'
+import {partial, pipe, noop, prop} from '../../../../common/core/fn'
 import {filterObject} from '../../services/utils'
 import {connect} from 'react-redux'
 import {identity} from 'folktale/core/lambda'
@@ -10,7 +10,7 @@ import Button from 'material-ui/FlatButton'
 import PageWithPanel from '../panel/PageWithPanel'
 import AsyncPanel from '../panel/AsyncPanel'
 import {AsyncDataAll} from '../../data/core/AsyncData'
-import Table from '../table/Table'
+import DataGrid from '../grid/DataGrid'
 import Container from '../common/Container'
 import DialogBoxMixin from '../mixins/DialogBoxMixin'
 import PanelContent from './PanelContent'
@@ -28,25 +28,23 @@ import {
 } from '../../data/transaction/transactionActions'
 
 const columns = [
-  {key: 'buyAsset', label: 'Buy Asset'},
-  {key: 'buyAmount', label: 'Buy Amount'},
-  {key: 'sellAsset', label: 'Sell Asset'},
-  {key: 'sellAmount', label: 'Sell Amount'},
-  {key: 'feesAsset', label: 'Fees Currency'},
-  {key: 'feesAmount', label: 'Fees Amount'},
-  {key: 'broker', label: 'Broker'},
-  {key: 'date', label: 'Date', render: date => dateformat(date, 'DD/MM/YYYY')},
-  {key: 'status', label: 'Status'},
-  {key: 'action', label: 'Action'}
+  {id: 'buyAsset', Header: 'Buy Asset', accessor: prop('buyAsset')},
+  {id: 'buyAmount', Header: 'Buy Amount', accessor: prop('buyAmount')},
+  {id: 'sellAsset', Header: 'Sell Asset',  accessor: prop('sellAsset')},
+  {id: 'sellAmount', Header: 'Sell Amount',  accessor: prop('sellAmount')},
+  {id: 'feesAsset', Header: 'Fees Currency',  accessor: prop('feesAsset')},
+  {id: 'feesAmount', Header: 'Fees Amount',  accessor: prop('feesAmount')},
+  {id: 'broker', Header: 'Broker',  accessor: prop('broker')},
+  {id: 'date', Header: 'Date', accessor: date => dateformat(date, 'DD/MM/YYYY')},
+  {id: 'status', Header: 'Status', accessor: prop('status')},
+  {id: 'action', Header: 'Action'}
 ];
 const DEFAULT_CURRENCY = 'GBP';
 
 @DialogBoxMixin
 class TransactionPage extends PureComponent {
   state = {
-    isPanelOpen: false,
-    limit: 10,
-    page: 1
+    isPanelOpen: false
   }
 
   componentDidMount() {
@@ -85,15 +83,14 @@ class TransactionPage extends PureComponent {
     this.props.startTransactionCurrentValueStream(currency);
   }
 
-  loadTransactions() {
+  loadTransactions(page=0, limit=10) {
     const {getTransactions, transactions} = this.props;
 
     transactions.get('fetchTxnCountResult').matchWith({
-      Empty: noop,
-      Loading: noop,
+      Empty: noop, 
+      Loading: noop, 
       Success: () => {
-        const {limit, page} = this.state;
-        const skip = (page - 1) * limit;
+        const skip = page * limit;
         getTransactions({skip, limit});
       },
       Failure: noop
@@ -129,20 +126,23 @@ class TransactionPage extends PureComponent {
     this.openDialog(partial(this.onTxnDelete, txn))
   }
 
-  handleCellClick = (e, _, txn) => {
-    this.togglePanel(e, txn);
+  handlePageChange = ({pageIndex}) => {
+    return this.loadTransactions(pageIndex);
   }
 
-  handleRowSizeChange = (e, rows) => {
-    this.setState(Object.assign({}, this.state, {page: 1, limit: rows}), this.loadTransactions);
+  handlePageSizeChange = (pageSize, pageIndex) => {
+    return this.loadTransactions(page, pageSize);
   }
 
-  handleNextPageClick = (e, page) => {
-    this.setState(Object.assign({}, this.state, {page: this.state.page + 1}), this.loadTransactions);
+  handleSortedChange = (newSorted, column, shiftKey) => {
+    console.log('>>>>>>>>>>', column);
+    console.log('>>>>>>>>>>', newSorted);
+    console.log('>>>>>>>>>>', shiftKey);
   }
 
-  handlePreviousPageClick = (e, page) => {
-    this.setState(Object.assign({}, this.state, {page: this.state.page - 1}), this.loadTransactions);
+  handleFilteredChange = (column, value) => {
+    console.log('>>>>>>>>>>', column);
+    console.log('>>>>>>>>>>', value);
   }
 
   // will include the value for each transaction
@@ -176,17 +176,15 @@ class TransactionPage extends PureComponent {
       Empty: noop,
       Loading: noop,
       Success: ({value}) => (
-        <Table
-          columns={columns}
-          limit={this.state.limit}
-          page={this.state.page}
+        <DataGrid 
           data={data}
-          count={transactions.get('count')}
-          onRowSizeChange={this.handleRowSizeChange}
-          onNextPageClick={this.handleNextPageClick}
-          onPreviousPageClick={this.handlePreviousPageClick}
-          handleCellClick={this.handleCellClick}
-        />
+          loading={transactions.get('fetchTxnsResult')}
+          columns={columns}
+          pages={transactions.get('count')}
+          handlePageChange={this.handlePageChange} 
+          handlePageSizeChange={this.handlePageSizeChange}
+          handleSortedChange={this.handleSortedChange} 
+          handleFilteredChange={this.handleFilteredChange} />
       ),
       Failure: noop
     })
@@ -201,7 +199,7 @@ class TransactionPage extends PureComponent {
     ]);
 
     return (
-      <Container title='Completed Transactions' subtitle=''>
+      <Container title='' subtitle=''>
         <AsyncPanel asyncResult={asyncResult}>
           {this.renderTransactionTable(data)}
         </AsyncPanel>

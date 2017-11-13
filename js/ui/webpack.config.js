@@ -126,7 +126,7 @@ module.exports = () => {
         {
           test: /\.css$/,
           loader: 'style-loader!css-loader',
-          include: /flexboxgrid/
+          include: /node_modules/, 
         },
         {
           test: /\.(js|jsx)$/,
