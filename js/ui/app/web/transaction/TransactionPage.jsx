@@ -27,24 +27,35 @@ import {
   deleteTransaction
 } from '../../data/transaction/transactionActions'
 
-const columns = [
-  {id: 'buyAsset', Header: 'Buy Asset', accessor: prop('buyAsset')},
-  {id: 'buyAmount', Header: 'Buy Amount', accessor: prop('buyAmount')},
-  {id: 'sellAsset', Header: 'Sell Asset',  accessor: prop('sellAsset')},
-  {id: 'sellAmount', Header: 'Sell Amount',  accessor: prop('sellAmount')},
-  {id: 'feesAsset', Header: 'Fees Currency',  accessor: prop('feesAsset')},
-  {id: 'feesAmount', Header: 'Fees Amount',  accessor: prop('feesAmount')},
-  {id: 'broker', Header: 'Broker',  accessor: prop('broker')},
-  {id: 'date', Header: 'Date', accessor: date => dateformat(date, 'DD/MM/YYYY')},
-  {id: 'status', Header: 'Status', accessor: prop('status')},
-  {id: 'action', Header: 'Action'}
-];
 const DEFAULT_CURRENCY = 'GBP';
 
 @DialogBoxMixin
 class TransactionPage extends PureComponent {
   state = {
-    isPanelOpen: false
+    isPanelOpen: false,
+    page: 0,
+    limit: 10
+  }
+
+  rendereDeleteBtn(txn) {
+    return (
+      <Button label="Delete" primary={true} onClick={partial(this.onTxnDeleteClick, txn)} />
+    )
+  }
+
+  getColumns() {
+    return [
+      {id: 'buyAsset', Header: 'Buy Asset', accessor: prop('buyAsset')},
+      {id: 'buyAmount', Header: 'Buy Amount', accessor: prop('buyAmount')},
+      {id: 'sellAsset', Header: 'Sell Asset',  accessor: prop('sellAsset')},
+      {id: 'sellAmount', Header: 'Sell Amount',  accessor: prop('sellAmount')},
+      {id: 'feesAsset', Header: 'Fees Currency',  accessor: prop('feesAsset')},
+      {id: 'feesAmount', Header: 'Fees Amount',  accessor: prop('feesAmount')},
+      {id: 'broker', Header: 'Broker',  accessor: prop('broker')},
+      {id: 'date', Header: 'Date', accessor: ({date}) => dateformat(date, 'DD/MM/YYYY')},
+      {id: 'status', Header: 'Status', accessor: prop('status')},
+      {id: 'action', Header: 'Action', accessor: this.rendereDeleteBtn}
+    ];
   }
 
   componentDidMount() {
@@ -83,8 +94,9 @@ class TransactionPage extends PureComponent {
     this.props.startTransactionCurrentValueStream(currency);
   }
 
-  loadTransactions(page=0, limit=10) {
+  loadTransactions() {
     const {getTransactions, transactions} = this.props;
+    const {page, limit} = this.state;
 
     transactions.get('fetchTxnCountResult').matchWith({
       Empty: noop, 
@@ -126,12 +138,13 @@ class TransactionPage extends PureComponent {
     this.openDialog(partial(this.onTxnDelete, txn))
   }
 
-  handlePageChange = ({pageIndex}) => {
-    return this.loadTransactions(pageIndex);
+  handlePageChange = page => {
+    this.setState(Object.assign({}, this.state, {page}), this.loadTransactions);
+
   }
 
-  handlePageSizeChange = (pageSize, pageIndex) => {
-    return this.loadTransactions(page, pageSize);
+  handlePageSizeChange = (pageSize, page) => {
+    this.setState(Object.assign({}, this.state, {page, limit: pageSize}), this.loadTransactions);
   }
 
   handleSortedChange = (newSorted, column, shiftKey) => {
@@ -151,7 +164,6 @@ class TransactionPage extends PureComponent {
       (acc, v, id) => acc.push(
         v.set('id', id)
           .set('status', v.get('positionType') === 'buy' ? renderTransactionValue(id, transactionValues, getSelectedCurrency(this.props.form)) : '')
-          .set('action', <Button label="Delete" primary={true} onClick={partial(this.onTxnDeleteClick, v)} />)
       ),
       List()
     )
@@ -171,6 +183,7 @@ class TransactionPage extends PureComponent {
 
   renderTransactionTable(data) {
     const {transactions} = this.props;
+    const {page, limit} = this.state;
 
     return transactions.get('fetchTxnCountResult').matchWith({
       Empty: noop,
@@ -178,8 +191,10 @@ class TransactionPage extends PureComponent {
       Success: ({value}) => (
         <DataGrid 
           data={data}
+          page={page}
+          pageSize={limit}
           loading={transactions.get('fetchTxnsResult')}
-          columns={columns}
+          columns={this.getColumns()}
           pages={transactions.get('count')}
           handlePageChange={this.handlePageChange} 
           handlePageSizeChange={this.handlePageSizeChange}

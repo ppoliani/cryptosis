@@ -18,7 +18,7 @@ class DataGrid extends Component {
   }
 
   render() { 
-    const {data, columns, pages, handlePageChange, handlePageSizeChange, handleSortedChange, handleFilteredChange} = this.props;
+    const {data, columns, page, pageSize, pages, handlePageChange, handlePageSizeChange, handleSortedChange, handleFilteredChange} = this.props;
 
     return (
       <ReactTable 
@@ -28,6 +28,8 @@ class DataGrid extends Component {
         loading={this.isLoading()}
         defaultPageSize={10}
         className='-striped -highlight'
+        page={page}
+        pageSize={pageSize}
         pages={pages}
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
