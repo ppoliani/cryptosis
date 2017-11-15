@@ -3,6 +3,10 @@ import {task} from 'folktale/concurrency/task'
 import {getItem} from './storage'
 import config from './config'
 
+export const normalizeFilters = filters => filters.reduce((acc, filter) => {
+  return Object.assign({}, acc, {[filter.id]: filter.value})
+}, {});
+
 export const constructUrl = (url, params) =>
   `
   ${url}?${

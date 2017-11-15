@@ -1,7 +1,7 @@
 import {createAction} from 'redux-actions'
 import {map} from 'folktale/core/lambda'
 import {Map} from 'immutable'
-import fetch, {constructUrl} from '../../services/api'
+import fetch, {constructUrl, normalizeFilters} from '../../services/api'
 import {partial} from '../../../../common/core/fn'
 import config from '../../services/config'
 
@@ -45,7 +45,9 @@ const getTransactionsCountRoot = fetch => {
 }
 
 const getTransactionsRoot = fetch => {
-  const getUrl = ({skip=0, limit=10}) => constructUrl(TRANSACTION_ENDPOINT, Map({skip, limit}));
+  const getUrl = ({skip=0, limit=10, filters}) => {
+    return constructUrl(TRANSACTION_ENDPOINT, Map({skip, limit, ...normalizeFilters(filters)}))
+  };
   const fetchData = (partial(fetch, 'GET')) ['∘'] (getUrl);
 
   return createAction(

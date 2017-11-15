@@ -18,10 +18,6 @@ class DataGrid extends Component {
     });
   }
 
-  handleFilteredChange = (value) => {
-
-  }
-
   render() { 
     const {data, columns, page, pageSize, pages, handlePageChange, handlePageSizeChange, handleSortedChange, handleFilteredChange} = this.props;
 
@@ -29,7 +25,7 @@ class DataGrid extends Component {
       <ReactTable 
         data={data}
         columns={columns}
-        filterable
+        
         manual
         loading={this.isLoading()}
         defaultPageSize={10}
@@ -40,7 +36,7 @@ class DataGrid extends Component {
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
         onSortedChange={handleSortedChange}
-        onFilteredChange={debouncedCallback(handleFilteredChange, 200)} />
+        onFilteredChange={debouncedCallback(handleFilteredChange, 300)} />
     )
   }
 }

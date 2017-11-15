@@ -1,4 +1,4 @@
-const {contructCreateMatchString, contructUpdateMatchString, createMatchObj} = require('../utils');
+const {contructCreateMatchString, contructUpdateMatchString, createMatchObj, constructFilters} = require('../utils');
 const {runQuery} = require('../query');
 
 let DbDriver;
@@ -55,13 +55,15 @@ const updateTransaction = async ({resource:txn}) => {
 }
 
 const getTransactions = async ({ctx}) => {
-  const {skip=0, limit=1000000} = ctx.request.query;
+  const {skip=0, limit=1000000, ...filters} = ctx.request.query;
 
   return  await runQuery( 
     DbDriver,
     `
       ${matchClause}
       WHERE ID(u)=${Number(ctx.state.user.id)}
+      WITH txn, atb, ats, b, atf
+      ${constructFilters('txn', filters)}
       RETURN txn{ .*, id: ID(txn), buyAsset:atb.name, sellAsset:ats.name, feesAsset:atf.name, broker:b.name}
       ORDER BY txn.date DESC
       SKIP ${skip}

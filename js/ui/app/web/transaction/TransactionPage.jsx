@@ -45,14 +45,14 @@ class TransactionPage extends PureComponent {
 
   getColumns() {
     return [
-      {id: 'buyAsset', Header: 'Buy Asset', accessor: prop('buyAsset')},
+      {id: 'buyAsset', Header: 'Buy Asset', accessor: prop('buyAsset'), filterable: true},
       {id: 'buyAmount', Header: 'Buy Amount', accessor: prop('buyAmount')},
-      {id: 'sellAsset', Header: 'Sell Asset',  accessor: prop('sellAsset')},
+      {id: 'sellAsset', Header: 'Sell Asset',  accessor: prop('sellAsset'), filterable: true},
       {id: 'sellAmount', Header: 'Sell Amount',  accessor: prop('sellAmount')},
-      {id: 'feesAsset', Header: 'Fees Currency',  accessor: prop('feesAsset')},
+      {id: 'feesAsset', Header: 'Fees Currency',  accessor: prop('feesAsset'), filterable: true},
       {id: 'feesAmount', Header: 'Fees Amount',  accessor: prop('feesAmount')},
-      {id: 'broker', Header: 'Broker',  accessor: prop('broker')},
-      {id: 'date', Header: 'Date', accessor: ({date}) => dateformat(date, 'DD/MM/YYYY')},
+      {id: 'broker', Header: 'Broker',  accessor: prop('broker'), filterable: true},
+      {id: 'date', Header: 'Date', accessor: ({date}) => dateformat(date, 'DD/MM/YYYY'), filterable: true},
       {id: 'status', Header: 'Status', accessor: prop('status')},
       {id: 'action', Header: 'Action', accessor: this.rendereDeleteBtn}
     ];
@@ -94,7 +94,7 @@ class TransactionPage extends PureComponent {
     this.props.startTransactionCurrentValueStream(currency);
   }
 
-  loadTransactions() {
+  loadTransactions(filters = []) {
     const {getTransactions, transactions} = this.props;
     const {page, limit} = this.state;
 
@@ -103,7 +103,7 @@ class TransactionPage extends PureComponent {
       Loading: noop, 
       Success: () => {
         const skip = page * limit;
-        getTransactions({skip, limit});
+        getTransactions({skip, limit, filters});
       },
       Failure: noop
     });
@@ -153,9 +153,8 @@ class TransactionPage extends PureComponent {
     console.log('>>>>>>>>>>', shiftKey);
   }
 
-  handleFilteredChange = ([{id: column, value}]) => {
-    console.log('>>>>>>>>>>', column);
-    console.log('>>>>>>>>>>', value);
+  handleFilteredChange = filters => {
+    this.loadTransactions(filters);
   }
 
   // will include the value for each transaction

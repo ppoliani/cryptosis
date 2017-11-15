@@ -1,5 +1,5 @@
 const neo4j = require('neo4j-driver').v1
-const {Map, List} = require('immutable')
+const {Map, List, fromJS} = require('immutable')
 const omit = require('lodash.omit')
 const Maybe = require('folktale/data/maybe')
 const {flatten} = require('../core/fn')
@@ -63,6 +63,18 @@ const createMatchObj = entity =>
       {}
     );
 
+
+const constructFilters = (node, filters=[]) => {
+  const str = fromJS(filters)
+    .reduce((acc, value, filter) => 
+      acc.push(`${node}.${filter} =~ '(?i)${value}*'`),
+      List()
+    )
+    .join(',');
+
+    return str ? `WHERE ${str}` : '';
+}
+
 const contructCreateMatchString = (entity, omitProps=[]) =>
   [
     '{',
@@ -71,6 +83,7 @@ const contructCreateMatchString = (entity, omitProps=[]) =>
     '}'
   ]
   .join('')
+
 
 const contructUpdateMatchString = entity =>
   [
@@ -90,6 +103,7 @@ module.exports = {
   unwrapCypherResultToMap,
   contructCreateMatchString,
   contructUpdateMatchString,
+  constructFilters,
   createMatchObj,
   getInteger
 };
