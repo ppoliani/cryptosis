@@ -109,7 +109,7 @@ class TransactionPage extends PureComponent {
     });
 
     if(filters.length > 0) {
-      //getTransactionsCount(filters);
+      getTransactionsCount(filters);
       return execRequest();
     }
 
@@ -191,22 +191,24 @@ class TransactionPage extends PureComponent {
     const {transactions} = this.props;
     const {page, limit} = this.state;
 
+    const render = ({value}) => (
+      <DataGrid 
+        data={data}
+        page={page}
+        pageSize={limit}
+        loading={transactions.get('fetchTxnsResult')}
+        columns={this.getColumns()}
+        pages={transactions.get('count')}
+        handlePageChange={this.handlePageChange} 
+        handlePageSizeChange={this.handlePageSizeChange}
+        handleSortedChange={this.handleSortedChange} 
+        handleFilteredChange={this.handleFilteredChange} />
+    )
+
     return transactions.get('fetchTxnCountResult').matchWith({
       Empty: noop,
-      Loading: noop,
-      Success: ({value}) => (
-        <DataGrid 
-          data={data}
-          page={page}
-          pageSize={limit}
-          loading={transactions.get('fetchTxnsResult')}
-          columns={this.getColumns()}
-          pages={transactions.get('count')}
-          handlePageChange={this.handlePageChange} 
-          handlePageSizeChange={this.handlePageSizeChange}
-          handleSortedChange={this.handleSortedChange} 
-          handleFilteredChange={this.handleFilteredChange} />
-      ),
+      Loading: render,
+      Success: render,
       Failure: noop
     })
   }

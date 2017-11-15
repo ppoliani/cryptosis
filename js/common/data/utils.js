@@ -67,10 +67,10 @@ const createMatchObj = entity =>
 const constructFilters = (node, filters=[]) => {
   const str = fromJS(filters)
     .reduce((acc, value, filter) => 
-      acc.push(`${node}.${filter} CONTAINS '${value}'`),
+      acc.push(`${node}.${filter} =~ '.*${value}.*'`),
       List()
     )
-    .join(',');
+    .join(' AND ');
 
     return str ? `WHERE ${str}` : '';
 }
