@@ -1,3 +1,5 @@
+const {create} = require('@most/create');
+
 const partial = (fn, ...args) => (...restArgs) => fn.apply(this, args.concat(restArgs));
 const pipe = (...fns) => fns.reverse().reduce((res, fn) => fn(res));
 const noop = () => {};
@@ -13,7 +15,12 @@ Function.prototype['∘'] = function(f) {
   return x => this(f(x))
 }
 
+const debouncedCallback = (callback, time) => (...args) =>
+  create((add, end, error) => add(...args))
+  .debounce(time)
+  .skipRepeats()
+  .observe(callback);
 
 const predicate = (...conditions) => item => conditions.every(c => c(item))
 
-module.exports = {partial, pipe, prop, flatten, predicate, noop, True, False}
+module.exports = {partial, pipe, prop, flatten, predicate, noop, True, False, debouncedCallback}

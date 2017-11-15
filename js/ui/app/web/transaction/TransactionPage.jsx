@@ -153,7 +153,7 @@ class TransactionPage extends PureComponent {
     console.log('>>>>>>>>>>', shiftKey);
   }
 
-  handleFilteredChange = (column, value) => {
+  handleFilteredChange = ([{id: column, value}]) => {
     console.log('>>>>>>>>>>', column);
     console.log('>>>>>>>>>>', value);
   }
@@ -268,7 +268,7 @@ class TransactionPage extends PureComponent {
             </Col>
           </Row>
           <Row className='row-spacing'>
-            <Col>
+            <Col xs>
               {this.renderTable()}
             </Col>
           </Row>

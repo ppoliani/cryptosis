@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import ReactTable from 'react-table'
-import {noop, True, False} from '../../../../common/core/fn'
+import {noop, True, False, debouncedCallback} from '../../../../common/core/fn'
 import 'react-table/react-table.css'
+import './dataGrid.scss'
 
 class DataGrid extends Component {
   state = {
@@ -17,6 +18,10 @@ class DataGrid extends Component {
     });
   }
 
+  handleFilteredChange = (value) => {
+
+  }
+
   render() { 
     const {data, columns, page, pageSize, pages, handlePageChange, handlePageSizeChange, handleSortedChange, handleFilteredChange} = this.props;
 
@@ -24,17 +29,18 @@ class DataGrid extends Component {
       <ReactTable 
         data={data}
         columns={columns}
+        filterable
         manual
         loading={this.isLoading()}
         defaultPageSize={10}
-        className='-striped -highlight'
+        className='data-grid -striped -highlight'
         page={page}
         pageSize={pageSize}
         pages={pages}
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
         onSortedChange={handleSortedChange}
-        onFilteredChange={handleFilteredChange} />
+        onFilteredChange={debouncedCallback(handleFilteredChange, 200)} />
     )
   }
 }
