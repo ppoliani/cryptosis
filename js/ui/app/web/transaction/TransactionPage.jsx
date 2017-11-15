@@ -225,7 +225,7 @@ class TransactionPage extends PureComponent {
     return this.props.transactions.get('fetchTxnsResult')
       .matchWith({
         Empty: () => this.loadTransactions(),
-        Loading: noop,
+        Loading: () => this.renderTransactionsTableContainer([]),
         Success: ({value}) =>
            pipe(
               this.renderTransactionsTableContainer,

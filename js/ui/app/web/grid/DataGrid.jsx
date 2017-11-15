@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import ReactTable from 'react-table'
 import {noop, True, False, debouncedCallback} from '../../../../common/core/fn'
 import 'react-table/react-table.css'
 import './dataGrid.scss'
 
-class DataGrid extends Component {
+class DataGrid extends PureComponent {
   state = {
     loading: true
   };
@@ -12,7 +12,7 @@ class DataGrid extends Component {
   isLoading() {
     return this.props.loading.matchWith({
       Empty: True,
-      loading: True,
+      Loading: True,
       Success: False,
       Failure: True
     });
@@ -25,8 +25,6 @@ class DataGrid extends Component {
       <ReactTable 
         data={data}
         columns={columns}
-        
-        manual
         loading={this.isLoading()}
         defaultPageSize={10}
         className='data-grid -striped -highlight'
