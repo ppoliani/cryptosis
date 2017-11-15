@@ -106,11 +106,15 @@ const deleteTransaction = async ({resource:txnId})  => {
 }
 
 const getTransactionsCount = async ({ctx}) => {
+  const {...filters} = ctx.request.query;
+  
   return await runQuery(
     DbDriver,
     `
       MATCH (txn:Transaction)-[:OWNED_BY]->(u:User)
       WHERE ID(u)=${Number(ctx.state.user.id)}
+      WITH txn
+      ${constructFilters('txn', filters)}
       WITH {count: count(txn)} AS count
       RETURN count
     `

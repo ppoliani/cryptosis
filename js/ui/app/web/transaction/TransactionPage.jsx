@@ -95,10 +95,10 @@ class TransactionPage extends PureComponent {
   }
 
   loadTransactions(filters = []) {
-    const {getTransactions, transactions} = this.props;
+    const {getTransactions, transactions, getTransactionsCount} = this.props;
     const {page, limit} = this.state;
 
-    transactions.get('fetchTxnCountResult').matchWith({
+    const execRequest = () => transactions.get('fetchTxnCountResult').matchWith({
       Empty: noop, 
       Loading: noop, 
       Success: () => {
@@ -107,6 +107,13 @@ class TransactionPage extends PureComponent {
       },
       Failure: noop
     });
+
+    if(filters.length > 0) {
+      //getTransactionsCount(filters);
+      return execRequest();
+    }
+
+    execRequest()
   }
 
   togglePanel = (_, selectedTransaction={}) => {
@@ -204,7 +211,7 @@ class TransactionPage extends PureComponent {
     })
   }
 
-  renderTransactionsTableContainer = data => {
+  renderTransactionsTableContainer = (data=[]) => {
     const {transactions} = this.props;
     
     const asyncResult = AsyncDataAll([
@@ -221,11 +228,11 @@ class TransactionPage extends PureComponent {
     )
   }
 
-  renderTable() {
+  renderTable() { 
     return this.props.transactions.get('fetchTxnsResult')
       .matchWith({
         Empty: () => this.loadTransactions(),
-        Loading: () => this.renderTransactionsTableContainer([]),
+        Loading: () => this.renderTransactionsTableContainer(),
         Success: ({value}) =>
            pipe(
               this.renderTransactionsTableContainer,

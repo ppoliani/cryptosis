@@ -67,7 +67,7 @@ const createMatchObj = entity =>
 const constructFilters = (node, filters=[]) => {
   const str = fromJS(filters)
     .reduce((acc, value, filter) => 
-      acc.push(`${node}.${filter} =~ '(?i)${value}*'`),
+      acc.push(`${node}.${filter} CONTAINS '${value}'`),
       List()
     )
     .join(',');

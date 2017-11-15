@@ -38,16 +38,20 @@ const getTransactionRoot = fetch => {
 }
 
 const getTransactionsCountRoot = fetch => {
+  const getUrl = (filters=[]) => constructUrl(TRANSACTIONS_COUNT_ENDPOINT, Map({...normalizeFilters(filters)}));
+  
+  const fetchData = (partial(fetch, 'GET')) ['∘'] (getUrl);
+
   return createAction(
     GET_TRANSACTIONS_COUNT,
-    partial(fetch, 'GET', TRANSACTIONS_COUNT_ENDPOINT)
+    fetchData
   );
 }
 
 const getTransactionsRoot = fetch => {
-  const getUrl = ({skip=0, limit=10, filters}) => {
-    return constructUrl(TRANSACTION_ENDPOINT, Map({skip, limit, ...normalizeFilters(filters)}))
-  };
+  const getUrl = ({skip=0, limit=10, filters}) => 
+    constructUrl(TRANSACTION_ENDPOINT, Map({skip, limit, ...normalizeFilters(filters)}));
+
   const fetchData = (partial(fetch, 'GET')) ['∘'] (getUrl);
 
   return createAction(
