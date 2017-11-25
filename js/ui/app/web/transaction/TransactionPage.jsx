@@ -44,15 +44,16 @@ class TransactionPage extends PureComponent {
   }
 
   getColumns() {
+    // use atb, ats and b to make filtering seemless with the back-end 
     return [
-      {id: 'buyAsset', Header: 'Buy Asset', accessor: prop('buyAsset'), filterable: true},
+      {id: 'atb', Header: 'Buy Asset', accessor: prop('buyAsset'), filterable: true},
       {id: 'buyAmount', Header: 'Buy Amount', accessor: prop('buyAmount')},
-      {id: 'sellAsset', Header: 'Sell Asset',  accessor: prop('sellAsset'), filterable: true},
+      {id: 'ats', Header: 'Sell Asset',  accessor: prop('sellAsset'), filterable: true},
       {id: 'sellAmount', Header: 'Sell Amount',  accessor: prop('sellAmount')},
       {id: 'feesAsset', Header: 'Fees Currency',  accessor: prop('feesAsset'), filterable: true},
       {id: 'feesAmount', Header: 'Fees Amount',  accessor: prop('feesAmount')},
-      {id: 'broker', Header: 'Broker',  accessor: prop('broker'), filterable: true},
-      {id: 'date', Header: 'Date', accessor: ({date}) => dateformat(date, 'DD/MM/YYYY'), filterable: true},
+      {id: 'b', Header: 'Broker',  accessor: prop('broker'), filterable: true},
+      {id: 'date', Header: 'Date', accessor: ({date}) => dateformat(date, 'DD/MM/YYYY')},
       {id: 'status', Header: 'Status', accessor: prop('status')},
       {id: 'action', Header: 'Action', accessor: this.rendereDeleteBtn}
     ];

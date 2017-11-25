@@ -64,10 +64,10 @@ const createMatchObj = entity =>
     );
 
 
-const constructFilters = (node, filters=[]) => {
+const constructFilters = (filters=[]) => {
   const str = fromJS(filters)
     .reduce((acc, value, filter) => 
-      acc.push(`${node}.${filter} =~ '.*${value}.*'`),
+      acc.push(`${filter}.name =~ '(?i).*${value}.*'`),
       List()
     )
     .join(' AND ');

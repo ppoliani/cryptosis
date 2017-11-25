@@ -63,7 +63,7 @@ const getTransactions = async ({ctx}) => {
       ${matchClause}
       WHERE ID(u)=${Number(ctx.state.user.id)}
       WITH txn, atb, ats, b, atf
-      ${constructFilters('txn', filters)}
+      ${constructFilters(filters)}
       RETURN txn{ .*, id: ID(txn), buyAsset:atb.name, sellAsset:ats.name, feesAsset:atf.name, broker:b.name}
       ORDER BY txn.date DESC
       SKIP ${skip}
@@ -111,10 +111,10 @@ const getTransactionsCount = async ({ctx}) => {
   return await runQuery(
     DbDriver,
     `
-      MATCH (txn:Transaction)-[:OWNED_BY]->(u:User)
+      ${matchClause}
       WHERE ID(u)=${Number(ctx.state.user.id)}
-      WITH txn
-      ${constructFilters('txn', filters)}
+      WITH txn, atb, ats, b, atf
+      ${constructFilters(filters)}
       WITH {count: count(txn)} AS count
       RETURN count
     `
