@@ -17,7 +17,7 @@ class DataGrid extends PureComponent {
       Failure: True
     });
   }
-
+  
   render() { 
     const {data, columns, page, pageSize, pages, handlePageChange, handlePageSizeChange, handleSortedChange, handleFilteredChange} = this.props;
 

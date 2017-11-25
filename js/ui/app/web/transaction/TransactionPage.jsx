@@ -95,9 +95,9 @@ class TransactionPage extends PureComponent {
     this.props.startTransactionCurrentValueStream(currency);
   }
 
-  loadTransactions(filters = []) {
+  loadTransactions() {
     const {getTransactions, transactions, getTransactionsCount} = this.props;
-    const {page, limit} = this.state;
+    const {page, limit, filters=[]} = this.state;
 
     const execRequest = () => transactions.get('fetchTxnCountResult').matchWith({
       Empty: noop, 
@@ -148,7 +148,6 @@ class TransactionPage extends PureComponent {
 
   handlePageChange = page => {
     this.setState(Object.assign({}, this.state, {page}), this.loadTransactions);
-
   }
 
   handlePageSizeChange = (pageSize, page) => {
@@ -162,7 +161,7 @@ class TransactionPage extends PureComponent {
   }
 
   handleFilteredChange = filters => {
-    this.loadTransactions(filters);
+    this.setState(Object.assign({}, this.state, {filters}), this.loadTransactions);
   }
 
   // will include the value for each transaction
@@ -312,4 +311,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps 
 )(TransactionPage)
-
