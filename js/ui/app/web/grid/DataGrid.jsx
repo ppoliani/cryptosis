@@ -24,8 +24,9 @@ class DataGrid extends PureComponent {
     return (
       <ReactTable 
         data={data}
+        filterable
+        defaultFilterMethod={(filter, row) => row}
         columns={columns}
-        loading={this.isLoading()}
         defaultPageSize={10}
         className='data-grid -striped -highlight'
         page={page}
