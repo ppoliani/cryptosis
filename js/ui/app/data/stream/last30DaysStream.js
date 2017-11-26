@@ -31,13 +31,13 @@ export const startLast30DaysStream = currency => dispatch => {
     // get from a successufll response so we use the correct day timestamps
     const data = priceList.filter(p => p.Response === 'Success')[0].Data;
     return {
-      Data: data.map(d => ({open: 1, time: d.time}))
+      Data: data.map(d => ({close: 1, time: d.time}))
     }
   }
 
   const getPriceObj = (asset, response) => fromJS(
     response.Data.map(i => ({
-      price: i.open, 
+      price: i.close, 
       market: '',
       asset,
       day: i.time * 1000 // unix time to js

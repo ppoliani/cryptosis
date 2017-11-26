@@ -19,7 +19,7 @@ const wrapPriceInFxInterface = (price, asset) => fromJS({
   [asset]: {price}
 })
 
-// Txns will include the txns on a specific day with priceOfday being the price at that time
+// Txns will include the txns of the given asset on a specific day with priceOfDay being the price at that time
 const getTotalValueForTheGivenPrice = (txns, asset, priceOfDay) => {
   const holdingsOfTheDay = calculateHoldings(txns);
   const portfolioValue = calculateHoldingsValue(

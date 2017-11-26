@@ -1,5 +1,6 @@
 import {fromPromise, combine, mergeArray} from 'most'
 import {fromJS, Map, Set} from 'immutable'
+import subDays from 'date-fns/sub_days'
 import {identity} from 'folktale/core/lambda'
 import fetch from '../../services/api'
 import {partial, prop} from '../../../../common/core/fn'
@@ -10,7 +11,13 @@ import config from '../../services/config'
 
 const TRANSACTION_ENDPOINT = `${config.API_URL}/transactions`;
 
-const historicalDataUrl = (fromSymbol, toSymbol, timestamp, days) => `https://min-api.cryptocompare.com/data/histoday?fsym=${fromSymbol}&tsym=${toSymbol}&limit=${days}&aggregate=1&toTs=${timestamp}&tryConversion=true`
+// cryptocompare accepts a specific timestamp
+const getYesterday = () => parseInt(Number(subDays(new Date(), 1)) / 1000);
+const shouldTryConversion = asset => !['GBP', 'EUR', 'USD'].includes(asset);
+ 
+const historicalDataUrl = (fromSymbol, toSymbol, days) => 
+  `https://min-api.cryptocompare.com/data/histoday?fsym=${fromSymbol}&tsym=${toSymbol}&limit=${days}&aggregate=1&toTs=${getYesterday()}&tryConversion=true`;
+
 const fxUrl = base => `http://api.fixer.io/latest?base=${base}&symbols=${getSymbolsExceptFor(base).join(',')}`;
 const priceUrl = (currency, symbol) => `https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=${currency}`
 
@@ -18,7 +25,7 @@ const getSymbolsExceptFor = currency => ['GBP', 'EUR', 'USD'].filter(c => c !== 
 
 const fetchPartialTransactions = fetch('GET', `${TRANSACTION_ENDPOINT}/partial`);
 const fetchFX = currency => fetch('GET', fxUrl(currency), {}, false);
-const fetchHistoricData = (currency, symbol) => fetch('GET', historicalDataUrl(symbol, currency, +(new Date), 30), {}, false);
+const fetchHistoricData = (currency, symbol) => fetch('GET', historicalDataUrl(symbol, currency, 30), {}, false);
 const fetchPrice = (currency, symbol) => fetch('GET', priceUrl(currency, symbol), {}, false)
 
 export const createPriceStreams$ = (currency, symbols) => symbols

@@ -21,6 +21,6 @@ const debouncedCallback = (callback, time) => (...args) =>
   .skipRepeats()
   .observe(callback);
 
-const predicate = (...conditions) => item => conditions.every(c => c(item))
+const every = (...conditions) => item => conditions.every(c => c(item))
 
-module.exports = {partial, pipe, prop, flatten, predicate, noop, True, False, debouncedCallback}
+module.exports = {partial, pipe, prop, flatten, every, noop, True, False, debouncedCallback}

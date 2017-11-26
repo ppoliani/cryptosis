@@ -24,11 +24,11 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
       console.log(`Error in the observer of the portfolio stream: ${errorValue}`)
     }
   }
-
+ 
   const getPrices = (transactions, price, fx)  => {
     const {prices} = getState(); 
     const priceData = getPriceObjFromStreamData(currency, fx, price);
-    
+
     return {
       transactions: fromJS(transactions.result),
       price: fromJS(priceData),
