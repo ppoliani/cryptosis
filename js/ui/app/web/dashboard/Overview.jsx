@@ -66,9 +66,6 @@ class Overview extends Component {
         <Row between='xs' className='row-spacing'>
           <CurrencySelector value={getSelectedCurrency(form)}/>
         </Row>
-        <Row between='xs' className='row-spacing'>
-          <PriceContainer />
-        </Row>
         <Row between='xs'>
           <TabView
             portfolio={portfolio}
