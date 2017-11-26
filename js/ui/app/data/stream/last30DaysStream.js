@@ -26,18 +26,18 @@ export const startLast30DaysStream = currency => dispatch => {
   // but the price for the current currency will be 1;
   // The reason we're doing that is that our source will send an error if we ask prices for 
   // the same trading pair i.e. GBP/GBP.  But we still need to have that entry to calculate 
-  // the portfolio metrics later.
+  // the portfolio metrics later on.
   const normalizePriceList = (priceList) => {
     // get from a successufll response so we use the correct day timestamps
     const data = priceList.filter(p => p.Response === 'Success')[0].Data;
     return {
-      Data: data.map(d => ({close: 1, time: d.time}))
+      Data: data.map(d => ({open: 1, time: d.time}))
     }
   }
 
   const getPriceObj = (asset, response) => fromJS(
     response.Data.map(i => ({
-      price: i.close, 
+      price: i.open, 
       market: '',
       asset,
       day: i.time * 1000 // unix time to js
