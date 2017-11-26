@@ -119,8 +119,6 @@ const getInitialPrices = async (currency, transactions) => {
 
 // load the prices for all available asset types using get requests
 // No need to unscubscribe because we getInitialPrices consist of promise streams which are disposes straightaway
-export const streamInitialPrice = (dispatch, currency) => {
-  return getPartialTransactions$()
-    .chain((fromPromise) ['∘'] (partial(getInitialPrices, currency)))
-    .tap((dispatch) ['∘'] (setPrices) ['∘'] (prop('prices')));
-}
+export const streamInitialPrice = (dispatch, currency) => getPartialTransactions$()
+  .chain((fromPromise) ['∘'] (partial(getInitialPrices, currency)))
+  .tap((dispatch) ['∘'] (setPrices) ['∘'] (prop('prices')));

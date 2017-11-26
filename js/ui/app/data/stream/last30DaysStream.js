@@ -4,7 +4,7 @@ import {fromJS, Map} from 'immutable'
 import subDays from 'date-fns/sub_days'
 import {partial} from '../../../../common/core/fn'
 import {calculateHistoricPortfolioValues} from '../../../../common/aggregators'
-import {changePriceToSelectedCurrency, convertToBaseCurrency} from '../../../../common/fx'
+import {convertToBaseCurrency} from '../../../../common/fx'
 import {MINUTE} from '../../../../common/constants/time'
 import {setLast30Days} from '../portfolio/portfolioActions'
 import {getPartialTransactions$, createHistoricStreams, fx$, getDistinctAssets} from './common'
@@ -44,8 +44,7 @@ export const startLast30DaysStream = currency => dispatch => {
     }))
   )
 
-  const updateTransactions = (txns, fx)  => fromJS(txns.result)
-    .map(partial(changePriceToSelectedCurrency, currency, fx.get(currency)))
+  const extractTxns = (txns, fx)  => fromJS(txns.result);
   
   const getPrices = ({txns, distinctAssets}, ...priceList) => {
     const priceObjReducer =  (acc, pl, index) => {
@@ -71,7 +70,7 @@ export const startLast30DaysStream = currency => dispatch => {
     }
   }
 
-  const subscription = combine(updateTransactions, getPartialTransactions$(), fx$(currency))
+  const subscription = combine(extractTxns, getPartialTransactions$(), fx$(currency))
     .throttle(MINUTE)
     .map(historicStreams)
     .chain(result => combine(

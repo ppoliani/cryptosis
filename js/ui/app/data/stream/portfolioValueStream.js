@@ -4,7 +4,6 @@ import {fromPromise, combine, zip} from 'most'
 import {partial, prop} from '../../../../common/core/fn'
 import {priceStream$} from '../../../../common/sockets/streams'
 import {calculateTotalPortfolioValue} from '../../../../common/aggregators'
-import {changePriceToSelectedCurrency} from '../../../../common/fx'
 import {MINUTE} from '../../../../common/constants/time'
 import {setPortfolioValue} from '../portfolio/portfolioActions'
 import {setPrice} from '../prices/priceActions'
@@ -29,12 +28,9 @@ export const startPortfolioStream = currency => (dispatch, getState) => {
   const getPrices = (transactions, price, fx)  => {
     const {prices} = getState(); 
     const priceData = getPriceObjFromStreamData(currency, fx, price);
-    // map though investments and convert price of purchase into the currenlty selected currency
-    const updatedTxns = fromJS(transactions.result)
-      .map(partial(changePriceToSelectedCurrency, currency, fx.get(currency)));
-
+    
     return {
-      transactions: updatedTxns,
+      transactions: fromJS(transactions.result),
       price: fromJS(priceData),
       fx: prices
     }
