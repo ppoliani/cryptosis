@@ -9,8 +9,8 @@ const init = driver => {
 
 const matchClause = `
   MATCH (b:Broker)<-[:HAS_BROKER]-(txn:Transaction)-[:OWNED_BY]->(u:User), 
-    (atb:Asset)<-[:HAS_BUY_ASSET]-(txn:Transaction)-[:HAS_SELL_ASSET]->(ats:Asset),
-    (txn:Transaction)-[:HAS_FEES_ASSET]->(atf:Asset)
+    (atb:Asset)<-[hba:HAS_BUY_ASSET]-(txn:Transaction)-[hsa:HAS_SELL_ASSET]->(ats:Asset),
+    (txn:Transaction)-[hfa:HAS_FEES_ASSET]->(atf:Asset)
 `;
 
 const omitProps = ['broker', 'buyAsset', 'sellAsset', 'feesAsset'];
@@ -22,8 +22,7 @@ const createTransaction = async ({resource:txn, ctx}) => {
       MATCH (b:Broker), (atb:Asset), (ats:Asset), (atf:Asset), (u:User)
       WHERE b.name="${txn.broker}" AND atb.name="${txn.buyAsset}" AND ats.name="${txn.sellAsset}" AND atf.name="${txn.feesAsset}" AND ID(u)=${Number(ctx.state.user.id)}
       CREATE (b)<-[:HAS_BROKER]-(txn:Transaction ${contructCreateMatchString(txn, omitProps)})-[:HAS_BUY_ASSET]->(atb)
-      CREATE (txn)-[:HAS_SELL_ASSET]->(ats)
-      CREATE (txn)-[:HAS_FEES_ASSET]->(atf)
+      CREATE (atf)<-[:HAS_FEES_ASSET]-(txn)-[:HAS_SELL_ASSET]->(ats)
       CREATE (txn)-[:OWNED_BY]->(u)
       RETURN txn{ .*, id: ID(txn), buyAsset:"${txn.buyAsset}", sellAsset:"${txn.sellAsset}", feesAsset:"${txn.feesAsset}", broker:"${txn.broker}" }
     `,
@@ -41,13 +40,11 @@ const updateTransaction = async ({resource:txn}) => {
       WHERE ID(txn) = ${txn.id}
       DELETE hb, hba, hsa, hfa
       WITH txn
-      MATCH (b:Broker), (atb:Asset), (ats:Asset), (atf:Asset)
-      WHERE b.name="${txn.broker}" AND atb.name="${txn.buyAsset}" AND ats.name="${txn.sellAsset}" AND atf.name="${txn.feesAsset}"
+      MATCH (b:Broker {name:"${txn.broker}"}), (atb:Asset {name:"${txn.buyAsset}"}), (ats:Asset {name:"${txn.sellAsset}"}), (atf:Asset {name:"${txn.feesAsset}"})
       SET txn = ${contructCreateMatchString(txn, omitProps)}
-      WITH txn, b, atb, ats
+      WITH txn, b, atb, ats, atf
       CREATE (b)<-[:HAS_BROKER]-(txn)-[:HAS_BUY_ASSET]->(atb)
-      CREATE (txn)-[:HAS_SELL_ASSET]->(ats)
-      CREATE (txn)-[:HAS_FEES_ASSET]->(atf)
+      CREATE (atf)<-[:HAS_FEES_ASSET]-(txn)-[:HAS_SELL_ASSET]->(ats)
       RETURN txn{ .*, id: ID(txn), buyAsset:"${txn.buyAsset}", sellAsset:"${txn.sellAsset}", feesAsset:"${txn.feesAsset}", broker:"${txn.broker}" }
     `,
     createMatchObj(txn)
