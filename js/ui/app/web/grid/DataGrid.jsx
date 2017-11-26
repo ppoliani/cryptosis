@@ -18,6 +18,12 @@ class DataGrid extends PureComponent {
     });
   }
 
+  getTdProps = (state, rowInfo, column, instance) => {
+    return {
+      onClick: e => this.props.handleRowClick(rowInfo)
+    };
+  }
+
   render() { 
     const {data, columns, page, pageSize, pages, handlePageChange, handlePageSizeChange, handleSortedChange, handleFilteredChange} = this.props;
 
@@ -34,7 +40,8 @@ class DataGrid extends PureComponent {
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
         onSortedChange={handleSortedChange}
-        onFilteredChange={debouncedCallback(handleFilteredChange, 300)} />
+        onFilteredChange={debouncedCallback(handleFilteredChange, 500)} 
+        getTdProps={this.getTdProps}/>
     )
   }
 }

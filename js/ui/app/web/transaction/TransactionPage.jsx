@@ -146,6 +146,10 @@ class TransactionPage extends PureComponent {
     this.openDialog(partial(this.onTxnDelete, txn))
   }
 
+  handleRowClick = ({original}) => {
+    this.togglePanel(null, original)
+  }
+
   handlePageChange = page => {
     this.setState(Object.assign({}, this.state, {page}), this.loadTransactions);
   }
@@ -202,7 +206,8 @@ class TransactionPage extends PureComponent {
         handlePageChange={this.handlePageChange} 
         handlePageSizeChange={this.handlePageSizeChange}
         handleSortedChange={this.handleSortedChange} 
-        handleFilteredChange={this.handleFilteredChange} />
+        handleFilteredChange={this.handleFilteredChange} 
+        handleRowClick={this.handleRowClick}/>
     )
 
     return transactions.get('fetchTxnCountResult').matchWith({
