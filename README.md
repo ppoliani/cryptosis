@@ -1,39 +1,49 @@
 Cryptosis
-
-Metrics Definition:
-
-Holdings
 ===
-The number of assets you currently possess. For example, if I buy 5 BTC holdings would be 5
 
-Total Cash
+Prerequisites
 ===
-The total amount you earned by selling your assets. For example, if I bought 5 BTC and then sold 3 BTC at a price of £4
-then the cash is £12. If I then re-invest the £12 then I still have £12 total cash although I don' pocess that amount any more.
-Essentially,
 
-`Total Cash = Sum of sells`
+1. Install `NodeJS 8` via `nvm` https://github.com/creationix/nvm
+2. Install and setup `neo4j` 
+https://neo4j.com/download/neo4j-desktop/?edition=desktop&flavour=osx&release=1.0.6
+3. Install Yarn https://yarnpkg.com/lang/en/docs/install/
 
-Total Amount Invested
+Setup
 ===
-The total amount that has been used to buy assets.
 
-`Total Amount Invested = Sum of buys`
+**API**
+1. Goto the `js/api` project and run `cp .env.sample .env`
+2. Update the environement variables in the file (add your own neo4j password from step 2)
 
-Exposure
-===
-`Total Amount Invested - Total Cash`
+```
+NODE_ENV=development
+SERVER_PORT=5000
+FB_LOGIN_URL=https://graph.facebook.com/me?fields=email,name,first_name,last_name,picture&access_token&access_token
+GOOGLE_LOGIN_URL=https://www.googleapis.com/plus/v1/people/me?access_token
+DB_URL=DB_URL": "bolt://localhost:7687
+DB_USERNAME=neo4j
+DB_PASSWORD=
+SESSION_KEY=
+JWT_SECRET=
+JWT_LIFE_SPAN="7d"
+```
+3. `yarn install` 
+4. `yarn dev`
 
-Current Value (Portfolio Value)
-===
-Total value of the given asset. For example, if I have 5 BTC and the current price is £10 then the current value of BTC in my pocession is equal to £50
+**UI**
+1. Goto `js/ui` and run `cp .env.sample .env` and paste the following env variable
 
-`Current Value = Holdings * Current Price`
+```
+NODE_ENV=development
+GOOGLE_CLIENT_ID=
+FB_CLIENT_ID=
+API_URL=http://127.0.0.1:5000
+PORT=3000
+ACCESS_TOKEN_KEY=@cryptosis:access_token
+USER_INFO=@cryptosis:user_info
+```
+2. `yarn install`
+3. `yarn start:web`
+4. Open browser `http://localhost:3000`
 
-Safe Sell Price
-===
-The price which if we sell all the holding will be equal to our exposure. Essentially, it indicates the price at which our gains and losses will equal to 0;
-
-Capital Growth
-===
-`Capital Growth = currentValue - exposure`
