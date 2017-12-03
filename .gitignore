@@ -7,3 +7,4 @@ js/ui/.env
 js/ui/.env.production
 js/api/.env
 NOTES.md
+.DS_Store
