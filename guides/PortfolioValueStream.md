@@ -5,7 +5,7 @@ It consists of two parallel streams. There is the `streamInitialPrice` which pre
 
 You can see the flow of the `streamPrices` stream below.
 
-![Alt text](./assets/PortfolioValueStream.svg)
+![Alt text](./assets/PortfolioValueStream.png)
 
 Let's examine each part.
 

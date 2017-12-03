@@ -5,7 +5,7 @@ A stream that at the end calculates the value of each asset at each day in a spe
 
 The stream is a composition of several other streams which you see in the following diagramm.
 
-![Alt text](./assets/Last30DaysStream.svg)
+![Alt text](./assets/Last30DaysStream.png)
 
 Let's examine each stream in isolation.
 
