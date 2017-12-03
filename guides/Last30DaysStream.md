@@ -101,9 +101,9 @@ HoldingOfTheday is essentially the same logic except that we don't take the sum 
 
 2. Keep just the fiat currency holdings i.e. GBP, EUR, USD.
 
-3. Calculate the value for each holding with the help of the `calculateHoldingsValues`.
+3. Calculate the value for each holding with the help of the `calculateHoldingsValue`.
 
-`calculateHoldingsValues` is a very important function and as you will see it will be used in the calculation of other metrics as well. At it's core, it does some simple tasks. it finds the `assetValue` of each asset. This is done redusing over the following function
+`calculateHoldingsValue` is a very important function and as you will see it will be used in the calculation of other metrics as well. At it's core, it does some simple tasks, it finds the `assetValue` of each asset. This is done redusing over the following function
 
 ```
 amount * fx.getIn([asset, 'price'], 0)

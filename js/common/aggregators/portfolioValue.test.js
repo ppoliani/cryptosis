@@ -5,7 +5,7 @@ const {
   calculateHoldingsValue, 
   calculateCapitalGain, 
   calculateTransactionFees,
-  calculatePorfolioExposure
+  calculatePortfolioExposure
 } = require('./portfolioValue')
 
 const fx = fromJS({
@@ -114,7 +114,7 @@ test('calculateCapitalGain should return the sum of holding in fiat currencies',
   t.is(capitalGain.totalValue, 49960);
 });
 
-test('calculatePorfolioExposure should return the sum of fiat currencies that were used to buy cryptos', t => {
+test('calculatePortfolioExposure should return the sum of fiat currencies that were used to buy cryptos', t => {
   const txns = fromJS({
     1: {
       buyAsset: 'BTC',
@@ -135,7 +135,7 @@ test('calculatePorfolioExposure should return the sum of fiat currencies that we
   });
 
   const exposureHoldings = calculateExposure(txns);
-  const portfolioExposure = calculatePorfolioExposure(exposureHoldings, fx);
+  const portfolioExposure = calculatePortfolioExposure(exposureHoldings, fx);
 
   t.is(portfolioExposure.assetExposure.get('GBP'), 5010);
   t.is(portfolioExposure.assetExposure.get('USD'), 20020);
