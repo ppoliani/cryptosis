@@ -20,9 +20,8 @@ const getPortfolioValueForAsset = (priceList, txns, asset) =>
     }) 
   })
 
-// returns a Map with keys for each asset and the entries
-// for each day as well as the portfolio value on that date
-// e.g. {[id]: Transaction} {ETH: Price[]} -> { ETH: [{day: 123, value: 2000}], BTC:  [{day: 123, value: 2000}]}
+// return Map<asset, assetDayValue>
+// where assetDayValue: { day: Number, value: { capitalGain: Number, totalValue: Number } }
 const calculateHistoricPortfolioValues = ({txns, prices}) => 
   prices.reduce(
     (acc, priceList, asset) => acc.set(

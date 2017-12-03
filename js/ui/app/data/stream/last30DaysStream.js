@@ -60,7 +60,7 @@ export const startLast30DaysStream = currency => dispatch => {
     };
   } 
 
-  const historicStreams = txns => {
+  const getHistoricStreams = txns => {
     const distinctAssets = getDistinctAssets(txns);
 
     return {
@@ -72,7 +72,7 @@ export const startLast30DaysStream = currency => dispatch => {
 
   const subscription = combine(extractTxns, getPartialTransactions$(), fx$(currency))
     .throttle(MINUTE)
-    .map(historicStreams)
+    .map(getHistoricStreams)
     .chain(result => combine(
         partial(getPrices, result), 
         ...result.histoStreams$

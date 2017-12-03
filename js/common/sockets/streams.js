@@ -10,6 +10,7 @@ const getFullSubscriptions = currency => [
   `2~Kraken~BCH~${currency}`,
   `2~Coinbase~BCH~${currency}`,
   `2~Kraken~ETH~${currency}`,
+  `2~Kraken~ZEC~${currency}`,
   `2~Bitstamp~XRP~${currency}`,
   `2~Kraken~XRP~${currency}`,
   `2~HitBTC~XTZ~${currency}`,
@@ -19,7 +20,9 @@ const getFullSubscriptions = currency => [
   `2~BitTrex~ARK~BTC`,
   `2~BitTrex~OMG~BTC`,
   `2~BitTrex~NEO~BTC`,
-  `2~BitTrex~XMR~BTC`
+  `2~BitTrex~XMR~BTC`,
+  `2~BitTrex~LSK~BTC`,
+  `2~BitTrex~ADA~BTC`
 ];
 
 const getMajorSubscriptions = currency => [

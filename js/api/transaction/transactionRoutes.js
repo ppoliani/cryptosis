@@ -27,7 +27,6 @@ const routes = {
     fn: getPartialTransactions
   },
 
-
   '/transactions$': {
     method: 'post',
     auth: true,
