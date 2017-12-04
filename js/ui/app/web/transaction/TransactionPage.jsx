@@ -37,9 +37,9 @@ class TransactionPage extends PureComponent {
     limit: 10
   }
 
-  rendereDeleteBtn(txn) {
+  rendereDeleteBtn = (txn) => {
     return (
-      <Button label="Delete" primary={true} onClick={partial(this.onTxnDeleteClick, txn)} />
+      <Button label="Delete" primary={true} onClick={partial(this.onTxnDeleteClick, fromJS(txn))} />
     )
   }
 

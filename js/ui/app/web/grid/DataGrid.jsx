@@ -19,9 +19,9 @@ class DataGrid extends PureComponent {
   }
 
   getTdProps = (state, rowInfo, column, instance) => {
-    return {
-      onClick: e => this.props.handleRowClick(rowInfo)
-    };
+    return column.Header === 'action' 
+     ? {onClick: e => this.props.handleRowClick(rowInfo)}
+     : {};
   }
 
   render() { 
