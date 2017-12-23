@@ -21,7 +21,7 @@ NODE_ENV=development
 SERVER_PORT=5000
 FB_LOGIN_URL=https://graph.facebook.com/me?fields=email,name,first_name,last_name,picture&access_token&access_token
 GOOGLE_LOGIN_URL=https://www.googleapis.com/plus/v1/people/me?access_token
-DB_URL=DB_URL": "bolt://localhost:7687
+DB_URL=bolt://localhost:7687
 DB_USERNAME=neo4j
 DB_PASSWORD=
 SESSION_KEY=
