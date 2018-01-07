@@ -81,7 +81,7 @@ For example
 }
 ```
 
-The value of each crypto indicates the quantity of the corresponding asset. There is conversion to the currently selected fiat currency at this point. So, in the example above, we have 3520 ADA tokens and not £3520 worth of ADA tokens.
+The value of each crypto indicates the quantity of the corresponding asset.  So, in the example above, we have 3520 ADA tokens and not £3520 worth of ADA tokens.
 
 ii. `exposure`: it is the result of the `calculatePortfolioExposure` function which takes two parameters. 
 
@@ -105,11 +105,28 @@ ii. `exposure`: it is the result of the `calculatePortfolioExposure` function wh
 
 Essentially, this is an object that holds the sum of the sell positions of all fiat currencies. In the example above, we have 1522 EUR exposure, which means we have purchased some assets by selling 1522 EUR in total. Similarly for the rest fiat currencies. Values are in the correspongind fiat currency. There is no conversion at this point.
 
-  - `fx`: Same object we described before. It is incrementally updated while we get new prices from the WS. In the beginning we it won't include the prices of all cryptos. That's fine though, because, there is abaked in logic that will default the any calculation to 0 if there is a missing price.
+  - `fx`: Same object we described before. It is incrementally updated while we get new prices from the WS. In the beginning we it won't include the prices of all cryptos. That's fine though, because, there is a baked in logic that will default any calculation to 0 if there is a missing price. There is conversion to the currently selected fiat currency, at this point. i.e. the price per `ADA` will be in GBP, by default.
 
-The logic of `calculatePortfolioExposure` is similar to what we've done before. As we mentioned earlier, there is one very important utility function that participates in the calculation of several metrics. This function is `calculateHoldingsValue` which calculates the value of each asset as well as the total value of all assets. A value of an asset is a simple as the following formulat:
+The logic of `calculatePortfolioExposure` is similar to what we've done before. As we mentioned earlier, there is one very important utility function that participates in the calculation of several metrics. This function is `calculateHoldingsValue` which calculates the value of each asset as well as the total value of all assets. A value of an asset is a simple as the following formula:
 
 `quantity * price`
+
+This number might be positive or negative (fiat currency holdings might be negative in the beginning of your portfolio, as you put as much fiat into the market and you don't yet get back anything from sells. It can also be negative at some point for BTC if you use to buy assets in BTC/* pairs.)
+
+To recap, `calculateHoldingsValue` will calculate the value per asset as well as the total value, which indicates the profit of the portfolio if we sell all our assets. 
+
+
+For example
+
+  ```javascript
+  {
+    EUR: -5000,
+    BTC: 8000,
+    ADA: 3000
+  }
+  ```
+
+If we decide to sell the above portfolio we will get back the 5000 EUR we put into the market initially to break even, plus 6000 EUR on top as net profit.
 
 iii. `capitalGain`: We've seen this metric before. Here we consider the total holdings of all fiat currencies. Unlike in exposure, we consider both sell and buy positions. 
 
@@ -131,6 +148,6 @@ iv. `value`: Similar logic to the previous values except this time we call `calc
 
 To recap, `exposure`, `capitalGain` and `value` are calculated using the `calculateHoldingsValue` function but they differ in the holding object we pass a parameter. Following is the holdings we pass for calculating each of these metrics.
 
-- `exposure`: Sum of all sell fiat positions 
-- `capitalGain`: Sum of all buy fiat positions - Sum of all sell fiat positions.
-- `value`: Sum of all asset buys - Sum of all asset sell position
+- `exposure`: We pass the sum of all sell fiat positions 
+- `capitalGain`: We pass the sum of all buy fiat positions - Sum of all sell fiat positions.
+- `value`: We pass the sum of all asset buys - Sum of all asset sell position
